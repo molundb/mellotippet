@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:melodifestivalen_competition/text_form_widget.dart';
 
 void main() {
   runApp(const MelodifestivalenCompetitionApp());
@@ -22,38 +23,53 @@ class MelodifestivalenCompetitionApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const MyHomePage(title: 'Melodifestivalen Competition'),
+        home: const HomePage(title: 'Melodifestivalen Competition'),
       ),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  late TextEditingController _controller;
+class _HomePageState extends State<HomePage> {
+  late TextEditingController _nameController;
+  late TextEditingController _finalist1Controller;
+  late TextEditingController _finalist2Controller;
+  late TextEditingController _semifinalist1Controller;
+  late TextEditingController _semifinalist2Controller;
+  late TextEditingController _fifthPlaceController;
 
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController();
+    _nameController = TextEditingController();
+    _finalist1Controller = TextEditingController();
+    _finalist2Controller = TextEditingController();
+    _semifinalist1Controller = TextEditingController();
+    _semifinalist2Controller = TextEditingController();
+    _fifthPlaceController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _nameController.dispose();
+    _finalist1Controller.dispose();
+    _finalist2Controller.dispose();
+    _semifinalist1Controller.dispose();
+    _semifinalist2Controller.dispose();
+    _fifthPlaceController.dispose();
     super.dispose();
   }
 
-  void submit(String text) {
-    _controller.clear();
+  void submit() {
+    _nameController.clear();
   }
 
   @override
@@ -68,23 +84,42 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              TextField(
-                controller: _controller,
-                onSubmitted: submit,
-                decoration: const InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.emoji_emotions_outlined,
-                      color: Colors.grey,
-                      size: 24.0,
-                    ),
-                    hintText: 'Enter your name',
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.blueAccent, width: 1.0),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.black, width: 1.0))),
+              TextFormFieldWidget(
+                textInputType: TextInputType.name,
+                controller: _nameController,
+                prefixIcon: const Icon(Icons.emoji_emotions_outlined),
+                hintText: 'Enter your name',
+                onSubmitField: submit,
+              ),
+              TextFormFieldWidget(
+                textInputType: TextInputType.number,
+                controller: _finalist1Controller,
+                prefixIcon: const Icon(Icons.star),
+                hintText: 'Finalist',
+              ),
+              TextFormFieldWidget(
+                textInputType: TextInputType.number,
+                controller: _finalist2Controller,
+                prefixIcon: const Icon(Icons.star),
+                hintText: 'Finalist',
+              ),
+              TextFormFieldWidget(
+                textInputType: TextInputType.number,
+                controller: _semifinalist1Controller,
+                prefixIcon: const Icon(Icons.star_border),
+                hintText: 'Semifinalist',
+              ),
+              TextFormFieldWidget(
+                textInputType: TextInputType.number,
+                controller: _semifinalist2Controller,
+                prefixIcon: const Icon(Icons.star_border),
+                hintText: 'Semifinalist',
+              ),
+              TextFormFieldWidget(
+                textInputType: TextInputType.number,
+                controller: _fifthPlaceController,
+                prefixIcon: const Icon(Icons.five_g_outlined),
+                hintText: 'Fifth place',
               ),
             ],
           ),
