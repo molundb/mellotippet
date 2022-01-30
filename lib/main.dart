@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:melodifestivalen_competition/text_form_widget.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'firebase_options.dart';
 
 void main() async {
@@ -8,6 +10,18 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  UserCredential userCredential =
+      await FirebaseAuth.instance.signInAnonymously();
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+  auth.authStateChanges().listen((User? user) {
+    if (user == null) {
+      print('User is currently signed out!');
+    } else {
+      print('User is signed in!');
+    }
+  });
+
   runApp(const MelodifestivalenCompetitionApp());
 }
 
