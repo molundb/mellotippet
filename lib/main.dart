@@ -1,26 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:melodifestivalen_competition/text_form_widget.dart';
 
 import 'firebase_options.dart';
+import 'firebase_rtd.dart';
+
+FirebaseApp? firebaseApp;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  FirebaseApp firebaseApp = await Firebase.initializeApp(
+  firebaseApp = await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  UserCredential userCredential =
-      await FirebaseAuth.instance.signInAnonymously();
-
-  FirebaseDatabase database = FirebaseDatabase.instanceFor(
-      app: firebaseApp,
-      databaseURL:
-          "https://melodifestivalen-competition-default-rtdb.europe-west1.firebasedatabase.app");
-  DatabaseReference ref = database.ref();
-  DatabaseEvent event = await ref.once();
-  print(event.snapshot.value);
+  await FirebaseAuth.instance.signInAnonymously();
 
   FirebaseAuth auth = FirebaseAuth.instance;
   auth.authStateChanges().listen((User? user) {
@@ -98,7 +91,15 @@ class _HomePageState extends State<HomePage> {
   }
 
   void submit() {
-    _nameController.clear();
+    FirebaseRtd firebaseRtd = FirebaseRtd(firebaseApp!);
+    firebaseRtd.storePrediction(
+      _nameController.text,
+      _finalist1Controller.text,
+      _finalist2Controller.text,
+      _semifinalist1Controller.text,
+      _semifinalist2Controller.text,
+      _fifthPlaceController.text,
+    );
   }
 
   @override
@@ -109,51 +110,86 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(44.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              TextFormFieldWidget(
-                textInputType: TextInputType.name,
-                controller: _nameController,
-                prefixIcon: const Icon(Icons.emoji_emotions_outlined),
-                hintText: 'Enter your name',
-                onSubmitField: submit,
-              ),
-              TextFormFieldWidget(
-                textInputType: TextInputType.number,
-                controller: _finalist1Controller,
-                prefixIcon: const Icon(Icons.star),
-                hintText: 'Finalist',
-              ),
-              TextFormFieldWidget(
-                textInputType: TextInputType.number,
-                controller: _finalist2Controller,
-                prefixIcon: const Icon(Icons.star),
-                hintText: 'Finalist',
-              ),
-              TextFormFieldWidget(
-                textInputType: TextInputType.number,
-                controller: _semifinalist1Controller,
-                prefixIcon: const Icon(Icons.star_border),
-                hintText: 'Semifinalist',
-              ),
-              TextFormFieldWidget(
-                textInputType: TextInputType.number,
-                controller: _semifinalist2Controller,
-                prefixIcon: const Icon(Icons.star_border),
-                hintText: 'Semifinalist',
-              ),
-              TextFormFieldWidget(
-                textInputType: TextInputType.number,
-                controller: _fifthPlaceController,
-                prefixIcon: const Icon(Icons.five_g_outlined),
-                hintText: 'Fifth place',
-              ),
-            ],
+          padding: const EdgeInsets.symmetric(horizontal: 44.0),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                _buildName(),
+                _buildFinalist1(),
+                _buildFinalist2(),
+                _buildSemifinalist1(),
+                _buildSemifinalist2(),
+                _buildFifthPlace(),
+                _buildSubmitButton(),
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  ElevatedButton _buildSubmitButton() {
+    return ElevatedButton(
+      onPressed: () {
+        submit();
+      },
+      child: const Text('Submit'),
+    );
+  }
+
+  TextFormFieldWidget _buildFifthPlace() {
+    return TextFormFieldWidget(
+      textInputType: TextInputType.number,
+      controller: _fifthPlaceController,
+      prefixIcon: const Icon(Icons.five_g_outlined),
+      hintText: 'Fifth place',
+    );
+  }
+
+  TextFormFieldWidget _buildSemifinalist2() {
+    return TextFormFieldWidget(
+      textInputType: TextInputType.number,
+      controller: _semifinalist2Controller,
+      prefixIcon: const Icon(Icons.star_border),
+      hintText: 'Semifinalist',
+    );
+  }
+
+  TextFormFieldWidget _buildSemifinalist1() {
+    return TextFormFieldWidget(
+      textInputType: TextInputType.number,
+      controller: _semifinalist1Controller,
+      prefixIcon: const Icon(Icons.star_border),
+      hintText: 'Semifinalist',
+    );
+  }
+
+  TextFormFieldWidget _buildFinalist2() {
+    return TextFormFieldWidget(
+      textInputType: TextInputType.number,
+      controller: _finalist2Controller,
+      prefixIcon: const Icon(Icons.star),
+      hintText: 'Finalist',
+    );
+  }
+
+  TextFormFieldWidget _buildFinalist1() {
+    return TextFormFieldWidget(
+      textInputType: TextInputType.number,
+      controller: _finalist1Controller,
+      prefixIcon: const Icon(Icons.star),
+      hintText: 'Finalist',
+    );
+  }
+
+  TextFormFieldWidget _buildName() {
+    return TextFormFieldWidget(
+      textInputType: TextInputType.name,
+      controller: _nameController,
+      prefixIcon: const Icon(Icons.emoji_emotions_outlined),
+      hintText: 'Enter your name',
     );
   }
 }
