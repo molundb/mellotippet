@@ -30,8 +30,8 @@ class FirebaseRtd {
         "name": name,
         "finalist1": finalist1,
         "finalist2": finalist2,
-        "finalist3": semifinalist1,
-        "finalist4": semifinalist2,
+        "semifinalist3": semifinalist1,
+        "semifinalist4": semifinalist2,
         "fifthPlace": fifthPlace,
       });
     }
