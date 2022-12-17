@@ -130,48 +130,12 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildSubmitButton() {
-    return ElevatedButton(
-      onPressed: () {
-        submit();
-      },
-      child: const Text('Submit'),
-    );
-  }
-
-  Widget _buildFifthPlace() {
+  Widget _buildName() {
     return TextFormFieldWidget(
-      textInputType: TextInputType.number,
-      controller: _fifthPlaceController,
-      prefixIcon: const Icon(Icons.five_g_outlined),
-      hintText: 'Fifth place',
-    );
-  }
-
-  Widget _buildSemifinalist2() {
-    return TextFormFieldWidget(
-      textInputType: TextInputType.number,
-      controller: _semifinalist2Controller,
-      prefixIcon: const Icon(Icons.star_border),
-      hintText: 'Semifinalist',
-    );
-  }
-
-  Widget _buildSemifinalist1() {
-    return TextFormFieldWidget(
-      textInputType: TextInputType.number,
-      controller: _semifinalist1Controller,
-      prefixIcon: const Icon(Icons.star_border),
-      hintText: 'Semifinalist',
-    );
-  }
-
-  Widget _buildFinalist2() {
-    return TextFormFieldWidget(
-      textInputType: TextInputType.number,
-      controller: _finalist2Controller,
-      prefixIcon: const Icon(Icons.star),
-      hintText: 'Finalist',
+      textInputType: TextInputType.name,
+      controller: _nameController,
+      prefixIcon: const Icon(Icons.emoji_emotions_outlined),
+      hintText: 'Enter your name',
     );
   }
 
@@ -184,12 +148,48 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildName() {
+  Widget _buildFinalist2() {
     return TextFormFieldWidget(
-      textInputType: TextInputType.name,
-      controller: _nameController,
-      prefixIcon: const Icon(Icons.emoji_emotions_outlined),
-      hintText: 'Enter your name',
+      textInputType: TextInputType.number,
+      controller: _finalist2Controller,
+      prefixIcon: const Icon(Icons.star),
+      hintText: 'Finalist',
+    );
+  }
+
+  Widget _buildSemifinalist1() {
+    return TextFormFieldWidget(
+      textInputType: TextInputType.number,
+      controller: _semifinalist1Controller,
+      prefixIcon: const Icon(Icons.star_border),
+      hintText: 'Semifinalist',
+    );
+  }
+
+  Widget _buildSemifinalist2() {
+    return TextFormFieldWidget(
+      textInputType: TextInputType.number,
+      controller: _semifinalist2Controller,
+      prefixIcon: const Icon(Icons.star_border),
+      hintText: 'Semifinalist',
+    );
+  }
+
+  Widget _buildFifthPlace() {
+    return TextFormFieldWidget(
+      textInputType: TextInputType.number,
+      controller: _fifthPlaceController,
+      prefixIcon: const Icon(Icons.five_g_outlined),
+      hintText: 'Fifth place',
+    );
+  }
+
+  Widget _buildSubmitButton() {
+    return ElevatedButton(
+      onPressed: () {
+        submit();
+      },
+      child: const Text('Submit'),
     );
   }
 }
