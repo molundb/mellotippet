@@ -130,7 +130,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  ElevatedButton _buildSubmitButton() {
+  Widget _buildSubmitButton() {
     return ElevatedButton(
       onPressed: () {
         submit();
@@ -139,7 +139,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  TextFormFieldWidget _buildFifthPlace() {
+  Widget _buildFifthPlace() {
     return TextFormFieldWidget(
       textInputType: TextInputType.number,
       controller: _fifthPlaceController,
@@ -148,7 +148,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  TextFormFieldWidget _buildSemifinalist2() {
+  Widget _buildSemifinalist2() {
     return TextFormFieldWidget(
       textInputType: TextInputType.number,
       controller: _semifinalist2Controller,
@@ -157,7 +157,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  TextFormFieldWidget _buildSemifinalist1() {
+  Widget _buildSemifinalist1() {
     return TextFormFieldWidget(
       textInputType: TextInputType.number,
       controller: _semifinalist1Controller,
@@ -166,7 +166,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  TextFormFieldWidget _buildFinalist2() {
+  Widget _buildFinalist2() {
     return TextFormFieldWidget(
       textInputType: TextInputType.number,
       controller: _finalist2Controller,
@@ -175,7 +175,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  TextFormFieldWidget _buildFinalist1() {
+  Widget _buildFinalist1() {
     return TextFormFieldWidget(
       textInputType: TextInputType.number,
       controller: _finalist1Controller,
@@ -184,7 +184,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  TextFormFieldWidget _buildName() {
+  Widget _buildName() {
     return TextFormFieldWidget(
       textInputType: TextInputType.name,
       controller: _nameController,
