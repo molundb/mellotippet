@@ -1,15 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class FirebaseRtd {
-  FirebaseDatabase? database;
+class Database {
+  FirebaseFirestore? db;
 
-  FirebaseRtd(FirebaseApp firebaseApp) {
-    database = FirebaseDatabase.instanceFor(
-        app: firebaseApp,
-        databaseURL:
-            "https://melodifestivalen-competition-default-rtdb.europe-west1.firebasedatabase.app");
+  Database(FirebaseApp firebaseApp) {
+    db = FirebaseFirestore.instance;
   }
 
   // TODO: Change type String to int for predictions and add input validation
@@ -24,9 +21,7 @@ class FirebaseRtd {
     var uid = FirebaseAuth.instance.currentUser?.uid;
 
     if (uid != null) {
-      DatabaseReference ref = database!.ref().child('predictions').child(uid);
-
-      await ref.set({
+      db!.collection('predictions').doc(uid).set({
         "name": name,
         "finalist1": finalist1,
         "finalist2": finalist2,
