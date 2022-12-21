@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:melodifestivalen_competition/text_form_widget.dart';
 
 import 'firebase_options.dart';
-import 'firebase_rtd.dart';
+import 'database.dart';
 
 FirebaseApp? firebaseApp;
 
