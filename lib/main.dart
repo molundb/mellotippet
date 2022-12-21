@@ -90,18 +90,6 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  void submit() {
-    FirebaseRtd firebaseRtd = FirebaseRtd(firebaseApp!);
-    firebaseRtd.storePrediction(
-      _nameController.text,
-      _finalist1Controller.text,
-      _finalist2Controller.text,
-      _semifinalist1Controller.text,
-      _semifinalist2Controller.text,
-      _fifthPlaceController.text,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -187,9 +175,21 @@ class _HomePageState extends State<HomePage> {
   Widget _buildSubmitButton() {
     return ElevatedButton(
       onPressed: () {
-        submit();
+        _submit();
       },
       child: const Text('Submit'),
+    );
+  }
+
+  void _submit() {
+    Database firebaseRtd = Database(firebaseApp!);
+    firebaseRtd.storePrediction(
+      _nameController.text,
+      _finalist1Controller.text,
+      _finalist2Controller.text,
+      _semifinalist1Controller.text,
+      _semifinalist2Controller.text,
+      _fifthPlaceController.text,
     );
   }
 }
