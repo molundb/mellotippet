@@ -6,19 +6,15 @@ class TextFormFieldWidget extends StatefulWidget {
   final Widget? prefixIcon;
   final String? defaultText;
   final bool obscureText;
-  final TextEditingController controller;
-  final Function? onSubmitField;
-  final Function? onFieldTap;
+  final Function(String?)? onSaved;
 
   const TextFormFieldWidget(
       {Key? key,
       required this.textInputType,
-      required this.controller,
       this.hintText,
       this.defaultText,
       this.obscureText = false,
-      this.onSubmitField,
-      this.onFieldTap,
+      this.onSaved,
       this.prefixIcon})
       : super(key: key);
 
@@ -81,13 +77,7 @@ class TextFormFieldWidgetState extends State<TextFormFieldWidget> {
             borderSide: BorderSide(color: primaryColor),
           ),
         ),
-        controller: widget.controller,
-        onFieldSubmitted: (value) {
-          widget.onSubmitField?.call();
-        },
-        onTap: () {
-          widget.onFieldTap?.call();
-        },
+        onSaved: widget.onSaved,
       ),
     );
   }
