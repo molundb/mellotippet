@@ -11,35 +11,14 @@ class PredictionPage extends StatefulWidget {
 }
 
 class PredictionPageState extends State<PredictionPage> {
-  late TextEditingController _nameController;
-  late TextEditingController _finalist1Controller;
-  late TextEditingController _finalist2Controller;
-  late TextEditingController _semifinalist1Controller;
-  late TextEditingController _semifinalist2Controller;
-  late TextEditingController _fifthPlaceController;
+  String name = '';
+  String finalist1 = '';
+  String finalist2 = '';
+  String semifinalist2 = '';
+  String semifinalist1 = '';
+  String fifthPlace = '';
+
   final _formKey = GlobalKey<FormState>();
-
-  @override
-  void initState() {
-    super.initState();
-    _nameController = TextEditingController();
-    _finalist1Controller = TextEditingController();
-    _finalist2Controller = TextEditingController();
-    _semifinalist1Controller = TextEditingController();
-    _semifinalist2Controller = TextEditingController();
-    _fifthPlaceController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _finalist1Controller.dispose();
-    _finalist2Controller.dispose();
-    _semifinalist1Controller.dispose();
-    _semifinalist2Controller.dispose();
-    _fifthPlaceController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,43 +28,56 @@ class PredictionPageState extends State<PredictionPage> {
         children: [
           TextFormFieldWidget(
             textInputType: TextInputType.name,
-            controller: _nameController,
             prefixIcon: const Icon(Icons.emoji_emotions_outlined),
             hintText: 'Enter your name',
+            onSaved: (String? value) {
+              name = value ?? '';
+            },
           ),
           TextFormFieldWidget(
             textInputType: TextInputType.number,
-            controller: _finalist1Controller,
             prefixIcon: const Icon(Icons.star),
             hintText: 'Finalist',
+            onSaved: (String? value) {
+              finalist1 = value ?? '';
+            },
           ),
           TextFormFieldWidget(
             textInputType: TextInputType.number,
-            controller: _finalist2Controller,
             prefixIcon: const Icon(Icons.star),
             hintText: 'Finalist',
+            onSaved: (String? value) {
+              finalist2 = value ?? '';
+            },
           ),
           TextFormFieldWidget(
             textInputType: TextInputType.number,
-            controller: _semifinalist1Controller,
             prefixIcon: const Icon(Icons.star_border),
             hintText: 'Semifinalist',
+            onSaved: (String? value) {
+              semifinalist1 = value ?? '';
+            },
           ),
           TextFormFieldWidget(
             textInputType: TextInputType.number,
-            controller: _semifinalist2Controller,
             prefixIcon: const Icon(Icons.star_border),
             hintText: 'Semifinalist',
+            onSaved: (String? value) {
+              semifinalist2 = value ?? '';
+            },
           ),
           TextFormFieldWidget(
             textInputType: TextInputType.number,
-            controller: _fifthPlaceController,
             prefixIcon: const Icon(Icons.five_g_outlined),
             hintText: 'Fifth place',
+            onSaved: (String? value) {
+              fifthPlace = value ?? '';
+            },
           ),
           ElevatedButton(
             onPressed: () {
               if (_formKey.currentState!.validate()) {
+                _formKey.currentState!.save();
                 _submit();
               }
             },
@@ -99,12 +91,12 @@ class PredictionPageState extends State<PredictionPage> {
   void _submit() {
     final database = getIt.get<Database>();
     database.storePrediction(
-      _nameController.text,
-      _finalist1Controller.text,
-      _finalist2Controller.text,
-      _semifinalist1Controller.text,
-      _semifinalist2Controller.text,
-      _fifthPlaceController.text,
+      name,
+      finalist1,
+      finalist2,
+      semifinalist1,
+      semifinalist2,
+      fifthPlace,
     );
   }
 }
