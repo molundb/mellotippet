@@ -23,10 +23,10 @@ class TextFormFieldWidget extends StatefulWidget {
       : super(key: key);
 
   @override
-  _TextFormFieldWidgetState createState() => _TextFormFieldWidgetState();
+  TextFormFieldWidgetState createState() => TextFormFieldWidgetState();
 }
 
-class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
+class TextFormFieldWidgetState extends State<TextFormFieldWidget> {
   double bottomPaddingToError = 12;
   Color primaryColor = Colors.blueAccent;
 

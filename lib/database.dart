@@ -1,13 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Database {
-  FirebaseFirestore? db;
-
-  Database(FirebaseApp firebaseApp) {
-    db = FirebaseFirestore.instance;
-  }
+  FirebaseFirestore db = FirebaseFirestore.instance;
 
   // TODO: Change type String to int for predictions and add input validation
   void storePrediction(
@@ -21,7 +16,7 @@ class Database {
     var uid = FirebaseAuth.instance.currentUser?.uid;
 
     if (uid != null) {
-      db!.collection('predictions').doc(uid).set({
+      db.collection('predictions').doc(uid).set({
         "name": name,
         "finalist1": finalist1,
         "finalist2": finalist2,
