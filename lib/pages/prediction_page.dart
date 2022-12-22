@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:melodifestivalen_competition/database.dart';
 import 'package:melodifestivalen_competition/dependencyInjection/get_it.dart';
+import 'package:melodifestivalen_competition/prediction_model.dart';
 import 'package:melodifestivalen_competition/text_form_widget.dart';
 
 class PredictionPage extends StatefulWidget {
@@ -11,12 +12,7 @@ class PredictionPage extends StatefulWidget {
 }
 
 class PredictionPageState extends State<PredictionPage> {
-  String name = '';
-  String finalist1 = '';
-  String finalist2 = '';
-  String semifinalist2 = '';
-  String semifinalist1 = '';
-  String fifthPlace = '';
+  PredictionModel prediction = PredictionModel();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -31,7 +27,7 @@ class PredictionPageState extends State<PredictionPage> {
             prefixIcon: const Icon(Icons.emoji_emotions_outlined),
             hintText: 'Enter your name',
             onSaved: (String? value) {
-              name = value ?? '';
+              prediction.name = value;
             },
           ),
           TextFormFieldWidget(
@@ -39,7 +35,7 @@ class PredictionPageState extends State<PredictionPage> {
             prefixIcon: const Icon(Icons.star),
             hintText: 'Finalist',
             onSaved: (String? value) {
-              finalist1 = value ?? '';
+              prediction.finalist1 = value;
             },
           ),
           TextFormFieldWidget(
@@ -47,7 +43,7 @@ class PredictionPageState extends State<PredictionPage> {
             prefixIcon: const Icon(Icons.star),
             hintText: 'Finalist',
             onSaved: (String? value) {
-              finalist2 = value ?? '';
+              prediction.finalist2 = value;
             },
           ),
           TextFormFieldWidget(
@@ -55,7 +51,7 @@ class PredictionPageState extends State<PredictionPage> {
             prefixIcon: const Icon(Icons.star_border),
             hintText: 'Semifinalist',
             onSaved: (String? value) {
-              semifinalist1 = value ?? '';
+              prediction.semifinalist1 = value;
             },
           ),
           TextFormFieldWidget(
@@ -63,7 +59,7 @@ class PredictionPageState extends State<PredictionPage> {
             prefixIcon: const Icon(Icons.star_border),
             hintText: 'Semifinalist',
             onSaved: (String? value) {
-              semifinalist2 = value ?? '';
+              prediction.semifinalist2 = value;
             },
           ),
           TextFormFieldWidget(
@@ -71,7 +67,7 @@ class PredictionPageState extends State<PredictionPage> {
             prefixIcon: const Icon(Icons.five_g_outlined),
             hintText: 'Fifth place',
             onSaved: (String? value) {
-              fifthPlace = value ?? '';
+              prediction.fifthPlace = value;
             },
           ),
           ElevatedButton(
@@ -90,13 +86,6 @@ class PredictionPageState extends State<PredictionPage> {
 
   void _submit() {
     final database = getIt.get<Database>();
-    database.storePrediction(
-      name,
-      finalist1,
-      finalist2,
-      semifinalist1,
-      semifinalist2,
-      fifthPlace,
-    );
+    database.uploadPrediction(prediction);
   }
 }
