@@ -43,12 +43,12 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
+            icon: Icon(Icons.calendar_month),
+            label: 'Upcoming',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
+            icon: Icon(Icons.star),
+            label: 'Score',
           ),
         ],
         currentIndex: _selectedIndex,

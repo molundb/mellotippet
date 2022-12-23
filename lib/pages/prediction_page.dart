@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:melodifestivalen_competition/database.dart';
+import 'package:melodifestivalen_competition/repositories/database_repository.dart';
 import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
-import 'package:melodifestivalen_competition/prediction_model.dart';
-import 'package:melodifestivalen_competition/text_form_widget.dart';
+import 'package:melodifestivalen_competition/models/prediction_model.dart';
+import 'package:melodifestivalen_competition/widgets/text_form_widget.dart';
 
 class PredictionPage extends StatefulWidget {
   const PredictionPage({super.key});
@@ -85,7 +85,7 @@ class PredictionPageState extends State<PredictionPage> {
   }
 
   void _submit() {
-    final database = getIt.get<Database>();
+    final database = getIt.get<DatabaseRepository>();
     database.uploadPrediction(prediction);
   }
 }

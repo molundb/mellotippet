@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:melodifestivalen_competition/authentication.dart';
+import 'package:melodifestivalen_competition/repositories/authentication_repository.dart';
 import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
 import 'package:melodifestivalen_competition/firebase_options.dart';
 import 'package:melodifestivalen_competition/mello_bottom_navigation_bar.dart';
@@ -45,6 +45,6 @@ class MelodifestivalenCompetitionApp extends StatelessWidget {
 }
 
 Future<void> _signInAnonymously() async {
-  final auth = getIt.get<Authentication>();
+  final auth = getIt.get<AuthenticationRepository>();
   await auth.signInAnonymously();
 }
