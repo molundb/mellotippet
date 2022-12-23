@@ -1,8 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:melodifestivalen_competition/authentication.dart';
-import 'package:melodifestivalen_competition/dependencyInjection/get_it.dart';
+import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
 import 'package:melodifestivalen_competition/firebase_options.dart';
+import 'package:melodifestivalen_competition/mello_bottom_navigation_bar.dart';
 import 'package:melodifestivalen_competition/pages/prediction_page.dart';
 
 
@@ -37,13 +38,7 @@ class MelodifestivalenCompetitionApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        // home: const HomePage(title: 'Melodifestivalen Competition'),
-        home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Melodifestivalen Competition'),
-          ),
-          body: const PredictionPage(),
-        ),
+        home:  const MelloBottomNavigationBar(),
       ),
     );
   }
