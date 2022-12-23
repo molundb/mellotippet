@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:melodifestivalen_competition/pages/prediction_page.dart';
+import 'package:melodifestivalen_competition/pages/upcoming_competitions_page.dart';
 
 class MelloBottomNavigationBar extends StatefulWidget {
   const MelloBottomNavigationBar({super.key});
@@ -17,10 +18,7 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
   );
   static const List<Widget> _widgetOptions = <Widget>[
     PredictionPage(),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
+    UpcomingCompetitionsPage(),
     Text(
       'Index 2: School',
       style: optionStyle,
