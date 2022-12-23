@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:melodifestivalen_competition/models/competition_model.dart';
 import 'package:melodifestivalen_competition/models/prediction_model.dart';
 
 class DatabaseRepository {
@@ -19,5 +20,18 @@ class DatabaseRepository {
         "fifthPlace": prediction.fifthPlace,
       });
     }
+  }
+
+  Future<List<CompetitionModel>> getUpcomingCompetitions() async {
+    final competitionCollectionSnap = await db
+        .collection('competitions')
+        .withConverter(
+          fromFirestore: CompetitionModel.fromFirestore,
+          toFirestore: (CompetitionModel competition, _) =>
+              competition.toFirestore(),
+        )
+        .get();
+
+    return competitionCollectionSnap.docs.map((e) => e.data()).toList();
   }
 }
