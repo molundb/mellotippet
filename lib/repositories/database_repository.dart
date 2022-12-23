@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:melodifestivalen_competition/prediction_model.dart';
+import 'package:melodifestivalen_competition/models/prediction_model.dart';
 
-class Database {
+class DatabaseRepository {
   FirebaseFirestore db = FirebaseFirestore.instance;
 
   // TODO: Change type String to int for predictions and add input validation
