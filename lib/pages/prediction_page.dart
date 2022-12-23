@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:melodifestivalen_competition/database.dart';
-import 'package:melodifestivalen_competition/dependencyInjection/get_it.dart';
+import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
 import 'package:melodifestivalen_competition/prediction_model.dart';
 import 'package:melodifestivalen_competition/text_form_widget.dart';
 
