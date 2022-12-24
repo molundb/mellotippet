@@ -1,11 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:melodifestivalen_competition/repositories/authentication_repository.dart';
 import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
 import 'package:melodifestivalen_competition/firebase_options.dart';
 import 'package:melodifestivalen_competition/mello_bottom_navigation_bar.dart';
-import 'package:melodifestivalen_competition/pages/prediction_page.dart';
-
+import 'package:melodifestivalen_competition/repositories/authentication_repository.dart';
+import 'package:melodifestivalen_competition/styles/colors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,9 +35,19 @@ class MelodifestivalenCompetitionApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Melodifestivalen Competition',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primaryColor: Colors.purpleAccent,
+          appBarTheme: const AppBarTheme(
+            color: melloMagenta,
+          ),
+          fontFamily: 'Hind',
+          textTheme: const TextTheme(
+            headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+            headline2: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
+            headline6: TextStyle(fontSize: 26.0, fontStyle: FontStyle.italic),
+            bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+          ),
         ),
-        home:  const MelloBottomNavigationBar(),
+        home: const MelloBottomNavigationBar(),
       ),
     );
   }

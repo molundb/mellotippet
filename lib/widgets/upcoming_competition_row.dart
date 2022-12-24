@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:melodifestivalen_competition/controllers/upcoming_competitions_row_controller.dart';
 import 'package:melodifestivalen_competition/models/competition_model.dart';
+import 'package:melodifestivalen_competition/styles/colors.dart';
 
 class UpcomingCompetitionRow extends StatefulWidget {
   final String title;
@@ -17,18 +18,28 @@ class UpcomingCompetitionRow extends StatefulWidget {
 }
 
 class _UpcomingCompetitionRowState extends State<UpcomingCompetitionRow> {
-  UpcomingCompetitionsRowController controller = UpcomingCompetitionsRowController();
+  UpcomingCompetitionsRowController controller =
+      UpcomingCompetitionsRowController();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.orangeAccent,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Text(widget.title),
-          Text(controller.formatDate(widget.competition.time)),
-        ],
+      color: melloYellow,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              widget.title,
+              style: Theme.of(context).textTheme.headline2,
+            ),
+            Text(
+              controller.formatDate(widget.competition.time),
+              style: Theme.of(context).textTheme.headline2,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -27,11 +27,10 @@ class _UpcomingCompetitionsPageState extends State<UpcomingCompetitionsPage> {
       children: [
         ListView.builder(
           shrinkWrap: true,
-          padding: const EdgeInsets.all(8),
           itemCount: competitions.length,
           itemBuilder: (BuildContext context, int index) {
             return UpcomingCompetitionRow(
-              title: 'Heat ${index + 1}',
+              title: 'Deltävling ${index + 1}',
               competition: competitions[index],
             );
           },
