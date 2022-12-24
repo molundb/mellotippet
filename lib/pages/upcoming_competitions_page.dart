@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
 import 'package:melodifestivalen_competition/models/competition_model.dart';
 import 'package:melodifestivalen_competition/repositories/database_repository.dart';
+import 'package:melodifestivalen_competition/widgets/upcoming_competition_row.dart';
 
 class UpcomingCompetitionsPage extends StatefulWidget {
   const UpcomingCompetitionsPage({super.key});
@@ -29,19 +30,12 @@ class _UpcomingCompetitionsPageState extends State<UpcomingCompetitionsPage> {
           padding: const EdgeInsets.all(8),
           itemCount: competitions.length,
           itemBuilder: (BuildContext context, int index) {
-            return Column(
-              children: [
-                Text('Deltävling ${index + 1}'),
-                Text('Plats: ${competitions[index].locationName}'),
-                Text('Tid: ${competitions[index].time}'),
-              ],
+            return UpcomingCompetitionRow(
+              title: 'Heat ${index + 1}',
+              competition: competitions[index],
             );
           },
         ),
-        // ElevatedButton(
-        //   onPressed: _getUpcomingCompetitions,
-        //   child: const Text('Fetch upcoming competitions'),
-        // ),
       ],
     );
   }
