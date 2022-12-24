@@ -15,6 +15,12 @@ class _UpcomingCompetitionsPageState extends State<UpcomingCompetitionsPage> {
   List<CompetitionModel> competitions = [];
 
   @override
+  void initState() {
+    super.initState();
+    _getUpcomingCompetitions();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -25,22 +31,22 @@ class _UpcomingCompetitionsPageState extends State<UpcomingCompetitionsPage> {
           itemBuilder: (BuildContext context, int index) {
             return Column(
               children: [
-                Text('Deltävling ${index+1}'),
+                Text('Deltävling ${index + 1}'),
                 Text('Plats: ${competitions[index].locationName}'),
                 Text('Tid: ${competitions[index].time}'),
               ],
             );
           },
         ),
-        ElevatedButton(
-          onPressed: _onPressed,
-          child: const Text('Fetch upcoming competitions'),
-        ),
+        // ElevatedButton(
+        //   onPressed: _getUpcomingCompetitions,
+        //   child: const Text('Fetch upcoming competitions'),
+        // ),
       ],
     );
   }
 
-  void _onPressed() async {
+  void _getUpcomingCompetitions() async {
     final databaseRepo = getIt<DatabaseRepository>();
 
     final competitions = await databaseRepo.getUpcomingCompetitions();
