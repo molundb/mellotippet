@@ -35,14 +35,17 @@ class MelodifestivalenCompetitionApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Melodifestivalen Competition',
         theme: ThemeData(
-          primaryColor: Colors.purpleAccent,
+          primaryColor: melloPurple,
           appBarTheme: const AppBarTheme(
-            color: melloMagenta,
+            color: melloPurple,
             shape: RoundedRectangleBorder(),
           ),
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
               backgroundColor: melloYellow,
+              // textStyle: const TextStyle(
+              //   fontSize: 12,
+              // )
             ),
           ),
           fontFamily: 'Hind',
