@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:melodifestivalen_competition/pages/prediction_page.dart';
-import 'package:melodifestivalen_competition/pages/upcoming_competitions_page.dart';
 
 class MelloBottomNavigationBar extends StatefulWidget {
   const MelloBottomNavigationBar({super.key});
@@ -18,9 +17,9 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
   );
   static const List<Widget> _widgetOptions = <Widget>[
     PredictionPage(),
-    UpcomingCompetitionsPage(),
+    // UpcomingCompetitionsPage(),
     Text(
-      'Index 2: School',
+      'Score!',
       style: optionStyle,
     ),
   ];
@@ -37,13 +36,13 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: Icon(Icons.list_alt),
+            label: 'Predix',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_month),
-            label: 'Upcoming',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.calendar_month),
+          //   label: 'Upcoming',
+          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.star),
             label: 'Score',

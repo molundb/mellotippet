@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:melodifestivalen_competition/styles/colors.dart';
 
 class TextFormFieldWidget extends StatefulWidget {
   final TextInputType textInputType;
@@ -24,16 +25,12 @@ class TextFormFieldWidget extends StatefulWidget {
 
 class TextFormFieldWidgetState extends State<TextFormFieldWidget> {
   double bottomPaddingToError = 12;
-  Color primaryColor = Colors.blueAccent;
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(
-        primaryColor: primaryColor,
-      ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: TextFormField(
-        cursorColor: primaryColor,
         obscureText: widget.obscureText,
         keyboardType: widget.textInputType,
         style: const TextStyle(
@@ -47,11 +44,11 @@ class TextFormFieldWidgetState extends State<TextFormFieldWidget> {
         decoration: InputDecoration(
           prefixIcon: widget.prefixIcon,
           hintText: widget.hintText,
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: primaryColor),
+          enabledBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: melloPurple),
           ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: primaryColor),
+          focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: melloPurple),
           ),
           hintStyle: const TextStyle(
             color: Colors.grey,
@@ -70,12 +67,12 @@ class TextFormFieldWidgetState extends State<TextFormFieldWidget> {
             fontStyle: FontStyle.normal,
             letterSpacing: 1.2,
           ),
-          errorBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: primaryColor),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: primaryColor),
-          ),
+          // errorBorder: OutlineInputBorder(
+          //   borderSide: BorderSide(color: primaryColor),
+          // ),
+          // focusedErrorBorder: OutlineInputBorder(
+          //   borderSide: BorderSide(color: primaryColor),
+          // ),
         ),
         onSaved: widget.onSaved,
       ),
