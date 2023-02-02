@@ -33,7 +33,7 @@ class MelodifestivalenCompetitionApp extends StatelessWidget {
         }
       },
       child: MaterialApp(
-        title: 'Melodifestivalen Competition',
+        title: 'Mello Predix',
         theme: ThemeData(
           primaryColor: melloPurple,
           appBarTheme: const AppBarTheme(
