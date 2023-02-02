@@ -19,7 +19,7 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
     PredictionPage(),
     // UpcomingCompetitionsPage(),
     Text(
-      'Score!',
+      'Coming soon...',
       style: optionStyle,
     ),
   ];
