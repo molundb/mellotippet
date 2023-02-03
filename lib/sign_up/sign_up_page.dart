@@ -7,6 +7,7 @@ import 'package:melodifestivalen_competition/sign_up/sign_up_controller.dart';
 final _formKey = GlobalKey<FormState>();
 
 class SignUpPage extends StatelessWidget {
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final SignUpController controller = SignUpController();
@@ -23,26 +24,54 @@ class SignUpPage extends StatelessWidget {
       body: Center(
         child: Form(
           key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _CreateAccountEmail(
-                controller: controller,
-                emailController: _emailController,
-              ),
-              const SizedBox(height: 30.0),
-              _CreateAccountPassword(
-                controller: controller,
-                passwordController: _passwordController,
-              ),
-              const SizedBox(height: 30.0),
-              _SubmitButton(
-                controller: controller,
-              ),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _LoginUsername(
+                  controller: controller,
+                  usernameController: _usernameController,
+                ),
+                const SizedBox(height: 30.0),
+                _CreateAccountEmail(
+                  controller: controller,
+                  emailController: _emailController,
+                ),
+                const SizedBox(height: 30.0),
+                _CreateAccountPassword(
+                  controller: controller,
+                  passwordController: _passwordController,
+                ),
+                const SizedBox(height: 30.0),
+                _SubmitButton(
+                  controller: controller,
+                ),
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class _LoginUsername extends StatelessWidget {
+  final SignUpController controller;
+  final TextEditingController usernameController;
+
+  const _LoginUsername({
+    super.key,
+    required this.controller,
+    required this.usernameController,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: usernameController,
+      decoration: const InputDecoration(hintText: 'Username'),
+      onSaved: controller.updateUsername,
     );
   }
 }
@@ -59,13 +88,10 @@ class _CreateAccountEmail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width / 2,
-      child: TextFormField(
-        controller: emailController,
-        decoration: const InputDecoration(hintText: 'Email'),
-        onSaved: controller.updateEmail,
-      ),
+    return TextFormField(
+      controller: emailController,
+      decoration: const InputDecoration(hintText: 'Email'),
+      onSaved: controller.updateEmail,
     );
   }
 }
@@ -82,14 +108,11 @@ class _CreateAccountPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width / 2,
-      child: TextFormField(
-        controller: passwordController,
-        obscureText: true,
-        decoration: const InputDecoration(hintText: 'Password'),
-        onSaved: controller.updatePassword,
-      ),
+    return TextFormField(
+      controller: passwordController,
+      obscureText: true,
+      decoration: const InputDecoration(hintText: 'Password'),
+      onSaved: controller.updatePassword,
     );
   }
 }
