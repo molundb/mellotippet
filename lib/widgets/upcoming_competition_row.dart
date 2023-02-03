@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:melodifestivalen_competition/controllers/upcoming_competitions_row_controller.dart';
-import 'package:melodifestivalen_competition/models/competition_model.dart';
+import 'package:melodifestivalen_competition/common/models/models.dart';
+import 'package:melodifestivalen_competition/upcoming_competitions/upcoming_competitions_row_controller.dart';
 import 'package:melodifestivalen_competition/styles/colors.dart';
 
 class UpcomingCompetitionRow extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:melodifestivalen_competition/pages/prediction_page.dart';
+import 'package:melodifestivalen_competition/prediction/prediction_page.dart';
 import 'package:melodifestivalen_competition/styles/colors.dart';
 
 class MelloBottomNavigationBar extends StatefulWidget {

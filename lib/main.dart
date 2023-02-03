@@ -1,9 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:melodifestivalen_competition/common/repositories/repositories.dart';
 import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
 import 'package:melodifestivalen_competition/firebase_options.dart';
-import 'package:melodifestivalen_competition/pages/login_page.dart';
-import 'package:melodifestivalen_competition/repositories/authentication_repository.dart';
+import 'package:melodifestivalen_competition/login/login_page.dart';
 import 'package:melodifestivalen_competition/styles/colors.dart';
 
 void main() async {

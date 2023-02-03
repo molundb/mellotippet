@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart' as auth;
-import 'package:melodifestivalen_competition/models/auth_error.dart';
-import 'package:melodifestivalen_competition/models/user_entity.dart';
+import 'package:melodifestivalen_competition/common/models/models.dart';
 import 'package:melodifestivalen_competition/services/auth_service.dart';
 
 class FirebaseAuthService implements AuthService {
