@@ -1,6 +1,6 @@
 import 'package:melodifestivalen_competition/common/models/models.dart';
 
-abstract class AuthService {
+abstract class AuthenticationRepository {
   Future<UserEntity> signInWithEmailAndPassword({
     required String email,
     required String password,

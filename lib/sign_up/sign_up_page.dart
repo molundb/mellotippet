@@ -1,9 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:melodifestivalen_competition/sign_up/sign_up_controller.dart';
+import 'package:melodifestivalen_competition/common/repositories/repositories.dart';
+import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
 import 'package:melodifestivalen_competition/mello_bottom_navigation_bar.dart';
-import 'package:melodifestivalen_competition/services/auth_service.dart';
-import 'package:melodifestivalen_competition/services/firebase_auth_service.dart';
+import 'package:melodifestivalen_competition/sign_up/sign_up_controller.dart';
 
 final _formKey = GlobalKey<FormState>();
 
@@ -97,9 +96,12 @@ class _CreateAccountPassword extends StatelessWidget {
 
 class _SubmitButton extends StatelessWidget {
   final SignUpController controller;
-  final AuthService _authService = FirebaseAuthService(
-    authService: FirebaseAuth.instance,
-  );
+
+  // final AuthService _authService = FirebaseAuthentication(
+  //   authService: FirebaseAuth.instance,
+  // );
+  final AuthenticationRepository _authService =
+      getIt.get<AuthenticationRepository>();
 
   _SubmitButton({
     super.key,
