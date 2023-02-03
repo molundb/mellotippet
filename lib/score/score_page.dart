@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:melodifestivalen_competition/score/score_controller.dart';
+import 'package:melodifestivalen_competition/styles/colors.dart';
 
 class ScorePage extends ConsumerStatefulWidget {
   const ScorePage({super.key});
@@ -33,7 +34,12 @@ class _ScorePageState extends ConsumerState<ScorePage> {
         SliverToBoxAdapter(
           child: Column(
             children: const [
-              Text('Highscore'),
+              SizedBox(height: 32),
+              Text(
+                'Highscore',
+                style: TextStyle(fontSize: 32, color: melloYellow),
+              ),
+              SizedBox(height: 16),
             ],
           ),
         ),
@@ -43,8 +49,14 @@ class _ScorePageState extends ConsumerState<ScorePage> {
             (context, index) => Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text(state.userScores[index].username ?? ''),
-                Text('${state.userScores[index].score}'),
+                Text(
+                  '${index + 1}. ${state.userScores[index].username ?? ''}',
+                  style: const TextStyle(fontSize: 24),
+                ),
+                Text(
+                  '${state.userScores[index].score}',
+                  style: const TextStyle(fontSize: 24),
+                ),
               ],
             ),
           ),
