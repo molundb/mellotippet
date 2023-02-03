@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:melodifestivalen_competition/common/models/prediction_model.dart';
 import 'package:melodifestivalen_competition/prediction/prediction_controller.dart';
+import 'package:melodifestivalen_competition/styles/colors.dart';
 import 'package:melodifestivalen_competition/widgets/text_form_widget.dart';
 
 class PredictionPage extends ConsumerStatefulWidget {
@@ -41,7 +42,8 @@ class _PredictionPageState extends ConsumerState<PredictionPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text('Welcome ${state.username}'),
+            Text('Welcome ${state.username}', style: const TextStyle(fontSize: 32, color: melloYellow),),
+            const SizedBox(height: 32),
             TextFormFieldWidget(
               textInputType: TextInputType.number,
               prefixIcon: const Icon(Icons.star),
