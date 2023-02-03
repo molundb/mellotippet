@@ -17,6 +17,8 @@ class FirebaseAuthentication implements AuthenticationRepository {
     try {
       await firebaseAuth.signInAnonymously();
 
+
+
       return _mapFirebaseUser(currentUser!);
     } on auth.FirebaseAuthException catch (e) {
       throw _determineError(e);
