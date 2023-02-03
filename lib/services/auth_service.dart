@@ -1,4 +1,4 @@
-import 'package:melodifestivalen_competition/models/user_entity.dart';
+import 'package:melodifestivalen_competition/common/models/models.dart';
 
 abstract class AuthService {
   Future<UserEntity> signInWithEmailAndPassword({

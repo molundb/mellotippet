@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:melodifestivalen_competition/models/participant_model.dart';
+import 'package:melodifestivalen_competition/common/models/participant_model.dart';
 
 class CompetitionModel {
   List<ParticipantModel>? participants;

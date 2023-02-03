@@ -1,6 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:melodifestivalen_competition/repositories/authentication_repository.dart';
-import 'package:melodifestivalen_competition/repositories/database_repository.dart';
+import 'package:melodifestivalen_competition/common/repositories/repositories.dart';
 
 final getIt = GetIt.instance;
 

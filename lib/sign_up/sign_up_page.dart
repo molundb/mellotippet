@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:melodifestivalen_competition/controllers/sign_up_controller.dart';
+import 'package:melodifestivalen_competition/sign_up/sign_up_controller.dart';
 import 'package:melodifestivalen_competition/mello_bottom_navigation_bar.dart';
 import 'package:melodifestivalen_competition/services/auth_service.dart';
 import 'package:melodifestivalen_competition/services/firebase_auth_service.dart';

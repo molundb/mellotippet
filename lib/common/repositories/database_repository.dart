@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:melodifestivalen_competition/models/competition_model.dart';
-import 'package:melodifestivalen_competition/models/prediction_model.dart';
+import 'package:melodifestivalen_competition/common/models/models.dart';
 
 class DatabaseRepository {
   FirebaseFirestore db = FirebaseFirestore.instance;

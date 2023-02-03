@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:melodifestivalen_competition/controllers/login_controller.dart';
+import 'package:melodifestivalen_competition/login/login_controller.dart';
 import 'package:melodifestivalen_competition/mello_bottom_navigation_bar.dart';
-import 'package:melodifestivalen_competition/pages/sign_up_page.dart';
+import 'package:melodifestivalen_competition/sign_up/sign_up_page.dart';
 import 'package:melodifestivalen_competition/services/auth_service.dart';
 import 'package:melodifestivalen_competition/services/firebase_auth_service.dart';
 
