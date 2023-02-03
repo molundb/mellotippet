@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:melodifestivalen_competition/common/models/models.dart';
-import 'package:melodifestivalen_competition/services/auth_service.dart';
+import 'package:melodifestivalen_competition/common/repositories/authentication/authentication_repository.dart';
 
-class FirebaseAuthService implements AuthService {
-  FirebaseAuthService({
+class FirebaseAuthentication implements AuthenticationRepository {
+  FirebaseAuthentication({
     required auth.FirebaseAuth authService,
   }) : _firebaseAuth = authService;
 
