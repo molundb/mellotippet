@@ -3,18 +3,21 @@ import 'package:melodifestivalen_competition/common/models/models.dart';
 import 'package:melodifestivalen_competition/common/repositories/authentication/authentication_repository.dart';
 
 class FirebaseAuthentication implements AuthenticationRepository {
-  FirebaseAuthentication({
-    required auth.FirebaseAuth firebaseAuth,
-  }) : _firebaseAuth = firebaseAuth;
+  final auth.FirebaseAuth firebaseAuth;
 
-  final auth.FirebaseAuth _firebaseAuth;
+  FirebaseAuthentication({
+    required this.firebaseAuth,
+  });
+
+  @override
+  auth.User? get currentUser => firebaseAuth.currentUser;
 
   @override
   Future<UserEntity> signInAnonymously() async {
     try {
-      await _firebaseAuth.signInAnonymously();
+      await firebaseAuth.signInAnonymously();
 
-      return _mapFirebaseUser(_firebaseAuth.currentUser!);
+      return _mapFirebaseUser(currentUser!);
     } on auth.FirebaseAuthException catch (e) {
       throw _determineError(e);
     }
@@ -26,12 +29,12 @@ class FirebaseAuthentication implements AuthenticationRepository {
     required String password,
   }) async {
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
+      await firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      return _mapFirebaseUser(_firebaseAuth.currentUser!);
+      return _mapFirebaseUser(currentUser!);
     } on auth.FirebaseAuthException catch (e) {
       throw _determineError(e);
     }
@@ -43,7 +46,7 @@ class FirebaseAuthentication implements AuthenticationRepository {
     required String password,
   }) async {
     try {
-      final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
+      final userCredential = await firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -59,22 +62,12 @@ class FirebaseAuthentication implements AuthenticationRepository {
       return UserEntity.empty();
     }
 
-    var splitName = ['Name ', 'LastName'];
-    if (user.displayName != null) {
-      splitName = user.displayName!.split(' ');
-    }
-
     final map = <String, dynamic>{
       'id': user.uid,
-      'firstName': splitName.first,
-      'lastName': splitName.last,
+      'username': user.uid,
       'email': user.email ?? '',
       'emailVerified': user.emailVerified,
-      'imageUrl': user.photoURL ?? '',
       'isAnonymous': user.isAnonymous,
-      'age': 0,
-      'phoneNumber': '',
-      'address': '',
     };
     return UserEntity.fromJson(map);
   }

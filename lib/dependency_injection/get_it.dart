@@ -6,10 +6,10 @@ import 'package:melodifestivalen_competition/common/repositories/repositories.da
 final getIt = GetIt.instance;
 
 Future<void> setUpGetIt() async {
-  getIt.registerSingleton<DatabaseRepository>(DatabaseRepository());
   getIt.registerSingleton<AuthenticationRepository>(FirebaseAuthentication(
     firebaseAuth: FirebaseAuth.instance,
   ));
+  getIt.registerSingleton<DatabaseRepository>(DatabaseRepository());
 
   return getIt.allReady();
 }

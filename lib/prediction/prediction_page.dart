@@ -75,6 +75,9 @@ class PredictionPageState extends State<PredictionPage> {
                     _submit();
                   }
                 },
+                style: ElevatedButton.styleFrom(
+                  shape: const StadiumBorder(),
+                ),
                 child: Text(
                   'Submit',
                   style: Theme.of(context).textTheme.headline2,

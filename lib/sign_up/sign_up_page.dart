@@ -28,8 +28,9 @@ class SignUpPage extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                _LoginUsername(
+                _UsernameInput(
                   controller: controller,
                   usernameController: _usernameController,
                 ),
@@ -56,11 +57,11 @@ class SignUpPage extends StatelessWidget {
   }
 }
 
-class _LoginUsername extends StatelessWidget {
+class _UsernameInput extends StatelessWidget {
   final SignUpController controller;
   final TextEditingController usernameController;
 
-  const _LoginUsername({
+  const _UsernameInput({
     super.key,
     required this.controller,
     required this.usernameController,
@@ -123,6 +124,9 @@ class _SubmitButton extends StatelessWidget {
   final AuthenticationRepository _authRepository =
       getIt.get<AuthenticationRepository>();
 
+  final DatabaseRepository _databaseRepository =
+      getIt.get<DatabaseRepository>();
+
   _SubmitButton({
     super.key,
     required this.controller,
@@ -132,6 +136,9 @@ class _SubmitButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () => _submitPressed(context),
+      style: ElevatedButton.styleFrom(
+        shape: const StadiumBorder(),
+      ),
       child: const Text('Create Account'),
     );
   }
@@ -151,6 +158,13 @@ class _SubmitButton extends StatelessWidget {
           email: controller.email,
           password: controller.password,
         );
+
+        final uid = _authRepository.currentUser?.uid;
+
+        _databaseRepository.users.doc(uid).set({
+          "username": controller.username,
+        });
+
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => const MelloBottomNavigationBar(),
