@@ -14,7 +14,6 @@ class PredictionPage extends ConsumerStatefulWidget {
 
 class _PredictionPageState extends ConsumerState<PredictionPage> {
   final _formKey = GlobalKey<FormState>();
-  PredictionModel prediction = PredictionModel();
 
   PredictionController get controller =>
       ref.read(PredictionController.provider.notifier);

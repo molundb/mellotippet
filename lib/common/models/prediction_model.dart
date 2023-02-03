@@ -1,6 +1,5 @@
 class PredictionModel {
   PredictionModel({
-    this.name,
     this.finalist1,
     this.finalist2,
     this.semifinalist1,
@@ -8,23 +7,29 @@ class PredictionModel {
     this.fifthPlace,
   });
 
-  String? name;
-  String? finalist1;
-  String? finalist2;
-  String? semifinalist1;
-  String? semifinalist2;
-  String? fifthPlace;
+  int? finalist1;
+  int? finalist2;
+  int? semifinalist1;
+  int? semifinalist2;
+  int? fifthPlace;
+
+  factory PredictionModel.fromJson(Map<String, dynamic> json) =>
+      PredictionModel(
+        finalist1: json['finalist1'] ?? -1,
+        finalist2: json['finalist2'] ?? -1,
+        semifinalist1: json['semifinalist1'] ?? -1,
+        semifinalist2: json['semifinalist2'] ?? -1,
+        fifthPlace: json['fifthPlace'] ?? -1,
+      );
 
   PredictionModel copyWith({
-    String? name,
-    String? finalist1,
-    String? finalist2,
-    String? semifinalist1,
-    String? semifinalist2,
-    String? fifthPlace,
+    int? finalist1,
+    int? finalist2,
+    int? semifinalist1,
+    int? semifinalist2,
+    int? fifthPlace,
   }) {
     return PredictionModel(
-      name: name ?? this.name,
       finalist1: finalist1 ?? this.finalist1,
       finalist2: finalist2 ?? this.finalist2,
       semifinalist1: semifinalist1 ?? this.semifinalist1,

@@ -3,6 +3,7 @@ import 'package:melodifestivalen_competition/prediction/prediction_page.dart';
 import 'package:melodifestivalen_competition/styles/colors.dart';
 
 import 'rules/rules_page.dart';
+import 'score/score_page.dart';
 
 class MelloBottomNavigationBar extends StatefulWidget {
   const MelloBottomNavigationBar({super.key});
@@ -22,10 +23,7 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
     PredictionPage(),
     // UpcomingCompetitionsPage(),
     RulesPage(),
-    Text(
-      'Coming soon...',
-      style: optionStyle,
-    ),
+    ScorePage(),
   ];
 
   @override
