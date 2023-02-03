@@ -9,6 +9,51 @@ class FirebaseAuthentication implements AuthenticationRepository {
 
   final auth.FirebaseAuth _firebaseAuth;
 
+  @override
+  Future<UserEntity> signInAnonymously() async {
+    try {
+      await _firebaseAuth.signInAnonymously();
+
+      return _mapFirebaseUser(_firebaseAuth.currentUser!);
+    } on auth.FirebaseAuthException catch (e) {
+      throw _determineError(e);
+    }
+  }
+
+  @override
+  Future<UserEntity> createUserWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      return _mapFirebaseUser(_firebaseAuth.currentUser!);
+    } on auth.FirebaseAuthException catch (e) {
+      throw _determineError(e);
+    }
+  }
+
+  @override
+  Future<UserEntity> signInWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      return _mapFirebaseUser(userCredential.user!);
+    } on auth.FirebaseAuthException catch (e) {
+      throw _determineError(e);
+    }
+  }
+
   UserEntity _mapFirebaseUser(auth.User? user) {
     if (user == null) {
       return UserEntity.empty();
@@ -32,40 +77,6 @@ class FirebaseAuthentication implements AuthenticationRepository {
       'address': '',
     };
     return UserEntity.fromJson(map);
-  }
-
-  @override
-  Future<UserEntity> signInWithEmailAndPassword({
-    required String email,
-    required String password,
-  }) async {
-    try {
-      final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-
-      return _mapFirebaseUser(userCredential.user!);
-    } on auth.FirebaseAuthException catch (e) {
-      throw _determineError(e);
-    }
-  }
-
-  @override
-  Future<UserEntity> createUserWithEmailAndPassword({
-    required String email,
-    required String password,
-  }) async {
-    try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-
-      return _mapFirebaseUser(_firebaseAuth.currentUser!);
-    } on auth.FirebaseAuthException catch (e) {
-      throw _determineError(e);
-    }
   }
 
   AuthError _determineError(auth.FirebaseAuthException exception) {
