@@ -1,23 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:melodifestivalen_competition/common/models/prediction_model.dart';
-import 'package:melodifestivalen_competition/common/repositories/repositories.dart';
-import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
+import 'package:melodifestivalen_competition/prediction/prediction_controller.dart';
 import 'package:melodifestivalen_competition/widgets/text_form_widget.dart';
 
-class PredictionPage extends StatefulWidget {
+class PredictionPage extends ConsumerStatefulWidget {
   const PredictionPage({super.key});
 
   @override
-  State<StatefulWidget> createState() => PredictionPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _PredictionPageState();
 }
 
-class PredictionPageState extends State<PredictionPage> {
+class _PredictionPageState extends ConsumerState<PredictionPage> {
+  final _formKey = GlobalKey<FormState>();
   PredictionModel prediction = PredictionModel();
 
-  final _formKey = GlobalKey<FormState>();
+  PredictionController get controller =>
+      ref.read(PredictionController.provider.notifier);
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.getUsername();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(PredictionController.provider);
+
+    if (state.loading) {
+      return const CircularProgressIndicator();
+    }
+
     return Form(
       key: _formKey,
       child: Padding(
@@ -25,45 +41,36 @@ class PredictionPageState extends State<PredictionPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            Text('Welcome ${state.username}'),
             TextFormFieldWidget(
               textInputType: TextInputType.number,
               prefixIcon: const Icon(Icons.star),
               hintText: 'Finalist',
-              onSaved: (String? value) {
-                prediction.finalist1 = value;
-              },
+              onSaved: controller.setFinalist1,
             ),
             TextFormFieldWidget(
               textInputType: TextInputType.number,
               prefixIcon: const Icon(Icons.star),
               hintText: 'Finalist',
-              onSaved: (String? value) {
-                prediction.finalist2 = value;
-              },
+              onSaved: controller.setFinalist2,
             ),
             TextFormFieldWidget(
               textInputType: TextInputType.number,
               prefixIcon: const Icon(Icons.star_border),
               hintText: 'Semifinalist',
-              onSaved: (String? value) {
-                prediction.semifinalist1 = value;
-              },
+              onSaved: controller.setSemifinalist1,
             ),
             TextFormFieldWidget(
               textInputType: TextInputType.number,
               prefixIcon: const Icon(Icons.star_border),
               hintText: 'Semifinalist',
-              onSaved: (String? value) {
-                prediction.semifinalist2 = value;
-              },
+              onSaved: controller.setSemifinalist2,
             ),
             TextFormFieldWidget(
               textInputType: TextInputType.number,
               prefixIcon: const Icon(Icons.five_g_outlined),
               hintText: 'Fifth place',
-              onSaved: (String? value) {
-                prediction.fifthPlace = value;
-              },
+              onSaved: controller.setFifthPlace,
             ),
             const Spacer(),
             SizedBox(
@@ -90,8 +97,5 @@ class PredictionPageState extends State<PredictionPage> {
     );
   }
 
-  void _submit() {
-    final database = getIt.get<DatabaseRepository>();
-    database.uploadPrediction(prediction);
-  }
+  void _submit() => controller.submitPrediction();
 }

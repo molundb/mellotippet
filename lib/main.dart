@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
 import 'package:melodifestivalen_competition/firebase_options.dart';
 import 'package:melodifestivalen_competition/login/login_page.dart';
@@ -14,7 +15,7 @@ void main() async {
 
   await setUpGetIt();
 
-  runApp(const MelodifestivalenCompetitionApp());
+  runApp(const ProviderScope(child: MelodifestivalenCompetitionApp()));
 }
 
 class MelodifestivalenCompetitionApp extends StatelessWidget {

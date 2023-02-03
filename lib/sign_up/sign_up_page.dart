@@ -134,12 +134,15 @@ class _SubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () => _submitPressed(context),
-      style: ElevatedButton.styleFrom(
-        shape: const StadiumBorder(),
+    return SizedBox(
+      height: 52,
+      child: ElevatedButton(
+        onPressed: () => _submitPressed(context),
+        style: ElevatedButton.styleFrom(
+          shape: const StadiumBorder(),
+        ),
+        child: const Text('Create Account'),
       ),
-      child: const Text('Create Account'),
     );
   }
 
