@@ -35,66 +35,83 @@ class _PredictionPageState extends ConsumerState<PredictionPage> {
       return const CircularProgressIndicator();
     }
 
-    return Form(
-      key: _formKey,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text('Welcome ${state.username}', style: const TextStyle(fontSize: 32, color: melloYellow),),
-            const SizedBox(height: 32),
-            TextFormFieldWidget(
-              textInputType: TextInputType.number,
-              prefixIcon: const Icon(Icons.star),
-              hintText: 'Finalist',
-              onSaved: controller.setFinalist1,
-            ),
-            TextFormFieldWidget(
-              textInputType: TextInputType.number,
-              prefixIcon: const Icon(Icons.star),
-              hintText: 'Finalist',
-              onSaved: controller.setFinalist2,
-            ),
-            TextFormFieldWidget(
-              textInputType: TextInputType.number,
-              prefixIcon: const Icon(Icons.star_border),
-              hintText: 'Semifinalist',
-              onSaved: controller.setSemifinalist1,
-            ),
-            TextFormFieldWidget(
-              textInputType: TextInputType.number,
-              prefixIcon: const Icon(Icons.star_border),
-              hintText: 'Semifinalist',
-              onSaved: controller.setSemifinalist2,
-            ),
-            TextFormFieldWidget(
-              textInputType: TextInputType.number,
-              prefixIcon: const Icon(Icons.five_g_outlined),
-              hintText: 'Fifth place',
-              onSaved: controller.setFifthPlace,
-            ),
-            const Spacer(),
-            SizedBox(
-              height: 52,
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                    _submit();
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: const StadiumBorder(),
-                ),
-                child: Text(
-                  'Submit',
-                  style: Theme.of(context).textTheme.headline2,
-                ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
+      child: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    'Welcome ${state.username}',
+                    style: const TextStyle(fontSize: 32, color: melloYellow),
+                  ),
+                  const SizedBox(height: 32),
+                  TextFormFieldWidget(
+                    textInputType: TextInputType.number,
+                    prefixIcon: const Icon(Icons.star),
+                    hintText: 'Finalist',
+                    onSaved: controller.setFinalist1,
+                  ),
+                  TextFormFieldWidget(
+                    textInputType: TextInputType.number,
+                    prefixIcon: const Icon(Icons.star),
+                    hintText: 'Finalist',
+                    onSaved: controller.setFinalist2,
+                  ),
+                  TextFormFieldWidget(
+                    textInputType: TextInputType.number,
+                    prefixIcon: const Icon(Icons.star_border),
+                    hintText: 'Semifinalist',
+                    onSaved: controller.setSemifinalist1,
+                  ),
+                  TextFormFieldWidget(
+                    textInputType: TextInputType.number,
+                    prefixIcon: const Icon(Icons.star_border),
+                    hintText: 'Semifinalist',
+                    onSaved: controller.setSemifinalist2,
+                  ),
+                  TextFormFieldWidget(
+                    textInputType: TextInputType.number,
+                    prefixIcon: const Icon(Icons.five_g_outlined),
+                    hintText: 'Fifth place',
+                    onSaved: controller.setFifthPlace,
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(
+                  height: 52,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                        _submit();
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: const StadiumBorder(),
+                    ),
+                    child: Text(
+                      'Submit',
+                      style: Theme.of(context).textTheme.headline2,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
