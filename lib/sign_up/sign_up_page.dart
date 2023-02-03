@@ -9,7 +9,7 @@ final _formKey = GlobalKey<FormState>();
 class SignUpPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  SignUpController controller = SignUpController();
+  final SignUpController controller = SignUpController();
 
   SignUpPage({super.key});
 
@@ -97,10 +97,7 @@ class _CreateAccountPassword extends StatelessWidget {
 class _SubmitButton extends StatelessWidget {
   final SignUpController controller;
 
-  // final AuthService _authService = FirebaseAuthentication(
-  //   authService: FirebaseAuth.instance,
-  // );
-  final AuthenticationRepository _authService =
+  final AuthenticationRepository _authRepository =
       getIt.get<AuthenticationRepository>();
 
   _SubmitButton({
@@ -127,7 +124,7 @@ class _SubmitButton extends StatelessWidget {
 
     {
       try {
-        await _authService.createUserWithEmailAndPassword(
+        await _authRepository.createUserWithEmailAndPassword(
           email: controller.email,
           password: controller.password,
         );
