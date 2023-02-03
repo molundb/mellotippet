@@ -18,7 +18,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login'),
+        title: const Text('Mello Predix'),
         centerTitle: true,
       ),
       body: Center(
@@ -28,6 +28,7 @@ class LoginPage extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 _LoginEmail(
                   controller: controller,
@@ -44,6 +45,8 @@ class LoginPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 30.0),
                 const _CreateAccountButton(),
+                const SizedBox(height: 30.0),
+                _ContinueWithoutAccountButton(),
               ],
             ),
           ),
@@ -109,9 +112,15 @@ class _SubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () => _loginPressed(context),
-      child: const Text('Login'),
+    return SizedBox(
+      height: 52,
+      child: ElevatedButton(
+        onPressed: () => _loginPressed(context),
+        style: ElevatedButton.styleFrom(
+          shape: const StadiumBorder(),
+        ),
+        child: const Text('Login'),
+      ),
     );
   }
 
@@ -129,6 +138,7 @@ class _SubmitButton extends StatelessWidget {
           email: controller.email,
           password: controller.password,
         );
+
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => const MelloBottomNavigationBar(),
@@ -150,15 +160,62 @@ class _CreateAccountButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => SignUpPage(),
-          ),
-        );
-      },
-      child: const Text('Create Account'),
+    return SizedBox(
+      height: 52,
+      child: OutlinedButton(
+        onPressed: () => _createAccountPressed(context),
+        style: ElevatedButton.styleFrom(
+          shape: const StadiumBorder(),
+        ),
+        child: const Text('Create Account'),
+      ),
     );
+  }
+
+  Future<dynamic> _createAccountPressed(BuildContext context) {
+    return Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => SignUpPage(),
+        ),
+      );
+  }
+}
+
+class _ContinueWithoutAccountButton extends StatelessWidget {
+  final AuthenticationRepository _authRepository =
+  getIt.get<AuthenticationRepository>();
+
+  _ContinueWithoutAccountButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 52,
+      child: OutlinedButton(
+        onPressed: () => _continueWithoutAccountPressed(context),
+        style: ElevatedButton.styleFrom(
+          shape: const StadiumBorder(),
+        ),
+        child: const Text('Continue Without Account'),
+      ),
+    );
+  }
+
+  Future<dynamic> _continueWithoutAccountPressed(BuildContext context) async {
+    try {
+      final user = await _authRepository.signInAnonymously();
+
+      return Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => const MelloBottomNavigationBar(),
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.toString()),
+        ),
+      );
+    }
   }
 }

@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:melodifestivalen_competition/common/models/models.dart';
 
 abstract class AuthenticationRepository {
-  void signInAnonymously(){}
+  auth.User? get currentUser;
+
+  Future<UserEntity> signInAnonymously();
 
   Future<UserEntity> createUserWithEmailAndPassword({
     required String email,
