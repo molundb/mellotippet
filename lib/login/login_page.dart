@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:melodifestivalen_competition/common/repositories/authentication/authentication_repository.dart';
 import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
@@ -11,7 +10,7 @@ final _formKey = GlobalKey<FormState>();
 class LoginPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  LoginController controller = LoginController();
+  final LoginController controller = LoginController();
 
   LoginPage({super.key});
 
@@ -103,11 +102,7 @@ class _LoginPassword extends StatelessWidget {
 class _SubmitButton extends StatelessWidget {
   final LoginController controller;
 
-  // final AuthenticationRepository _authService = FirebaseAuthentication(
-  //   authService: FirebaseAuth.instance,
-  // );
-
-  final AuthenticationRepository _authService =
+  final AuthenticationRepository _authRepository =
       getIt.get<AuthenticationRepository>();
 
   _SubmitButton({
@@ -133,7 +128,7 @@ class _SubmitButton extends StatelessWidget {
 
     {
       try {
-        await _authService.signInWithEmailAndPassword(
+        await _authRepository.signInWithEmailAndPassword(
           email: controller.email,
           password: controller.password,
         );

@@ -4,8 +4,8 @@ import 'package:melodifestivalen_competition/common/repositories/authentication/
 
 class FirebaseAuthentication implements AuthenticationRepository {
   FirebaseAuthentication({
-    required auth.FirebaseAuth authService,
-  }) : _firebaseAuth = authService;
+    required auth.FirebaseAuth firebaseAuth,
+  }) : _firebaseAuth = firebaseAuth;
 
   final auth.FirebaseAuth _firebaseAuth;
 
@@ -14,15 +14,15 @@ class FirebaseAuthentication implements AuthenticationRepository {
       return UserEntity.empty();
     }
 
-    var splittedName = ['Name ', 'LastName'];
+    var splitName = ['Name ', 'LastName'];
     if (user.displayName != null) {
-      splittedName = user.displayName!.split(' ');
+      splitName = user.displayName!.split(' ');
     }
 
     final map = <String, dynamic>{
       'id': user.uid,
-      'firstName': splittedName.first,
-      'lastName': splittedName.last,
+      'firstName': splitName.first,
+      'lastName': splitName.last,
       'email': user.email ?? '',
       'emailVerified': user.emailVerified,
       'imageUrl': user.photoURL ?? '',

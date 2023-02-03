@@ -8,7 +8,7 @@ final getIt = GetIt.instance;
 Future<void> setUpGetIt() async {
   getIt.registerSingleton<DatabaseRepository>(DatabaseRepository());
   getIt.registerSingleton<AuthenticationRepository>(FirebaseAuthentication(
-    authService: FirebaseAuth.instance,
+    firebaseAuth: FirebaseAuth.instance,
   ));
 
   return getIt.allReady();
