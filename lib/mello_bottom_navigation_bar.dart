@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:melodifestivalen_competition/prediction/prediction_page.dart';
 import 'package:melodifestivalen_competition/styles/colors.dart';
 
+import 'rules/rules_page.dart';
+
 class MelloBottomNavigationBar extends StatefulWidget {
   const MelloBottomNavigationBar({super.key});
 
@@ -19,6 +21,7 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
   static const List<Widget> _widgetOptions = <Widget>[
     PredictionPage(),
     // UpcomingCompetitionsPage(),
+    RulesPage(),
     Text(
       'Coming soon...',
       style: optionStyle,
@@ -41,13 +44,17 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.list_alt),
+            icon: Icon(Icons.edit_note_sharp),
             label: 'Predix',
           ),
           // BottomNavigationBarItem(
           //   icon: Icon(Icons.calendar_month),
           //   label: 'Upcoming',
           // ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list_alt),
+            label: 'Rules',
+          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.star),
             label: 'Score',
