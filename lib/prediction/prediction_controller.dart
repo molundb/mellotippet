@@ -5,49 +5,52 @@ import 'package:melodifestivalen_competition/common/repositories/repositories.da
 import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
 
 class PredictionController extends StateNotifier<PredictionControllerState> {
+  PredictionController({
+    required this.databaseRepository,
+    PredictionControllerState? state,
+  }) : super(state ?? PredictionControllerState.withDefaults());
+
+  final DatabaseRepository databaseRepository;
+
   static final provider =
       StateNotifierProvider<PredictionController, PredictionControllerState>(
-          (ref) => PredictionController());
-
-  final DatabaseRepository _databaseRepository =
-      getIt.get<DatabaseRepository>();
-
-  PredictionController({PredictionControllerState? state})
-      : super(state ?? const PredictionControllerState());
+          (ref) => PredictionController(
+                databaseRepository: getIt.get<DatabaseRepository>(),
+              ));
 
   Future<void> getUsername() async {
     state = state.copyWith(loading: true);
-    final username = await _databaseRepository.getCurrentUsername();
+    final username = await databaseRepository.getCurrentUsername();
     state = state.copyWith(loading: false, username: username);
   }
 
   void setFinalist1(String? value) {
     state = state.copyWith(
-        prediction: state.prediction?.copyWith(finalist1: value));
+        prediction: state.prediction.copyWith(finalist1: value));
   }
 
   void setFinalist2(String? value) {
     state = state.copyWith(
-        prediction: state.prediction?.copyWith(finalist2: value));
+        prediction: state.prediction.copyWith(finalist2: value));
   }
 
   void setSemifinalist1(String? value) {
     state = state.copyWith(
-        prediction: state.prediction?.copyWith(semifinalist1: value));
+        prediction: state.prediction.copyWith(semifinalist1: value));
   }
 
   void setSemifinalist2(String? value) {
     state = state.copyWith(
-        prediction: state.prediction?.copyWith(semifinalist2: value));
+        prediction: state.prediction.copyWith(semifinalist2: value));
   }
 
   void setFifthPlace(String? value) {
     state = state.copyWith(
-        prediction: state.prediction?.copyWith(fifthPlace: value));
+        prediction: state.prediction.copyWith(fifthPlace: value));
   }
 
   void submitPrediction() {
-    _databaseRepository.uploadPrediction(state.prediction!);
+    databaseRepository.uploadPrediction(state.prediction);
   }
 }
 
@@ -56,12 +59,12 @@ class PredictionControllerState {
   const PredictionControllerState({
     this.loading = false,
     this.username = "",
-    this.prediction,
+    required this.prediction,
   });
 
   final bool loading;
   final String username;
-  final PredictionModel? prediction;
+  final PredictionModel prediction;
 
   PredictionControllerState copyWith({
     bool? loading,
@@ -74,4 +77,10 @@ class PredictionControllerState {
       prediction: prediction ?? this.prediction,
     );
   }
+
+  factory PredictionControllerState.withDefaults() => PredictionControllerState(
+        loading: false,
+        username: "",
+        prediction: PredictionModel(),
+      );
 }

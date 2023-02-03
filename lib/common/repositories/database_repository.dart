@@ -24,7 +24,7 @@ class DatabaseRepository {
     var uid = authRepository.currentUser?.uid;
 
     if (uid != null) {
-      predictions.doc(uid).set({
+      competitions.doc('heat1').collection('predictions').doc(uid).set({
         "name": prediction.name,
         "finalist1": prediction.finalist1,
         "finalist2": prediction.finalist2,
