@@ -17,8 +17,6 @@ class FirebaseAuthentication implements AuthenticationRepository {
     try {
       await firebaseAuth.signInAnonymously();
 
-
-
       return _mapFirebaseUser(currentUser!);
     } on auth.FirebaseAuthException catch (e) {
       throw _determineError(e);
@@ -66,7 +64,8 @@ class FirebaseAuthentication implements AuthenticationRepository {
 
     final map = <String, dynamic>{
       'id': user.uid,
-      'username': user.uid,
+      'username': '',
+      'score': 0,
       'email': user.email ?? '',
       'emailVerified': user.emailVerified,
       'isAnonymous': user.isAnonymous,

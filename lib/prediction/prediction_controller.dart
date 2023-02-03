@@ -25,28 +25,38 @@ class PredictionController extends StateNotifier<PredictionControllerState> {
   }
 
   void setFinalist1(String? value) {
+    if (value == null || value.isEmpty) return;
+
     state = state.copyWith(
-        prediction: state.prediction.copyWith(finalist1: value));
+        prediction: state.prediction.copyWith(finalist1: int.parse(value)));
   }
 
   void setFinalist2(String? value) {
+    if (value == null || value.isEmpty) return;
+
     state = state.copyWith(
-        prediction: state.prediction.copyWith(finalist2: value));
+        prediction: state.prediction.copyWith(finalist2: int.parse(value)));
   }
 
   void setSemifinalist1(String? value) {
+    if (value == null || value.isEmpty) return;
+
     state = state.copyWith(
-        prediction: state.prediction.copyWith(semifinalist1: value));
+        prediction: state.prediction.copyWith(semifinalist1: int.parse(value)));
   }
 
   void setSemifinalist2(String? value) {
+    if (value == null || value.isEmpty) return;
+
     state = state.copyWith(
-        prediction: state.prediction.copyWith(semifinalist2: value));
+        prediction: state.prediction.copyWith(semifinalist2: int.parse(value)));
   }
 
   void setFifthPlace(String? value) {
+    if (value == null || value.isEmpty) return;
+
     state = state.copyWith(
-        prediction: state.prediction.copyWith(fifthPlace: value));
+        prediction: state.prediction.copyWith(fifthPlace: int.parse(value)));
   }
 
   void submitPrediction() {
@@ -79,8 +89,6 @@ class PredictionControllerState {
   }
 
   factory PredictionControllerState.withDefaults() => PredictionControllerState(
-        loading: false,
-        username: "",
         prediction: PredictionModel(),
       );
 }
