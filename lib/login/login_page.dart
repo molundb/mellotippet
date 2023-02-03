@@ -24,25 +24,28 @@ class LoginPage extends StatelessWidget {
       body: Center(
         child: Form(
           key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _LoginEmail(
-                controller: controller,
-                emailController: _emailController,
-              ),
-              const SizedBox(height: 30.0),
-              _LoginPassword(
-                controller: controller,
-                passwordController: _passwordController,
-              ),
-              const SizedBox(height: 30.0),
-              _SubmitButton(
-                controller: controller,
-              ),
-              const SizedBox(height: 30.0),
-              const _CreateAccountButton(),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _LoginEmail(
+                  controller: controller,
+                  emailController: _emailController,
+                ),
+                const SizedBox(height: 30.0),
+                _LoginPassword(
+                  controller: controller,
+                  passwordController: _passwordController,
+                ),
+                const SizedBox(height: 30.0),
+                _SubmitButton(
+                  controller: controller,
+                ),
+                const SizedBox(height: 30.0),
+                const _CreateAccountButton(),
+              ],
+            ),
           ),
         ),
       ),
@@ -62,13 +65,10 @@ class _LoginEmail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width / 2,
-      child: TextFormField(
-        controller: emailController,
-        decoration: const InputDecoration(hintText: 'Email'),
-        onSaved: controller.updateEmail,
-      ),
+    return TextFormField(
+      controller: emailController,
+      decoration: const InputDecoration(hintText: 'Email'),
+      onSaved: controller.updateEmail,
     );
   }
 }
@@ -85,16 +85,13 @@ class _LoginPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width / 2,
-      child: TextFormField(
-        controller: passwordController,
-        obscureText: true,
-        decoration: const InputDecoration(
-          hintText: 'Password',
-        ),
-        onSaved: controller.updatePassword,
+    return TextFormField(
+      controller: passwordController,
+      obscureText: true,
+      decoration: const InputDecoration(
+        hintText: 'Password',
       ),
+      onSaved: controller.updatePassword,
     );
   }
 }
