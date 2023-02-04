@@ -107,9 +107,10 @@ class _PredictionPageState extends ConsumerState<PredictionPage> {
                         _formKey.currentState!.save();
 
                         if (!controller.duplicatePredictions()) {
-                          _submit();
+                          _submit(context);
                         } else {
-                          print('error!');
+                          _showErrorSnackBar(
+                            context, 'Error: same prediction in multiple positions',);
                         }
                       }
                     },
@@ -130,5 +131,20 @@ class _PredictionPageState extends ConsumerState<PredictionPage> {
     );
   }
 
-  void _submit() => controller.submitPrediction();
+  void _showErrorSnackBar(BuildContext context, String text) {
+    final snackBar = SnackBar(
+      content: Text(text),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void _submit(BuildContext context) async {
+    final successful = await controller.submitPrediction();
+
+    if (successful) {
+      _showErrorSnackBar(context, 'Upload Successful!');
+    } else {
+      _showErrorSnackBar(context, 'Upload Failed!');
+    }
+  }
 }

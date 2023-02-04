@@ -60,9 +60,8 @@ class PredictionController extends StateNotifier<PredictionControllerState> {
         prediction: state.prediction.copyWith(fifthPlace: int.parse(value)));
   }
 
-  void submitPrediction() {
+  Future<bool> submitPrediction() =>
     databaseRepository.uploadPrediction(state.prediction);
-  }
 
   String? validatePredictionInput(String? prediction) {
     if (prediction == null || prediction.isEmpty) {
