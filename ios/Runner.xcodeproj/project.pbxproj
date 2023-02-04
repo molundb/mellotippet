@@ -12,6 +12,7 @@
 		37025E3BE7A3D728DCE28C88 /* stageDebug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 31DF08FE5561503E8173CB33 /* stageDebug.xcconfig */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		3C007A192C1069C0B4B29204 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6785BDFE6600716B664C8802 /* Pods_Runner.framework */; };
+		42CA3D7B51DD7AFEA26E54C0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3D9125CE80D75B07922BE574 /* GoogleService-Info.plist */; };
 		52B31AEB61D2C0C4B2A580A4 /* prodLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7B40367F536CE6BA21A712A /* prodLaunchScreen.storyboard */; };
 		5E4FFA57BC7292BF31640BD4 /* stageRelease.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9C9CED4E22EA3091D63389D6 /* stageRelease.xcconfig */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
@@ -46,6 +47,7 @@
 		31DF08FE5561503E8173CB33 /* stageDebug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = stageDebug.xcconfig; path = Flutter/stageDebug.xcconfig; sourceTree = "<group>"; };
 		358F8EC3CEC98BA623FEDF28 /* stageProfile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = stageProfile.xcconfig; path = Flutter/stageProfile.xcconfig; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
+		3D9125CE80D75B07922BE574 /* GoogleService-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Runner/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4532D3EC35124DD319493509 /* Pods-Runner.profile-prod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile-prod.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile-prod.xcconfig"; sourceTree = "<group>"; };
 		4A60EEBCB94ED2F4DE719EA2 /* prodProfile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = prodProfile.xcconfig; path = Flutter/prodProfile.xcconfig; sourceTree = "<group>"; };
 		6785BDFE6600716B664C8802 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,6 +128,7 @@
 				F46AA291A86F405E7EDEA6D6 /* Frameworks */,
 				E7B40367F536CE6BA21A712A /* prodLaunchScreen.storyboard */,
 				0D58551C4530F860FF4C8F31 /* stageLaunchScreen.storyboard */,
+				3D9125CE80D75B07922BE574 /* GoogleService-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -168,6 +171,7 @@
 			buildConfigurationList = 97C147051CF9000F007C117D /* Build configuration list for PBXNativeTarget "Runner" */;
 			buildPhases = (
 				0B9E5B4B142C6515574DC8F2 /* [CP] Check Pods Manifest.lock */,
+				DBA2F0B44F142A22CED07CA2 /* Firebase Setup */,
 				9740EEB61CF901F6004384FC /* Run Script */,
 				97C146EA1CF9000F007C117D /* Sources */,
 				97C146EB1CF9000F007C117D /* Frameworks */,
@@ -236,6 +240,7 @@
 				5E4FFA57BC7292BF31640BD4 /* stageRelease.xcconfig in Resources */,
 				52B31AEB61D2C0C4B2A580A4 /* prodLaunchScreen.storyboard in Resources */,
 				8EA42C6CE388B9E884A97F30 /* stageLaunchScreen.storyboard in Resources */,
+				42CA3D7B51DD7AFEA26E54C0 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +333,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"$PODS_ROOT/FirebaseCrashlytics/upload-symbols\" --flutter-project \"$PROJECT_DIR/firebase_app_id_file.json\" ";
+		};
+		DBA2F0B44F142A22CED07CA2 /* Firebase Setup */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Firebase Setup";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"$CONFIGURATION\" == \"Debug-prod\" ] || [ \"$CONFIGURATION\" == \"Release-prod\" ]; then\n  cp Runner/prod/GoogleService-Info.plist Runner/GoogleService-Info.plist\nelif [ \"$CONFIGURATION\" == \"Debug-stage\" ] || [ \"$CONFIGURATION\" == \"Release-stage\" ]; then\n  cp Runner/stage/GoogleService-Info.plist Runner/GoogleService-Info.plist\nfi\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -447,7 +470,7 @@
 			baseConfigurationReference = 358F8EC3CEC98BA623FEDF28 /* stageProfile.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "$(ASSET_PREFIX)AppIcon";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -570,7 +593,7 @@
 			baseConfigurationReference = 9C9CED4E22EA3091D63389D6 /* stageRelease.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "$(ASSET_PREFIX)AppIcon";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -807,7 +830,7 @@
 			baseConfigurationReference = AFFB3069D60FE95CFC5E0060 /* prodRelease.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "$(ASSET_PREFIX)AppIcon";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -878,7 +901,7 @@
 			baseConfigurationReference = 6E93048ECA5730E87900C7B2 /* prodDebug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "$(ASSET_PREFIX)AppIcon";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -952,7 +975,7 @@
 			baseConfigurationReference = 31DF08FE5561503E8173CB33 /* stageDebug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "$(ASSET_PREFIX)AppIcon";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1026,7 +1049,7 @@
 			baseConfigurationReference = 4A60EEBCB94ED2F4DE719EA2 /* prodProfile.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "$(ASSET_PREFIX)AppIcon";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";

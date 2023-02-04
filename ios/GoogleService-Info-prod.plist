@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>997889272585-4hm7l232uul836hskpql7lstijoojs4k.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.997889272585-4hm7l232uul836hskpql7lstijoojs4k</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC7TC-UHoICsDCm0E8thr9ArvLUliIzQ1s</string>
+	<key>GCM_SENDER_ID</key>
+	<string>997889272585</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.molundb.melodifestivalen-competition</string>
+	<key>PROJECT_ID</key>
+	<string>melodifestivalen-competition</string>
+	<key>STORAGE_BUCKET</key>
+	<string>melodifestivalen-competition.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:997889272585:ios:09de893773df24e44201d8</string>
+	<key>DATABASE_URL</key>
+	<string>https://melodifestivalen-competition-default-rtdb.europe-west1.firebasedatabase.app</string>
+</dict>
+</plist>

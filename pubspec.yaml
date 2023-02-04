@@ -63,6 +63,8 @@ flavorizr:
 
       ios:
         bundleId: "com.molundb.melodifestivalen-competition"
+        firebase:
+          config: "ios/GoogleService-Info-prod.plist"
 
     stage:
       app:
@@ -74,6 +76,8 @@ flavorizr:
           config: "android/app/google-services-stage.json"
       ios:
         bundleId: "com.molundb.melodifestivalen-competition-stage"
+        firebase:
+          config: "ios/GoogleService-Info-stage.plist"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
