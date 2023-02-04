@@ -17,7 +17,6 @@ class DatabaseRepository {
   CollectionReference<Map<String, dynamic>> get competitions =>
       db.collection('competitions');
 
-  // TODO: Add input validation
   Future<bool> uploadPrediction(PredictionModel prediction) async {
     try {
       var uid = authRepository.currentUser?.uid;
@@ -59,6 +58,7 @@ class DatabaseRepository {
   Future<List<UserEntity>> getUserScores() async {
     final competitions = await getUpcomingCompetitions();
 
+    // TODO: get result for correct competition
     final result = PredictionModel.fromJson(competitions.first.result);
 
     final snapshot =
