@@ -3,18 +3,13 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
-import 'secrets.dart';
+import 'package:melodifestivalen_competition/config/config.dart';
+import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
+import 'package:melodifestivalen_competition/secrets.dart';
 
-/// Default [FirebaseOptions] for use with your Firebase apps.
-///
-/// Example:
-/// ```dart
-/// import 'firebase_options.dart';
-/// // ...
-/// await Firebase.initializeApp(
-///   options: DefaultFirebaseOptions.currentPlatform,
-/// );
-/// ```
+final config = getIt.get<Config>();
+final secrets = getIt.get<Secrets>();
+
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
@@ -51,22 +46,20 @@ class DefaultFirebaseOptions {
   }
 
   static FirebaseOptions get android => FirebaseOptions(
-        apiKey: Secrets().firebaseAPIKeyAndroid(),
-        appId: Secrets().firebaseAppIdAndroid(),
-        messagingSenderId: Secrets().firebaseMessagingSenderId(),
-        projectId: Secrets().firebaseProjectId(),
-        databaseURL: Secrets().firebaseDatabaseUrl(),
-        storageBucket: Secrets().firebaseStorageBucket(),
-      );
+    apiKey: secrets.firebaseAPIKeyAndroid(config.flavor),
+    appId: secrets.firebaseAppIdAndroid(config.flavor),
+    messagingSenderId: secrets.firebaseMessagingSenderId(config.flavor),
+    projectId: secrets.firebaseProjectId(config.flavor),
+    storageBucket: secrets.firebaseAPIKeyAndroid(config.flavor),
+  );
 
-  static FirebaseOptions ios = FirebaseOptions(
-    apiKey: Secrets().firebaseAPIKeyIos(),
-    appId: Secrets().firebaseAppIdIos(),
-    messagingSenderId: Secrets().firebaseMessagingSenderId(),
-    projectId: Secrets().firebaseProjectId(),
-    databaseURL: Secrets().firebaseDatabaseUrl(),
-    storageBucket: Secrets().firebaseStorageBucket(),
-    iosClientId: Secrets().firebaseIosClientId(),
-    iosBundleId: Secrets().firebaseIosBundleId(),
+  static FirebaseOptions get ios => FirebaseOptions(
+    apiKey: secrets.firebaseAPIKeyIos(config.flavor),
+    appId: secrets.firebaseAppIdIos(config.flavor),
+    messagingSenderId: secrets.firebaseMessagingSenderId(config.flavor),
+    projectId: secrets.firebaseProjectId(config.flavor),
+    storageBucket: secrets.firebaseStorageBucket(config.flavor),
+    iosClientId: secrets.firebaseIosClientId(config.flavor),
+    iosBundleId: secrets.firebaseIosBundleId(config.flavor),
   );
 }

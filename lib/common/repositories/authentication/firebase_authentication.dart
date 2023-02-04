@@ -1,13 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:firebase_core/firebase_core.dart';
 import 'package:melodifestivalen_competition/common/models/models.dart';
 import 'package:melodifestivalen_competition/common/repositories/authentication/authentication_repository.dart';
+import 'package:melodifestivalen_competition/firebase_options.dart';
 
 class FirebaseAuthentication implements AuthenticationRepository {
-  final auth.FirebaseAuth firebaseAuth;
-
   FirebaseAuthentication({
     required this.firebaseAuth,
   });
+
+  final auth.FirebaseAuth firebaseAuth;
+
+  static Future<void> initialize() async {
+    await Firebase.initializeApp(
+      name: 'melodifestivalen-comp-stage',
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  }
 
   @override
   auth.User? get currentUser => firebaseAuth.currentUser;
