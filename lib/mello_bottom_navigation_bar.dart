@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:melodifestivalen_competition/config/config.dart';
+import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
 import 'package:melodifestivalen_competition/prediction/prediction_page.dart';
 import 'package:melodifestivalen_competition/styles/colors.dart';
 
@@ -14,11 +16,9 @@ class MelloBottomNavigationBar extends StatefulWidget {
 }
 
 class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
+  final config = getIt.get<Config>();
+
   int _selectedIndex = 0;
-  static const TextStyle optionStyle = TextStyle(
-    fontSize: 30,
-    fontWeight: FontWeight.bold,
-  );
   static const List<Widget> _widgetOptions = <Widget>[
     PredictionPage(),
     // UpcomingCompetitionsPage(),
@@ -31,9 +31,9 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          'Mello Predix',
-          style: TextStyle(color: melloYellow, fontSize: 32),
+        title: Text(
+          config.title,
+          style: const TextStyle(color: melloYellow, fontSize: 32),
         ),
       ),
       body: Center(

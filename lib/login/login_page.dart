@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:melodifestivalen_competition/common/repositories/authentication/authentication_repository.dart';
+import 'package:melodifestivalen_competition/config/config.dart';
 import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
 import 'package:melodifestivalen_competition/login/login_controller.dart';
 import 'package:melodifestivalen_competition/mello_bottom_navigation_bar.dart';
@@ -8,6 +9,8 @@ import 'package:melodifestivalen_competition/sign_up/sign_up_page.dart';
 final _formKey = GlobalKey<FormState>();
 
 class LoginPage extends StatelessWidget {
+  final config = getIt.get<Config>();
+
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final LoginController controller = LoginController();
@@ -18,7 +21,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mello Predix'),
+        title: Text(config.title),
         centerTitle: true,
       ),
       body: Center(
