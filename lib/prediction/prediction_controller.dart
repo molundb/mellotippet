@@ -13,10 +13,11 @@ class PredictionController extends StateNotifier<PredictionControllerState> {
   final DatabaseRepository databaseRepository;
 
   static final provider =
-      StateNotifierProvider<PredictionController, PredictionControllerState>(
-          (ref) => PredictionController(
-                databaseRepository: getIt.get<DatabaseRepository>(),
-              ));
+  StateNotifierProvider<PredictionController, PredictionControllerState>(
+          (ref) =>
+          PredictionController(
+            databaseRepository: getIt.get<DatabaseRepository>(),
+          ));
 
   Future<void> getUsername() async {
     state = state.copyWith(loading: true);
@@ -62,6 +63,52 @@ class PredictionController extends StateNotifier<PredictionControllerState> {
   void submitPrediction() {
     databaseRepository.uploadPrediction(state.prediction);
   }
+
+  String? validatePredictionInput(String? prediction) {
+    if (prediction == null || prediction.isEmpty) {
+      return 'Prediction can not be empty';
+    }
+
+    if (prediction.length > 1) {
+      return 'Prediction is too long';
+    }
+
+    if (!_isNumeric(prediction)) {
+      return 'Prediction is not a number';
+    }
+
+    if (int.tryParse(prediction)! < 1 || int.tryParse(prediction)! > 7) {
+      return 'Prediction must be between 1 and 7';
+    }
+
+    return null;
+  }
+
+  bool _isNumeric(String s) => int.tryParse(s) != null;
+
+  bool duplicatePredictions() {
+    var duplicate = false;
+
+    final List<int> predictions = [
+      state.prediction.finalist1!,
+      state.prediction.finalist2!,
+      state.prediction.semifinalist1!,
+      state.prediction.semifinalist2!,
+      state.prediction.fifthPlace!,
+    ];
+
+    List<int> tempPredictions = [];
+    for (var element in predictions) {
+      if (tempPredictions.contains(element)) {
+        duplicate = true;
+        break;
+      } else {
+        tempPredictions.add(element);
+      }
+    }
+
+    return duplicate;
+  }
 }
 
 @immutable
@@ -88,7 +135,8 @@ class PredictionControllerState {
     );
   }
 
-  factory PredictionControllerState.withDefaults() => PredictionControllerState(
+  factory PredictionControllerState.withDefaults() =>
+      PredictionControllerState(
         prediction: PredictionModel(),
       );
 }

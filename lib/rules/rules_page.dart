@@ -18,12 +18,12 @@ class RulesPage extends ConsumerWidget {
               'Predict which songs will make it to the final, semi-final and fifth place. You can change your prediction as many times as you want - it is the last one that counts. The predictions close shortly before any song is announced to go to the second voting round.'
               ''
               '\n\nIf you miss predicting in any heat, you get 1p less than the person who got the lowest score in that heat.',
-              style: defaultStyle,
+              style: MelloPredixTextStyle.defaultStyle,
             ),
             const SizedBox(height: 32),
             const Text(
               'For each of the two songs that go to the final, you will get 0, 1, 3 or 5 points depending on how correct your prediction is:',
-              style: defaultStyle,
+              style: MelloPredixTextStyle.defaultStyle,
             ),
             const SizedBox(height: 8),
             Table(
@@ -76,7 +76,7 @@ class RulesPage extends ConsumerWidget {
             const SizedBox(height: 32),
             const Text(
               'For each of the two songs that go to the semi final, you will get 0, 1 or 2 points depending on how correct your prediction is:',
-              style: defaultStyle,
+              style: MelloPredixTextStyle.defaultStyle,
             ),
             const SizedBox(height: 8),
             Table(
@@ -149,7 +149,7 @@ class RulesPage extends ConsumerWidget {
       '\n\n• For each semi-finalist you had as 5th place: 1p'
       ''
       '\n\nIf you miss betting in any competition, you get 1p less than the person who got the lowest score in that competition.',
-      style: defaultStyle,
+      style: MelloPredixTextStyle.defaultStyle,
     );
   }
 }

@@ -33,7 +33,10 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
         centerTitle: true,
         title: Text(
           config.title,
-          style: const TextStyle(color: melloYellow, fontSize: 32),
+          style: const TextStyle(
+            color: MelloPredixColors.melloYellow,
+            fontSize: 32,
+          ),
         ),
       ),
       body: Center(
