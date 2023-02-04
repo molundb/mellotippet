@@ -1,9 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
 import 'package:melodifestivalen_competition/firebase_options.dart';
 import 'package:melodifestivalen_competition/login/login_page.dart';
+import 'package:melodifestivalen_competition/services/crash_reporting.dart';
 import 'package:melodifestivalen_competition/styles/colors.dart';
 
 void main() async {
@@ -12,6 +15,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  CrashReporting.init();
 
   await setUpGetIt();
 
