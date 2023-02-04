@@ -43,7 +43,7 @@ class _PredictionPageState extends ConsumerState<PredictionPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    'Welcome ${state.username}',
+                    'Welcome, ${state.username}!',
                     style: const TextStyle(
                       fontSize: 32,
                       color: melloYellow,
