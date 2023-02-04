@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "674049140713",
+    "project_id": "melodifestivalen-comp-stage",
+    "storage_bucket": "melodifestivalen-comp-stage.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:674049140713:android:3710089a14b22fdb510d78",
+        "android_client_info": {
+          "package_name": "com.molundb.melodifestivalen_competition_stage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "674049140713-28q4inkminbq98n6b6r2gcldh6sats1e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfyWEjbGe_DA6nmwQBHktq_K9v2zBZ9jw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "674049140713-28q4inkminbq98n6b6r2gcldh6sats1e.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "674049140713-c0vh9crp9io5sjlpnnjrt4gbj3u0ra7e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.molundb.melodifestivalen-competition-stage"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

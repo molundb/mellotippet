@@ -3,17 +3,13 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:melodifestivalen_competition/config/config.dart';
+import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
+import 'package:melodifestivalen_competition/secrets.dart';
 
-/// Default [FirebaseOptions] for use with your Firebase apps.
-///
-/// Example:
-/// ```dart
-/// import 'firebase_options.dart';
-/// // ...
-/// await Firebase.initializeApp(
-///   options: DefaultFirebaseOptions.currentPlatform,
-/// );
-/// ```
+final config = getIt.get<Config>();
+final secrets = getIt.get<Secrets>();
+
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
@@ -49,23 +45,21 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyC1vztbHt8jJXLymSlP2TyPVAmg8zBcYLY',
-    appId: '1:997889272585:android:5f8072c75c1e25be4201d8',
-    messagingSenderId: '997889272585',
-    projectId: 'melodifestivalen-competition',
-    databaseURL: 'https://melodifestivalen-competition-default-rtdb.europe-west1.firebasedatabase.app',
-    storageBucket: 'melodifestivalen-competition.appspot.com',
+  static FirebaseOptions get android => FirebaseOptions(
+    apiKey: secrets.firebaseAPIKeyAndroid(config.flavor),
+    appId: secrets.firebaseAppIdAndroid(config.flavor),
+    messagingSenderId: secrets.firebaseMessagingSenderId(config.flavor),
+    projectId: secrets.firebaseProjectId(config.flavor),
+    storageBucket: secrets.firebaseAPIKeyAndroid(config.flavor),
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyC7TC-UHoICsDCm0E8thr9ArvLUliIzQ1s',
-    appId: '1:997889272585:ios:09de893773df24e44201d8',
-    messagingSenderId: '997889272585',
-    projectId: 'melodifestivalen-competition',
-    databaseURL: 'https://melodifestivalen-competition-default-rtdb.europe-west1.firebasedatabase.app',
-    storageBucket: 'melodifestivalen-competition.appspot.com',
-    iosClientId: '997889272585-4hm7l232uul836hskpql7lstijoojs4k.apps.googleusercontent.com',
-    iosBundleId: 'com.molundb.melodifestivalen-competition',
+  static FirebaseOptions get ios => FirebaseOptions(
+    apiKey: secrets.firebaseAPIKeyIos(config.flavor),
+    appId: secrets.firebaseAppIdIos(config.flavor),
+    messagingSenderId: secrets.firebaseMessagingSenderId(config.flavor),
+    projectId: secrets.firebaseProjectId(config.flavor),
+    storageBucket: secrets.firebaseStorageBucket(config.flavor),
+    iosClientId: secrets.firebaseIosClientId(config.flavor),
+    iosBundleId: secrets.firebaseIosBundleId(config.flavor),
   );
 }
