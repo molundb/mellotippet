@@ -18,17 +18,25 @@ class DatabaseRepository {
       db.collection('competitions');
 
   // TODO: Add input validation
-  void uploadPrediction(PredictionModel prediction) async {
-    var uid = authRepository.currentUser?.uid;
+  Future<bool> uploadPrediction(PredictionModel prediction) async {
+    try {
+      var uid = authRepository.currentUser?.uid;
 
-    if (uid != null) {
-      competitions.doc('heat1').collection('predictions').doc(uid).set({
-        "finalist1": prediction.finalist1,
-        "finalist2": prediction.finalist2,
-        "semifinalist1": prediction.semifinalist1,
-        "semifinalist2": prediction.semifinalist2,
-        "fifthPlace": prediction.fifthPlace,
-      });
+      if (uid != null) {
+        await competitions.doc('heat1').collection('predictions').doc(uid).set({
+          "finalist1": prediction.finalist1,
+          "finalist2": prediction.finalist2,
+          "semifinalist1": prediction.semifinalist1,
+          "semifinalist2": prediction.semifinalist2,
+          "fifthPlace": prediction.fifthPlace,
+        });
+
+        return true;
+      }
+
+      return false;
+    } catch (e) {
+      return false;
     }
   }
 
