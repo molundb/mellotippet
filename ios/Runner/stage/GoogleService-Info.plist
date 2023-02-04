@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>674049140713-c0vh9crp9io5sjlpnnjrt4gbj3u0ra7e.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.674049140713-c0vh9crp9io5sjlpnnjrt4gbj3u0ra7e</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBWA5bekJkz4cVsljPIyPmUm0gLmR9y09E</string>
+	<key>GCM_SENDER_ID</key>
+	<string>674049140713</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.molundb.melodifestivalen-competition-stage</string>
+	<key>PROJECT_ID</key>
+	<string>melodifestivalen-comp-stage</string>
+	<key>STORAGE_BUCKET</key>
+	<string>melodifestivalen-comp-stage.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:674049140713:ios:6b754c7a7c7a2931510d78</string>
+</dict>
+</plist>
