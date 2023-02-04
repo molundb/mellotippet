@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:melodifestivalen_competition/config/config.dart';
+import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
 import 'package:melodifestivalen_competition/login/login_page.dart';
 import 'package:melodifestivalen_competition/styles/colors.dart';
 
 class MelodifestivalenCompetitionApp extends StatelessWidget {
-  const MelodifestivalenCompetitionApp({Key? key}) : super(key: key);
+  final config = getIt.get<Config>();
+
+  MelodifestivalenCompetitionApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +20,7 @@ class MelodifestivalenCompetitionApp extends StatelessWidget {
         }
       },
       child: MaterialApp(
-        title: 'Mello Predix',
+        title: config.title,
         theme: ThemeData(
           primaryColor: melloPurple,
           appBarTheme: const AppBarTheme(
