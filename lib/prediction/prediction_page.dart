@@ -45,7 +45,7 @@ class _PredictionPageState extends ConsumerState<PredictionPage> {
                     'Welcome, ${state.username}!',
                     style: const TextStyle(
                       fontSize: 32,
-                      color: melloYellow,
+                      color: MelloPredixColors.melloYellow,
                     ),
                   ),
                   const SizedBox(height: 32),
@@ -54,30 +54,40 @@ class _PredictionPageState extends ConsumerState<PredictionPage> {
                     prefixIcon: const Icon(Icons.star),
                     hintText: 'Finalist',
                     onSaved: controller.setFinalist1,
+                    validator: (value) =>
+                        controller.validatePredictionInput(value),
                   ),
                   TextFormFieldWidget(
                     textInputType: TextInputType.number,
                     prefixIcon: const Icon(Icons.star),
                     hintText: 'Finalist',
                     onSaved: controller.setFinalist2,
+                    validator: (value) =>
+                        controller.validatePredictionInput(value),
                   ),
                   TextFormFieldWidget(
                     textInputType: TextInputType.number,
                     prefixIcon: const Icon(Icons.star_border),
                     hintText: 'Semifinalist',
                     onSaved: controller.setSemifinalist1,
+                    validator: (value) =>
+                        controller.validatePredictionInput(value),
                   ),
                   TextFormFieldWidget(
                     textInputType: TextInputType.number,
                     prefixIcon: const Icon(Icons.star_border),
                     hintText: 'Semifinalist',
                     onSaved: controller.setSemifinalist2,
+                    validator: (value) =>
+                        controller.validatePredictionInput(value),
                   ),
                   TextFormFieldWidget(
                     textInputType: TextInputType.number,
                     prefixIcon: const Icon(Icons.five_g_outlined),
                     hintText: 'Fifth place',
                     onSaved: controller.setFifthPlace,
+                    validator: (value) =>
+                        controller.validatePredictionInput(value),
                   ),
                 ],
               ),
@@ -95,7 +105,12 @@ class _PredictionPageState extends ConsumerState<PredictionPage> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
-                        _submit();
+
+                        if (!controller.duplicatePredictions()) {
+                          _submit();
+                        } else {
+                          print('error!');
+                        }
                       }
                     },
                     style: ElevatedButton.styleFrom(

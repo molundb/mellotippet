@@ -13,5 +13,5 @@ void main() async {
   await FirebaseAuthentication.initialize();
   CrashReporting.init();
 
-  runApp(const ProviderScope(child: MelodifestivalenCompetitionApp()));
+  runApp(ProviderScope(child: MelodifestivalenCompetitionApp()));
 }

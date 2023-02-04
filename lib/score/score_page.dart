@@ -35,7 +35,7 @@ class _ScorePageState extends ConsumerState<ScorePage> {
               SizedBox(height: 32),
               Text(
                 'Highscore',
-                style: TextStyle(fontSize: 32, color: melloYellow),
+                style: TextStyle(fontSize: 32, color: MelloPredixColors.melloYellow),
               ),
               SizedBox(height: 16),
             ],
