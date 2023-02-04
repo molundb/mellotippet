@@ -35,7 +35,7 @@ class _UpcomingCompetitionRowState extends State<UpcomingCompetitionRow> {
               style: Theme.of(context).textTheme.headline2,
             ),
             Text(
-              controller.formatDate(widget.competition.time),
+              'time', // controller.formatDate(widget.competition.time),
               style: Theme.of(context).textTheme.headline2,
             ),
           ],
