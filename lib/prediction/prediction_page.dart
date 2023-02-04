@@ -30,9 +30,7 @@ class _PredictionPageState extends ConsumerState<PredictionPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(PredictionController.provider);
 
-    if (state.loading) {
-      return const CircularProgressIndicator();
-    }
+    // TODO: Figure out how to handle loading
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
@@ -46,7 +44,10 @@ class _PredictionPageState extends ConsumerState<PredictionPage> {
                 children: [
                   Text(
                     'Welcome ${state.username}',
-                    style: const TextStyle(fontSize: 32, color: melloYellow),
+                    style: const TextStyle(
+                      fontSize: 32,
+                      color: melloYellow,
+                    ),
                   ),
                   const SizedBox(height: 32),
                   TextFormFieldWidget(

@@ -25,9 +25,7 @@ class _ScorePageState extends ConsumerState<ScorePage> {
   Widget build(BuildContext context) {
     final state = ref.watch(ScoreController.provider);
 
-    if (state.loading) {
-      return const CircularProgressIndicator();
-    }
+    // TODO: Figure out how to handle loading
 
     return CustomScrollView(
       slivers: [
