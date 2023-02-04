@@ -102,9 +102,9 @@ class _PredictionPageState extends ConsumerState<PredictionPage> {
                     style: ElevatedButton.styleFrom(
                       shape: const StadiumBorder(),
                     ),
-                    child: Text(
+                    child: const Text(
                       'Submit',
-                      style: Theme.of(context).textTheme.headline2,
+                      style: TextStyle(fontSize: 24),
                     ),
                   ),
                 ),
