@@ -64,17 +64,19 @@ class DatabaseRepository {
     final snapshot =
         await this.competitions.doc('heat1').collection('predictions').get();
 
-    final users = await Future.wait(snapshot.docs.map((doc) async {
+    final userScores = await Future.wait(snapshot.docs.map((doc) async {
       final username = await _getUsername(doc.id);
       final prediction = PredictionModel.fromJson(doc.data());
-      final score = calculateScore(result, prediction);
+      final score = _calculateScore(result, prediction);
       return UserEntity(username: username, score: score);
     }));
 
-    return users;
+    userScores.sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
+
+    return userScores;
   }
 
-  int calculateScore(PredictionModel result, PredictionModel prediction) {
+  int _calculateScore(PredictionModel result, PredictionModel prediction) {
     var score = 0;
 
     score += _calculateFinalistScore(result.finalist1, prediction);
