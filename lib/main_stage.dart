@@ -9,7 +9,7 @@ import 'package:melodifestivalen_competition/services/crash_reporting.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setUpGetIt(Flavor.stage);
-  await FirebaseAuthentication.initialize();
+  await AuthenticationRepository.initialize();
   CrashReporting.init();
 
   runApp(ProviderScope(child: MelodifestivalenCompetitionApp()));

@@ -1,11 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:melodifestivalen_competition/common/models/models.dart';
-import 'package:melodifestivalen_competition/common/repositories/authentication/authentication_repository.dart';
 import 'package:melodifestivalen_competition/firebase_options.dart';
 
-class FirebaseAuthentication implements AuthenticationRepository {
-  FirebaseAuthentication({
+class AuthenticationRepository {
+  AuthenticationRepository({
     required this.firebaseAuth,
   });
 
@@ -18,10 +17,8 @@ class FirebaseAuthentication implements AuthenticationRepository {
     );
   }
 
-  @override
   auth.User? get currentUser => firebaseAuth.currentUser;
 
-  @override
   Future<UserEntity> signInAnonymously() async {
     try {
       await firebaseAuth.signInAnonymously();
@@ -32,7 +29,6 @@ class FirebaseAuthentication implements AuthenticationRepository {
     }
   }
 
-  @override
   Future<UserEntity> createUserWithEmailAndPassword({
     required String email,
     required String password,

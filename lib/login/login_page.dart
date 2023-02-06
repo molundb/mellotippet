@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:melodifestivalen_competition/common/repositories/authentication/authentication_repository.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:melodifestivalen_competition/common/repositories/repositories.dart';
 import 'package:melodifestivalen_competition/config/config.dart';
 import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
 import 'package:melodifestivalen_competition/login/login_controller.dart';
@@ -8,17 +9,47 @@ import 'package:melodifestivalen_competition/sign_up/sign_up_page.dart';
 
 final _formKey = GlobalKey<FormState>();
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends ConsumerStatefulWidget {
+  const LoginPage({super.key});
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends ConsumerState<LoginPage> {
   final config = getIt.get<Config>();
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final LoginController controller = LoginController();
 
-  LoginPage({super.key});
+  LoginController get controller => ref.read(LoginController.provider.notifier);
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.restoreSession();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(LoginController.provider);
+    
+    ref.listen<LoginControllerState>(LoginController.provider, (previous, next) {
+      if (next.loggedIn) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const MelloBottomNavigationBar(),
+          ),
+        );
+      }
+    });
+
+    if (state.loading) {
+      return const CircularProgressIndicator();
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(config.title),
@@ -44,7 +75,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 30.0),
                 _SubmitButton(
-                  controller: controller,
+                  state: state,
                 ),
                 const SizedBox(height: 30.0),
                 const _CreateAccountButton(),
@@ -103,14 +134,14 @@ class _LoginPassword extends StatelessWidget {
 }
 
 class _SubmitButton extends StatelessWidget {
-  final LoginController controller;
+  final LoginControllerState state;
 
   final AuthenticationRepository _authRepository =
       getIt.get<AuthenticationRepository>();
 
   _SubmitButton({
     super.key,
-    required this.controller,
+    required this.state,
   });
 
   @override
@@ -118,7 +149,7 @@ class _SubmitButton extends StatelessWidget {
     return SizedBox(
       height: 52,
       child: ElevatedButton(
-        onPressed: () => _loginPressed(context),
+        onPressed: () => _loginPressed(context, state),
         style: ElevatedButton.styleFrom(
           shape: const StadiumBorder(),
         ),
@@ -127,7 +158,10 @@ class _SubmitButton extends StatelessWidget {
     );
   }
 
-  Future<void> _loginPressed(BuildContext context) async {
+  Future<void> _loginPressed(
+    BuildContext context,
+    LoginControllerState state,
+  ) async {
     final FormState? form = _formKey.currentState;
     if (form == null || !form.validate()) return;
 
@@ -138,8 +172,8 @@ class _SubmitButton extends StatelessWidget {
     {
       try {
         await _authRepository.signInWithEmailAndPassword(
-          email: controller.email,
-          password: controller.password,
+          email: state.email,
+          password: state.password,
         );
 
         Navigator.of(context).pushReplacement(
@@ -177,16 +211,16 @@ class _CreateAccountButton extends StatelessWidget {
 
   Future<dynamic> _createAccountPressed(BuildContext context) {
     return Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => SignUpPage(),
-        ),
-      );
+      MaterialPageRoute(
+        builder: (context) => SignUpPage(),
+      ),
+    );
   }
 }
 
 class _ContinueWithoutAccountButton extends StatelessWidget {
   final AuthenticationRepository _authRepository =
-  getIt.get<AuthenticationRepository>();
+      getIt.get<AuthenticationRepository>();
 
   _ContinueWithoutAccountButton({super.key});
 

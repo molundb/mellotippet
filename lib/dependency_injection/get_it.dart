@@ -11,7 +11,7 @@ Future<void> setUpGetIt(Flavor flavor) async {
   getIt.registerSingleton<Config>(Config(flavor));
   getIt.registerSingleton<Secrets>(Secrets());
 
-  getIt.registerLazySingleton<AuthenticationRepository>(() => FirebaseAuthentication(
+  getIt.registerLazySingleton<AuthenticationRepository>(() => AuthenticationRepository(
     firebaseAuth: FirebaseAuth.instance,
   ));
 
