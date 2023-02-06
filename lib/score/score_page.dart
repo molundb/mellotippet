@@ -27,39 +27,49 @@ class _ScorePageState extends ConsumerState<ScorePage> {
 
     // TODO: Figure out how to handle loading
 
-    return CustomScrollView(
-      slivers: [
-        SliverToBoxAdapter(
-          child: Column(
-            children: const [
-              SizedBox(height: 32),
-              Text(
-                'Highscore',
-                style: TextStyle(fontSize: 32, color: MelloPredixColors.melloYellow),
-              ),
-              SizedBox(height: 16),
-            ],
-          ),
-        ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            childCount: state.userScores.length,
-            (context, index) => Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 64),
+      child: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: Column(
+              children: const [
                 Text(
-                  '${index + 1}. ${state.userScores[index].username ?? ''}',
-                  style: const TextStyle(fontSize: 24),
+                  'Highscore',
+                  style: TextStyle(
+                    fontSize: 32,
+                    color: MelloPredixColors.melloYellow,
+                  ),
                 ),
-                Text(
-                  '${state.userScores[index].score}',
-                  style: const TextStyle(fontSize: 24),
-                ),
+                SizedBox(height: 16),
               ],
             ),
           ),
-        ),
-      ],
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              childCount: state.userScores.length,
+              (context, index) => Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '${index + 1}. ${state.userScores[index].username ?? ''}',
+                        style: const TextStyle(fontSize: 24),
+                      ),
+                      Text(
+                        '${state.userScores[index].score}',
+                        style: const TextStyle(fontSize: 24),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
