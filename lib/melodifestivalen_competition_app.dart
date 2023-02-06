@@ -43,7 +43,7 @@ class MelodifestivalenCompetitionApp extends StatelessWidget {
             bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
           ),
         ),
-        home: LoginPage(),
+        home: const LoginPage(),
       ),
     );
   }
