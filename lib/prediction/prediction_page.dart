@@ -102,18 +102,7 @@ class _PredictionPageState extends ConsumerState<PredictionPage> {
                 SizedBox(
                   height: 52,
                   child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        _formKey.currentState!.save();
-
-                        if (!controller.duplicatePredictions()) {
-                          _submit(context);
-                        } else {
-                          _showErrorSnackBar(
-                            context, 'Error: same prediction in multiple positions',);
-                        }
-                      }
-                    },
+                    onPressed: () => _submitPressed(context),
                     style: ElevatedButton.styleFrom(
                       shape: const StadiumBorder(),
                     ),
@@ -129,6 +118,21 @@ class _PredictionPageState extends ConsumerState<PredictionPage> {
         ],
       ),
     );
+  }
+
+  void _submitPressed(BuildContext context) {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      if (!controller.duplicatePredictions()) {
+        _submit(context);
+      } else {
+        _showErrorSnackBar(
+          context,
+          'Error: same prediction in multiple positions',
+        );
+      }
+    }
   }
 
   void _showErrorSnackBar(BuildContext context, String text) {
