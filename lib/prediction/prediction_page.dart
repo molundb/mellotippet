@@ -54,40 +54,35 @@ class _PredictionPageState extends ConsumerState<PredictionPage> {
                     prefixIcon: const Icon(Icons.star),
                     hintText: 'Finalist',
                     onSaved: controller.setFinalist1,
-                    validator: (value) =>
-                        controller.validatePredictionInput(value),
+                    validator: controller.validatePredictionInput,
                   ),
                   TextFormFieldWidget(
                     textInputType: TextInputType.number,
                     prefixIcon: const Icon(Icons.star),
                     hintText: 'Finalist',
                     onSaved: controller.setFinalist2,
-                    validator: (value) =>
-                        controller.validatePredictionInput(value),
+                    validator: controller.validatePredictionInput,
                   ),
                   TextFormFieldWidget(
                     textInputType: TextInputType.number,
                     prefixIcon: const Icon(Icons.star_border),
                     hintText: 'Semifinalist',
                     onSaved: controller.setSemifinalist1,
-                    validator: (value) =>
-                        controller.validatePredictionInput(value),
+                    validator: controller.validatePredictionInput,
                   ),
                   TextFormFieldWidget(
                     textInputType: TextInputType.number,
                     prefixIcon: const Icon(Icons.star_border),
                     hintText: 'Semifinalist',
                     onSaved: controller.setSemifinalist2,
-                    validator: (value) =>
-                        controller.validatePredictionInput(value),
+                    validator: controller.validatePredictionInput,
                   ),
                   TextFormFieldWidget(
                     textInputType: TextInputType.number,
                     prefixIcon: const Icon(Icons.five_g_outlined),
                     hintText: 'Fifth place',
                     onSaved: controller.setFifthPlace,
-                    validator: (value) =>
-                        controller.validatePredictionInput(value),
+                    validator: controller.validatePredictionInput,
                   ),
                 ],
               ),
