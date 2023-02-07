@@ -7,8 +7,6 @@ import 'package:melodifestivalen_competition/login/login_controller.dart';
 import 'package:melodifestivalen_competition/mello_bottom_navigation_bar.dart';
 import 'package:melodifestivalen_competition/sign_up/sign_up_page.dart';
 
-final _formKey = GlobalKey<FormState>();
-
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
 
@@ -17,6 +15,7 @@ class LoginPage extends ConsumerStatefulWidget {
 }
 
 class _LoginPageState extends ConsumerState<LoginPage> {
+  final _formKey = GlobalKey<FormState>();
   final config = getIt.get<Config>();
 
   final TextEditingController _emailController = TextEditingController();
@@ -35,8 +34,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(LoginController.provider);
-    
-    ref.listen<LoginControllerState>(LoginController.provider, (previous, next) {
+
+    ref.listen<LoginControllerState>(LoginController.provider,
+        (previous, next) {
       if (next.loggedIn) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
@@ -75,6 +75,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 ),
                 const SizedBox(height: 30.0),
                 _SubmitButton(
+                  formKey: _formKey,
                   state: state,
                 ),
                 const SizedBox(height: 30.0),
@@ -134,6 +135,7 @@ class _LoginPassword extends StatelessWidget {
 }
 
 class _SubmitButton extends StatelessWidget {
+  final GlobalKey<FormState> formKey;
   final LoginControllerState state;
 
   final AuthenticationRepository _authRepository =
@@ -141,6 +143,7 @@ class _SubmitButton extends StatelessWidget {
 
   _SubmitButton({
     super.key,
+    required this.formKey,
     required this.state,
   });
 
@@ -149,7 +152,11 @@ class _SubmitButton extends StatelessWidget {
     return SizedBox(
       height: 52,
       child: ElevatedButton(
-        onPressed: () => _loginPressed(context, state),
+        onPressed: () => _loginPressed(
+          context,
+          formKey,
+          state,
+        ),
         style: ElevatedButton.styleFrom(
           shape: const StadiumBorder(),
         ),
@@ -160,9 +167,10 @@ class _SubmitButton extends StatelessWidget {
 
   Future<void> _loginPressed(
     BuildContext context,
+    GlobalKey<FormState> formKey,
     LoginControllerState state,
   ) async {
-    final FormState? form = _formKey.currentState;
+    final FormState? form = formKey.currentState;
     if (form == null || !form.validate()) return;
 
     form.save();

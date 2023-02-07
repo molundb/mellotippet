@@ -4,9 +4,9 @@ import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
 import 'package:melodifestivalen_competition/mello_bottom_navigation_bar.dart';
 import 'package:melodifestivalen_competition/sign_up/sign_up_controller.dart';
 
-final _formKey = GlobalKey<FormState>();
-
 class SignUpPage extends StatelessWidget {
+  final _formKey = GlobalKey<FormState>();
+
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -46,6 +46,7 @@ class SignUpPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 30.0),
                 _SubmitButton(
+                  formKey: _formKey,
                   controller: controller,
                 ),
               ],
@@ -119,6 +120,7 @@ class _CreateAccountPassword extends StatelessWidget {
 }
 
 class _SubmitButton extends StatelessWidget {
+  final GlobalKey<FormState> formKey;
   final SignUpController controller;
 
   final AuthenticationRepository _authRepository =
@@ -129,6 +131,7 @@ class _SubmitButton extends StatelessWidget {
 
   _SubmitButton({
     super.key,
+    required this.formKey,
     required this.controller,
   });
 
@@ -137,7 +140,7 @@ class _SubmitButton extends StatelessWidget {
     return SizedBox(
       height: 52,
       child: ElevatedButton(
-        onPressed: () => _submitPressed(context),
+        onPressed: () => _submitPressed(context, formKey),
         style: ElevatedButton.styleFrom(
           shape: const StadiumBorder(),
         ),
@@ -146,9 +149,12 @@ class _SubmitButton extends StatelessWidget {
     );
   }
 
-  Future<void> _submitPressed(BuildContext context) async {
+  Future<void> _submitPressed(
+    BuildContext context,
+    GlobalKey<FormState> formKey,
+  ) async {
     // if (!_validateForm()) return;
-    final FormState? form = _formKey.currentState;
+    final FormState? form = formKey.currentState;
     if (form == null || !form.validate()) return;
 
     form.save();
