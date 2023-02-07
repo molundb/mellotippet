@@ -158,34 +158,40 @@ class _SubmitButton extends StatelessWidget {
     if (form == null || !form.validate()) return;
 
     form.save();
-
     FocusScope.of(context).unfocus();
 
-    {
-      try {
-        await _authRepository.createUserWithEmailAndPassword(
-          email: controller.email,
-          password: controller.password,
-        );
+    if (await controller.isUsernameAlreadyTaken()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Username is already taken.'),
+        ),
+      );
+      return;
+    }
 
-        final uid = _authRepository.currentUser?.uid;
+    try {
+      await _authRepository.createUserWithEmailAndPassword(
+        email: controller.email,
+        password: controller.password,
+      );
 
-        _databaseRepository.users.doc(uid).set({
-          "username": controller.username,
-        });
+      final uid = _authRepository.currentUser?.uid;
 
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const MelloBottomNavigationBar(),
-          ),
-        );
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(e.toString()),
-          ),
-        );
-      }
+      _databaseRepository.users.doc(uid).set({
+        "username": controller.username,
+      });
+
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const MelloBottomNavigationBar(),
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.toString()),
+        ),
+      );
     }
   }
 }

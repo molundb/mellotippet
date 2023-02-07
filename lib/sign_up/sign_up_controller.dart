@@ -1,4 +1,9 @@
+import 'package:melodifestivalen_competition/common/repositories/repositories.dart';
+import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
+
 class SignUpController {
+  final databaseRepository = getIt.get<DatabaseRepository>();
+
   late String username;
   late String email;
   late String password;
@@ -19,5 +24,13 @@ class SignUpController {
     if (password == null) return;
 
     this.password = password;
+  }
+
+  Future<bool> isUsernameAlreadyTaken() async {
+    final query = await databaseRepository.users
+        .where('username', isEqualTo: username)
+        .get();
+
+    return query.docs.isNotEmpty;
   }
 }
