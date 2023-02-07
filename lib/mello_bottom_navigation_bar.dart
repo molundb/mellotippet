@@ -6,6 +6,7 @@ import 'package:melodifestivalen_competition/styles/colors.dart';
 
 import 'rules/rules_page.dart';
 import 'score/score_page.dart';
+import 'settings/settings_page.dart';
 
 class MelloBottomNavigationBar extends StatefulWidget {
   const MelloBottomNavigationBar({super.key});
@@ -24,6 +25,7 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
     // UpcomingCompetitionsPage(),
     RulesPage(),
     ScorePage(),
+    SettingsPage(),
   ];
 
   @override
@@ -43,6 +45,7 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.edit_note_sharp),
@@ -59,6 +62,10 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
           BottomNavigationBarItem(
             icon: Icon(Icons.star),
             label: 'Score',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_box_rounded),
+            label: 'Settings',
           ),
         ],
         currentIndex: _selectedIndex,
