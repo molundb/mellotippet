@@ -55,19 +55,38 @@ class DatabaseRepository {
     );
   }
 
+  Future<int> getScore(PredictionModel result, String? uid) async {
+    return await competitions
+        .doc('heat1')
+        .collection('predictions')
+        .doc(uid)
+        .get()
+        .then(
+      (DocumentSnapshot doc) {
+        var data = doc.data();
+        if (data == null) {
+          return 0;
+        }
+
+        final prediction =
+            PredictionModel.fromJson(data as Map<String, dynamic>);
+        return _calculateScore(result, prediction);
+      },
+      onError: (e) => print("Error getting document: $e"),
+    );
+  }
+
   Future<List<UserEntity>> getUserScores() async {
-    final competitions = await getUpcomingCompetitions();
+    final competitions = await getCompetitions();
 
     // TODO: get result for correct competition
     final result = PredictionModel.fromJson(competitions.first.result);
 
-    final snapshot =
-        await this.competitions.doc('heat1').collection('predictions').get();
+    final users = await this.users.get();
 
-    final userScores = await Future.wait(snapshot.docs.map((doc) async {
-      final username = await _getUsername(doc.id);
-      final prediction = PredictionModel.fromJson(doc.data());
-      final score = _calculateScore(result, prediction);
+    final userScores = await Future.wait(users.docs.map((user) async {
+      final username = user.data()["username"];
+      final score = await getScore(result, user.id);
       return UserEntity(username: username, score: score);
     }));
 
@@ -122,7 +141,7 @@ class DatabaseRepository {
     return score;
   }
 
-  Future<List<CompetitionModel>> getUpcomingCompetitions() async {
+  Future<List<CompetitionModel>> getCompetitions() async {
     final competitionCollectionSnap = await competitions
         .withConverter(
           fromFirestore: CompetitionModel.fromFirestore,
