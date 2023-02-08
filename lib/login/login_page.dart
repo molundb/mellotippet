@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:melodifestivalen_competition/common/repositories/repositories.dart';
+import 'package:melodifestivalen_competition/common/widgets/widgets.dart';
 import 'package:melodifestivalen_competition/config/config.dart';
 import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
 import 'package:melodifestivalen_competition/login/login_controller.dart';
@@ -149,18 +150,12 @@ class _SubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 52,
-      child: ElevatedButton(
-        onPressed: () => _loginPressed(
-          context,
-          formKey,
-          state,
-        ),
-        style: ElevatedButton.styleFrom(
-          shape: const StadiumBorder(),
-        ),
-        child: const Text('Login'),
+    return CtaButton(
+      text: 'Login',
+      onPressed: () => _loginPressed(
+        context,
+        formKey,
+        state,
       ),
     );
   }
@@ -205,15 +200,9 @@ class _CreateAccountButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 52,
-      child: OutlinedButton(
-        onPressed: () => _createAccountPressed(context),
-        style: ElevatedButton.styleFrom(
-          shape: const StadiumBorder(),
-        ),
-        child: const Text('Create Account'),
-      ),
+    return SecondaryButton(
+      text: 'Create Account',
+      onPressed: () => _createAccountPressed(context),
     );
   }
 

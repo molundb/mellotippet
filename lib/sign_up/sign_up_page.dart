@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:melodifestivalen_competition/common/repositories/repositories.dart';
+import 'package:melodifestivalen_competition/common/widgets/cta_button.dart';
 import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
 import 'package:melodifestivalen_competition/mello_bottom_navigation_bar.dart';
 import 'package:melodifestivalen_competition/sign_up/sign_up_controller.dart';
@@ -137,15 +138,9 @@ class _SubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 52,
-      child: ElevatedButton(
-        onPressed: () => _submitPressed(context, formKey),
-        style: ElevatedButton.styleFrom(
-          shape: const StadiumBorder(),
-        ),
-        child: const Text('Create Account'),
-      ),
+    return CtaButton(
+      text: 'Create Account',
+      onPressed: () => _submitPressed(context, formKey),
     );
   }
 

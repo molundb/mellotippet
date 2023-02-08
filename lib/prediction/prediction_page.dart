@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:melodifestivalen_competition/common/widgets/cta_button.dart';
 import 'package:melodifestivalen_competition/common/widgets/text_form_widget.dart';
 import 'package:melodifestivalen_competition/prediction/prediction_controller.dart';
 import 'package:melodifestivalen_competition/styles/colors.dart';
@@ -94,19 +95,10 @@ class _PredictionPageState extends ConsumerState<PredictionPage> {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SizedBox(
-                  height: 52,
-                  child: ElevatedButton(
-                    onPressed: () => _submitPressed(context),
-                    style: ElevatedButton.styleFrom(
-                      shape: const StadiumBorder(),
-                    ),
-                    child: const Text(
-                      'Submit',
-                      style: TextStyle(fontSize: 24),
-                    ),
-                  ),
-                ),
+                CtaButton(
+                  text: 'Submit',
+                  onPressed: () => _submitPressed(context),
+                )
               ],
             ),
           )
