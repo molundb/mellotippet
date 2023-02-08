@@ -53,10 +53,15 @@ class _ScorePageState extends ConsumerState<ScorePage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        '${index + 1}. ${state.userScores[index].username ?? ''}',
-                        style: const TextStyle(fontSize: 24),
+                      Expanded(
+                        child: Text(
+                          '${index + 1}. ${state.userScores[index].username ?? ''}',
+                          style: const TextStyle(fontSize: 24),
+                          softWrap: false,
+                          overflow: TextOverflow.fade,
+                        ),
                       ),
+                      const SizedBox(width: 16),
                       Text(
                         '${state.userScores[index].score}',
                         style: const TextStyle(fontSize: 24),

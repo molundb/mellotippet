@@ -64,9 +64,16 @@ class DatabaseRepository {
       return UserEntity(username: username, score: score);
     }));
 
-    userScores.sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
+    final filteredUserScores = userScores.where((userScore) {
+      if (userScore.username == null) {
+        return false;
+      }
+      return !userScore.username!.contains('appletester');
+    }).toList();
 
-    return userScores;
+    filteredUserScores.sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
+
+    return filteredUserScores;
   }
 
   Future<int> _getUserScore(String? uid) async {
