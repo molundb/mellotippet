@@ -42,7 +42,7 @@ class _UpcomingCompetitionsPageState extends State<UpcomingCompetitionsPage> {
   void _getUpcomingCompetitions() async {
     final databaseRepo = getIt<DatabaseRepository>();
 
-    final competitions = await databaseRepo.getUpcomingCompetitions();
+    final competitions = await databaseRepo.getCompetitions();
     setState(() {
       this.competitions = competitions;
     });
