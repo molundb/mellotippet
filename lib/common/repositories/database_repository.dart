@@ -22,7 +22,7 @@ class DatabaseRepository {
       var uid = authRepository.currentUser?.uid;
 
       if (uid != null) {
-        await competitions.doc('heat1').collection('predictions').doc(uid).set({
+        await competitions.doc('heat2').collection('predictions').doc(uid).set({
           "finalist1": prediction.finalist1,
           "finalist2": prediction.finalist2,
           "semifinalist1": prediction.semifinalist1,
@@ -55,44 +55,49 @@ class DatabaseRepository {
     );
   }
 
-  Future<int> getScore(PredictionModel result, String? uid) async {
-    return await competitions
-        .doc('heat1')
-        .collection('predictions')
-        .doc(uid)
-        .get()
-        .then(
-      (DocumentSnapshot doc) {
-        var data = doc.data();
-        if (data == null) {
-          return 0;
-        }
-
-        final prediction =
-            PredictionModel.fromJson(data as Map<String, dynamic>);
-        return _calculateScore(result, prediction);
-      },
-      onError: (e) => print("Error getting document: $e"),
-    );
-  }
-
   Future<List<UserEntity>> getUserScores() async {
-    final competitions = await getCompetitions();
-
-    // TODO: get result for correct competition
-    final result = PredictionModel.fromJson(competitions.first.result);
-
     final users = await this.users.get();
 
     final userScores = await Future.wait(users.docs.map((user) async {
       final username = user.data()["username"];
-      final score = await getScore(result, user.id);
+      final score = await _getUserScore(user.id);
       return UserEntity(username: username, score: score);
     }));
 
     userScores.sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
 
     return userScores;
+  }
+
+  Future<int> _getUserScore(String? uid) async {
+    final competitions = await getCompetitions();
+
+    var score = 0;
+
+    for (var competition in competitions) {
+      score += await this
+          .competitions
+          .doc(competition.id)
+          .collection('predictions')
+          .doc(uid)
+          .get()
+          .then(
+        (DocumentSnapshot doc) {
+          var data = doc.data();
+          if (data == null) {
+            return 0;
+          } else {
+            final prediction =
+                PredictionModel.fromJson(data as Map<String, dynamic>);
+            var result = PredictionModel.fromJson(competition.result);
+            return _calculateScore(result, prediction);
+          }
+        },
+        onError: (e) => print("Error getting document: $e"),
+      );
+    }
+
+    return score;
   }
 
   int _calculateScore(PredictionModel result, PredictionModel prediction) {
