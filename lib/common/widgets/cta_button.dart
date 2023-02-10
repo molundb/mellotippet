@@ -19,7 +19,10 @@ class CtaButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           shape: const StadiumBorder(),
         ),
-        child: Text(text),
+        child: Text(
+          text,
+          style: const TextStyle(fontSize: 24),
+        ),
       ),
     );
   }
