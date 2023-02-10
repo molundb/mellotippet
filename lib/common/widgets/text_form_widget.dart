@@ -49,8 +49,8 @@ class TextFormFieldWidgetState extends State<TextFormFieldWidget> {
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: _borderColor),
           ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: _borderColor),
+          focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: MelloPredixColors.melloYellow),
           ),
           hintStyle: const TextStyle(
             color: Colors.grey,
@@ -74,10 +74,10 @@ class TextFormFieldWidgetState extends State<TextFormFieldWidget> {
             letterSpacing: 1.2,
           ),
           errorBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.red),
+            borderSide: BorderSide(color: MelloPredixColors.danger),
           ),
           focusedErrorBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.red),
+            borderSide: BorderSide(color: MelloPredixColors.danger),
           ),
         ),
         onSaved: widget.onSaved,
@@ -97,7 +97,7 @@ class TextFormFieldWidgetState extends State<TextFormFieldWidget> {
 
   void _onError(bool hasError) {
     final borderColor =
-        hasError ? MelloPredixColors.danger : MelloPredixColors.itemGray;
+        hasError ? MelloPredixColors.danger : MelloPredixColors.melloPurple;
     final textColor = hasError ? MelloPredixColors.danger : Colors.black;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (!mounted) return;
