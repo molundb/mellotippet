@@ -49,7 +49,15 @@ class _PredictionPageState extends ConsumerState<PredictionPage> {
                       color: MelloPredixColors.melloYellow,
                     ),
                   ),
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 64),
+                  const Text(
+                    'Please place your bets for heat 2!',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: MelloPredixColors.melloYellow,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
                   TextFormFieldWidget(
                     textInputType: TextInputType.number,
                     prefixIcon: const Icon(Icons.star),
