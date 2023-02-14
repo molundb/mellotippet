@@ -10,6 +10,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setUpGetIt(Flavor.stage);
   await AuthenticationRepository.initialize();
+  await FeatureFlagRepository.initialize();
   CrashReporting.init();
 
   runApp(ProviderScope(child: MelodifestivalenCompetitionApp()));

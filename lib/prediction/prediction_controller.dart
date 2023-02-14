@@ -7,22 +7,29 @@ import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
 class PredictionController extends StateNotifier<PredictionControllerState> {
   PredictionController({
     required this.databaseRepository,
+    required this.featureFlagRepository,
     PredictionControllerState? state,
   }) : super(state ?? PredictionControllerState.withDefaults());
 
   final DatabaseRepository databaseRepository;
+  final FeatureFlagRepository featureFlagRepository;
 
   static final provider =
-  StateNotifierProvider<PredictionController, PredictionControllerState>(
-          (ref) =>
-          PredictionController(
-            databaseRepository: getIt.get<DatabaseRepository>(),
-          ));
+      StateNotifierProvider<PredictionController, PredictionControllerState>(
+          (ref) => PredictionController(
+                databaseRepository: getIt.get<DatabaseRepository>(),
+                featureFlagRepository: getIt.get<FeatureFlagRepository>(),
+              ));
 
-  Future<void> getUsername() async {
+  Future<void> getUsernameAndCurrentCompetition() async {
     state = state.copyWith(loading: true);
     final username = await databaseRepository.getCurrentUsername();
-    state = state.copyWith(loading: false, username: username);
+    final currentCompetition = featureFlagRepository.getCurrentCompetition();
+    state = state.copyWith(
+      loading: false,
+      username: username,
+      currentCompetition: currentCompetition,
+    );
   }
 
   void setFinalist1(String? value) {
@@ -60,8 +67,10 @@ class PredictionController extends StateNotifier<PredictionControllerState> {
         prediction: state.prediction.copyWith(fifthPlace: int.parse(value)));
   }
 
-  Future<bool> submitPrediction() =>
-    databaseRepository.uploadPrediction(state.prediction);
+  Future<bool> submitPrediction() => databaseRepository.uploadPrediction(
+        state.currentCompetition,
+        state.prediction,
+      );
 
   String? validatePredictionInput(String? prediction) {
     if (prediction == null || prediction.isEmpty) {
@@ -115,27 +124,30 @@ class PredictionControllerState {
   const PredictionControllerState({
     this.loading = false,
     this.username = "",
+    this.currentCompetition = "",
     required this.prediction,
   });
 
   final bool loading;
   final String username;
+  final String currentCompetition;
   final PredictionModel prediction;
 
   PredictionControllerState copyWith({
     bool? loading,
     String? username,
+    String? currentCompetition,
     PredictionModel? prediction,
   }) {
     return PredictionControllerState(
       loading: loading ?? this.loading,
       username: username ?? this.username,
+      currentCompetition: currentCompetition ?? this.currentCompetition,
       prediction: prediction ?? this.prediction,
     );
   }
 
-  factory PredictionControllerState.withDefaults() =>
-      PredictionControllerState(
+  factory PredictionControllerState.withDefaults() => PredictionControllerState(
         prediction: PredictionModel(),
       );
 }

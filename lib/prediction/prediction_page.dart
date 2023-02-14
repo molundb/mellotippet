@@ -22,7 +22,7 @@ class _PredictionPageState extends ConsumerState<PredictionPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.getUsername();
+      controller.getUsernameAndCurrentCompetition();
     });
   }
 
@@ -50,9 +50,9 @@ class _PredictionPageState extends ConsumerState<PredictionPage> {
                     ),
                   ),
                   const SizedBox(height: 64),
-                  const Text(
-                    'Please place your bets for heat 2!',
-                    style: TextStyle(
+                  Text(
+                    'Please place your bets for ${state.currentCompetition}!',
+                    style: const TextStyle(
                       fontSize: 16,
                       color: MelloPredixColors.melloYellow,
                     ),

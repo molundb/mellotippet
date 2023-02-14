@@ -17,12 +17,12 @@ class DatabaseRepository {
   CollectionReference<Map<String, dynamic>> get competitions =>
       db.collection('competitions');
 
-  Future<bool> uploadPrediction(PredictionModel prediction) async {
+  Future<bool> uploadPrediction(String competition, PredictionModel prediction) async {
     try {
       var uid = authRepository.currentUser?.uid;
 
       if (uid != null) {
-        await competitions.doc('heat2').collection('predictions').doc(uid).set({
+        await competitions.doc(competition).collection('predictions').doc(uid).set({
           "finalist1": prediction.finalist1,
           "finalist2": prediction.finalist2,
           "semifinalist1": prediction.semifinalist1,
