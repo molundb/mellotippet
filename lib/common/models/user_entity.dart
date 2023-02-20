@@ -5,7 +5,7 @@ class UserEntity {
   });
 
   final String? username;
-  final int? score;
+  final String? score;
 
   factory UserEntity.fromJson(Map<String, dynamic> json) => UserEntity(
         username: json['username'],
