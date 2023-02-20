@@ -92,7 +92,7 @@ class DatabaseRepository {
         (DocumentSnapshot doc) {
           var data = doc.data();
           if (data == null) {
-            return 0;
+            return competition.lowestScore - 1;
           } else {
             final prediction =
                 PredictionModel.fromJson(data as Map<String, dynamic>);
