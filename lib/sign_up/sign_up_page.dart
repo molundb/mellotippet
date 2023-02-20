@@ -176,10 +176,11 @@ class _SubmitButton extends StatelessWidget {
         "username": controller.username,
       });
 
-      Navigator.of(context).pushReplacement(
+      Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
           builder: (context) => const MelloBottomNavigationBar(),
         ),
+        ModalRoute.withName('/'),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
