@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:melodifestivalen_competition/prediction/prediction_page.dart';
 import 'package:melodifestivalen_competition/score/score_controller.dart';
 import 'package:melodifestivalen_competition/styles/colors.dart';
 
@@ -28,7 +29,7 @@ class _ScorePageState extends ConsumerState<ScorePage> {
     // TODO: Figure out how to handle loading
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 64),
+      padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
       child: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
@@ -50,23 +51,32 @@ class _ScorePageState extends ConsumerState<ScorePage> {
               childCount: state.userScores.length,
               (context, index) => Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          '${index + 1}. ${state.userScores[index].username ?? ''}',
-                          style: const TextStyle(fontSize: 24),
-                          softWrap: false,
-                          overflow: TextOverflow.fade,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const PredictionPage(),
                         ),
-                      ),
-                      const SizedBox(width: 16),
-                      Text(
-                        '${state.userScores[index].score}',
-                        style: const TextStyle(fontSize: 24),
-                      ),
-                    ],
+                      );
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            '${index + 1}. ${state.userScores[index].username ?? ''}',
+                            style: const TextStyle(fontSize: 24),
+                            softWrap: false,
+                            overflow: TextOverflow.fade,
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Text(
+                          '${state.userScores[index].score}',
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 8),
                 ],

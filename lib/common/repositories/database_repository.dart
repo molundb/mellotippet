@@ -17,12 +17,17 @@ class DatabaseRepository {
   CollectionReference<Map<String, dynamic>> get competitions =>
       db.collection('competitions');
 
-  Future<bool> uploadPrediction(String competition, PredictionModel prediction) async {
+  Future<bool> uploadPrediction(
+      String competition, PredictionModel prediction) async {
     try {
       var uid = authRepository.currentUser?.uid;
 
       if (uid != null) {
-        await competitions.doc(competition).collection('predictions').doc(uid).set({
+        await competitions
+            .doc(competition)
+            .collection('predictions')
+            .doc(uid)
+            .set({
           "finalist1": prediction.finalist1,
           "finalist2": prediction.finalist2,
           "semifinalist1": prediction.semifinalist1,
@@ -71,18 +76,27 @@ class DatabaseRepository {
       return !userScore.username!.contains('appletester');
     }).toList();
 
-    filteredUserScores.sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
+    filteredUserScores.sort((a, b) {
+      if (a.score == null || b.score == null) {
+        return 0;
+      }
+      return int.parse(
+              b.score!.substring(b.score!.length - 3, b.score!.length - 1)) -
+          int.parse(
+              a.score!.substring(a.score!.length - 3, a.score!.length - 1));
+    });
 
     return filteredUserScores;
   }
 
-  Future<int> _getUserScore(String? uid) async {
+  Future<String> _getUserScore(String? uid) async {
     final competitions = await getCompetitions();
 
-    var score = 0;
+    var totalScore = 0;
+    var scoreS = '';
 
     for (var competition in competitions) {
-      score += await this
+      totalScore += await this
           .competitions
           .doc(competition.id)
           .collection('predictions')
@@ -91,20 +105,28 @@ class DatabaseRepository {
           .then(
         (DocumentSnapshot doc) {
           var data = doc.data();
+          int score;
           if (data == null) {
-            return competition.lowestScore - 1;
+            score = competition.lowestScore - 1;
           } else {
             final prediction =
                 PredictionModel.fromJson(data as Map<String, dynamic>);
             var result = PredictionModel.fromJson(competition.result);
-            return _calculateScore(result, prediction);
+            score = _calculateScore(result, prediction);
           }
+          if (score < 10) {
+            scoreS += ' ';
+          }
+          scoreS += '$score+';
+          return score;
         },
         onError: (e) => print("Error getting document: $e"),
       );
     }
 
-    return score;
+    scoreS = '${scoreS.substring(0, scoreS.length - 1)}=${totalScore}p';
+
+    return scoreS;
   }
 
   int _calculateScore(PredictionModel result, PredictionModel prediction) {
