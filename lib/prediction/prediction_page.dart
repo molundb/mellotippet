@@ -51,7 +51,7 @@ class _PredictionPageState extends ConsumerState<PredictionPage> {
                   ),
                   const SizedBox(height: 64),
                   Text(
-                    'Please place your bets for ${state.currentCompetition}!',
+                    'Please make your prediction for ${state.currentCompetition}!',
                     style: const TextStyle(
                       fontSize: 16,
                       color: MelloPredixColors.melloYellow,
