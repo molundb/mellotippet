@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:melodifestivalen_competition/prediction/prediction_page.dart';
 import 'package:melodifestivalen_competition/score/score_controller.dart';
+import 'package:melodifestivalen_competition/score/score_per_competition_page.dart';
 import 'package:melodifestivalen_competition/styles/colors.dart';
 
 class ScorePage extends ConsumerStatefulWidget {
@@ -55,17 +55,20 @@ class _ScorePageState extends ConsumerState<ScorePage> {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => const PredictionPage(),
+                          builder: (context) => ScorePerCompetitionPage(
+                            userEntity: state.userScores[index],
+                          ),
                         ),
                       );
                     },
                     child: Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        border: Border.all(color: MelloPredixColors.melloOrange),
-                        borderRadius: const BorderRadius.all(
-                            Radius.circular(5.0) //                 <--- border radius here
-                        ),
+                        border:
+                            Border.all(color: MelloPredixColors.melloOrange),
+                        borderRadius: const BorderRadius.all(Radius.circular(
+                                5.0) //                 <--- border radius here
+                            ),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
