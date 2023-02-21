@@ -6,11 +6,11 @@ import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
 
 class ScoreController extends StateNotifier<ScoreControllerState> {
   ScoreController({
-    required this.databaseRepository,
+    required DatabaseRepository databaseRepository,
     ScoreControllerState? state,
-  }) : super(state ?? ScoreControllerState.withDefaults());
+  }) : _databaseRepository = databaseRepository, super(state ?? ScoreControllerState.withDefaults());
 
-  final DatabaseRepository databaseRepository;
+  final DatabaseRepository _databaseRepository;
 
   static final provider =
       StateNotifierProvider<ScoreController, ScoreControllerState>(
@@ -20,7 +20,7 @@ class ScoreController extends StateNotifier<ScoreControllerState> {
 
   Future<void> getUserScores() async {
     state = state.copyWith(loading: true);
-    final userScores = await databaseRepository.getUserScores();
+    final userScores = await _databaseRepository.getUserScores();
     state = state.copyWith(loading: false, userScores: userScores);
   }
 }

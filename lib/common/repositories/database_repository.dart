@@ -65,8 +65,12 @@ class DatabaseRepository {
 
     final userScores = await Future.wait(users.docs.map((user) async {
       final username = user.data()["username"];
-      final score = await _getUserScore(user.id);
-      return UserEntity(username: username, score: score);
+      final userEntity = await _getUserScore(user.id);
+      return UserEntity(
+        username: username,
+        score: userEntity.score,
+        competitionToScore: userEntity.competitionToScore,
+      );
     }));
 
     final filteredUserScores = userScores.where((userScore) {
@@ -89,11 +93,13 @@ class DatabaseRepository {
     return filteredUserScores;
   }
 
-  Future<String> _getUserScore(String? uid) async {
+  Future<UserEntity> _getUserScore(String? uid) async {
     final competitions = await getCompetitions();
 
     var totalScore = 0;
     var scoreS = '';
+
+    final Map<String, int> competitionsToScore = {};
 
     for (var competition in competitions) {
       totalScore += await this
@@ -118,6 +124,9 @@ class DatabaseRepository {
             scoreS += ' ';
           }
           scoreS += '$score+';
+
+          competitionsToScore[competition.id] = score;
+
           return score;
         },
         onError: (e) => print("Error getting document: $e"),
@@ -126,7 +135,7 @@ class DatabaseRepository {
 
     scoreS = '${scoreS.substring(0, scoreS.length - 1)}=${totalScore}p';
 
-    return scoreS;
+    return UserEntity(score: scoreS, competitionToScore: competitionsToScore);
   }
 
   int _calculateScore(PredictionModel result, PredictionModel prediction) {
