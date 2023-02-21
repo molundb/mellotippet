@@ -59,26 +59,35 @@ class _ScorePageState extends ConsumerState<ScorePage> {
                         ),
                       );
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            '${index + 1}. ${state.userScores[index].username ?? ''}',
-                            style: const TextStyle(fontSize: 24),
-                            softWrap: false,
-                            overflow: TextOverflow.fade,
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: MelloPredixColors.melloOrange),
+                        borderRadius: const BorderRadius.all(
+                            Radius.circular(5.0) //                 <--- border radius here
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              '${index + 1}. ${state.userScores[index].username ?? ''}',
+                              style: const TextStyle(fontSize: 24),
+                              softWrap: false,
+                              overflow: TextOverflow.fade,
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 16),
-                        Text(
-                          '${state.userScores[index].score}',
-                          style: const TextStyle(fontSize: 20),
-                        ),
-                      ],
+                          const SizedBox(width: 16),
+                          Text(
+                            '${state.userScores[index].score}',
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 16),
                 ],
               ),
             ),
