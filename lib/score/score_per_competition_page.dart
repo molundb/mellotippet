@@ -44,6 +44,19 @@ class _ScorePerCompetitionPageState
         padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
         child: CustomScrollView(
           slivers: [
+            SliverToBoxAdapter(
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: Text(
+                    widget.userEntity.username ?? '',
+                    style: const TextStyle(
+                      fontSize: 32,
+                    ),
+                  ),
+                ),
+              ),
+            ),
             SliverList(
               delegate: SliverChildListDelegate(
                 competitionToScore.entries.map((element) {
@@ -54,9 +67,11 @@ class _ScorePerCompetitionPageState
                         decoration: BoxDecoration(
                           border:
                               Border.all(color: MelloPredixColors.melloOrange),
-                          borderRadius: const BorderRadius.all(Radius.circular(
-                                  5.0) //                 <--- border radius here
-                              ),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(
+                              5.0,
+                            ), //
+                          ),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
