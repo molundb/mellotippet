@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:melodifestivalen_competition/score/score_controller.dart';
@@ -54,8 +55,9 @@ class _ScorePageState extends ConsumerState<ScorePage> {
                   GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => ScorePerCompetitionPage(
+                        CupertinoPageRoute<bool>(
+                          builder: (BuildContext context) =>
+                              ScorePerCompetitionPage(
                             userEntity: state.userScores[index],
                           ),
                         ),
