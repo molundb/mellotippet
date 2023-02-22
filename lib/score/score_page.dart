@@ -83,9 +83,10 @@ class _ScorePageState extends ConsumerState<ScorePage> {
                           ),
                           const SizedBox(width: 16),
                           Text(
-                            '${state.userScores[index].score}',
-                            style: const TextStyle(fontSize: 20),
+                            '${state.userScores[index].totalScore}p',
+                            style: const TextStyle(fontSize: 24),
                           ),
+                          const Icon(Icons.arrow_forward_ios_rounded),
                         ],
                       ),
                     ),

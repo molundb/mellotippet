@@ -68,7 +68,8 @@ class DatabaseRepository {
       final userEntity = await _getUserScore(user.id);
       return UserEntity(
         username: username,
-        score: userEntity.score,
+        scoreS: userEntity.scoreS,
+        totalScore: userEntity.totalScore,
         competitionToScore: userEntity.competitionToScore,
       );
     }));
@@ -81,13 +82,13 @@ class DatabaseRepository {
     }).toList();
 
     filteredUserScores.sort((a, b) {
-      if (a.score == null || b.score == null) {
+      if (a.scoreS == null || b.scoreS == null) {
         return 0;
       }
       return int.parse(
-              b.score!.substring(b.score!.length - 3, b.score!.length - 1)) -
+              b.scoreS!.substring(b.scoreS!.length - 3, b.scoreS!.length - 1)) -
           int.parse(
-              a.score!.substring(a.score!.length - 3, a.score!.length - 1));
+              a.scoreS!.substring(a.scoreS!.length - 3, a.scoreS!.length - 1));
     });
 
     return filteredUserScores;
@@ -133,9 +134,13 @@ class DatabaseRepository {
       );
     }
 
-    scoreS = '${scoreS.substring(0, scoreS.length - 1)}=${totalScore}p';
+    scoreS = '${scoreS.substring(0, scoreS.length - 1)}=$totalScore';
 
-    return UserEntity(score: scoreS, competitionToScore: competitionsToScore);
+    return UserEntity(
+      scoreS: scoreS,
+      totalScore: totalScore,
+      competitionToScore: competitionsToScore,
+    );
   }
 
   int _calculateScore(PredictionModel result, PredictionModel prediction) {

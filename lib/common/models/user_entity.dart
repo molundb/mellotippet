@@ -1,29 +1,34 @@
 class UserEntity {
   const UserEntity({
     this.username,
-    this.score,
+    this.scoreS,
+    this.totalScore,
     this.competitionToScore,
   });
 
   final String? username;
-  final String? score;
+  final String? scoreS;
+  final int? totalScore;
   final Map<String, int>? competitionToScore;
 
   factory UserEntity.fromJson(Map<String, dynamic> json) => UserEntity(
         username: json['username'],
-        score: json['score'],
+        scoreS: json['scoreS'],
+        totalScore: json['totalScore'],
         competitionToScore: json['competitionToScore'],
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'username': username,
-        'score': score,
+        'score': scoreS,
+        'totalScore': totalScore,
         'competitionToScore': competitionToScore,
       };
 
   factory UserEntity.empty() => const UserEntity(
         username: null,
-        score: null,
+        scoreS: null,
+        totalScore: null,
         competitionToScore: null,
       );
 }
