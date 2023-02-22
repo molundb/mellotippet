@@ -86,9 +86,9 @@ class DatabaseRepository {
         return 0;
       }
       return int.parse(
-              b.scoreS!.substring(b.scoreS!.length - 3, b.scoreS!.length - 1)) -
+              b.scoreS!.substring(b.scoreS!.length - 2, b.scoreS!.length - 1)) -
           int.parse(
-              a.scoreS!.substring(a.scoreS!.length - 3, a.scoreS!.length - 1));
+              a.scoreS!.substring(a.scoreS!.length - 2, a.scoreS!.length - 1));
     });
 
     return filteredUserScores;
