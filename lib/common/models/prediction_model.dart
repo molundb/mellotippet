@@ -38,3 +38,15 @@ class PredictionModel {
     );
   }
 }
+
+extension PredictionToMap on PredictionModel {
+  Map<int, String> toMap() {
+    return <int, String>{
+      finalist1!: 'F',
+      finalist2!: 'F',
+      semifinalist1!: 'SF',
+      semifinalist2!: 'SF',
+      fifthPlace!: '5th',
+    };
+  }
+}

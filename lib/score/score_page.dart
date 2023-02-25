@@ -58,7 +58,7 @@ class _ScorePageState extends ConsumerState<ScorePage> {
                         CupertinoPageRoute<bool>(
                           builder: (BuildContext context) =>
                               ScorePerCompetitionPage(
-                            userEntity: state.userScores[index],
+                            userEntity: state.userScores[index]
                           ),
                         ),
                       );
