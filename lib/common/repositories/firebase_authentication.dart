@@ -19,7 +19,7 @@ class AuthenticationRepository {
 
   auth.User? get currentUser => firebaseAuth.currentUser;
 
-  Future<UserEntity> signInAnonymously() async {
+  Future<UserScoreEntity> signInAnonymously() async {
     try {
       await firebaseAuth.signInAnonymously();
 
@@ -29,7 +29,7 @@ class AuthenticationRepository {
     }
   }
 
-  Future<UserEntity> createUserWithEmailAndPassword({
+  Future<UserScoreEntity> createUserWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
@@ -46,7 +46,7 @@ class AuthenticationRepository {
   }
 
   @override
-  Future<UserEntity> signInWithEmailAndPassword({
+  Future<UserScoreEntity> signInWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
@@ -62,9 +62,9 @@ class AuthenticationRepository {
     }
   }
 
-  UserEntity _mapFirebaseUser(auth.User? user) {
+  UserScoreEntity _mapFirebaseUser(auth.User? user) {
     if (user == null) {
-      return UserEntity.empty();
+      return UserScoreEntity.empty();
     }
 
     final map = <String, dynamic>{
@@ -75,7 +75,7 @@ class AuthenticationRepository {
       'emailVerified': user.emailVerified,
       'isAnonymous': user.isAnonymous,
     };
-    return UserEntity.fromJson(map);
+    return UserScoreEntity.fromJson(map);
   }
 
   AuthError _determineError(auth.FirebaseAuthException exception) {

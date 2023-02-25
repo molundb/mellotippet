@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:melodifestivalen_competition/common/models/models.dart';
 
 class CompetitionModel {
   String id;
@@ -6,7 +7,7 @@ class CompetitionModel {
   // DateTime time;
   // String? locationName;
   int lowestScore;
-  Map<String, dynamic> result;
+  PredictionModel result;
   // List<PredictionModel> predictions;
 
   CompetitionModel({
@@ -30,7 +31,7 @@ class CompetitionModel {
       // time: (data?['time'] as Timestamp).toDate(),
       // locationName: data?['locationName'],
       lowestScore: data?['lowestScore'],
-      result: data?['result'],
+      result: PredictionModel.fromJson(data?['result']),
       // predictions: data?['predictions']((document) {
       //   PredictionModel.fromJson(document);
       // }),

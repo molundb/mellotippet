@@ -1,34 +1,37 @@
-class UserEntity {
-  const UserEntity({
+import 'package:melodifestivalen_competition/common/models/models.dart';
+
+class UserScoreEntity {
+  const UserScoreEntity({
     this.username,
-    this.scoreS,
+    this.competitionToPrediction,
     this.totalScore,
     this.competitionToScore,
   });
 
   final String? username;
-  final String? scoreS;
   final int? totalScore;
   final Map<String, int>? competitionToScore;
+  final Map<CompetitionModel, PredictionModel?>? competitionToPrediction;
 
-  factory UserEntity.fromJson(Map<String, dynamic> json) => UserEntity(
+  factory UserScoreEntity.fromJson(Map<String, dynamic> json) =>
+      UserScoreEntity(
         username: json['username'],
-        scoreS: json['scoreS'],
         totalScore: json['totalScore'],
         competitionToScore: json['competitionToScore'],
+        competitionToPrediction: json['competitionToScore'],
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'username': username,
-        'score': scoreS,
         'totalScore': totalScore,
         'competitionToScore': competitionToScore,
+        'competitionToPrediction': competitionToPrediction,
       };
 
-  factory UserEntity.empty() => const UserEntity(
+  factory UserScoreEntity.empty() => const UserScoreEntity(
         username: null,
-        scoreS: null,
         totalScore: null,
         competitionToScore: null,
+        competitionToPrediction: null,
       );
 }
