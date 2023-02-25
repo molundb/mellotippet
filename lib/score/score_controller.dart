@@ -44,7 +44,7 @@ class ScoreController extends StateNotifier<ScoreControllerState> {
     }));
 
     final filteredUserScores = _filterScores(userScores);
-    // _sortScores(filteredUserScores);
+    _sortScores(filteredUserScores);
 
     return filteredUserScores;
   }
@@ -69,16 +69,15 @@ class ScoreController extends StateNotifier<ScoreControllerState> {
         return !userScore.username!.contains('appletester');
       }).toList();
 
-  // void _sortScores(List<UserScoreEntity> filteredUserScores) =>
-  //     filteredUserScores.sort((a, b) {
-  //       if (a.scoreS == null || b.scoreS == null) {
-  //         return 0;
-  //       }
-  //       return int.parse(b.scoreS!
-  //               .substring(b.scoreS!.length - 2, b.scoreS!.length - 1)) -
-  //           int.parse(a.scoreS!
-  //               .substring(a.scoreS!.length - 2, a.scoreS!.length - 1));
-  //     });
+  void _sortScores(List<UserScoreEntity> filteredUserScores) =>
+      filteredUserScores.sort((a, b) {
+        var aTotalScore = a.totalScore;
+        var bTotalScore = b.totalScore;
+        if (aTotalScore == null || bTotalScore == null) {
+          return 0;
+        }
+        return bTotalScore - aTotalScore;
+      });
 
   Future<Map<CompetitionModel, PredictionModel?>> _getUserPredictions(
       String? uid) async {
