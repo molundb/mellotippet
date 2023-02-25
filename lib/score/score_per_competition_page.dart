@@ -37,7 +37,7 @@ class _ScorePerCompetitionPageState
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          'Score Detail',
+          'Scores',
           style: TextStyle(
             color: MelloPredixColors.melloYellow,
             fontSize: 32,
