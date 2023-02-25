@@ -67,9 +67,9 @@ class _ScoreForCompetitionPageState
               child: Column(
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
-                      Text(''),
+                      Text('                    '),
                       Text('Result'),
                       Text('Predix'),
                       Text('Points'),
@@ -88,7 +88,7 @@ class _ScoreForCompetitionPageState
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Final'),
+                        const Text('Final       '),
                         Text(widget.result.finalist1.toString()),
                         Text(predictionMap[widget.result.finalist1] ?? '-'),
                         Text(
@@ -109,7 +109,7 @@ class _ScoreForCompetitionPageState
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Final'),
+                        const Text('Final       '),
                         Text(widget.result.finalist2.toString()),
                         Text(predictionMap[widget.result.finalist2] ?? '-'),
                         Text(
