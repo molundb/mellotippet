@@ -69,17 +69,12 @@ class _ScorePerCompetitionPageState
                       Navigator.of(context).push(
                         CupertinoPageRoute<bool>(
                           builder: (BuildContext context) {
-                            // Get result
-                            // get prediction
-                            // get score per prediction
-
                             final competition = competitionToPrediction.keys.firstWhere((e) =>
                             e.id == competitionIdToScore.key);
-                            final result = competition.result;
                             final prediction = competitionToPrediction[competition];
 
                             return ScoreForCompetitionPage(
-                              result: result,
+                              competition: competition,
                               prediction: prediction,
                             );
                           },
