@@ -40,7 +40,6 @@ class _PredictionPageState extends ConsumerState<PredictionPage> {
             child: Form(
               key: _formKey,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
                     'Welcome, ${state.username}!',

@@ -11,10 +11,6 @@ class ScoreForCompetitionPage extends ConsumerStatefulWidget {
   final CompetitionModel competition;
   final PredictionModel? prediction;
 
-  // Result
-  // User prediction
-  // User Score?
-
   const ScoreForCompetitionPage({
     required this.competition,
     required this.prediction,
@@ -40,9 +36,9 @@ class _ScoreForCompetitionPageState
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          'Score Detail',
-          style: TextStyle(
+        title: Text(
+          competition.id,
+          style: const TextStyle(
             color: MelloPredixColors.melloYellow,
             fontSize: 32,
           ),
@@ -132,30 +128,33 @@ class _ScoreForCompetitionPageState
     );
   }
 
-  Container _buildRow({
+  Widget _buildRow({
     required String position,
     required String? prediction,
     required int score,
     required int? result,
   }) {
-    return Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        border: Border.all(color: MelloPredixColors.melloOrange),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(
-            5.0,
-          ), //
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          border: Border.all(color: MelloPredixColors.melloOrange),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(
+              5.0,
+            ), //
+          ),
         ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(position),
-          Text(result.toString()),
-          Text(prediction ?? '-'),
-          Text('${score}p'),
-        ],
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(position),
+            Text(result.toString()),
+            Text(prediction ?? '-'),
+            Text('${score}p'),
+          ],
+        ),
       ),
     );
   }
