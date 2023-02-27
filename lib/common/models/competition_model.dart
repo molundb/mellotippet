@@ -30,7 +30,7 @@ class CompetitionModel {
       // participants: null,
       // time: (data?['time'] as Timestamp).toDate(),
       // locationName: data?['locationName'],
-      lowestScore: data?['lowestScore'],
+      lowestScore: data?['lowestScore'] ?? -1,
       result: PredictionModel.fromJson(data?['result']),
       // predictions: data?['predictions']((document) {
       //   PredictionModel.fromJson(document);
