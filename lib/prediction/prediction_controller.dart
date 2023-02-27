@@ -60,13 +60,6 @@ class PredictionController extends StateNotifier<PredictionControllerState> {
         prediction: state.prediction.copyWith(semifinalist2: int.parse(value)));
   }
 
-  void setFifthPlace(String? value) {
-    if (value == null || value.isEmpty) return;
-
-    state = state.copyWith(
-        prediction: state.prediction.copyWith(fifthPlace: int.parse(value)));
-  }
-
   Future<bool> submitPrediction() => databaseRepository.uploadPrediction(
         state.currentCompetition,
         state.prediction,
@@ -102,7 +95,6 @@ class PredictionController extends StateNotifier<PredictionControllerState> {
       state.prediction.finalist2!,
       state.prediction.semifinalist1!,
       state.prediction.semifinalist2!,
-      state.prediction.fifthPlace!,
     ];
 
     List<int> tempPredictions = [];

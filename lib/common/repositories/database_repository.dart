@@ -35,9 +35,8 @@ class DatabaseRepository {
         await predictionsForCompetition(competitionId).doc(uid).set({
           "finalist1": prediction.finalist1,
           "finalist2": prediction.finalist2,
-          "semifinalist1": prediction.semifinalist1,
-          "semifinalist2": prediction.semifinalist2,
-          "fifthPlace": prediction.fifthPlace,
+          "finalist3": prediction.semifinalist1,
+          "finalist4": prediction.semifinalist2,
         });
 
         return true;
