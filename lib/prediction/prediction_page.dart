@@ -51,7 +51,7 @@ class _PredictionPageState extends ConsumerState<PredictionPage> {
                   ),
                   const SizedBox(height: 64),
                   Text(
-                    'Please make your prediction for ${state.currentCompetition}!',
+                    'Please make your prediction for the ${state.currentCompetition}!',
                     style: const TextStyle(
                       fontSize: 16,
                       color: MelloPredixColors.melloYellow,
@@ -74,23 +74,16 @@ class _PredictionPageState extends ConsumerState<PredictionPage> {
                   ),
                   TextFormFieldWidget(
                     textInputType: TextInputType.number,
-                    prefixIcon: const Icon(Icons.star_border),
-                    hintText: 'Semifinalist',
+                    prefixIcon: const Icon(Icons.star),
+                    hintText: 'Finalist',
                     onSaved: controller.setSemifinalist1,
                     validator: controller.validatePredictionInput,
                   ),
                   TextFormFieldWidget(
                     textInputType: TextInputType.number,
-                    prefixIcon: const Icon(Icons.star_border),
-                    hintText: 'Semifinalist',
+                    prefixIcon: const Icon(Icons.star),
+                    hintText: 'Finalist',
                     onSaved: controller.setSemifinalist2,
-                    validator: controller.validatePredictionInput,
-                  ),
-                  TextFormFieldWidget(
-                    textInputType: TextInputType.number,
-                    prefixIcon: const Icon(Icons.five_g_outlined),
-                    hintText: 'Fifth place',
-                    onSaved: controller.setFifthPlace,
                     validator: controller.validatePredictionInput,
                   ),
                 ],
