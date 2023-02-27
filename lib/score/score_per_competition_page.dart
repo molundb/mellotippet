@@ -36,9 +36,9 @@ class _ScorePerCompetitionPageState
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          'Scores',
-          style: TextStyle(
+        title: Text(
+          widget.userEntity.username ?? '',
+          style: const TextStyle(
             color: MelloPredixColors.melloYellow,
             fontSize: 32,
           ),
@@ -48,19 +48,6 @@ class _ScorePerCompetitionPageState
         padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
         child: CustomScrollView(
           slivers: [
-            SliverToBoxAdapter(
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0),
-                  child: Text(
-                    widget.userEntity.username ?? '',
-                    style: const TextStyle(
-                      fontSize: 32,
-                    ),
-                  ),
-                ),
-              ),
-            ),
             SliverList(
               delegate: SliverChildListDelegate(
                 competitionIdsToScore.entries.map((competitionIdToScore) {
