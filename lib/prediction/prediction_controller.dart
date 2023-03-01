@@ -50,14 +50,14 @@ class PredictionController extends StateNotifier<PredictionControllerState> {
     if (value == null || value.isEmpty) return;
 
     state = state.copyWith(
-        prediction: state.prediction.copyWith(semifinalist1: int.parse(value)));
+        prediction: state.prediction.copyWith(finalist1: int.parse(value)));
   }
 
   void setSemifinalist2(String? value) {
     if (value == null || value.isEmpty) return;
 
     state = state.copyWith(
-        prediction: state.prediction.copyWith(semifinalist2: int.parse(value)));
+        prediction: state.prediction.copyWith(finalist2: int.parse(value)));
   }
 
   Future<bool> submitPrediction() => databaseRepository.uploadPrediction(
@@ -93,8 +93,8 @@ class PredictionController extends StateNotifier<PredictionControllerState> {
     final List<int> predictions = [
       state.prediction.finalist1!,
       state.prediction.finalist2!,
-      state.prediction.semifinalist1!,
-      state.prediction.semifinalist2!,
+      state.prediction.finalist3!,
+      state.prediction.finalist4!,
     ];
 
     List<int> tempPredictions = [];
@@ -123,13 +123,13 @@ class PredictionControllerState {
   final bool loading;
   final String username;
   final String currentCompetition;
-  final HeatPredictionModel prediction;
+  final SemifinalPredictionModel prediction;
 
   PredictionControllerState copyWith({
     bool? loading,
     String? username,
     String? currentCompetition,
-    HeatPredictionModel? prediction,
+    SemifinalPredictionModel? prediction,
   }) {
     return PredictionControllerState(
       loading: loading ?? this.loading,
@@ -140,6 +140,6 @@ class PredictionControllerState {
   }
 
   factory PredictionControllerState.withDefaults() => PredictionControllerState(
-        prediction: HeatPredictionModel(),
+        prediction: SemifinalPredictionModel(),
       );
 }

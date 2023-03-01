@@ -1,4 +1,6 @@
-class HeatPredictionModel {
+import 'package:melodifestivalen_competition/common/models/prediction_model.dart';
+
+class HeatPredictionModel extends PredictionModel {
   HeatPredictionModel({
     this.finalist1,
     this.finalist2,
@@ -39,7 +41,7 @@ class HeatPredictionModel {
   }
 }
 
-extension PredictionToMap on HeatPredictionModel {
+extension HeatPredictionToMap on HeatPredictionModel {
   Map<int, String> toMap() {
     return <int, String>{
       finalist1!: 'F',

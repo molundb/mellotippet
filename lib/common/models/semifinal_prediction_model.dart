@@ -1,4 +1,6 @@
-class SemifinalPredictionModel {
+import 'package:melodifestivalen_competition/common/models/prediction_model.dart';
+
+class SemifinalPredictionModel extends PredictionModel {
   SemifinalPredictionModel({
     this.finalist1,
     this.finalist2,
@@ -34,7 +36,7 @@ class SemifinalPredictionModel {
   }
 }
 
-extension PredictionToMap on SemifinalPredictionModel {
+extension SemifinalPredictionToMap on SemifinalPredictionModel {
   Map<int, String> toMap() {
     return <int, String>{
       finalist1!: 'F',
