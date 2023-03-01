@@ -26,7 +26,7 @@ class DatabaseRepository {
 
   Future<bool> uploadPrediction(
     String competitionId,
-    HeatPredictionModel prediction,
+    SemifinalPredictionModel prediction,
   ) async {
     try {
       var uid = authRepository.currentUser?.uid;
@@ -35,8 +35,8 @@ class DatabaseRepository {
         await predictionsForCompetition(competitionId).doc(uid).set({
           "finalist1": prediction.finalist1,
           "finalist2": prediction.finalist2,
-          "finalist3": prediction.semifinalist1,
-          "finalist4": prediction.semifinalist2,
+          "finalist3": prediction.finalist3,
+          "finalist4": prediction.finalist4,
         });
 
         return true;

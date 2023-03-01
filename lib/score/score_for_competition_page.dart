@@ -9,7 +9,7 @@ import 'package:melodifestivalen_competition/styles/colors.dart';
 
 class ScoreForCompetitionPage extends ConsumerStatefulWidget {
   final CompetitionModel competition;
-  final HeatPredictionModel? prediction;
+  final PredictionModel? prediction;
 
   const ScoreForCompetitionPage({
     required this.competition,
@@ -30,8 +30,27 @@ class _ScoreForCompetitionPageState
   @override
   Widget build(BuildContext context) {
     final competition = widget.competition;
-    final prediction = widget.prediction;
-    final predictionMap = prediction?.toMap();
+    var prediction;
+    var result;
+    final Map<int, String>? predictionMap;
+
+    switch (competition.type) {
+      case CompetitionType.theFinal:
+        result = competition.result as HeatPredictionModel;
+        prediction = widget.prediction as HeatPredictionModel?;
+        predictionMap = (prediction as HeatPredictionModel?)?.toMap();
+        break;
+      case CompetitionType.semifinal:
+        result = competition.result as SemifinalPredictionModel;
+        prediction = widget.prediction as SemifinalPredictionModel?;
+        predictionMap = (prediction as SemifinalPredictionModel?)?.toMap();
+        break;
+      case CompetitionType.heat:
+        result = competition.result as HeatPredictionModel;
+        prediction = widget.prediction as HeatPredictionModel?;
+        predictionMap = (prediction as HeatPredictionModel?)?.toMap();
+        break;
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -70,54 +89,106 @@ class _ScoreForCompetitionPageState
                             Text('Points'),
                           ],
                         ),
-                        _buildRow(
-                          position: "Final       ",
-                          prediction: predictionMap != null
-                              ? predictionMap[competition.result.finalist1]
-                              : null,
-                          score: _getFinalistScore(
-                            competition.lowestScore,
-                            competition.result.finalist1!,
-                            prediction,
+                        if (competition.type == CompetitionType.semifinal) ...[
+                          _buildRow(
+                            position: "Final       ",
+                            prediction: predictionMap != null
+                                ? predictionMap[result.finalist1]
+                                : null,
+                            score: _getSemifinalistFinalistScore(
+                              competition.lowestScore,
+                              result.finalist1!,
+                              prediction,
+                            ),
+                            result: result.finalist1,
                           ),
-                          result: competition.result.finalist1,
-                        ),
-                        _buildRow(
-                          position: "Final       ",
-                          prediction: predictionMap != null
-                              ? predictionMap[competition.result.finalist1]
-                              : null,
-                          score: _getFinalistScore(
-                            competition.lowestScore,
-                            competition.result.finalist2!,
-                            prediction,
+                          _buildRow(
+                            position: "Final       ",
+                            prediction: predictionMap != null
+                                ? predictionMap[result.finalist2]
+                                : null,
+                            score: _getSemifinalistFinalistScore(
+                              competition.lowestScore,
+                              result.finalist2!,
+                              prediction,
+                            ),
+                            result: result.finalist2,
                           ),
-                          result: competition.result.finalist2,
-                        ),
-                        _buildRow(
-                          position: "Semifinal",
-                          prediction: predictionMap != null
-                              ? predictionMap[competition.result.semifinalist1]
-                              : null,
-                          score: _getSemifinalistScore(
-                            competition.lowestScore,
-                            competition.result.semifinalist1!,
-                            prediction,
+                          _buildRow(
+                            position: "Final       ",
+                            prediction: predictionMap != null
+                                ? predictionMap[result.finalist3]
+                                : null,
+                            score: _getSemifinalistFinalistScore(
+                              competition.lowestScore,
+                              result.finalist3!,
+                              prediction,
+                            ),
+                            result: result.finalist3,
                           ),
-                          result: competition.result.semifinalist1,
-                        ),
-                        _buildRow(
-                          position: "Semifinal",
-                          prediction: predictionMap != null
-                              ? predictionMap[competition.result.semifinalist2]
-                              : null,
-                          score: _getSemifinalistScore(
-                            competition.lowestScore,
-                            competition.result.semifinalist2!,
-                            prediction,
+                          _buildRow(
+                            position: "Final       ",
+                            prediction: predictionMap != null
+                                ? predictionMap[result.finalist4]
+                                : null,
+                            score: _getSemifinalistFinalistScore(
+                              competition.lowestScore,
+                              result.finalist4!,
+                              prediction,
+                            ),
+                            result: result.finalist4,
+                          )
+                        ] else if (competition.type ==
+                            CompetitionType.heat) ...[
+                          _buildRow(
+                            position: "Final       ",
+                            prediction: predictionMap != null
+                                ? predictionMap[result.finalist1]
+                                : null,
+                            score: _getHeatFinalistScore(
+                              competition.lowestScore,
+                              result.finalist1!,
+                              prediction,
+                            ),
+                            result: result.finalist1,
                           ),
-                          result: competition.result.semifinalist2,
-                        ),
+                          _buildRow(
+                            position: "Final       ",
+                            prediction: predictionMap != null
+                                ? predictionMap[result.finalist2]
+                                : null,
+                            score: _getHeatFinalistScore(
+                              competition.lowestScore,
+                              result.finalist2!,
+                              prediction,
+                            ),
+                            result: result.finalist2,
+                          ),
+                          _buildRow(
+                            position: "Semifinal",
+                            prediction: predictionMap != null
+                                ? predictionMap[result.semifinalist1]
+                                : null,
+                            score: _getHeatSemifinalistScore(
+                              competition.lowestScore,
+                              result.semifinalist1!,
+                              prediction,
+                            ),
+                            result: result.semifinalist1,
+                          ),
+                          _buildRow(
+                            position: "Semifinal",
+                            prediction: predictionMap != null
+                                ? predictionMap[result.semifinalist2]
+                                : null,
+                            score: _getHeatSemifinalistScore(
+                              competition.lowestScore,
+                              result.semifinalist2!,
+                              prediction,
+                            ),
+                            result: result.semifinalist2,
+                          )
+                        ],
                         const SizedBox(height: 16),
                       ],
                     ),
@@ -159,7 +230,7 @@ class _ScoreForCompetitionPageState
     );
   }
 
-  int _getSemifinalistScore(
+  int _getHeatSemifinalistScore(
     int lowestScore,
     int semifinalist,
     HeatPredictionModel? prediction,
@@ -168,10 +239,10 @@ class _ScoreForCompetitionPageState
       return lowestScore - 1;
     }
 
-    return calculateSemifinalistScore(semifinalist, prediction);
+    return calculateHeatSemifinalistScore(semifinalist, prediction);
   }
 
-  int _getFinalistScore(
+  int _getHeatFinalistScore(
     int lowestScore,
     int finalist,
     HeatPredictionModel? prediction,
@@ -180,6 +251,25 @@ class _ScoreForCompetitionPageState
       return lowestScore - 1;
     }
 
-    return calculateFinalistScore(finalist, prediction);
+    return calculateHeatFinalistScore(finalist, prediction);
+  }
+
+  int _getSemifinalistFinalistScore(
+    int lowestScore,
+    int finalist,
+    SemifinalPredictionModel? prediction,
+  ) {
+    if (prediction == null) {
+      return lowestScore;
+    }
+
+    final predictions = [
+      prediction.finalist1,
+      prediction.finalist2,
+      prediction.finalist3,
+      prediction.finalist4,
+    ];
+
+    return calculateSemifinalFinalistScore(finalist, predictions);
   }
 }

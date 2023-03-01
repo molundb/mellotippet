@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:melodifestivalen_competition/common/models/models.dart';
 import 'package:melodifestivalen_competition/common/repositories/repositories.dart';
 import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
 import 'package:melodifestivalen_competition/score/score_calculator.dart';
-import 'package:collection/collection.dart';
 
 class ScoreController extends StateNotifier<ScoreControllerState> {
   ScoreController({
@@ -50,14 +50,14 @@ class ScoreController extends StateNotifier<ScoreControllerState> {
   }
 
   int _calculateTotalScore(
-      Map<CompetitionModel, HeatPredictionModel?> userPredictions) {
+      Map<CompetitionModel, PredictionModel?> userPredictions) {
     return userPredictions.entries
         .map((e) => calculateScore(e.key, e.value))
         .sum;
   }
 
   Map<String, int> _calculateCompetitionToScore(
-          Map<CompetitionModel, HeatPredictionModel?> competitionToPrediction) =>
+          Map<CompetitionModel, PredictionModel?> competitionToPrediction) =>
       competitionToPrediction
           .map((key, value) => MapEntry(key.id, calculateScore(key, value)));
 
@@ -79,11 +79,12 @@ class ScoreController extends StateNotifier<ScoreControllerState> {
         return bTotalScore - aTotalScore;
       });
 
-  Future<Map<CompetitionModel, HeatPredictionModel?>> _getUserPredictions(
-      String? uid) async {
+  Future<Map<CompetitionModel, PredictionModel?>> _getUserPredictions(
+    String? uid,
+  ) async {
     final competitions = await _databaseRepository.getCompetitions();
 
-    final Map<CompetitionModel, HeatPredictionModel?> competitionsToPrediction = {};
+    final Map<CompetitionModel, PredictionModel?> competitionsToPrediction = {};
 
     for (var competition in competitions) {
       await _databaseRepository
@@ -93,9 +94,22 @@ class ScoreController extends StateNotifier<ScoreControllerState> {
           .then(
         (DocumentSnapshot doc) {
           var data = doc.data();
-          HeatPredictionModel? prediction;
+
+          PredictionModel? prediction;
+
           if (data != null) {
-            prediction = HeatPredictionModel.fromJson(data as Map<String, dynamic>);
+            switch (competition.type) {
+              case CompetitionType.theFinal:
+                break;
+              case CompetitionType.semifinal:
+                prediction = SemifinalPredictionModel.fromJson(
+                    data as Map<String, dynamic>);
+                break;
+              case CompetitionType.heat:
+                prediction =
+                    HeatPredictionModel.fromJson(data as Map<String, dynamic>);
+                break;
+            }
           }
           competitionsToPrediction[competition] = prediction;
         },

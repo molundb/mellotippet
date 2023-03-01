@@ -3,11 +3,13 @@ import 'package:melodifestivalen_competition/common/models/models.dart';
 
 class CompetitionModel {
   String id;
+  CompetitionType type;
   int lowestScore;
-  HeatPredictionModel result;
+  PredictionModel result;
 
   CompetitionModel({
     required this.id,
+    required this.type,
     required this.lowestScore,
     required this.result,
   });
@@ -17,14 +19,39 @@ class CompetitionModel {
     SnapshotOptions? options,
   ) {
     final data = snapshot.data();
+
+    CompetitionType type;
+    PredictionModel result;
+    switch (snapshot.id) {
+      // case 'final':
+      //   type = CompetitionType.theFinal;
+      //   result = FinalPredictionModel.fromJson(data?['result']);
+      //   break;
+      case 'semifinal':
+        type = CompetitionType.semifinal;
+        result = SemifinalPredictionModel.fromJson(data?['result']);
+        break;
+      default:
+        type = CompetitionType.heat;
+        result = HeatPredictionModel.fromJson(data?['result']);
+        break;
+    }
+
     return CompetitionModel(
       id: snapshot.id,
+      type: type,
       lowestScore: data?['lowestScore'] ?? -1,
-      result: HeatPredictionModel.fromJson(data?['result']),
+      result: result,
     );
   }
 
   Map<String, dynamic> toFirestore() {
     return {};
   }
+}
+
+enum CompetitionType {
+  heat,
+  semifinal,
+  theFinal,
 }
