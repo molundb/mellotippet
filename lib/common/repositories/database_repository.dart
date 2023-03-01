@@ -26,7 +26,7 @@ class DatabaseRepository {
 
   Future<bool> uploadPrediction(
     String competitionId,
-    PredictionModel prediction,
+    HeatPredictionModel prediction,
   ) async {
     try {
       var uid = authRepository.currentUser?.uid;

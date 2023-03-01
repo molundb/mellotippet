@@ -1,6 +1,6 @@
 import 'package:melodifestivalen_competition/common/models/models.dart';
 
-int calculateScore(CompetitionModel competition, PredictionModel? prediction) {
+int calculateScore(CompetitionModel competition, HeatPredictionModel? prediction) {
   if (prediction == null) {
     return competition.lowestScore -1;
   }
@@ -8,7 +8,7 @@ int calculateScore(CompetitionModel competition, PredictionModel? prediction) {
   return _calculateScoreWithResult(competition.result, prediction);
 }
 
-int _calculateScoreWithResult(PredictionModel result, PredictionModel prediction) {
+int _calculateScoreWithResult(HeatPredictionModel result, HeatPredictionModel prediction) {
   var score = 0;
 
   score += calculateFinalistScore(result.finalist1, prediction);
@@ -21,7 +21,7 @@ int _calculateScoreWithResult(PredictionModel result, PredictionModel prediction
 
 int calculateFinalistScore(
   int? finalist,
-  PredictionModel prediction,
+  HeatPredictionModel prediction,
 ) {
   var score = 0;
 
@@ -38,7 +38,7 @@ int calculateFinalistScore(
 
 int calculateSemifinalistScore(
   int? semifinalist,
-  PredictionModel prediction,
+  HeatPredictionModel prediction,
 ) {
   var score = 0;
 

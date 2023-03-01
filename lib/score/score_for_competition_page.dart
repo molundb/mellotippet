@@ -9,7 +9,7 @@ import 'package:melodifestivalen_competition/styles/colors.dart';
 
 class ScoreForCompetitionPage extends ConsumerStatefulWidget {
   final CompetitionModel competition;
-  final PredictionModel? prediction;
+  final HeatPredictionModel? prediction;
 
   const ScoreForCompetitionPage({
     required this.competition,
@@ -162,7 +162,7 @@ class _ScoreForCompetitionPageState
   int _getSemifinalistScore(
     int lowestScore,
     int semifinalist,
-    PredictionModel? prediction,
+    HeatPredictionModel? prediction,
   ) {
     if (prediction == null) {
       return lowestScore - 1;
@@ -174,7 +174,7 @@ class _ScoreForCompetitionPageState
   int _getFinalistScore(
     int lowestScore,
     int finalist,
-    PredictionModel? prediction,
+    HeatPredictionModel? prediction,
   ) {
     if (prediction == null) {
       return lowestScore - 1;

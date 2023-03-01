@@ -50,14 +50,14 @@ class ScoreController extends StateNotifier<ScoreControllerState> {
   }
 
   int _calculateTotalScore(
-      Map<CompetitionModel, PredictionModel?> userPredictions) {
+      Map<CompetitionModel, HeatPredictionModel?> userPredictions) {
     return userPredictions.entries
         .map((e) => calculateScore(e.key, e.value))
         .sum;
   }
 
   Map<String, int> _calculateCompetitionToScore(
-          Map<CompetitionModel, PredictionModel?> competitionToPrediction) =>
+          Map<CompetitionModel, HeatPredictionModel?> competitionToPrediction) =>
       competitionToPrediction
           .map((key, value) => MapEntry(key.id, calculateScore(key, value)));
 
@@ -79,11 +79,11 @@ class ScoreController extends StateNotifier<ScoreControllerState> {
         return bTotalScore - aTotalScore;
       });
 
-  Future<Map<CompetitionModel, PredictionModel?>> _getUserPredictions(
+  Future<Map<CompetitionModel, HeatPredictionModel?>> _getUserPredictions(
       String? uid) async {
     final competitions = await _databaseRepository.getCompetitions();
 
-    final Map<CompetitionModel, PredictionModel?> competitionsToPrediction = {};
+    final Map<CompetitionModel, HeatPredictionModel?> competitionsToPrediction = {};
 
     for (var competition in competitions) {
       await _databaseRepository
@@ -93,9 +93,9 @@ class ScoreController extends StateNotifier<ScoreControllerState> {
           .then(
         (DocumentSnapshot doc) {
           var data = doc.data();
-          PredictionModel? prediction;
+          HeatPredictionModel? prediction;
           if (data != null) {
-            prediction = PredictionModel.fromJson(data as Map<String, dynamic>);
+            prediction = HeatPredictionModel.fromJson(data as Map<String, dynamic>);
           }
           competitionsToPrediction[competition] = prediction;
         },
