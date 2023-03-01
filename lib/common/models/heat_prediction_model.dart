@@ -1,5 +1,5 @@
-class PredictionModel {
-  PredictionModel({
+class HeatPredictionModel {
+  HeatPredictionModel({
     this.finalist1,
     this.finalist2,
     this.semifinalist1,
@@ -13,8 +13,8 @@ class PredictionModel {
   int? semifinalist2;
   int? fifthPlace;
 
-  factory PredictionModel.fromJson(Map<String, dynamic> json) =>
-      PredictionModel(
+  factory HeatPredictionModel.fromJson(Map<String, dynamic> json) =>
+      HeatPredictionModel(
         finalist1: json['finalist1'] ?? -1,
         finalist2: json['finalist2'] ?? -1,
         semifinalist1: json['semifinalist1'] ?? -1,
@@ -22,14 +22,14 @@ class PredictionModel {
         fifthPlace: json['fifthPlace'] ?? -1,
       );
 
-  PredictionModel copyWith({
+  HeatPredictionModel copyWith({
     int? finalist1,
     int? finalist2,
     int? semifinalist1,
     int? semifinalist2,
     int? fifthPlace,
   }) {
-    return PredictionModel(
+    return HeatPredictionModel(
       finalist1: finalist1 ?? this.finalist1,
       finalist2: finalist2 ?? this.finalist2,
       semifinalist1: semifinalist1 ?? this.semifinalist1,
@@ -39,7 +39,7 @@ class PredictionModel {
   }
 }
 
-extension PredictionToMap on PredictionModel {
+extension PredictionToMap on HeatPredictionModel {
   Map<int, String> toMap() {
     return <int, String>{
       finalist1!: 'F',

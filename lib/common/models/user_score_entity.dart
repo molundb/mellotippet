@@ -11,7 +11,7 @@ class UserScoreEntity {
   final String? username;
   final int? totalScore;
   final Map<String, int>? competitionToScore;
-  final Map<CompetitionModel, PredictionModel?>? competitionToPrediction;
+  final Map<CompetitionModel, HeatPredictionModel?>? competitionToPrediction;
 
   factory UserScoreEntity.fromJson(Map<String, dynamic> json) =>
       UserScoreEntity(

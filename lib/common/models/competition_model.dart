@@ -7,7 +7,7 @@ class CompetitionModel {
   // DateTime time;
   // String? locationName;
   int lowestScore;
-  PredictionModel result;
+  HeatPredictionModel result;
   // List<PredictionModel> predictions;
 
   CompetitionModel({
@@ -31,7 +31,7 @@ class CompetitionModel {
       // time: (data?['time'] as Timestamp).toDate(),
       // locationName: data?['locationName'],
       lowestScore: data?['lowestScore'] ?? -1,
-      result: PredictionModel.fromJson(data?['result']),
+      result: HeatPredictionModel.fromJson(data?['result']),
       // predictions: data?['predictions']((document) {
       //   PredictionModel.fromJson(document);
       // }),

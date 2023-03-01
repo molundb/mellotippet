@@ -123,13 +123,13 @@ class PredictionControllerState {
   final bool loading;
   final String username;
   final String currentCompetition;
-  final PredictionModel prediction;
+  final HeatPredictionModel prediction;
 
   PredictionControllerState copyWith({
     bool? loading,
     String? username,
     String? currentCompetition,
-    PredictionModel? prediction,
+    HeatPredictionModel? prediction,
   }) {
     return PredictionControllerState(
       loading: loading ?? this.loading,
@@ -140,6 +140,6 @@ class PredictionControllerState {
   }
 
   factory PredictionControllerState.withDefaults() => PredictionControllerState(
-        prediction: PredictionModel(),
+        prediction: HeatPredictionModel(),
       );
 }
