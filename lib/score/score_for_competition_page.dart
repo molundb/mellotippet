@@ -68,11 +68,11 @@ class _ScoreForCompetitionPageState
         child: prediction == null
             ? Column(
                 children: [
-                  Text('Your score is ${competition.lowestScore - 1}p',
+                  Text('${competition.lowestScore - 1}p',
                       style: const TextStyle(fontSize: 24)),
                   const SizedBox(height: 16),
-                  const Text(
-                      'You did not make a prediction on time! Therefore, your score is 1 point less than the person who scored the lowest.'),
+                  Text(
+                      'No prediction was made! Therefore, the score is 1 point less than for the person who scored the lowest in this competition, which was ${competition.lowestScore}p.'),
                 ],
               )
             : CustomScrollView(
