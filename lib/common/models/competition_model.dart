@@ -27,7 +27,8 @@ class CompetitionModel {
       //   type = CompetitionType.theFinal;
       //   result = FinalPredictionModel.fromJson(data?['result']);
       //   break;
-      case 'semifinal':
+      case 'semifinal_group1':
+      case 'semifinal_group2':
         type = CompetitionType.semifinal;
         result = SemifinalPredictionModel.fromJson(data?['result']);
         break;

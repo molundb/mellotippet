@@ -46,24 +46,39 @@ class PredictionController extends StateNotifier<PredictionControllerState> {
         prediction: state.prediction.copyWith(finalist2: int.parse(value)));
   }
 
-  void setSemifinalist1(String? value) {
+  void setFinalist3(String? value) {
     if (value == null || value.isEmpty) return;
 
     state = state.copyWith(
-        prediction: state.prediction.copyWith(finalist1: int.parse(value)));
+        prediction: state.prediction.copyWith(finalist3: int.parse(value)));
   }
 
-  void setSemifinalist2(String? value) {
+  void setFinalist4(String? value) {
     if (value == null || value.isEmpty) return;
 
     state = state.copyWith(
-        prediction: state.prediction.copyWith(finalist2: int.parse(value)));
+        prediction: state.prediction.copyWith(finalist4: int.parse(value)));
   }
 
-  Future<bool> submitPrediction() => databaseRepository.uploadPrediction(
-        state.currentCompetition,
-        state.prediction,
+  Future<bool> submitPrediction(int group) async {
+    bool uploadSuccessful;
+
+    if (group == 1) {
+      uploadSuccessful = await databaseRepository.uploadPrediction(
+        '${state.currentCompetition}_group1',
+        state.prediction.finalist1,
+        state.prediction.finalist2,
       );
+    } else {
+      uploadSuccessful = await databaseRepository.uploadPrediction(
+        '${state.currentCompetition}_group2',
+        state.prediction.finalist3,
+        state.prediction.finalist4,
+      );
+    }
+
+    return uploadSuccessful;
+  }
 
   String? validatePredictionInput(String? prediction) {
     if (prediction == null || prediction.isEmpty) {
@@ -78,8 +93,8 @@ class PredictionController extends StateNotifier<PredictionControllerState> {
       return 'Prediction is not a number';
     }
 
-    if (int.tryParse(prediction)! < 1 || int.tryParse(prediction)! > 7) {
-      return 'Prediction must be between 1 and 7';
+    if (int.tryParse(prediction)! < 1 || int.tryParse(prediction)! > 4) {
+      return 'Prediction must be between 1 and 4';
     }
 
     return null;
@@ -87,15 +102,21 @@ class PredictionController extends StateNotifier<PredictionControllerState> {
 
   bool _isNumeric(String s) => int.tryParse(s) != null;
 
-  bool duplicatePredictions() {
+  bool duplicatePredictions(int group) {
     var duplicate = false;
 
-    final List<int> predictions = [
-      state.prediction.finalist1!,
-      state.prediction.finalist2!,
-      state.prediction.finalist3!,
-      state.prediction.finalist4!,
-    ];
+    List<int> predictions;
+    if (group == 1) {
+      predictions = [
+        state.prediction.finalist1!,
+        state.prediction.finalist2!,
+      ];
+    } else {
+      predictions = [
+        state.prediction.finalist3!,
+        state.prediction.finalist4!,
+      ];
+    }
 
     List<int> tempPredictions = [];
     for (var element in predictions) {
