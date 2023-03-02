@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:melodifestivalen_competition/common/models/models.dart';
-import 'package:melodifestivalen_competition/common/models/user_entity_two.dart';
 import 'package:melodifestivalen_competition/common/repositories/repositories.dart';
 
 // TODO: Create an abstract class
@@ -26,17 +25,16 @@ class DatabaseRepository {
 
   Future<bool> uploadPrediction(
     String competitionId,
-    SemifinalPredictionModel prediction,
+    int? finalist1,
+    int? finalist2,
   ) async {
     try {
       var uid = authRepository.currentUser?.uid;
 
       if (uid != null) {
         await predictionsForCompetition(competitionId).doc(uid).set({
-          "finalist1": prediction.finalist1,
-          "finalist2": prediction.finalist2,
-          "finalist3": prediction.finalist3,
-          "finalist4": prediction.finalist4,
+          "finalist1": finalist1,
+          "finalist2": finalist2,
         });
 
         return true;
