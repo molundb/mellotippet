@@ -13,8 +13,7 @@ class PredictionPage extends ConsumerStatefulWidget {
 }
 
 class _PredictionPageState extends ConsumerState<PredictionPage> {
-  final _formKey1 = GlobalKey<FormState>();
-  final _formKey2 = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   PredictionController get controller =>
       ref.read(PredictionController.provider.notifier);
@@ -39,7 +38,7 @@ class _PredictionPageState extends ConsumerState<PredictionPage> {
         slivers: [
           SliverToBoxAdapter(
             child: Form(
-              key: _formKey1,
+              key: _formKey,
               child: Column(
                 children: [
                   Text(
@@ -49,9 +48,9 @@ class _PredictionPageState extends ConsumerState<PredictionPage> {
                       color: MelloPredixColors.melloYellow,
                     ),
                   ),
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 64),
                   Text(
-                    'Please make your prediction for ${state.currentCompetition} group 1!',
+                    'Please make your prediction for the ${state.currentCompetition}!',
                     style: const TextStyle(
                       fontSize: 16,
                       color: MelloPredixColors.melloYellow,
@@ -72,79 +71,48 @@ class _PredictionPageState extends ConsumerState<PredictionPage> {
                     onSaved: controller.setFinalist2,
                     validator: controller.validatePredictionInput,
                   ),
-                  const SizedBox(height: 8),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      CtaButton(
-                        text: 'Submit group 1',
-                        onPressed: () => _submitPressed(context, _formKey1, 1),
-                      )
-                    ],
-                  ),
-                  const SizedBox(height: 64),
-                ],
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Form(
-              key: _formKey2,
-              child: Column(
-                children: [
-                  Text(
-                    'Please make your prediction for ${state.currentCompetition} group 2!',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: MelloPredixColors.melloYellow,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
                   TextFormFieldWidget(
                     textInputType: TextInputType.number,
                     prefixIcon: const Icon(Icons.star),
                     hintText: 'Finalist',
-                    onSaved: controller.setFinalist3,
+                    onSaved: controller.setSemifinalist1,
                     validator: controller.validatePredictionInput,
                   ),
                   TextFormFieldWidget(
                     textInputType: TextInputType.number,
                     prefixIcon: const Icon(Icons.star),
                     hintText: 'Finalist',
-                    onSaved: controller.setFinalist4,
+                    onSaved: controller.setSemifinalist2,
                     validator: controller.validatePredictionInput,
-                  ),
-                  const SizedBox(height: 8),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      CtaButton(
-                        text: 'Submit group 2',
-                        onPressed: () => _submitPressed(context, _formKey2, 2),
-                      )
-                    ],
                   ),
                 ],
               ),
             ),
           ),
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                CtaButton(
+                  text: 'Submit',
+                  onPressed: () => _submitPressed(context),
+                )
+              ],
+            ),
+          )
         ],
       ),
     );
   }
 
-  void _submitPressed(
-    BuildContext context,
-    GlobalKey<FormState> formKey,
-    int group,
-  ) {
-    if (formKey.currentState!.validate()) {
-      formKey.currentState!.save();
+  void _submitPressed(BuildContext context) {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
 
-      if (!controller.duplicatePredictions(group)) {
-        _submit(context, group);
+      if (!controller.duplicatePredictions()) {
+        _submit(context);
       } else {
         _showErrorSnackBar(
           context,
@@ -161,8 +129,8 @@ class _PredictionPageState extends ConsumerState<PredictionPage> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  void _submit(BuildContext context, int group) async {
-    final successful = await controller.submitPrediction(group);
+  void _submit(BuildContext context) async {
+    final successful = await controller.submitPrediction();
 
     if (successful) {
       _showErrorSnackBar(context, 'Upload Successful!');

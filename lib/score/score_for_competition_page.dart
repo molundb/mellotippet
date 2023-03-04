@@ -114,6 +114,30 @@ class _ScoreForCompetitionPageState
                             ),
                             result: result.finalist2,
                           ),
+                          _buildRow(
+                            position: "Final       ",
+                            prediction: predictionMap != null
+                                ? predictionMap[result.finalist3]
+                                : null,
+                            score: _getSemifinalistFinalistScore(
+                              competition.lowestScore,
+                              result.finalist3!,
+                              prediction,
+                            ),
+                            result: result.finalist3,
+                          ),
+                          _buildRow(
+                            position: "Final       ",
+                            prediction: predictionMap != null
+                                ? predictionMap[result.finalist4]
+                                : null,
+                            score: _getSemifinalistFinalistScore(
+                              competition.lowestScore,
+                              result.finalist4!,
+                              prediction,
+                            ),
+                            result: result.finalist4,
+                          )
                         ] else if (competition.type ==
                             CompetitionType.heat) ...[
                           _buildRow(

@@ -11,7 +11,7 @@ int calculateScore(CompetitionModel competition, PredictionModel? prediction) {
     case CompetitionType.theFinal:
       break;
     case CompetitionType.semifinal:
-      score = _calculateSemifinalGroupScore(
+      score = _calculateSemifinalScore(
         competition.result as SemifinalPredictionModel,
         prediction as SemifinalPredictionModel,
       );
@@ -76,7 +76,7 @@ int calculateHeatSemifinalistScore(
   return score;
 }
 
-int _calculateSemifinalGroupScore(
+int _calculateSemifinalScore(
   SemifinalPredictionModel result,
   SemifinalPredictionModel prediction,
 ) {
@@ -84,10 +84,14 @@ int _calculateSemifinalGroupScore(
   final predictions = [
     prediction.finalist1,
     prediction.finalist2,
+    prediction.finalist3,
+    prediction.finalist4,
   ];
 
   score += calculateSemifinalFinalistScore(result.finalist1, predictions);
   score += calculateSemifinalFinalistScore(result.finalist2, predictions);
+  score += calculateSemifinalFinalistScore(result.finalist3, predictions);
+  score += calculateSemifinalFinalistScore(result.finalist4, predictions);
 
   return score;
 }
