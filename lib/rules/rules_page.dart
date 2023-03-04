@@ -19,9 +19,9 @@ class RulesPage extends ConsumerWidget {
               )),
           SizedBox(height: 16),
           Text(
-            'Predict which songs will make it to the final. You can change your prediction as many times as you want - it is the last one that counts. The predictions close shortly before the first result of each group is announced.'
+            'Predict which songs will make it to the final. You can change your prediction as many times as you want - it is the last one that counts. The predictions close shortly before the first voting result is announced.'
             ''
-            '\n\nIf you miss predicting any group of the Semifinal, you get 1p less than the person who got the lowest score.',
+            '\n\nIf you miss predicting the Semifinal, you get 1p less than the person who got the lowest score.',
             style: MelloPredixTextStyle.defaultStyle,
           ),
           SizedBox(height: 32),
