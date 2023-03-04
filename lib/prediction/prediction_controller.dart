@@ -46,18 +46,18 @@ class PredictionController extends StateNotifier<PredictionControllerState> {
         prediction: state.prediction.copyWith(finalist2: int.parse(value)));
   }
 
-  void setSemifinalist1(String? value) {
+  void setFinalist3(String? value) {
     if (value == null || value.isEmpty) return;
 
     state = state.copyWith(
-        prediction: state.prediction.copyWith(finalist1: int.parse(value)));
+        prediction: state.prediction.copyWith(finalist3: int.parse(value)));
   }
 
-  void setSemifinalist2(String? value) {
+  void setFinalist4(String? value) {
     if (value == null || value.isEmpty) return;
 
     state = state.copyWith(
-        prediction: state.prediction.copyWith(finalist2: int.parse(value)));
+        prediction: state.prediction.copyWith(finalist4: int.parse(value)));
   }
 
   Future<bool> submitPrediction() => databaseRepository.uploadPrediction(
