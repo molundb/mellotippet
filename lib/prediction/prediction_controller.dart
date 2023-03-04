@@ -78,8 +78,8 @@ class PredictionController extends StateNotifier<PredictionControllerState> {
       return 'Prediction is not a number';
     }
 
-    if (int.tryParse(prediction)! < 1 || int.tryParse(prediction)! > 7) {
-      return 'Prediction must be between 1 and 7';
+    if (int.tryParse(prediction)! < 1 || int.tryParse(prediction)! > 8) {
+      return 'Prediction must be between 1 and 8';
     }
 
     return null;
