@@ -17,6 +17,8 @@ class SemifinalPredictionModel extends PredictionModel {
       SemifinalPredictionModel(
         finalist1: json['finalist1'] ?? -1,
         finalist2: json['finalist2'] ?? -1,
+        finalist3: json['finalist3'] ?? -1,
+        finalist4: json['finalist4'] ?? -1,
       );
 
   SemifinalPredictionModel copyWith({
@@ -39,6 +41,8 @@ extension SemifinalPredictionToMap on SemifinalPredictionModel {
     return <int, String>{
       finalist1!: 'F',
       finalist2!: 'F',
+      finalist3!: 'F',
+      finalist4!: 'F',
     };
   }
 }
