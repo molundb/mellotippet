@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:melodifestivalen_competition/config/config.dart';
 import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
-import 'package:melodifestivalen_competition/prediction/prediction_page.dart';
 import 'package:melodifestivalen_competition/styles/colors.dart';
 
+import 'prediction/final_prediction_page.dart';
 import 'rules/rules_page.dart';
 import 'score/score_page.dart';
 import 'settings/settings_page.dart';
@@ -21,7 +21,7 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
 
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
-    PredictionPage(),
+    FinalPredictionPage(),
     // UpcomingCompetitionsPage(),
     RulesPage(),
     ScorePage(),

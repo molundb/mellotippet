@@ -6,3 +6,4 @@ export 'prediction_model.dart';
 export 'semifinal_prediction_model.dart';
 export 'user_entity_two.dart';
 export 'user_score_entity.dart';
+export 'final_prediction_model.dart';

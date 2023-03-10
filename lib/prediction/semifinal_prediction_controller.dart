@@ -4,19 +4,19 @@ import 'package:melodifestivalen_competition/common/models/models.dart';
 import 'package:melodifestivalen_competition/common/repositories/repositories.dart';
 import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
 
-class PredictionController extends StateNotifier<PredictionControllerState> {
-  PredictionController({
+class SemifinalPredictionController extends StateNotifier<SemifinalPredictionControllerState> {
+  SemifinalPredictionController({
     required this.databaseRepository,
     required this.featureFlagRepository,
-    PredictionControllerState? state,
-  }) : super(state ?? PredictionControllerState.withDefaults());
+    SemifinalPredictionControllerState? state,
+  }) : super(state ?? SemifinalPredictionControllerState.withDefaults());
 
   final DatabaseRepository databaseRepository;
   final FeatureFlagRepository featureFlagRepository;
 
   static final provider =
-      StateNotifierProvider<PredictionController, PredictionControllerState>(
-          (ref) => PredictionController(
+      StateNotifierProvider<SemifinalPredictionController, SemifinalPredictionControllerState>(
+          (ref) => SemifinalPredictionController(
                 databaseRepository: getIt.get<DatabaseRepository>(),
                 featureFlagRepository: getIt.get<FeatureFlagRepository>(),
               ));
@@ -60,7 +60,7 @@ class PredictionController extends StateNotifier<PredictionControllerState> {
         prediction: state.prediction.copyWith(finalist4: int.parse(value)));
   }
 
-  Future<bool> submitPrediction() => databaseRepository.uploadPrediction(
+  Future<bool> submitPrediction() => databaseRepository.uploadSemifinalPrediction(
         state.currentCompetition,
         state.prediction,
       );
@@ -112,8 +112,8 @@ class PredictionController extends StateNotifier<PredictionControllerState> {
 }
 
 @immutable
-class PredictionControllerState {
-  const PredictionControllerState({
+class SemifinalPredictionControllerState {
+  const SemifinalPredictionControllerState({
     this.loading = false,
     this.username = "",
     this.currentCompetition = "",
@@ -125,13 +125,13 @@ class PredictionControllerState {
   final String currentCompetition;
   final SemifinalPredictionModel prediction;
 
-  PredictionControllerState copyWith({
+  SemifinalPredictionControllerState copyWith({
     bool? loading,
     String? username,
     String? currentCompetition,
     SemifinalPredictionModel? prediction,
   }) {
-    return PredictionControllerState(
+    return SemifinalPredictionControllerState(
       loading: loading ?? this.loading,
       username: username ?? this.username,
       currentCompetition: currentCompetition ?? this.currentCompetition,
@@ -139,7 +139,7 @@ class PredictionControllerState {
     );
   }
 
-  factory PredictionControllerState.withDefaults() => PredictionControllerState(
+  factory SemifinalPredictionControllerState.withDefaults() => SemifinalPredictionControllerState(
         prediction: SemifinalPredictionModel(),
       );
 }

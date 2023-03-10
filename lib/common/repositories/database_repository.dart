@@ -24,7 +24,7 @@ class DatabaseRepository {
   ) =>
       competitions.doc(competitionId).collection('predictions');
 
-  Future<bool> uploadPrediction(
+  Future<bool> uploadSemifinalPrediction(
     String competitionId,
     SemifinalPredictionModel prediction,
   ) async {
@@ -37,6 +37,38 @@ class DatabaseRepository {
           "finalist2": prediction.finalist2,
           "finalist3": prediction.finalist3,
           "finalist4": prediction.finalist4,
+        });
+
+        return true;
+      }
+
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> uploadFinalPrediction(
+      String competitionId,
+      FinalPredictionModel prediction,
+      ) async {
+    try {
+      var uid = authRepository.currentUser?.uid;
+
+      if (uid != null) {
+        await predictionsForCompetition(competitionId).doc(uid).set({
+          "position1": prediction.position1,
+          "position2": prediction.position2,
+          "position3": prediction.position3,
+          "position4": prediction.position4,
+          "position5": prediction.position5,
+          "position6": prediction.position6,
+          "position7": prediction.position7,
+          "position8": prediction.position8,
+          "position9": prediction.position9,
+          "position10": prediction.position10,
+          "position11": prediction.position11,
+          "position12": prediction.position12,
         });
 
         return true;
