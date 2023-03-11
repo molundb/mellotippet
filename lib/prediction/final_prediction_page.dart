@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:melodifestivalen_competition/common/widgets/cta_button.dart';
 import 'package:melodifestivalen_competition/common/widgets/text_form_widget.dart';
 import 'package:melodifestivalen_competition/prediction/final_prediction_controller.dart';
-import 'package:melodifestivalen_competition/prediction/semifinal_prediction_controller.dart';
 import 'package:melodifestivalen_competition/styles/colors.dart';
 
 class FinalPredictionPage extends ConsumerStatefulWidget {
@@ -49,7 +48,7 @@ class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
                       color: MelloPredixColors.melloYellow,
                     ),
                   ),
-                  const SizedBox(height: 64),
+                  const SizedBox(height: 32),
                   Text(
                     'Please make your prediction for the ${state.currentCompetition}!',
                     style: const TextStyle(
@@ -142,6 +141,7 @@ class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
                     onSaved: controller.setPosition12,
                     validator: controller.validatePredictionInput,
                   ),
+                  const SizedBox(height: 16),
                 ],
               ),
             ),
