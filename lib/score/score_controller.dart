@@ -50,14 +50,16 @@ class ScoreController extends StateNotifier<ScoreControllerState> {
   }
 
   int _calculateTotalScore(
-      Map<CompetitionModel, PredictionModel?> userPredictions) {
+    Map<CompetitionModel, PredictionModel?> userPredictions,
+  ) {
     return userPredictions.entries
         .map((e) => calculateScore(e.key, e.value))
         .sum;
   }
 
   Map<String, int> _calculateCompetitionToScore(
-          Map<CompetitionModel, PredictionModel?> competitionToPrediction) =>
+    Map<CompetitionModel, PredictionModel?> competitionToPrediction,
+  ) =>
       competitionToPrediction
           .map((key, value) => MapEntry(key.id, calculateScore(key, value)));
 
@@ -100,6 +102,8 @@ class ScoreController extends StateNotifier<ScoreControllerState> {
           if (data != null) {
             switch (competition.type) {
               case CompetitionType.theFinal:
+                prediction =
+                    FinalPredictionModel.fromJson(data as Map<String, dynamic>);
                 break;
               case CompetitionType.semifinal:
                 prediction = SemifinalPredictionModel.fromJson(

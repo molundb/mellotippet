@@ -1,3 +1,6 @@
+import 'dart:collection';
+import 'dart:math';
+
 import 'package:melodifestivalen_competition/common/models/models.dart';
 
 int calculateScore(CompetitionModel competition, PredictionModel? prediction) {
@@ -9,6 +12,10 @@ int calculateScore(CompetitionModel competition, PredictionModel? prediction) {
 
   switch (competition.type) {
     case CompetitionType.theFinal:
+      score = _calculateFinalScore(
+        competition.result as FinalPredictionModel,
+        prediction as FinalPredictionModel,
+      );
       break;
     case CompetitionType.semifinal:
       score = _calculateSemifinalScore(
@@ -105,4 +112,104 @@ int calculateSemifinalFinalistScore(
   } else {
     return 0;
   }
+}
+
+int _calculateFinalScore(
+  FinalPredictionModel result,
+  FinalPredictionModel prediction,
+) {
+  var score = 0;
+
+  final from1to4Result = [
+    result.position1!,
+    result.position2!,
+    result.position3!,
+    result.position4!,
+  ];
+
+  final from5to8Result = [
+    result.position5!,
+    result.position6!,
+    result.position7!,
+    result.position8!,
+  ];
+
+  final from9to12Result = [
+    result.position9!,
+    result.position10!,
+    result.position11!,
+    result.position12!,
+  ];
+
+  final predictions = [
+    prediction.position1!,
+    prediction.position2!,
+    prediction.position3!,
+    prediction.position4!,
+    prediction.position5!,
+    prediction.position6!,
+    prediction.position7!,
+    prediction.position8!,
+    prediction.position9!,
+    prediction.position10!,
+    prediction.position11!,
+    prediction.position12!,
+  ];
+
+  score += _calculateFinalistGroupScore(
+    5,
+    1,
+    from1to4Result,
+    predictions,
+  );
+  score += _calculateFinalistGroupScore(
+    3,
+    5,
+    from5to8Result,
+    predictions,
+  );
+  score += _calculateFinalistGroupScore(
+    2,
+    9,
+    from9to12Result,
+    predictions,
+  );
+
+  return score;
+}
+
+int _calculateFinalistGroupScore(
+  int maxScore,
+  int groupStartPosition,
+  List<int> finalistsOrdered,
+  List<int> predictions,
+) {
+  var score = 0;
+
+  for (var i = 0; i < finalistsOrdered.length; i++) {
+    score += calculateFinalistScore(
+      maxScore,
+      groupStartPosition + i,
+      finalistsOrdered[i],
+      predictions,
+    );
+  }
+
+  return score;
+}
+
+int calculateFinalistScore(
+  int maxScore,
+  int finalistPosition,
+  int finalistStartingNumber,
+  List<int> predictions,
+) {
+  var score = 0;
+
+  var indexOf = predictions.indexOf(finalistStartingNumber) + 1;
+  var i = (finalistPosition - indexOf);
+  final distance = i.abs();
+  score += max(0, maxScore - distance);
+
+  return score;
 }

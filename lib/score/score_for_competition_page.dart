@@ -36,9 +36,9 @@ class _ScoreForCompetitionPageState
 
     switch (competition.type) {
       case CompetitionType.theFinal:
-        result = competition.result as HeatPredictionModel;
-        prediction = widget.prediction as HeatPredictionModel?;
-        predictionMap = (prediction as HeatPredictionModel?)?.toMap();
+        result = competition.result as FinalPredictionModel;
+        prediction = widget.prediction as FinalPredictionModel?;
+        predictionMap = (prediction as FinalPredictionModel?)?.toMap();
         break;
       case CompetitionType.semifinal:
         result = competition.result as SemifinalPredictionModel;
@@ -89,7 +89,177 @@ class _ScoreForCompetitionPageState
                             Text('Points'),
                           ],
                         ),
-                        if (competition.type == CompetitionType.semifinal) ...[
+                        if (competition.type == CompetitionType.theFinal) ...[
+                          _buildRow(
+                            position: "1st",
+                            prediction: predictionMap != null
+                                ? predictionMap[result.position1]
+                                : null,
+                            score: _getFinalistScore(
+                              competition.lowestScore,
+                              5,
+                              1,
+                              result.position1!,
+                              prediction,
+                            ),
+                            result: result.position1,
+                          ),
+                          _buildRow(
+                            position: "2nd",
+                            prediction: predictionMap != null
+                                ? predictionMap[result.position2]
+                                : null,
+                            score: _getFinalistScore(
+                              competition.lowestScore,
+                              5,
+                              2,
+                              result.position2!,
+                              prediction,
+                            ),
+                            result: result.position2,
+                          ),
+                          _buildRow(
+                            position: "3rd",
+                            prediction: predictionMap != null
+                                ? predictionMap[result.position3]
+                                : null,
+                            score: _getFinalistScore(
+                              competition.lowestScore,
+                              5,
+                              3,
+                              result.position3!,
+                              prediction,
+                            ),
+                            result: result.position3,
+                          ),
+                          _buildRow(
+                            position: "4th",
+                            prediction: predictionMap != null
+                                ? predictionMap[result.position4]
+                                : null,
+                            score: _getFinalistScore(
+                              competition.lowestScore,
+                              5,
+                              4,
+                              result.position4!,
+                              prediction,
+                            ),
+                            result: result.position4,
+                          ),
+                          _buildRow(
+                            position: "5th",
+                            prediction: predictionMap != null
+                                ? predictionMap[result.position5]
+                                : null,
+                            score: _getFinalistScore(
+                              competition.lowestScore,
+                              3,
+                              5,
+                              result.position5!,
+                              prediction,
+                            ),
+                            result: result.position5,
+                          ),
+                          _buildRow(
+                            position: "6th",
+                            prediction: predictionMap != null
+                                ? predictionMap[result.position6]
+                                : null,
+                            score: _getFinalistScore(
+                              competition.lowestScore,
+                              3,
+                              6,
+                              result.position6!,
+                              prediction,
+                            ),
+                            result: result.position6,
+                          ),
+                          _buildRow(
+                            position: "7th",
+                            prediction: predictionMap != null
+                                ? predictionMap[result.position7]
+                                : null,
+                            score: _getFinalistScore(
+                              competition.lowestScore,
+                              3,
+                              7,
+                              result.position7!,
+                              prediction,
+                            ),
+                            result: result.position7,
+                          ),
+                          _buildRow(
+                            position: "8th",
+                            prediction: predictionMap != null
+                                ? predictionMap[result.position8]
+                                : null,
+                            score: _getFinalistScore(
+                              competition.lowestScore,
+                              3,
+                              8,
+                              result.position8!,
+                              prediction,
+                            ),
+                            result: result.position8,
+                          ),
+                          _buildRow(
+                            position: "9th",
+                            prediction: predictionMap != null
+                                ? predictionMap[result.position9]
+                                : null,
+                            score: _getFinalistScore(
+                              competition.lowestScore,
+                              2,
+                              9,
+                              result.position9!,
+                              prediction,
+                            ),
+                            result: result.position9,
+                          ),
+                          _buildRow(
+                            position: "10th",
+                            prediction: predictionMap != null
+                                ? predictionMap[result.position10]
+                                : null,
+                            score: _getFinalistScore(
+                              competition.lowestScore,
+                              2,
+                              10,
+                              result.position10!,
+                              prediction,
+                            ),
+                            result: result.position10,
+                          ),
+                          _buildRow(
+                            position: "11th",
+                            prediction: predictionMap != null
+                                ? predictionMap[result.position11]
+                                : null,
+                            score: _getFinalistScore(
+                              competition.lowestScore,
+                              2,
+                              11,
+                              result.position11!,
+                              prediction,
+                            ),
+                            result: result.position11,
+                          ),
+                          _buildRow(
+                            position: "12th",
+                            prediction: predictionMap != null
+                                ? predictionMap[result.position12]
+                                : null,
+                            score: _getFinalistScore(
+                              competition.lowestScore,
+                              2,
+                              12,
+                              result.position12!,
+                              prediction,
+                            ),
+                            result: result.position12,
+                          ),
+                        ] else if (competition.type ==
+                            CompetitionType.semifinal) ...[
                           _buildRow(
                             position: "Final       ",
                             prediction: predictionMap != null
@@ -271,5 +441,39 @@ class _ScoreForCompetitionPageState
     ];
 
     return calculateSemifinalFinalistScore(finalist, predictions);
+  }
+
+  int _getFinalistScore(
+    int lowestScore,
+    int maxScore,
+    int finalistPosition,
+    int finalistStartingNumber,
+    FinalPredictionModel? prediction,
+  ) {
+    if (prediction == null) {
+      return lowestScore;
+    }
+
+    final predictions = [
+      prediction.position1!,
+      prediction.position2!,
+      prediction.position3!,
+      prediction.position4!,
+      prediction.position5!,
+      prediction.position6!,
+      prediction.position7!,
+      prediction.position8!,
+      prediction.position9!,
+      prediction.position10!,
+      prediction.position11!,
+      prediction.position12!,
+    ];
+
+    return calculateFinalistScore(
+      maxScore,
+      finalistPosition,
+      finalistStartingNumber,
+      predictions,
+    );
   }
 }

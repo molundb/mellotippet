@@ -126,7 +126,7 @@ class FinalPredictionController extends StateNotifier<FinalPredictionControllerS
       return 'Prediction can not be empty';
     }
 
-    if (prediction.length > 1) {
+    if (prediction.length > 2) {
       return 'Prediction is too long';
     }
 
@@ -134,8 +134,8 @@ class FinalPredictionController extends StateNotifier<FinalPredictionControllerS
       return 'Prediction is not a number';
     }
 
-    if (int.tryParse(prediction)! < 1 || int.tryParse(prediction)! > 8) {
-      return 'Prediction must be between 1 and 8';
+    if (int.tryParse(prediction)! < 1 || int.tryParse(prediction)! > 12) {
+      return 'Prediction must be between 1 and 12';
     }
 
     return null;
