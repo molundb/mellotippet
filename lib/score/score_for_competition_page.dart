@@ -85,10 +85,9 @@ class _ScoreForCompetitionPageState
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: competition.type == CompetitionType.theFinal ? const [
-                            Text('                    '),
                             Text(''),
-                            Text('Result'),
-                            Text('Predix'),
+                            Text('        '),
+                            Text('Result       Predix'),
                             Text('Points'),
                           ] : const [
                             Text('                    '),
@@ -412,7 +411,7 @@ class _ScoreForCompetitionPageState
             ? _buildFinalRow(
                 position,
                 result,
-                prediction,
+                prediction == null ? null : int.parse(prediction),
                 score,
                 maxScore,
               )
@@ -445,7 +444,7 @@ class _ScoreForCompetitionPageState
   Widget _buildFinalRow(
     String position,
     int? result,
-    String? prediction,
+    int? prediction,
     int score,
     int maxScore,
   ) =>
@@ -453,11 +452,13 @@ class _ScoreForCompetitionPageState
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(position),
-          Text('${maxScore}p - abs ('),
+          Text('${maxScore}p'),
+          const Text('- abs ('),
           Text(result.toString()),
           const Text('-'),
-          Text(prediction ?? '-'),
+          Text(prediction == null ? '-' : '$prediction${toOrdinal(prediction)}'),
           const Text(')'),
+          const Text('='),
           Text('${score}p'),
         ],
       );
@@ -524,5 +525,22 @@ class _ScoreForCompetitionPageState
       finalistStartingNumber,
       predictions,
     );
+  }
+
+  String toOrdinal(int number) {
+    if(!(number >= 1 && number <= 12)) {//here you change the range
+      throw Exception('Invalid number');
+    }
+
+    if(number >= 11 && number <= 13) {
+      return 'th';
+    }
+
+    switch(number % 10) {
+      case 1: return 'st';
+      case 2: return 'nd';
+      case 3: return 'rd';
+      default: return 'th';
+    }
   }
 }
