@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:melodifestivalen_competition/styles/colors.dart';
 import 'package:melodifestivalen_competition/styles/text_styles.dart';
 
-class RulesPage extends ConsumerWidget {
-  const RulesPage({super.key});
+class SemifinalRulesPage extends ConsumerWidget {
+  const SemifinalRulesPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
