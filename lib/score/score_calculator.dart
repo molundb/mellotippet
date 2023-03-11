@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'dart:math';
 
 import 'package:melodifestivalen_competition/common/models/models.dart';
@@ -141,20 +140,7 @@ int _calculateFinalScore(
     result.position12!,
   ];
 
-  final predictions = [
-    prediction.position1!,
-    prediction.position2!,
-    prediction.position3!,
-    prediction.position4!,
-    prediction.position5!,
-    prediction.position6!,
-    prediction.position7!,
-    prediction.position8!,
-    prediction.position9!,
-    prediction.position10!,
-    prediction.position11!,
-    prediction.position12!,
-  ];
+  final predictions = prediction.toList();
 
   score += _calculateFinalistGroupScore(
     5,
