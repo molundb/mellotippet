@@ -85,9 +85,9 @@ class _ScoreForCompetitionPageState
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: competition.type == CompetitionType.theFinal ? const [
-                            Text(''),
-                            Text('        '),
-                            Text('Result       Predix'),
+                            Text('          '),
+                            Text('Result'),
+                            Text('Predix'),
                             Text('Points'),
                           ] : const [
                             Text('                    '),
@@ -447,21 +447,18 @@ class _ScoreForCompetitionPageState
     int? prediction,
     int score,
     int maxScore,
-  ) =>
-      Row(
+  ) {
+    var data = prediction == null ? '-' : '$prediction${toOrdinal(prediction)}';
+    return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(position),
-          Text('${maxScore}p'),
-          const Text('- abs ('),
           Text(result.toString()),
-          const Text('-'),
-          Text(prediction == null ? '-' : '$prediction${toOrdinal(prediction)}'),
-          const Text(')'),
-          const Text('='),
+          Text(data),
           Text('${score}p'),
         ],
       );
+  }
 
   int _getHeatSemifinalistScore(
     int lowestScore,
