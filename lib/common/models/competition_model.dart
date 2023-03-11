@@ -23,10 +23,10 @@ class CompetitionModel {
     CompetitionType type;
     PredictionModel result;
     switch (snapshot.id) {
-      // case 'final':
-      //   type = CompetitionType.theFinal;
-      //   result = FinalPredictionModel.fromJson(data?['result']);
-      //   break;
+      case 'final':
+        type = CompetitionType.theFinal;
+        result = FinalPredictionModel.fromJson(data?['result']);
+        break;
       case 'semifinal':
         type = CompetitionType.semifinal;
         result = SemifinalPredictionModel.fromJson(data?['result']);
