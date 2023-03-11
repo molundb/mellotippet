@@ -151,6 +151,14 @@ class FinalPredictionController extends StateNotifier<FinalPredictionControllerS
       state.prediction.position2!,
       state.prediction.position3!,
       state.prediction.position4!,
+      state.prediction.position5!,
+      state.prediction.position6!,
+      state.prediction.position7!,
+      state.prediction.position8!,
+      state.prediction.position9!,
+      state.prediction.position10!,
+      state.prediction.position11!,
+      state.prediction.position12!,
     ];
 
     List<int> tempPredictions = [];
