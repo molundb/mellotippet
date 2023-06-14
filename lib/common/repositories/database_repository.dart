@@ -1,15 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:melodifestivalen_competition/common/models/models.dart';
-import 'package:melodifestivalen_competition/common/models/user_entity_two.dart';
 import 'package:melodifestivalen_competition/common/repositories/repositories.dart';
 
 // TODO: Create an abstract class
 class DatabaseRepository {
+  FirebaseFirestore db;
   AuthenticationRepository authRepository;
 
-  DatabaseRepository({required this.authRepository});
-
-  FirebaseFirestore db = FirebaseFirestore.instance;
+  DatabaseRepository({
+    required this.db,
+    required this.authRepository,
+  });
 
   CollectionReference<Map<String, dynamic>> get users => db.collection('users');
 
@@ -49,9 +50,9 @@ class DatabaseRepository {
   }
 
   Future<bool> uploadFinalPrediction(
-      String competitionId,
-      FinalPredictionModel prediction,
-      ) async {
+    String competitionId,
+    FinalPredictionModel prediction,
+  ) async {
     try {
       var uid = authRepository.currentUser?.uid;
 

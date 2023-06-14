@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:melodifestivalen_competition/common/repositories/repositories.dart';
@@ -17,6 +18,7 @@ Future<void> setUpGetIt(Flavor flavor) async {
           ));
 
   getIt.registerLazySingleton<DatabaseRepository>(() => DatabaseRepository(
+        db: FirebaseFirestore.instance,
         authRepository: getIt.get<AuthenticationRepository>(),
       ));
 
