@@ -133,3 +133,5 @@ testers.txt
 **/fastlane/test_output
 
 lib/secrets.dart
+
+.fvm/flutter_sdk
