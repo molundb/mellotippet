@@ -135,3 +135,5 @@ testers.txt
 lib/secrets.dart
 
 .fvm/flutter_sdk
+
+**.mocks.dart
