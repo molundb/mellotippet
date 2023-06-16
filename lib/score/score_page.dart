@@ -33,9 +33,9 @@ class _ScorePageState extends ConsumerState<ScorePage> {
       padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
       child: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(
+          const SliverToBoxAdapter(
             child: Column(
-              children: const [
+              children: [
                 Text(
                   'Highscore',
                   style: TextStyle(

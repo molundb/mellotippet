@@ -64,7 +64,6 @@ class _UsernameInput extends StatelessWidget {
   final TextEditingController usernameController;
 
   const _UsernameInput({
-    super.key,
     required this.controller,
     required this.usernameController,
   });
@@ -84,7 +83,6 @@ class _CreateAccountEmail extends StatelessWidget {
   final TextEditingController emailController;
 
   const _CreateAccountEmail({
-    super.key,
     required this.controller,
     required this.emailController,
   });
@@ -104,7 +102,6 @@ class _CreateAccountPassword extends StatelessWidget {
   final TextEditingController passwordController;
 
   const _CreateAccountPassword({
-    super.key,
     required this.controller,
     required this.passwordController,
   });
@@ -131,7 +128,6 @@ class _SubmitButton extends StatelessWidget {
       getIt.get<DatabaseRepository>();
 
   _SubmitButton({
-    super.key,
     required this.formKey,
     required this.controller,
   });
