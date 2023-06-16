@@ -8,10 +8,10 @@ class SemifinalRulesPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
+    return const Padding(
+      padding: EdgeInsets.symmetric(vertical: 32, horizontal: 16),
       child: Column(
-        children: const [
+        children: [
           Text('Rules for the Semifinal',
               style: TextStyle(
                 fontSize: 32,
