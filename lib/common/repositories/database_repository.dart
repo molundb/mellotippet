@@ -42,7 +42,6 @@ class DatabaseRepository {
 
         return true;
       }
-
       return false;
     } catch (e) {
       return false;
