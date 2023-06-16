@@ -1,11 +1,9 @@
 import 'dart:convert';
 
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:melodifestivalen_competition/common/repositories/database_repository.dart';
-import 'package:melodifestivalen_competition/common/repositories/firebase_authentication.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
@@ -13,7 +11,6 @@ import 'database_repository_test.mocks.dart';
 import 'fakes.dart';
 
 @GenerateMocks([
-  FirebaseAuth,
   AuthenticationRepository,
 ])
 Future<void> main() async {
