@@ -32,11 +32,11 @@ class _UpcomingCompetitionRowState extends State<UpcomingCompetitionRow> {
           children: [
             Text(
               widget.title,
-              style: Theme.of(context).textTheme.headline2,
+              style: Theme.of(context).textTheme.displayMedium,
             ),
             Text(
               'time', // controller.formatDate(widget.competition.time),
-              style: Theme.of(context).textTheme.headline2,
+              style: Theme.of(context).textTheme.displayMedium,
             ),
           ],
         ),

@@ -45,7 +45,6 @@ class AuthenticationRepository {
     }
   }
 
-  @override
   Future<UserScoreEntity> signInWithEmailAndPassword({
     required String email,
     required String password,

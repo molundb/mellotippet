@@ -97,7 +97,6 @@ class _LoginEmail extends StatelessWidget {
   final TextEditingController emailController;
 
   const _LoginEmail({
-    super.key,
     required this.controller,
     required this.emailController,
   });
@@ -143,7 +142,6 @@ class _SubmitButton extends StatelessWidget {
       getIt.get<AuthenticationRepository>();
 
   _SubmitButton({
-    super.key,
     required this.formKey,
     required this.state,
   });
@@ -196,7 +194,7 @@ class _SubmitButton extends StatelessWidget {
 }
 
 class _CreateAccountButton extends StatelessWidget {
-  const _CreateAccountButton({super.key});
+  const _CreateAccountButton();
 
   @override
   Widget build(BuildContext context) {
@@ -219,7 +217,7 @@ class _ContinueWithoutAccountButton extends StatelessWidget {
   final AuthenticationRepository _authRepository =
       getIt.get<AuthenticationRepository>();
 
-  _ContinueWithoutAccountButton({super.key});
+  _ContinueWithoutAccountButton();
 
   @override
   Widget build(BuildContext context) {
@@ -237,7 +235,7 @@ class _ContinueWithoutAccountButton extends StatelessWidget {
 
   Future<dynamic> _continueWithoutAccountPressed(BuildContext context) async {
     try {
-      final user = await _authRepository.signInAnonymously();
+      await _authRepository.signInAnonymously();
 
       return Navigator.of(context).push(
         MaterialPageRoute(
