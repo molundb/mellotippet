@@ -1,4 +1,4 @@
-import 'package:melodifestivalen_competition/common/repositories/firebase_authentication.dart';
+import 'package:melodifestivalen_competition/common/repositories/authentication_repository.dart';
 import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
 
 class SettingsController {
