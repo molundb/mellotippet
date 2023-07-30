@@ -9,6 +9,7 @@ class MelloPredixColors {
 
   static const itemGray = Color(0xFFCBD4D5);
 
+  static const info = Color(0xFF99D7B1);
+  static const success = Color(0xFF009A3D);
   static const danger = Color(0xFFFF2E47);
-  static const dangerDark = Color(0xFFDF041E);
 }

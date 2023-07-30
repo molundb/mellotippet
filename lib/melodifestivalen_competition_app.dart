@@ -7,6 +7,7 @@ import 'package:melodifestivalen_competition/styles/text_styles.dart';
 
 class MelodifestivalenCompetitionApp extends StatelessWidget {
   final config = getIt.get<Config>();
+  final snackbarKey = getIt.get<GlobalKey<ScaffoldMessengerState>>();
 
   MelodifestivalenCompetitionApp({Key? key}) : super(key: key);
 
@@ -22,6 +23,7 @@ class MelodifestivalenCompetitionApp extends StatelessWidget {
       },
       child: MaterialApp(
         title: config.title,
+        scaffoldMessengerKey: snackbarKey,
         theme: ThemeData(
           primaryColor: MelloPredixColors.melloPurple,
           appBarTheme: const AppBarTheme(

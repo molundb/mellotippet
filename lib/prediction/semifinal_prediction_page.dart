@@ -3,16 +3,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:melodifestivalen_competition/common/widgets/cta_button.dart';
 import 'package:melodifestivalen_competition/common/widgets/text_form_widget.dart';
 import 'package:melodifestivalen_competition/prediction/semifinal_prediction_controller.dart';
+import 'package:melodifestivalen_competition/snackbar/snackbar_handler.dart';
 import 'package:melodifestivalen_competition/styles/colors.dart';
 
 class SemifinalPredictionPage extends ConsumerStatefulWidget {
-  const SemifinalPredictionPage({super.key});
+  final SnackbarHandler snackbarHandler;
+
+  const SemifinalPredictionPage({super.key, required this.snackbarHandler});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _SemifinalPredictionPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _SemifinalPredictionPageState();
 }
 
-class _SemifinalPredictionPageState extends ConsumerState<SemifinalPredictionPage> {
+class _SemifinalPredictionPageState
+    extends ConsumerState<SemifinalPredictionPage> {
   final _formKey = GlobalKey<FormState>();
 
   SemifinalPredictionController get controller =>
@@ -114,28 +119,22 @@ class _SemifinalPredictionPageState extends ConsumerState<SemifinalPredictionPag
       if (!controller.duplicatePredictions()) {
         _submit(context);
       } else {
-        _showErrorSnackBar(
-          context,
-          'Error: same prediction in multiple positions',
+        widget.snackbarHandler.showText(
+          title: 'Error: same prediction in multiple positions',
         );
       }
     }
-  }
-
-  void _showErrorSnackBar(BuildContext context, String text) {
-    final snackBar = SnackBar(
-      content: Text(text),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   void _submit(BuildContext context) async {
     final successful = await controller.submitPrediction();
 
     if (successful) {
-      _showErrorSnackBar(context, 'Upload Successful!');
+      widget.snackbarHandler.showText(
+          title: 'Upload Successful!', level: SnackbarAlertLevel.success);
     } else {
-      _showErrorSnackBar(context, 'Upload Failed!');
+      widget.snackbarHandler
+          .showText(title: 'Upload Failed!', level: SnackbarAlertLevel.error);
     }
   }
 }
