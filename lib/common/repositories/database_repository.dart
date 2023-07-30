@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:melodifestivalen_competition/common/models/models.dart';
+import 'package:melodifestivalen_competition/common/models/all_models.dart';
 import 'package:melodifestivalen_competition/common/repositories/repositories.dart';
 
 // TODO: Create an abstract class

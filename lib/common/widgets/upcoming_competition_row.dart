@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:melodifestivalen_competition/common/models/models.dart';
+import 'package:melodifestivalen_competition/common/models/all_models.dart';
 import 'package:melodifestivalen_competition/upcoming_competitions/upcoming_competitions_row_controller.dart';
 import 'package:melodifestivalen_competition/styles/colors.dart';
 

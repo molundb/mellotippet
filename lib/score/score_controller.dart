@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:melodifestivalen_competition/common/models/models.dart';
+import 'package:melodifestivalen_competition/common/models/all_models.dart';
 import 'package:melodifestivalen_competition/common/repositories/repositories.dart';
 import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
 import 'package:melodifestivalen_competition/score/score_calculator.dart';

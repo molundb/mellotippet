@@ -1,6 +1,6 @@
 
 
-import 'package:melodifestivalen_competition/common/models/models.dart';
+import 'package:melodifestivalen_competition/common/models/all_models.dart';
 
 final fakeSemifinalPrediction = SemifinalPredictionModel(
   finalist1: 1,

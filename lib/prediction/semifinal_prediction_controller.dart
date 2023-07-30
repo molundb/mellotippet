@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:melodifestivalen_competition/common/models/models.dart';
+import 'package:melodifestivalen_competition/common/models/all_models.dart';
 import 'package:melodifestivalen_competition/common/repositories/repositories.dart';
 import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
 
