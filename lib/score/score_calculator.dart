@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:melodifestivalen_competition/common/models/models.dart';
+import 'package:melodifestivalen_competition/common/models/all_models.dart';
 
 int calculateScore(CompetitionModel competition, PredictionModel? prediction) {
   if (prediction == null) {
