@@ -45,6 +45,7 @@ dependencies:
   firebase_crashlytics: ^3.0.11
   firebase_remote_config: ^3.0.10
   firebase_analytics: ^10.1.1
+  logger: ^1.4.0
 
 dev_dependencies:
   flutter_test:
