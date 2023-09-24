@@ -121,4 +121,102 @@ class DatabaseRepository {
       .docs
       .map((e) => e.data())
       .toList();
+
+  Future<List<PredictionModel>> getAllPredictionsForHeat(
+    String competitionId,
+  ) async =>
+      (await competitions
+              .doc(competitionId)
+              .collection('predictions')
+              .withConverter(
+                fromFirestore: HeatPredictionModel.fromFirestore,
+                toFirestore: (HeatPredictionModel heatPredictionModel, _) =>
+                    heatPredictionModel.toFirestore(),
+              )
+              .get())
+          .docs
+          .map((e) => e.data())
+          .toList();
+
+  Future<List<PredictionModel>> getAllPredictionsForSemifinal(
+    String competitionId,
+  ) async =>
+      (await competitions
+              .doc(competitionId)
+              .collection('predictions')
+              .withConverter(
+                fromFirestore: SemifinalPredictionModel.fromFirestore,
+                toFirestore:
+                    (SemifinalPredictionModel semifinalPredictionModel, _) =>
+                        semifinalPredictionModel.toFirestore(),
+              )
+              .get())
+          .docs
+          .map((e) => e.data())
+          .toList();
+
+  Future<List<PredictionModel>> getAllPredictionsForFinal(
+    String competitionId,
+  ) async =>
+      (await competitions
+              .doc(competitionId)
+              .collection('predictions')
+              .withConverter(
+                fromFirestore: FinalPredictionModel.fromFirestore,
+                toFirestore: (FinalPredictionModel finalPredictionModel, _) =>
+                    finalPredictionModel.toFirestore(),
+              )
+              .get())
+          .docs
+          .map((e) => e.data())
+          .toList();
+
+  Future<HeatPredictionModel?> getPredictionsForHeatForUser(
+    String heatId,
+    String? userId,
+  ) async =>
+      (await competitions
+              .doc(heatId)
+              .collection('predictions')
+              .doc(userId)
+              .withConverter(
+                fromFirestore: HeatPredictionModel.fromFirestore,
+                toFirestore: (HeatPredictionModel heatPredictionModel, _) =>
+                    heatPredictionModel.toFirestore(),
+              )
+              .get())
+          .data();
+
+  Future<SemifinalPredictionModel?> getPredictionsForSemifinalForUser(
+    String heatId,
+    String? userId,
+  ) async =>
+      (await competitions
+              .doc(heatId)
+              .collection('predictions')
+              .doc(userId)
+              .withConverter(
+                fromFirestore: SemifinalPredictionModel.fromFirestore,
+                toFirestore:
+                    (SemifinalPredictionModel semifinalPredictionModel, _) =>
+                        semifinalPredictionModel.toFirestore(),
+              )
+              .get())
+          .data();
+
+  Future<FinalPredictionModel?> getPredictionsForFinalForUser(
+    String heatId,
+    String? userId,
+  ) async =>
+      (await competitions
+              .doc(heatId)
+              .collection('predictions')
+              .doc(userId)
+              .withConverter(
+                fromFirestore: FinalPredictionModel.fromFirestore,
+                toFirestore: (FinalPredictionModel? finalPredictionModel, _) =>
+                    finalPredictionModel?.toFirestore() ?? {},
+              )
+              .get())
+          .data();
 }

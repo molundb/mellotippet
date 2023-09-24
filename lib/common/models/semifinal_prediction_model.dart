@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:melodifestivalen_competition/common/models/prediction_model.dart';
 
 class SemifinalPredictionModel extends PredictionModel {
@@ -12,6 +13,15 @@ class SemifinalPredictionModel extends PredictionModel {
   int? finalist2;
   int? finalist3;
   int? finalist4;
+
+  factory SemifinalPredictionModel.fromFirestore(
+      DocumentSnapshot<Map<String, dynamic>> snapshot,
+      SnapshotOptions? options,
+      ) {
+    final data = snapshot.data();
+
+    return SemifinalPredictionModel.fromJson(data ?? {});
+  }
 
   factory SemifinalPredictionModel.fromJson(Map<String, dynamic> json) =>
       SemifinalPredictionModel(

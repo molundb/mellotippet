@@ -89,36 +89,26 @@ class ScoreController extends StateNotifier<ScoreControllerState> {
     final Map<CompetitionModel, PredictionModel?> competitionsToPrediction = {};
 
     for (var competition in competitions) {
-      await _databaseRepository
-          .predictionsForCompetition(competition.id)
-          .doc(uid)
-          .get()
-          .then(
-        (DocumentSnapshot doc) {
-          var data = doc.data();
+      PredictionModel? prediction;
 
-          PredictionModel? prediction;
+      switch (competition.type) {
+        case CompetitionType.heat:
+          prediction = await _databaseRepository.getPredictionsForHeatForUser(
+              competition.id, uid);
+          break;
+        case CompetitionType.semifinal:
+          prediction = await _databaseRepository
+              .getPredictionsForSemifinalForUser(competition.id, uid);
+          break;
+        case CompetitionType.theFinal:
+          prediction = await _databaseRepository.getPredictionsForFinalForUser(
+              competition.id, uid);
+          break;
+      }
 
-          if (data != null) {
-            switch (competition.type) {
-              case CompetitionType.theFinal:
-                prediction =
-                    FinalPredictionModel.fromJson(data as Map<String, dynamic>);
-                break;
-              case CompetitionType.semifinal:
-                prediction = SemifinalPredictionModel.fromJson(
-                    data as Map<String, dynamic>);
-                break;
-              case CompetitionType.heat:
-                prediction =
-                    HeatPredictionModel.fromJson(data as Map<String, dynamic>);
-                break;
-            }
-          }
-          competitionsToPrediction[competition] = prediction;
-        },
-        onError: (e) => print("Error getting document: $e"),
-      );
+      if (prediction != null) {
+        competitionsToPrediction[competition] = prediction;
+      }
     }
     return competitionsToPrediction;
   }

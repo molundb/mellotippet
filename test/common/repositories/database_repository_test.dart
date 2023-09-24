@@ -8,8 +8,8 @@ import 'package:melodifestivalen_competition/common/repositories/database_reposi
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
+import '../fakes.dart';
 import 'database_repository_test.mocks.dart';
-import 'fakes.dart';
 
 @GenerateMocks([
   AuthenticationRepository,

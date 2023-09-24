@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:melodifestivalen_competition/common/models/prediction_model.dart';
 
 class HeatPredictionModel extends PredictionModel {
@@ -14,6 +15,15 @@ class HeatPredictionModel extends PredictionModel {
   int? semifinalist1;
   int? semifinalist2;
   int? fifthPlace;
+
+  factory HeatPredictionModel.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    final data = snapshot.data();
+
+    return HeatPredictionModel.fromJson(data ?? {});
+  }
 
   factory HeatPredictionModel.fromJson(Map<String, dynamic> json) =>
       HeatPredictionModel(

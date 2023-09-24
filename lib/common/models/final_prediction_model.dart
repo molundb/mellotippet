@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:melodifestivalen_competition/common/models/prediction_model.dart';
 
 class FinalPredictionModel extends PredictionModel {
@@ -28,6 +29,15 @@ class FinalPredictionModel extends PredictionModel {
   int? position10;
   int? position11;
   int? position12;
+
+  factory FinalPredictionModel.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    final data = snapshot.data();
+
+    return FinalPredictionModel.fromJson(data ?? {});
+  }
 
   factory FinalPredictionModel.fromJson(Map<String, dynamic> json) =>
       FinalPredictionModel(
@@ -113,4 +123,3 @@ extension FinalPredictionToList on FinalPredictionModel {
     ];
   }
 }
-
