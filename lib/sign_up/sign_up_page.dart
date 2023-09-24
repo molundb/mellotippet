@@ -152,11 +152,13 @@ class _SubmitButton extends StatelessWidget {
     FocusScope.of(context).unfocus();
 
     if (await controller.isUsernameAlreadyTaken()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Username is already taken.'),
-        ),
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Username is already taken.'),
+          ),
+        );
+      }
       return;
     }
 
@@ -172,18 +174,22 @@ class _SubmitButton extends StatelessWidget {
         "username": controller.username,
       });
 
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-          builder: (context) => const MelloBottomNavigationBar(),
-        ),
-        ModalRoute.withName('/'),
-      );
+      if (context.mounted) {
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => const MelloBottomNavigationBar(),
+          ),
+          ModalRoute.withName('/'),
+        );
+      }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(e.toString()),
-        ),
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString()),
+          ),
+        );
+      }
     }
   }
 }

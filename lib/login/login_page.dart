@@ -177,11 +177,13 @@ class _SubmitButton extends StatelessWidget {
           password: state.password,
         );
 
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const MelloBottomNavigationBar(),
-          ),
-        );
+        if (context.mounted) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const MelloBottomNavigationBar(),
+            ),
+          );
+        }
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -237,11 +239,13 @@ class _ContinueWithoutAccountButton extends StatelessWidget {
     try {
       await _authRepository.signInAnonymously();
 
-      return Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => const MelloBottomNavigationBar(),
-        ),
-      );
+      if (context.mounted) {
+        return Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const MelloBottomNavigationBar(),
+          ),
+        );
+      }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
