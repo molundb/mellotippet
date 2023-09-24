@@ -24,30 +24,28 @@ class ScoreController extends StateNotifier<ScoreControllerState> {
 
   Future<void> getUserScores() async {
     state = state.copyWith(loading: true);
-    final userEntities = await _getUserEntities();
-    state = state.copyWith(loading: false, userScores: userEntities);
+    final filteredAndSortedUserScores = (await _getUserScores())
+        .filterNullsAndTesterAccounts()
+        .sortWithNullAsZero();
+    state =
+        state.copyWith(loading: false, userScores: filteredAndSortedUserScores);
   }
 
-  Future<List<UserScoreEntity>> _getUserEntities() async {
-    final userScores = await Future.wait(
-        (await _databaseRepository.getUsers()).map((user) async {
-      final userPredictions = await _getUserPredictions(user.id);
-      final totalScore = _calculateTotalScore(userPredictions);
-      final competitionToScore = _calculateCompetitionToScore(userPredictions);
+  Future<List<UserScoreEntity>> _getUserScores() async =>
+      Future.wait((await _databaseRepository.getUsers()).map((user) async {
+        final userPredictionsPerCompetition =
+            await _getUserPredictionsPerCompetition(user.id);
+        final totalScore = _calculateTotalScore(userPredictionsPerCompetition);
+        final competitionToScore =
+            _calculateCompetitionToScore(userPredictionsPerCompetition);
 
-      return UserScoreEntity(
-        username: user.username,
-        competitionToPrediction: userPredictions,
-        totalScore: totalScore,
-        competitionToScore: competitionToScore,
-      );
-    }));
-
-    final filteredUserScores = _filterScores(userScores);
-    _sortScores(filteredUserScores);
-
-    return filteredUserScores;
-  }
+        return UserScoreEntity(
+          username: user.username,
+          competitionToPrediction: userPredictionsPerCompetition,
+          totalScore: totalScore,
+          competitionToScore: competitionToScore,
+        );
+      }));
 
   int _calculateTotalScore(
     Map<CompetitionModel, PredictionModel?> userPredictions,
@@ -63,25 +61,8 @@ class ScoreController extends StateNotifier<ScoreControllerState> {
       competitionToPrediction
           .map((key, value) => MapEntry(key.id, calculateScore(key, value)));
 
-  List<UserScoreEntity> _filterScores(List<UserScoreEntity> userScores) =>
-      userScores.where((userScore) {
-        if (userScore.username == null) {
-          return false;
-        }
-        return !userScore.username!.contains('appletester');
-      }).toList();
-
-  void _sortScores(List<UserScoreEntity> filteredUserScores) =>
-      filteredUserScores.sort((a, b) {
-        var aTotalScore = a.totalScore;
-        var bTotalScore = b.totalScore;
-        if (aTotalScore == null || bTotalScore == null) {
-          return 0;
-        }
-        return bTotalScore - aTotalScore;
-      });
-
-  Future<Map<CompetitionModel, PredictionModel?>> _getUserPredictions(
+  Future<Map<CompetitionModel, PredictionModel?>>
+      _getUserPredictionsPerCompetition(
     String? uid,
   ) async {
     final competitions = await _databaseRepository.getCompetitions();
@@ -140,4 +121,30 @@ class ScoreControllerState {
 
   factory ScoreControllerState.withDefaults() =>
       const ScoreControllerState(competitions: null, userScores: []);
+}
+
+extension FilterScores on List<UserScoreEntity> {
+  List<UserScoreEntity> filterNullsAndTesterAccounts() {
+    return where((userScore) {
+      if (userScore.username == null) {
+        return false;
+      }
+      return !userScore.username!.contains('appletester');
+    }).toList();
+  }
+}
+
+extension SortScores on List<UserScoreEntity> {
+  List<UserScoreEntity> sortWithNullAsZero() {
+    sort((a, b) {
+      var aTotalScore = a.totalScore;
+      var bTotalScore = b.totalScore;
+      if (aTotalScore == null || bTotalScore == null) {
+        return 0;
+      }
+      return bTotalScore - aTotalScore;
+    });
+
+    return this;
+  }
 }
