@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "outDir": "lib",
@@ -11,5 +13,5 @@
   "compileOnSave": true,
   "include": [
     "src"
-  ]
+, "./index.d.ts"  ]
 }
