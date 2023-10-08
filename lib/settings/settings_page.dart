@@ -12,15 +12,38 @@ class SettingsPage extends ConsumerStatefulWidget {
 }
 
 class _SettingsPageState extends ConsumerState<SettingsPage> {
-  final controller = SettingsController();
+  SettingsController get controller =>
+      ref.read(SettingsController.provider.notifier);
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.getAppVersion();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: CtaButton(
-        text: 'Sign Out',
-        onPressed: () => _logoutPressed(),
-      ),
+    final state = ref.watch(SettingsController.provider);
+
+    return Column(
+      children: [
+        Expanded(
+          child: Center(
+            child: CtaButton(
+              text: 'Sign Out',
+              onPressed: () => _logoutPressed(),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 16.0),
+          child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Text("Version: ${state.appVersion}")),
+        ),
+      ],
     );
   }
 

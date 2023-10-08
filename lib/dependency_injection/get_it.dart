@@ -7,6 +7,7 @@ import 'package:melodifestivalen_competition/common/repositories/repositories.da
 import 'package:melodifestivalen_competition/config/config.dart';
 import 'package:melodifestivalen_competition/config/flavor.dart';
 import 'package:melodifestivalen_competition/secrets.dart';
+import 'package:melodifestivalen_competition/services/mello_predix_package_info.dart';
 import 'package:melodifestivalen_competition/snackbar/snackbar_handler.dart';
 
 final getIt = GetIt.instance;
@@ -40,6 +41,8 @@ Future<void> setUpGetIt(Flavor flavor) async {
       getIt.get<Logger>(),
     ),
   );
+
+  getIt.registerSingleton<MelloPredixPackageInfo>(MelloPredixPackageInfo());
 
   return getIt.allReady();
 }
