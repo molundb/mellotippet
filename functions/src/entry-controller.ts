@@ -1,19 +1,19 @@
-import {Response} from "express";
-import {db} from "./config/firebase";
+import { Response } from "express";
+import { db } from "./config/firebase";
 
 type EntryType = {
-    title: string,
-    text: string,
-    coverImageUrl: string,
-  }
+  title: string;
+  text: string;
+  coverImageUrl: string;
+};
 
 type Request = {
-    body: EntryType,
-    params: { entryId: string }
-}
+  body: EntryType;
+  params: { entryId: string };
+};
 
 const addEntry = async (req: Request, res: Response) => {
-  const {title, text} = req.body;
+  const { title, text } = req.body;
 
   try {
     const entry = db.collection("entries").doc();
@@ -39,8 +39,9 @@ const getAllEntries = async (req: Request, res: Response) => {
   try {
     const allEntries: EntryType[] = [];
 
-    (await db.collection("entries").get())
-        .forEach((doc: any) => allEntries.push(doc.data()));
+    (await db.collection("entries").get()).forEach((doc: any) =>
+      allEntries.push(doc.data())
+    );
     return res.status(200).json(allEntries);
   } catch (error) {
     return res.status(500).json("There was an error fetching all entries.");
@@ -48,7 +49,10 @@ const getAllEntries = async (req: Request, res: Response) => {
 };
 
 const updateEntry = async (req: Request, res: Response) => {
-  const {body: {text, title}, params: {entryId}} = req;
+  const {
+    body: { text, title },
+    params: { entryId },
+  } = req;
 
   try {
     const entry = db.collection("entries").doc(entryId);
@@ -71,14 +75,14 @@ const updateEntry = async (req: Request, res: Response) => {
       data: entryObject,
     });
   } catch (error) {
-    return res.status(500).json(
-        `There was an error updating the entry: ${error}`
-    );
+    return res
+      .status(500)
+      .json(`There was an error updating the entry: ${error}`);
   }
 };
 
 const deleteEntry = async (req: Request, res: Response) => {
-  const {entryId} = req.params;
+  const { entryId } = req.params;
 
   try {
     const entry = db.collection("entries").doc(entryId);
@@ -99,4 +103,4 @@ const deleteEntry = async (req: Request, res: Response) => {
   }
 };
 
-export {addEntry, getAllEntries, updateEntry, deleteEntry};
+export { addEntry, getAllEntries, updateEntry, deleteEntry };
