@@ -144,6 +144,3 @@ lib/secrets.dart
 .fvm/flutter_sdk
 
 **.mocks.dart
-
-## Firebase service account
-**service-account.json

@@ -1,56 +1,74 @@
 import { DocumentData, QueryDocumentSnapshot } from "firebase-admin/firestore";
 
-export default class FinalPrediction {
+export default class FinalPredictionOrResult {
   constructor(
-    readonly position1: number,
-    readonly position2: number,
-    readonly position3: number,
-    readonly position4: number,
-    readonly position5: number,
-    readonly position6: number,
-    readonly position7: number,
-    readonly position8: number,
-    readonly position9: number,
-    readonly position10: number,
-    readonly position11: number,
-    readonly position12: number
+    readonly placement1: number,
+    readonly placement2: number,
+    readonly placement3: number,
+    readonly placement4: number,
+    readonly placement5: number,
+    readonly placement6: number,
+    readonly placement7: number,
+    readonly placement8: number,
+    readonly placement9: number,
+    readonly placement10: number,
+    readonly placement11: number,
+    readonly placement12: number
   ) {}
+
+  toList() {
+    return [
+      this.placement1,
+      this.placement2,
+      this.placement3,
+      this.placement4,
+      this.placement4,
+      this.placement5,
+      this.placement6,
+      this.placement7,
+      this.placement8,
+      this.placement9,
+      this.placement10,
+      this.placement11,
+      this.placement12,
+    ]
+  }
 }
 
 const finalPredictionConverter = {
-  toFirestore(finalPrediction: FinalPrediction): DocumentData {
+  toFirestore(finalPrediction: FinalPredictionOrResult): DocumentData {
     return {
-      position1: finalPrediction.position1,
-      position2: finalPrediction.position2,
-      position3: finalPrediction.position3,
-      position4: finalPrediction.position4,
-      position5: finalPrediction.position5,
-      position6: finalPrediction.position6,
-      position7: finalPrediction.position7,
-      position8: finalPrediction.position8,
-      position9: finalPrediction.position9,
-      position10: finalPrediction.position10,
-      position11: finalPrediction.position11,
-      position12: finalPrediction.position12,
+      placement1: finalPrediction.placement1,
+      placement2: finalPrediction.placement2,
+      placement3: finalPrediction.placement3,
+      placement4: finalPrediction.placement4,
+      placement5: finalPrediction.placement5,
+      placement6: finalPrediction.placement6,
+      placement7: finalPrediction.placement7,
+      placement8: finalPrediction.placement8,
+      placement9: finalPrediction.placement9,
+      placement10: finalPrediction.placement10,
+      placement11: finalPrediction.placement11,
+      placement12: finalPrediction.placement12,
     };
   },
-  fromFirestore(snapshot: QueryDocumentSnapshot): FinalPrediction {
+  fromFirestore(snapshot: QueryDocumentSnapshot): FinalPredictionOrResult {
     const data = snapshot.data();
-    return new FinalPrediction(
-      data.position1,
-      data.position2,
-      data.position3,
-      data.position4,
-      data.position5,
-      data.position6,
-      data.position7,
-      data.position8,
-      data.position9,
-      data.position10,
-      data.position11,
-      data.position12
+    return new FinalPredictionOrResult(
+      data.placement1,
+      data.placement2,
+      data.placement3,
+      data.placement4,
+      data.placement5,
+      data.placement6,
+      data.placement7,
+      data.placement8,
+      data.placement9,
+      data.placement10,
+      data.placement11,
+      data.placement12
     );
   },
 };
 
-export { FinalPrediction, finalPredictionConverter };
+export { FinalPredictionOrResult, finalPredictionConverter };

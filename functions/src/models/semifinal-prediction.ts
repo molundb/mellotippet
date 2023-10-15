@@ -5,6 +5,10 @@ export default class SemifinalPrediction {
     readonly finalist1: number,
     readonly finalist2: number,
   ) {}
+
+  toList() {
+    return [this.finalist1, this.finalist2]
+  }
 }
 
 const semifinalPredictionConverter = {

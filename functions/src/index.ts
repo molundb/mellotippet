@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import { onRequest } from "firebase-functions/v2/https";
 import express from "express";
 import {
@@ -9,14 +10,15 @@ import {
 
 import { calculateTotalScores } from "./score-controller";
 
-const app2 = express();
 
-app2.get("/", (req, res) => res.status(200).send("Hey there!"));
-app2.post("/entries", addEntry);
-app2.get("/entries", getAllEntries);
-app2.patch("/entries/:entryId", updateEntry);
-app2.delete("/entries/:entryId", deleteEntry);
+const app = express();
 
-exports.app2 = onRequest(app2);
+app.get("/", (req, res) => res.status(200).send("Hey there!"));
+app.post("/entries", addEntry);
+app.get("/entries", getAllEntries);
+app.patch("/entries/:entryId", updateEntry);
+app.delete("/entries/:entryId", deleteEntry);
 
-exports.calculateTotalScores = calculateTotalScores;
+let app2 = onRequest(app);
+
+export { app2, calculateTotalScores };
