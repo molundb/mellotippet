@@ -12,10 +12,16 @@ class ScoreCalculator {
     var score = 0;
 
     for (let i = 0; i < result.toList().length; i++) {
-      score += this.calculateScoreForFinalPlacement(
-        i + 1,
-        prediction.toList()[result.toList()[i]]
-      );
+      let placement = i+1;
+      let startNumber = result.toList()[i];
+      let predictedPlacement = prediction.toList().indexOf(startNumber)+1;
+
+      if (predictedPlacement != -1) {
+        score += this.calculateScoreForFinalPlacement(
+          placement,
+          predictedPlacement
+        );
+      }
     }
 
     return score;
@@ -25,17 +31,13 @@ class ScoreCalculator {
     placement: number,
     predictedPlacement: number
   ) {
-    var score = 0;
-
     if (placement <= 4) {
-      score += Math.max(0, 5 - Math.abs(placement - predictedPlacement));
+      return Math.max(0, 5 - Math.abs(placement - predictedPlacement));
     } else if (placement <= 8) {
-      score += Math.max(0, 3 - Math.abs(placement - predictedPlacement));
+      return Math.max(0, 3 - Math.abs(placement - predictedPlacement));
     } else {
-      score += Math.max(0, 2 - Math.abs(placement - predictedPlacement));
+      return Math.max(0, 2 - Math.abs(placement - predictedPlacement));
     }
-
-    return score;
   }
 
   calculateSemifinalScore(

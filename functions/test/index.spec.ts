@@ -22,8 +22,8 @@ describe("calculateTotalScores", function () {
   });
 
   it("should calculate score correctly for heat", async function () {
+    // Given:
     // Create user
-
     const uid = "user1";
     const username = "testUser1";
     const totalScore = 0;
@@ -64,16 +64,16 @@ describe("calculateTotalScores", function () {
 
     const change = test.makeChange(beforeSnap, afterSnap);
 
-    // Have to create an object because of issues with firebase-functions-test & firebase-functions/v2/firestore, see: 
+    // Have to create an object because of issues with firebase-functions-test & firebase-functions/v2/firestore, see:
     // https://github.com/firebase/firebase-functions-test/issues/205
     // https://github.com/firebase/firebase-functions-test/issues/10
-    const event = { data: change, params: { competition: "heat1" } }; 
+    const event = { data: change, params: { competition: "heat1" } };
 
-    // Trigger calculate scores
+    // When: Trigger calculate total scores
     const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
     await wrappedCalculateTotalScores(event);
 
-    // Check that scores are correct
+    // Then: Check that scores are correct
     const userAfter = await db
       .doc(`users/${uid}`)
       .withConverter(userConverter)
@@ -82,5 +82,139 @@ describe("calculateTotalScores", function () {
     const data = userAfter.data();
 
     expect(data?.totalScore).to.equal(14);
+  });
+
+  it("should calculate score correctly for semifinal", async function () {
+    // Given:
+    // Create user
+    const uid = "user1";
+    const username = "testUser1";
+    const totalScore = 0;
+    await db
+      .doc(`users/${uid}`)
+      .set(Object.assign({}, new User(uid, username, totalScore)));
+
+    // Create prediction
+    await db.doc(`competitions/semifinal/predictions/${uid}`).set({
+      finalist1: 1,
+      finalist2: 2,
+    });
+
+    // Create result
+    const beforeSnap = test.firestore.makeDocumentSnapshot(
+      {},
+      "competitions/semifinal"
+    );
+
+    const result = {
+      result: {
+        finalist1: 1,
+        finalist2: 2,
+      },
+    };
+    await db.doc("competitions/semifinal").set(result);
+
+    const afterSnap = test.firestore.makeDocumentSnapshot(
+      result,
+      "competitions/semifinal"
+    );
+
+    const change = test.makeChange(beforeSnap, afterSnap);
+
+    // Have to create an object because of issues with firebase-functions-test & firebase-functions/v2/firestore, see:
+    // https://github.com/firebase/firebase-functions-test/issues/205
+    // https://github.com/firebase/firebase-functions-test/issues/10
+    const event = { data: change, params: { competition: "semifinal" } };
+
+    // When: Trigger calculate total scores
+    const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
+    await wrappedCalculateTotalScores(event);
+
+    // Then: Check that scores are correct
+    const userAfter = await db
+      .doc(`users/${uid}`)
+      .withConverter(userConverter)
+      .get();
+
+    const data = userAfter.data();
+
+    expect(data?.totalScore).to.equal(6);
+  });
+
+  it("should calculate score correctly for final", async function () {
+    // Given:
+    // Create user
+    const uid = "user1";
+    const username = "testUser1";
+    const totalScore = 0;
+    await db
+      .doc(`users/${uid}`)
+      .set(Object.assign({}, new User(uid, username, totalScore)));
+
+    // Create prediction
+    await db.doc(`competitions/final/predictions/${uid}`).set({
+      placement1: 1,
+      placement2: 2,
+      placement3: 3,
+      placement4: 4,
+      placement5: 5,
+      placement6: 6,
+      placement7: 7,
+      placement8: 8,
+      placement9: 9,
+      placement10: 10,
+      placement11: 11,
+      placement12: 12,
+    });
+
+    // Create result
+    const beforeSnap = test.firestore.makeDocumentSnapshot(
+      {},
+      "competitions/final"
+    );
+
+    const result = {
+      result: {
+        placement1: 1,
+        placement2: 2,
+        placement3: 3,
+        placement4: 4,
+        placement5: 5,
+        placement6: 6,
+        placement7: 7,
+        placement8: 8,
+        placement9: 9,
+        placement10: 10,
+        placement11: 11,
+        placement12: 12,
+      },
+    };
+    await db.doc("competitions/semifinal").set(result);
+
+    const afterSnap = test.firestore.makeDocumentSnapshot(
+      result,
+      "competitions/final"
+    );
+
+    const change = test.makeChange(beforeSnap, afterSnap);
+
+    // Have to create an object because of issues with firebase-functions-test & firebase-functions/v2/firestore, see:
+    // https://github.com/firebase/firebase-functions-test/issues/205
+    // https://github.com/firebase/firebase-functions-test/issues/10
+    const event = { data: change, params: { competition: "final" } };
+
+    // When: Trigger calculate total scores
+    const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
+    await wrappedCalculateTotalScores(event);
+
+    // Then: Check that scores are correct
+    const userAfter = await db
+      .doc(`users/${uid}`)
+      .withConverter(userConverter)
+      .get();
+
+    const data = userAfter.data();
+
+    expect(data?.totalScore).to.equal(40);
   });
 });

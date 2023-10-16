@@ -22,7 +22,6 @@ export default class FinalPredictionOrResult {
       this.placement2,
       this.placement3,
       this.placement4,
-      this.placement4,
       this.placement5,
       this.placement6,
       this.placement7,
