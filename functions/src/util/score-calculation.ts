@@ -2,7 +2,7 @@ import { HeatResult } from "../models/heat-result";
 import { HeatPrediction } from "../models/heat-prediction";
 import SemifinalPrediction from "../models/semifinal-prediction";
 import SemifinalResult from "../models/semifinal-result";
-import FinalPredictionOrResult from "../models/final-prediction";
+import FinalPredictionOrResult from "../models/final-prediction-or-result";
 
 class ScoreCalculator {
   calculateFinalScore(

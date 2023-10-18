@@ -8,7 +8,7 @@ import { heatPredictionConverter } from "./models/heat-prediction";
 import { semifinalPredictionConverter } from "./models/semifinal-prediction";
 import FinalPredictionOrResult, {
   finalPredictionConverter,
-} from "./models/final-prediction";
+} from "./models/final-prediction-or-result";
 
 import { ScoreCalculator } from "./util/score-calculation";
 
@@ -73,12 +73,12 @@ async function calculateScoreForHeatAndUpdateTotalScore(
   const prediction = snapshot.data();
   if (prediction !== undefined) {
     let scoreForHeat = scoreCalculator.calculateHeatScore(
-      new HeatResult(
-        result.finalist1,
-        result.finalist2,
-        result.semifinalist1,
-        result.semifinalist2
-      ),
+      new HeatResult({
+        finalist1: result.finalist1,
+        finalist2: result.finalist2,
+        semifinalist1: result.semifinalist1,
+        semifinalist2: result.semifinalist2,
+      }),
       prediction
     );
 
@@ -105,7 +105,10 @@ async function calculateScoreForSemifinalAndUpdateTotalScore(
   const prediction = snapshot.data();
   if (prediction !== undefined) {
     let scoreForSemifinal = scoreCalculator.calculateSemifinalScore(
-      new SemifinalResult(result.finalist1, result.finalist2),
+      new SemifinalResult({
+        finalist1: result.finalist1,
+        finalist2: result.finalist2,
+      }),
       prediction
     );
 
@@ -132,20 +135,20 @@ async function calculateScoreForFinalAndUpdateTotalScore(
   const prediction = snapshot.data();
   if (prediction !== undefined) {
     let scoreForFinal = scoreCalculator.calculateFinalScore(
-      new FinalPredictionOrResult(
-        result.placement1,
-        result.placement2,
-        result.placement3,
-        result.placement4,
-        result.placement5,
-        result.placement6,
-        result.placement7,
-        result.placement8,
-        result.placement9,
-        result.placement10,
-        result.placement11,
-        result.placement12
-      ),
+      new FinalPredictionOrResult({
+        placement1: prediction.placement1,
+        placement2: prediction.placement2,
+        placement3: prediction.placement3,
+        placement4: prediction.placement4,
+        placement5: prediction.placement5,
+        placement6: prediction.placement6,
+        placement7: prediction.placement7,
+        placement8: prediction.placement8,
+        placement9: prediction.placement9,
+        placement10: prediction.placement10,
+        placement11: prediction.placement11,
+        placement12: prediction.placement12,
+      }),
       prediction
     );
 
