@@ -55,6 +55,23 @@ export default class FinalPredictionOrResult {
     this.placement12 = placement12;
   }
 
+  static fromJson(result?: any) {
+    return new FinalPredictionOrResult({
+      placement1: result.placement1,
+      placement2: result.placement2,
+      placement3: result.placement3,
+      placement4: result.placement4,
+      placement5: result.placement5,
+      placement6: result.placement6,
+      placement7: result.placement7,
+      placement8: result.placement8,
+      placement9: result.placement9,
+      placement10: result.placement10,
+      placement11: result.placement11,
+      placement12: result.placement12,
+    });
+  }
+ 
   toList() {
     return [
       this.placement1,
@@ -92,21 +109,21 @@ export default class FinalPredictionOrResult {
   }
 }
 
-const finalPredictionConverter = {
-  toFirestore(finalPrediction: FinalPredictionOrResult): DocumentData {
+const finalPredictionOrResultConverter = {
+  toFirestore(finalPredictionOrResult: FinalPredictionOrResult): DocumentData {
     return {
-      placement1: finalPrediction.placement1,
-      placement2: finalPrediction.placement2,
-      placement3: finalPrediction.placement3,
-      placement4: finalPrediction.placement4,
-      placement5: finalPrediction.placement5,
-      placement6: finalPrediction.placement6,
-      placement7: finalPrediction.placement7,
-      placement8: finalPrediction.placement8,
-      placement9: finalPrediction.placement9,
-      placement10: finalPrediction.placement10,
-      placement11: finalPrediction.placement11,
-      placement12: finalPrediction.placement12,
+      placement1: finalPredictionOrResult.placement1,
+      placement2: finalPredictionOrResult.placement2,
+      placement3: finalPredictionOrResult.placement3,
+      placement4: finalPredictionOrResult.placement4,
+      placement5: finalPredictionOrResult.placement5,
+      placement6: finalPredictionOrResult.placement6,
+      placement7: finalPredictionOrResult.placement7,
+      placement8: finalPredictionOrResult.placement8,
+      placement9: finalPredictionOrResult.placement9,
+      placement10: finalPredictionOrResult.placement10,
+      placement11: finalPredictionOrResult.placement11,
+      placement12: finalPredictionOrResult.placement12,
     };
   },
   fromFirestore(snapshot: QueryDocumentSnapshot): FinalPredictionOrResult {
@@ -128,4 +145,4 @@ const finalPredictionConverter = {
   },
 };
 
-export { FinalPredictionOrResult, finalPredictionConverter };
+export { FinalPredictionOrResult, finalPredictionOrResultConverter};

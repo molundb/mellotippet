@@ -32,6 +32,7 @@ describe("calculateTotalScores", function () {
         "heat4",
         "heat5",
         "semifinal",
+        "final"
       ]) {
         db.doc(`competitions/${competition}/predictions/${userId}`).delete();
         db.doc(`competitions/${competition}`).delete();
@@ -475,60 +476,290 @@ describe("calculateTotalScores", function () {
     }
   );
 
-  it("should calculate score correctly for final", async function () {
-    // Given
-    const uid = "user1";
-    const username = "testUser1";
-    const totalScore = 0;
+  const finalTests = [
+    {
+      testName: "should calculate score correctly for perfect prediction",
+      usersWithPredictionAndExpectedScore: [
+        {
+          user: new User("user1", "testUser1", 0),
+          prediction: new FinalPredictionOrResult({
+            placement1: 1,
+            placement2: 2,
+            placement3: 3,
+            placement4: 4,
+            placement5: 5,
+            placement6: 6,
+            placement7: 7,
+            placement8: 8,
+            placement9: 9,
+            placement10: 10,
+            placement11: 11,
+            placement12: 12,
+          }),
+          expectedScore: 40,
+        },
+      ],
+      result: new FinalPredictionOrResult({
+        placement1: 1,
+        placement2: 2,
+        placement3: 3,
+        placement4: 4,
+        placement5: 5,
+        placement6: 6,
+        placement7: 7,
+        placement8: 8,
+        placement9: 9,
+        placement10: 10,
+        placement11: 11,
+        placement12: 12,
+      }).toResult(),
+    },
+    {
+      testName: "should calculate score correctly when user has totalScore > 0",
+      usersWithPredictionAndExpectedScore: [
+        {
+          user: new User("user1", "testUser1", 48),
+          prediction: new FinalPredictionOrResult({
+            placement1: 1,
+            placement2: 2,
+            placement3: 3,
+            placement4: 4,
+            placement5: 5,
+            placement6: 6,
+            placement7: 7,
+            placement8: 8,
+            placement9: 9,
+            placement10: 10,
+            placement11: 11,
+            placement12: 12,
+          }),
+          expectedScore: 88,
+        },
+      ],
+      result: new FinalPredictionOrResult({
+        placement1: 1,
+        placement2: 2,
+        placement3: 3,
+        placement4: 4,
+        placement5: 5,
+        placement6: 6,
+        placement7: 7,
+        placement8: 8,
+        placement9: 9,
+        placement10: 10,
+        placement11: 11,
+        placement12: 12,
+      }).toResult(),
+    },
+    {
+      testName:
+        "should calculate score correctly when result order is different",
+      usersWithPredictionAndExpectedScore: [
+        {
+          user: new User("user1", "testUser1", 0),
+          prediction: new FinalPredictionOrResult({
+            placement1: 8,
+            placement2: 7,
+            placement3: 4,
+            placement4: 5,
+            placement5: 12,
+            placement6: 10,
+            placement7: 3,
+            placement8: 6,
+            placement9: 1,
+            placement10: 11,
+            placement11: 2,
+            placement12: 9,
+          }),
+          expectedScore: 40,
+        },
+      ],
+      result: new FinalPredictionOrResult({
+        placement1: 8,
+        placement2: 7,
+        placement3: 4,
+        placement4: 5,
+        placement5: 12,
+        placement6: 10,
+        placement7: 3,
+        placement8: 6,
+        placement9: 1,
+        placement10: 11,
+        placement11: 2,
+        placement12: 9,
+      }).toResult(),
+    },
+    {
+      testName: "should calculate score correctly when mistakes",
+      usersWithPredictionAndExpectedScore: [
+        {
+          user: new User("user1", "testUser1", 17),
+          prediction: new FinalPredictionOrResult({
+            placement1: 7,
+            placement2: 3,
+            placement3: 8,
+            placement4: 12,
+            placement5: 9,
+            placement6: 4,
+            placement7: 2,
+            placement8: 5,
+            placement9: 1,
+            placement10: 6,
+            placement11: 10,
+            placement12: 11,
+          }),
+          expectedScore: 32,
+        },
+      ],
+      result: new FinalPredictionOrResult({
+        placement1: 8,
+        placement2: 7,
+        placement3: 4,
+        placement4: 5,
+        placement5: 12,
+        placement6: 10,
+        placement7: 3,
+        placement8: 6,
+        placement9: 1,
+        placement10: 11,
+        placement11: 2,
+        placement12: 9,
+      }).toResult(),
+    },
+    {
+      testName: "should calculate score correctly when mistakes 2",
+      usersWithPredictionAndExpectedScore: [
+        {
+          user: new User("user1", "testUser1", 99),
+          prediction: new FinalPredictionOrResult({
+            placement1: 7,
+            placement2: 3,
+            placement3: 8,
+            placement4: 12,
+            placement5: 9,
+            placement6: 4,
+            placement7: 2,
+            placement8: 5,
+            placement9: 1,
+            placement10: 6,
+            placement11: 10,
+            placement12: 11,
+          }),
+          expectedScore: 108,
+        },
+      ],
+      result: new FinalPredictionOrResult({
+        placement1: 5,
+        placement2: 1,
+        placement3: 4,
+        placement4: 8,
+        placement5: 12,
+        placement6: 11,
+        placement7: 6,
+        placement8: 3,
+        placement9: 7,
+        placement10: 10,
+        placement11: 9,
+        placement12: 2,
+      }).toResult(),
+    },
+    {
+      testName: "should not change score when no prediction",
+      usersWithPredictionAndExpectedScore: [
+        {
+          user: new User("user1", "testUser1", 33),
+          prediction: undefined,
+          expectedScore: 33,
+        },
+      ],
+      result: new FinalPredictionOrResult({
+        placement1: 8,
+        placement2: 7,
+        placement3: 4,
+        placement4: 5,
+        placement5: 12,
+        placement6: 10,
+        placement7: 3,
+        placement8: 6,
+        placement9: 1,
+        placement10: 11,
+        placement11: 2,
+        placement12: 9,
+      }).toResult(),
+    },
+    {
+      testName: "should calculate score correctly for multiple users",
+      usersWithPredictionAndExpectedScore: [
+        {
+          user: new User("user1", "testUser1", 17),
+          prediction: new FinalPredictionOrResult({
+            placement1: 7,
+            placement2: 3,
+            placement3: 8,
+            placement4: 11,
+            placement5: 12,
+            placement6: 4,
+            placement7: 10,
+            placement8: 5,
+            placement9: 1,
+            placement10: 6,
+            placement11: 2,
+            placement12: 9,
+          }),
+          expectedScore: 39,
+        },
+        {
+          user: new User("user2", "username 2", 78),
+          prediction: new FinalPredictionOrResult({
+            placement1: 5,
+            placement2: 3,
+            placement3: 8,
+            placement4: 11,
+            placement5: 12,
+            placement6: 4,
+            placement7: 10,
+            placement8: 7,
+            placement9: 1,
+            placement10: 6,
+            placement11: 9,
+            placement12: 2,
+          }),
+          expectedScore: 95,
+        },
+        {
+          user: new User("user3", "third name", 46),
+          prediction: undefined,
+          expectedScore: 46,
+        },
+      ],
+      result: new FinalPredictionOrResult({
+        placement1: 8,
+        placement2: 7,
+        placement3: 4,
+        placement4: 5,
+        placement5: 12,
+        placement6: 10,
+        placement7: 3,
+        placement8: 6,
+        placement9: 1,
+        placement10: 11,
+        placement11: 2,
+        placement12: 9,
+      }).toResult(),
+    },
+  ];
 
-    const competition = "final";
-    const competitionPath = `competitions/${competition}`;
-
-    const prediction = new FinalPredictionOrResult({
-      placement1: 1,
-      placement2: 2,
-      placement3: 3,
-      placement4: 4,
-      placement5: 5,
-      placement6: 6,
-      placement7: 7,
-      placement8: 8,
-      placement9: 9,
-      placement10: 10,
-      placement11: 11,
-      placement12: 12,
-    });
-
-    const result = new FinalPredictionOrResult({
-      placement1: 1,
-      placement2: 2,
-      placement3: 3,
-      placement4: 4,
-      placement5: 5,
-      placement6: 6,
-      placement7: 7,
-      placement8: 8,
-      placement9: 9,
-      placement10: 10,
-      placement11: 11,
-      placement12: 12,
-    }).toResult();
-
-    await addUserToDatabase(new User(uid, username, totalScore));
-    await addPredictionToDatabase(competitionPath, uid, prediction);
-    await addResultToDatabase(competitionPath, result);
-
-    const change = createChange(competitionPath, result);
-    const event = createEvent(change, competition);
-
-    // When: Trigger calculate total scores
-    const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
-    await wrappedCalculateTotalScores(event);
-
-    // Then: Assert that scores are correct
-    const user = await getUserFromDatabase(uid);
-    expect(user?.totalScore).to.equal(40);
-  });
+  finalTests.forEach(
+    ({ testName, usersWithPredictionAndExpectedScore, result }) => {
+      it(`final: ${testName}`, async function () {
+        await testCalculateTotalScore(
+          "final",
+          usersWithPredictionAndExpectedScore,
+          result
+        );
+      });
+    }
+  );
 });
 
 async function testCalculateTotalScore(

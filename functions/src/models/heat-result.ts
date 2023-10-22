@@ -21,6 +21,15 @@ export default class HeatResult {
     this.semifinalist2 = semifinalist2;
   }
 
+  static fromJson(result: any) {
+    return new HeatResult({
+      finalist1: result.finalist1,
+      finalist2: result.finalist2,
+      semifinalist1: result.semifinalist1,
+      semifinalist2: result.semifinalist2,
+    });
+  }
+
   toResult() {
     return {
       result: {
@@ -28,8 +37,8 @@ export default class HeatResult {
         finalist2: this.finalist2,
         semifinalist1: this.semifinalist1,
         semifinalist2: this.semifinalist2,
-      }
-    }
+      },
+    };
   }
 }
 

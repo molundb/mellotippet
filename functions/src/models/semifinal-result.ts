@@ -13,6 +13,13 @@ export default class SemifinalResult {
     this.finalist2 = finalist2;
   }
 
+  static fromJson(result: any) {
+    return new SemifinalResult({
+      finalist1: result.finalist1,
+      finalist2: result.finalist2,
+    });
+  }
+
   toResult() {
     return {
       result: {
