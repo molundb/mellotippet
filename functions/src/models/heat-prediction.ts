@@ -1,11 +1,12 @@
 import { DocumentData, QueryDocumentSnapshot } from "firebase-admin/firestore";
+import { PredictionAndScore } from "./prediction-and-score";
 
 export default class HeatPrediction {
-  readonly finalist1: number;
-  readonly finalist2: number;
-  readonly semifinalist1: number;
-  readonly semifinalist2: number;
-  readonly fifthPlace: number;
+  readonly finalist1: PredictionAndScore;
+  readonly finalist2: PredictionAndScore;
+  readonly semifinalist1: PredictionAndScore;
+  readonly semifinalist2: PredictionAndScore;
+  readonly fifthPlace: PredictionAndScore;
 
   constructor({
     finalist1,
@@ -14,11 +15,11 @@ export default class HeatPrediction {
     semifinalist2,
     fifthPlace,
   }: {
-    finalist1: number;
-    finalist2: number;
-    semifinalist1: number;
-    semifinalist2: number;
-    fifthPlace: number;
+    finalist1: PredictionAndScore;
+    finalist2: PredictionAndScore;
+    semifinalist1: PredictionAndScore;
+    semifinalist2: PredictionAndScore;
+    fifthPlace: PredictionAndScore;
   }) {
     this.finalist1 = finalist1;
     this.finalist2 = finalist2;
@@ -31,21 +32,36 @@ export default class HeatPrediction {
 const heatPredictionConverter = {
   toFirestore(heatPrediction: HeatPrediction): DocumentData {
     return {
-      finalist1: heatPrediction.finalist1,
-      finalist2: heatPrediction.finalist2,
-      semifinalist1: heatPrediction.semifinalist1,
-      semifinalist2: heatPrediction.semifinalist2,
-      fifthPlace: heatPrediction.fifthPlace,
+      finalist1: heatPrediction.finalist1.toJson(),
+      finalist2: heatPrediction.finalist2.toJson(),
+      semifinalist1: heatPrediction.semifinalist1.toJson(),
+      semifinalist2: heatPrediction.semifinalist2.toJson(),
+      fifthPlace: heatPrediction.fifthPlace.toJson(),
     };
   },
   fromFirestore(snapshot: QueryDocumentSnapshot): HeatPrediction {
     const data = snapshot.data();
     return new HeatPrediction({
-      finalist1: data.finalist1,
-      finalist2: data.finalist2,
-      semifinalist1: data.semifinalist1,
-      semifinalist2: data.semifinalist2,
-      fifthPlace: data.fifthPlace,
+      finalist1: new PredictionAndScore({
+        prediction: data.finalist1.prediction,
+        score: data.finalist1.score,
+      }),
+      finalist2: new PredictionAndScore({
+        prediction: data.finalist2.prediction,
+        score: data.finalist2.score,
+      }),
+      semifinalist1: new PredictionAndScore({
+        prediction: data.semifinalist1.prediction,
+        score: data.semifinalist1.score,
+      }),
+      semifinalist2: new PredictionAndScore({
+        prediction: data.semifinalist2.prediction,
+        score: data.semifinalist2.score,
+      }),
+      fifthPlace: new PredictionAndScore({
+        prediction: data.fifthPlace.prediction,
+        score: data.fifthPlace.score,
+      }),
     });
   },
 };

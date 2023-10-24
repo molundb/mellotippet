@@ -1,5 +1,5 @@
 import { HeatResult } from "../models/heat-result";
-import { HeatPrediction } from "../models/heat-prediction";
+import { HeatPrediction as HeatPredictionAndScore } from "../models/heat-prediction";
 import SemifinalPrediction from "../models/semifinal-prediction";
 import SemifinalResult from "../models/semifinal-result";
 import FinalPredictionOrResult from "../models/final-prediction-or-result";
@@ -12,9 +12,9 @@ class ScoreCalculator {
     var score = 0;
 
     for (let i = 0; i < result.toList().length; i++) {
-      let placement = i+1;
+      let placement = i + 1;
       let startNumber = result.toList()[i];
-      let predictedPlacement = prediction.toList().indexOf(startNumber)+1;
+      let predictedPlacement = prediction.toList().indexOf(startNumber) + 1;
 
       if (predictedPlacement != -1) {
         score += this.calculateScoreForFinalPlacement(
@@ -69,18 +69,30 @@ class ScoreCalculator {
     }
   }
 
-  calculateHeatScore(result: HeatResult, prediction: HeatPrediction) {
+  calculateHeatScore(
+    result: HeatResult,
+    predictionAndScore: HeatPredictionAndScore,
+    predictionAndScoresSnapshot: FirebaseFirestore.DocumentSnapshot<HeatPredictionAndScore>
+  ) {
     var score = 0;
 
-    score += this.calculateScoreForHeatFinalist(result.finalist1, prediction);
-    score += this.calculateScoreForHeatFinalist(result.finalist2, prediction);
+    score += this.calculateScoreForHeatFinalist(
+      result.finalist1,
+      predictionAndScore,
+      predictionAndScoresSnapshot
+    );
+    score += this.calculateScoreForHeatFinalist(
+      result.finalist2,
+      predictionAndScore,
+      predictionAndScoresSnapshot
+    );
     score += this.calculateScoreForHeatSemifinalist(
       result.semifinalist1,
-      prediction
+      predictionAndScore
     );
     score += this.calculateScoreForHeatSemifinalist(
       result.semifinalist2,
-      prediction
+      predictionAndScore
     );
 
     return score;
@@ -88,18 +100,22 @@ class ScoreCalculator {
 
   private calculateScoreForHeatFinalist(
     finalist: number,
-    prediction: HeatPrediction
+    predictionAndScore: HeatPredictionAndScore,
+    predictionAndScoresSnapshot: FirebaseFirestore.DocumentSnapshot<HeatPredictionAndScore>
   ): number {
     var score = 0;
 
-    if (finalist == prediction.finalist1 || finalist == prediction.finalist2) {
+    if (finalist == predictionAndScore.finalist1.prediction) {
+      score = 5;
+      predictionAndScoresSnapshot.ref.set
+    }else if (finalist == predictionAndScore.finalist2.prediction){
       score = 5;
     } else if (
-      finalist == prediction.semifinalist1 ||
-      finalist == prediction.semifinalist2
+      finalist == predictionAndScore.semifinalist1.prediction ||
+      finalist == predictionAndScore.semifinalist2.prediction
     ) {
       score = 3;
-    } else if (finalist == prediction.fifthPlace) {
+    } else if (finalist == predictionAndScore.fifthPlace.prediction) {
       score = 1;
     }
 
@@ -108,21 +124,21 @@ class ScoreCalculator {
 
   private calculateScoreForHeatSemifinalist(
     semifinalist: number,
-    prediction: HeatPrediction
+    prediction: HeatPredictionAndScore
   ): number {
     var score = 0;
 
     if (
-      semifinalist == prediction.finalist1 ||
-      semifinalist == prediction.finalist2
+      semifinalist == prediction.finalist1.prediction ||
+      semifinalist == prediction.finalist2.prediction
     ) {
       score = 1;
     } else if (
-      semifinalist == prediction.semifinalist1 ||
-      semifinalist == prediction.semifinalist2
+      semifinalist == prediction.semifinalist1.prediction ||
+      semifinalist == prediction.semifinalist2.prediction
     ) {
       score = 2;
-    } else if (semifinalist == prediction.fifthPlace) {
+    } else if (semifinalist == prediction.fifthPlace.prediction) {
       score = 1;
     }
 
