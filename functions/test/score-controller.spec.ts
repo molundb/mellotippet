@@ -25,28 +25,9 @@ const test = functions(
 );
 
 describe("calculateTotalScores", function () {
-  afterEach(function () {
+  afterEach(async function () {
     // Do cleanup tasks.
     test.cleanup();
-    // Reset the database.
-    for (var userId of ["user1", "user2", "user3"]) {
-      db.doc(`users/${userId}`).delete();
-
-      for (var competition of [
-        "heat1",
-        "heat2",
-        "heat3",
-        "heat4",
-        "heat5",
-        "semifinal",
-        "final",
-      ]) {
-        db.doc(
-          `competitions/${competition}/predictionsAndScores/${userId}`
-        ).delete();
-        db.doc(`competitions/${competition}`).delete();
-      }
-    }
   });
 
   it(`heat: should calculate score correctly when user has totalScore > 0`, async function () {
@@ -85,6 +66,9 @@ describe("calculateTotalScores", function () {
     // Then
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
+
+    // Reset the database
+    await resetDatabase(user.id, competition);
   });
 
   it(`heat: should calculate score correctly when one finalist on semifinal`, async function () {
@@ -123,6 +107,9 @@ describe("calculateTotalScores", function () {
     // Then
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
+
+    // Reset the database
+    await resetDatabase(user.id, competition);
   });
 
   it(`heat: should calculate score correctly when two finalists on semifinal`, async function () {
@@ -161,6 +148,9 @@ describe("calculateTotalScores", function () {
     // Then
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
+
+    // Reset the database
+    await resetDatabase(user.id, competition);
   });
 
   it(`heat: should calculate score correctly when finalist on fifth place`, async function () {
@@ -199,6 +189,9 @@ describe("calculateTotalScores", function () {
     // Then
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
+
+    // Reset the database
+    await resetDatabase(user.id, competition);
   });
 
   it(`heat: should calculate score correctly when semifinalist on fifth place`, async function () {
@@ -237,6 +230,9 @@ describe("calculateTotalScores", function () {
     // Then
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
+
+    // Reset the database
+    await resetDatabase(user.id, competition);
   });
 
   it(`heat: should calculate score correctly for multiple users`, async function () {
@@ -299,6 +295,11 @@ describe("calculateTotalScores", function () {
       const userAfter = await getUserFromDatabase(user.id);
       expect(userAfter?.totalScore).to.equal(expectedScore);
     }
+
+    // Reset the database
+    for (var { user } of usersWithPredictionAndExpectedScore) {
+      await resetDatabase(user.id, competition);
+    }
   });
 
   it(`heat: should not change score when no prediction`, async function () {
@@ -331,6 +332,9 @@ describe("calculateTotalScores", function () {
     // Then
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
+
+    // Reset the database
+    await resetDatabase(user.id, competition);
   });
 
   const heats = ["heat1", "heat2", "heat3", "heat4", "heat5"];
@@ -372,6 +376,13 @@ describe("calculateTotalScores", function () {
       // Then
       const userAfter = await getUserFromDatabase(user.id);
       expect(userAfter?.totalScore).to.equal(expectedScore);
+
+      // Reset the database
+      await db.doc(`users/${user.id}`).delete();
+      await db
+        .doc(`competitions/${competition}/predictionsAndScores/${user.id}`)
+        .delete();
+      await db.doc(`competitions/${competition}`).delete();
     });
   });
 
@@ -409,6 +420,9 @@ describe("calculateTotalScores", function () {
     // Then
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
+
+    // Reset the database
+    await resetDatabase(user.id, competition);
   });
 
   it("semifinal: should calculate score correctly when user has totalScore > 0", async function () {
@@ -445,6 +459,9 @@ describe("calculateTotalScores", function () {
     // Then
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
+
+    // Reset the database
+    await resetDatabase(user.id, competition);
   });
 
   it("semifinal: should calculate score correctly when one finalist correct", async function () {
@@ -481,6 +498,9 @@ describe("calculateTotalScores", function () {
     // Then
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
+
+    // Reset the database
+    await resetDatabase(user.id, competition);
   });
 
   it("semifinal: should calculate score correctly when no finalist correct", async function () {
@@ -517,6 +537,9 @@ describe("calculateTotalScores", function () {
     // Then
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
+
+    // Reset the database
+    await resetDatabase(user.id, competition);
   });
 
   it("semifinal: should not change score when no prediction", async function () {
@@ -550,6 +573,9 @@ describe("calculateTotalScores", function () {
     // Then
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
+
+    // Reset the database
+    await resetDatabase(user.id, competition);
   });
 
   it("semifinal: should calculate score correctly for multiple users", async function () {
@@ -607,8 +633,13 @@ describe("calculateTotalScores", function () {
       const userAfter = await getUserFromDatabase(user.id);
       expect(userAfter?.totalScore).to.equal(expectedScore);
     }
+
+    // Reset the database
+    for (var { user } of usersWithPredictionAndExpectedScore) {
+      await resetDatabase(user.id, competition);
+    }
   });
-  
+
   it("final: should calculate score correctly for perfect prediction", async function () {
     const competition = "final";
     const competitionPath = `competitions/${competition}`;
@@ -659,6 +690,9 @@ describe("calculateTotalScores", function () {
     // Then
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
+
+    // Reset the database
+    await resetDatabase(user.id, competition);
   });
 
   it("final: should calculate score correctly when user has totalScore > 0", async function () {
@@ -711,6 +745,9 @@ describe("calculateTotalScores", function () {
     // Then
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
+
+    // Reset the database
+    await resetDatabase(user.id, competition);
   });
 
   it("final: should calculate score correctly when result order is different", async function () {
@@ -763,6 +800,9 @@ describe("calculateTotalScores", function () {
     // Then
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
+
+    // Reset the database
+    await resetDatabase(user.id, competition);
   });
 
   it("final: should calculate score correctly when mistakes", async function () {
@@ -815,6 +855,9 @@ describe("calculateTotalScores", function () {
     // Then
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
+
+    // Reset the database
+    await resetDatabase(user.id, competition);
   });
 
   it("final: should calculate score correctly when mistakes 2", async function () {
@@ -867,6 +910,9 @@ describe("calculateTotalScores", function () {
     // Then
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
+
+    // Reset the database
+    await resetDatabase(user.id, competition);
   });
 
   it("final: should not change score when no prediction", async function () {
@@ -906,6 +952,8 @@ describe("calculateTotalScores", function () {
     // Then
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
+
+    await resetDatabase(user.id, competition);
   });
 
   it("final: should calculate score correctly for multiple users", async function () {
@@ -989,11 +1037,27 @@ describe("calculateTotalScores", function () {
       const userAfter = await getUserFromDatabase(user.id);
       expect(userAfter?.totalScore).to.equal(expectedScore);
     }
+
+    // Reset the database
+    for (var { user } of usersWithPredictionAndExpectedScore) {
+      await resetDatabase(user.id, competition);
+    }
   });
 });
 
+async function resetDatabase(userId: string, competition: string) {
+  await db.doc(`users/${userId}`).delete();
+  await db
+    .doc(`competitions/${competition}/predictionsAndScores/${userId}`)
+    .delete();
+  await db.doc(`competitions/${competition}`).delete();
+}
+
 async function addUserToDatabase(user: User) {
-  return await db.doc(`users/${user.id}`).set(Object.assign({}, user));
+  return await db
+    .doc(`users/${user.id}`)
+    .withConverter(userConverter)
+    .set(user);
 }
 
 async function addHeatPredictionToDatabase(
