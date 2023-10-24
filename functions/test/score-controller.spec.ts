@@ -375,132 +375,239 @@ describe("calculateTotalScores", function () {
     });
   });
 
-  const semifinalTests = [
-    {
-      testName: "should calculate score correctly for perfect prediction",
-      usersWithPredictionAndExpectedScore: [
-        {
-          user: new User("user1", "testUser1", 0),
-          prediction: new SemifinalPrediction({
-            finalist1: 1,
-            finalist2: 2,
-          }),
-          expectedScore: 6,
-        },
-      ],
-      result: new SemifinalResult({
-        finalist1: 1,
-        finalist2: 2,
-      }).toResult(),
-    },
-    {
-      testName: "should calculate score correctly when user has totalScore > 0",
-      usersWithPredictionAndExpectedScore: [
-        {
-          user: new User("user1", "testUser1", 4),
-          prediction: new SemifinalPrediction({
-            finalist1: 1,
-            finalist2: 2,
-          }),
-          expectedScore: 10,
-        },
-      ],
-      result: new SemifinalResult({
-        finalist1: 1,
-        finalist2: 2,
-      }).toResult(),
-    },
-    {
-      testName: "should calculate score correctly when one finalist correct",
-      usersWithPredictionAndExpectedScore: [
-        {
-          user: new User("user1", "testUser1", 7),
-          prediction: new SemifinalPrediction({
-            finalist1: 1,
-            finalist2: 3,
-          }),
-          expectedScore: 10,
-        },
-      ],
-      result: new SemifinalResult({
-        finalist1: 1,
-        finalist2: 2,
-      }).toResult(),
-    },
-    {
-      testName: "should calculate score correctly when no finalist correct",
-      usersWithPredictionAndExpectedScore: [
-        {
-          user: new User("user1", "testUser1", 99),
-          prediction: new SemifinalPrediction({
-            finalist1: 2,
-            finalist2: 5,
-          }),
-          expectedScore: 99,
-        },
-      ],
-      result: new SemifinalResult({
-        finalist1: 4,
-        finalist2: 8,
-      }).toResult(),
-    },
-    {
-      testName: "should not change score when no prediction",
-      usersWithPredictionAndExpectedScore: [
-        {
-          user: new User("user1", "testUser1", 5),
-          prediction: undefined,
-          expectedScore: 5,
-        },
-      ],
-      result: new SemifinalResult({
-        finalist1: 1,
-        finalist2: 2,
-      }).toResult(),
-    },
-    {
-      testName: "should calculate score correctly for multiple users",
-      usersWithPredictionAndExpectedScore: [
-        {
-          user: new User("user1", "testUser1", 3),
-          prediction: new SemifinalPrediction({
-            finalist1: 2,
-            finalist2: 1,
-          }),
-          expectedScore: 9,
-        },
-        {
-          user: new User("user2", "username 2", 78),
-          prediction: new SemifinalPrediction({
-            finalist1: 2,
-            finalist2: 5,
-          }),
-          expectedScore: 81,
-        },
-        {
-          user: new User("user3", "third name", 95),
-          prediction: undefined,
-          expectedScore: 95,
-        },
-      ],
-      result: new SemifinalResult({
-        finalist1: 1,
-        finalist2: 2,
-      }).toResult(),
-    },
-  ];
+  it("semifinal: should calculate score correctly for perfect prediction", async function () {
+    const competition = "semifinal";
+    const competitionPath = `competitions/${competition}`;
 
-  semifinalTests.forEach(
-    ({ testName, usersWithPredictionAndExpectedScore, result }) => {
-      it(`semifinal: ${testName}`, async function () {
-        await testCalculateTotalScoreSemifinal(
-          "semifinal",
-          usersWithPredictionAndExpectedScore,
-          result
-        );
-      });
+    let user = new User("user1", "testUser1", 0);
+    let prediction = new SemifinalPrediction({
+      finalist1: 1,
+      finalist2: 2,
+    });
+    let expectedScore = 6;
+
+    let result = new SemifinalResult({
+      finalist1: 1,
+      finalist2: 2,
+    }).toResult();
+
+    await addUserToDatabase(user);
+    await addSemifinalPredictionToDatabase(
+      competitionPath,
+      user.id,
+      prediction
+    );
+    await addResultToDatabase(competitionPath, result);
+
+    const change = createChange(competitionPath, result);
+    const event = createEvent(change, competition);
+
+    // When
+    const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
+    await wrappedCalculateTotalScores(event);
+
+    // Then
+    const userAfter = await getUserFromDatabase(user.id);
+    expect(userAfter?.totalScore).to.equal(expectedScore);
+  });
+
+  it("semifinal: should calculate score correctly when user has totalScore > 0", async function () {
+    const competition = "semifinal";
+    const competitionPath = `competitions/${competition}`;
+
+    let user = new User("user1", "testUser1", 4);
+    let prediction = new SemifinalPrediction({
+      finalist1: 1,
+      finalist2: 2,
+    });
+    let expectedScore = 10;
+
+    let result = new SemifinalResult({
+      finalist1: 1,
+      finalist2: 2,
+    }).toResult();
+
+    await addUserToDatabase(user);
+    await addSemifinalPredictionToDatabase(
+      competitionPath,
+      user.id,
+      prediction
+    );
+    await addResultToDatabase(competitionPath, result);
+
+    const change = createChange(competitionPath, result);
+    const event = createEvent(change, competition);
+
+    // When
+    const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
+    await wrappedCalculateTotalScores(event);
+
+    // Then
+    const userAfter = await getUserFromDatabase(user.id);
+    expect(userAfter?.totalScore).to.equal(expectedScore);
+  });
+
+  it("semifinal: should calculate score correctly when one finalist correct", async function () {
+    const competition = "semifinal";
+    const competitionPath = `competitions/${competition}`;
+
+    let user = new User("user1", "testUser1", 7);
+    let prediction = new SemifinalPrediction({
+      finalist1: 1,
+      finalist2: 3,
+    });
+    let expectedScore = 10;
+
+    let result = new SemifinalResult({
+      finalist1: 1,
+      finalist2: 2,
+    }).toResult();
+
+    await addUserToDatabase(user);
+    await addSemifinalPredictionToDatabase(
+      competitionPath,
+      user.id,
+      prediction
+    );
+    await addResultToDatabase(competitionPath, result);
+
+    const change = createChange(competitionPath, result);
+    const event = createEvent(change, competition);
+
+    // When
+    const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
+    await wrappedCalculateTotalScores(event);
+
+    // Then
+    const userAfter = await getUserFromDatabase(user.id);
+    expect(userAfter?.totalScore).to.equal(expectedScore);
+  });
+
+  it("semifinal: should calculate score correctly when no finalist correct", async function () {
+    const competition = "semifinal";
+    const competitionPath = `competitions/${competition}`;
+
+    let user = new User("user1", "testUser1", 99);
+    let prediction = new SemifinalPrediction({
+      finalist1: 2,
+      finalist2: 5,
+    });
+    let expectedScore = 99;
+
+    let result = new SemifinalResult({
+      finalist1: 4,
+      finalist2: 8,
+    }).toResult();
+
+    await addUserToDatabase(user);
+    await addSemifinalPredictionToDatabase(
+      competitionPath,
+      user.id,
+      prediction
+    );
+    await addResultToDatabase(competitionPath, result);
+
+    const change = createChange(competitionPath, result);
+    const event = createEvent(change, competition);
+
+    // When
+    const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
+    await wrappedCalculateTotalScores(event);
+
+    // Then
+    const userAfter = await getUserFromDatabase(user.id);
+    expect(userAfter?.totalScore).to.equal(expectedScore);
+  });
+
+  it("semifinal: should not change score when no prediction", async function () {
+    const competition = "semifinal";
+    const competitionPath = `competitions/${competition}`;
+
+    let user = new User("user1", "testUser1", 5);
+    let prediction = undefined;
+    let expectedScore = 5;
+
+    let result = new SemifinalResult({
+      finalist1: 1,
+      finalist2: 2,
+    }).toResult();
+
+    await addUserToDatabase(user);
+    await addSemifinalPredictionToDatabase(
+      competitionPath,
+      user.id,
+      prediction
+    );
+    await addResultToDatabase(competitionPath, result);
+
+    const change = createChange(competitionPath, result);
+    const event = createEvent(change, competition);
+
+    // When
+    const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
+    await wrappedCalculateTotalScores(event);
+
+    // Then
+    const userAfter = await getUserFromDatabase(user.id);
+    expect(userAfter?.totalScore).to.equal(expectedScore);
+  });
+
+  it("semifinal: should calculate score correctly for multiple users", async function () {
+    const competition = "semifinal";
+    const competitionPath = `competitions/${competition}`;
+
+    let usersWithPredictionAndExpectedScore = [
+      {
+        user: new User("user1", "testUser1", 3),
+        prediction: new SemifinalPrediction({
+          finalist1: 2,
+          finalist2: 1,
+        }),
+        expectedScore: 9,
+      },
+      {
+        user: new User("user2", "username 2", 78),
+        prediction: new SemifinalPrediction({
+          finalist1: 2,
+          finalist2: 5,
+        }),
+        expectedScore: 81,
+      },
+      {
+        user: new User("user3", "third name", 95),
+        prediction: undefined,
+        expectedScore: 95,
+      },
+    ];
+
+    let result = new SemifinalResult({
+      finalist1: 1,
+      finalist2: 2,
+    }).toResult();
+
+    for (var { user, prediction } of usersWithPredictionAndExpectedScore) {
+      await addUserToDatabase(user);
+      await addSemifinalPredictionToDatabase(
+        competitionPath,
+        user.id,
+        prediction
+      );
     }
-  );
+    await addResultToDatabase(competitionPath, result);
+
+    const change = createChange(competitionPath, result);
+    const event = createEvent(change, competition);
+
+    // When
+    const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
+    await wrappedCalculateTotalScores(event);
+
+    // Then
+    for (var { user, expectedScore } of usersWithPredictionAndExpectedScore) {
+      const userAfter = await getUserFromDatabase(user.id);
+      expect(userAfter?.totalScore).to.equal(expectedScore);
+    }
+  });
 
   const finalTests = [
     {
@@ -787,40 +894,6 @@ describe("calculateTotalScores", function () {
     }
   );
 });
-
-async function testCalculateTotalScoreSemifinal(
-  competition: string,
-  usersWithPredictionAndExpectedScore: (
-    | { user: User; prediction: SemifinalPrediction; expectedScore: number }
-    | { user: User; prediction: undefined; expectedScore: number }
-  )[],
-  result: any
-) {
-  const competitionPath = `competitions/${competition}`;
-
-  for (var { user, prediction } of usersWithPredictionAndExpectedScore) {
-    await addUserToDatabase(user);
-    await addSemifinalPredictionToDatabase(
-      competitionPath,
-      user.id,
-      prediction
-    );
-  }
-  await addResultToDatabase(competitionPath, result);
-
-  const change = createChange(competitionPath, result);
-  const event = createEvent(change, competition);
-
-  // When
-  const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
-  await wrappedCalculateTotalScores(event);
-
-  // Then
-  for (var { user, expectedScore } of usersWithPredictionAndExpectedScore) {
-    const userAfter = await getUserFromDatabase(user.id);
-    expect(userAfter?.totalScore).to.equal(expectedScore);
-  }
-}
 
 async function testCalculateTotalScoreFinal(
   competition: string,
