@@ -1,18 +1,18 @@
 import { DocumentData, QueryDocumentSnapshot } from "firebase-admin/firestore";
 
-export default class FinalPredictionOrResult {
-  readonly placement1: number;
-  readonly placement2: number;
-  readonly placement3: number;
-  readonly placement4: number;
-  readonly placement5: number;
-  readonly placement6: number;
-  readonly placement7: number;
-  readonly placement8: number;
-  readonly placement9: number;
-  readonly placement10: number;
-  readonly placement11: number;
-  readonly placement12: number;
+export default class FinalResult {
+  placement1: number;
+  placement2: number;
+  placement3: number;
+  placement4: number;
+  placement5: number;
+  placement6: number;
+  placement7: number;
+  placement8: number;
+  placement9: number;
+  placement10: number;
+  placement11: number;
+  placement12: number;
 
   constructor({
     placement1,
@@ -56,7 +56,7 @@ export default class FinalPredictionOrResult {
   }
 
   static fromJson(result?: any) {
-    return new FinalPredictionOrResult({
+    return new FinalResult({
       placement1: result.placement1,
       placement2: result.placement2,
       placement3: result.placement3,
@@ -71,7 +71,7 @@ export default class FinalPredictionOrResult {
       placement12: result.placement12,
     });
   }
- 
+
   toList() {
     return [
       this.placement1,
@@ -110,7 +110,7 @@ export default class FinalPredictionOrResult {
 }
 
 const finalPredictionOrResultConverter = {
-  toFirestore(finalPredictionOrResult: FinalPredictionOrResult): DocumentData {
+  toFirestore(finalPredictionOrResult: FinalResult): DocumentData {
     return {
       placement1: finalPredictionOrResult.placement1,
       placement2: finalPredictionOrResult.placement2,
@@ -126,9 +126,9 @@ const finalPredictionOrResultConverter = {
       placement12: finalPredictionOrResult.placement12,
     };
   },
-  fromFirestore(snapshot: QueryDocumentSnapshot): FinalPredictionOrResult {
+  fromFirestore(snapshot: QueryDocumentSnapshot): FinalResult {
     const data = snapshot.data();
-    return new FinalPredictionOrResult({
+    return new FinalResult({
       placement1: data.placement1,
       placement2: data.placement2,
       placement3: data.placement3,
@@ -145,4 +145,4 @@ const finalPredictionOrResultConverter = {
   },
 };
 
-export { FinalPredictionOrResult, finalPredictionOrResultConverter};
+export { FinalResult, finalPredictionOrResultConverter };

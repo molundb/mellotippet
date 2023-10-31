@@ -47,7 +47,7 @@ export default class HeatPredictionAndScore {
   }
 }
 
-const heatPredictionConverter = {
+const heatPredictionAndScoreConverter = {
   toFirestore(heatPrediction: HeatPredictionAndScore): DocumentData {
     return {
       finalist1: heatPrediction.finalist1.toJson(),
@@ -84,4 +84,4 @@ const heatPredictionConverter = {
   },
 };
 
-export { HeatPredictionAndScore, heatPredictionConverter };
+export { HeatPredictionAndScore, heatPredictionAndScoreConverter };

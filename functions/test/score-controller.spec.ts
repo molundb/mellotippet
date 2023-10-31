@@ -4,17 +4,18 @@ import functions from "firebase-functions-test";
 import { expect } from "chai";
 import { User, userConverter } from "../src/models/user";
 import HeatPredictionAndScore, {
-  heatPredictionConverter,
-} from "../src/models/heat-prediction";
+  heatPredictionAndScoreConverter,
+} from "../src/models/heat-prediction-and-score";
 import SemifinalPredictionAndScore, {
-  semifinalPredictionConverter,
-} from "../src/models/semifinal-prediction";
-import FinalPredictionOrResult, {
-  finalPredictionOrResultConverter,
-} from "../src/models/final-prediction-or-result";
+  semifinalPredictionAndScoreConverter,
+} from "../src/models/semifinal-prediction-and-score";
+import FinalPredictionAndScore, {
+  finalPredictionAndScoreConverter,
+} from "../src/models/final-prediction-and-score";
 import HeatResult from "../src/models/heat-result";
-import { Change } from "firebase-functions/v1";
 import SemifinalResult from "../src/models/semifinal-result";
+import FinalResult from "../src/models/final-result";
+import { Change } from "firebase-functions/v1";
 import { PredictionAndScore } from "../src/models/prediction-and-score";
 
 const test = functions(
@@ -384,7 +385,7 @@ describe("calculateTotalScores", function () {
     const predictionAndScoreAfter = (
       await db
         .doc(`competitions/${competition}/predictionsAndScores/${user.id}`)
-        .withConverter(heatPredictionConverter)
+        .withConverter(heatPredictionAndScoreConverter)
         .get()
     ).data();
     expect(predictionAndScoreAfter).to.deep.equal(expectedPredictionAndScore);
@@ -613,23 +614,23 @@ describe("calculateTotalScores", function () {
     const competitionPath = `competitions/${competition}`;
 
     let user = new User("user1", "testUser1", 0);
-    let prediction = new FinalPredictionOrResult({
-      placement1: 1,
-      placement2: 2,
-      placement3: 3,
-      placement4: 4,
-      placement5: 5,
-      placement6: 6,
-      placement7: 7,
-      placement8: 8,
-      placement9: 9,
-      placement10: 10,
-      placement11: 11,
-      placement12: 12,
+    let prediction = new FinalPredictionAndScore({
+      placement1: new PredictionAndScore({ prediction: 1, score: 0 }),
+      placement2: new PredictionAndScore({ prediction: 2, score: 0 }),
+      placement3: new PredictionAndScore({ prediction: 3, score: 0 }),
+      placement4: new PredictionAndScore({ prediction: 4, score: 0 }),
+      placement5: new PredictionAndScore({ prediction: 5, score: 0 }),
+      placement6: new PredictionAndScore({ prediction: 6, score: 0 }),
+      placement7: new PredictionAndScore({ prediction: 7, score: 0 }),
+      placement8: new PredictionAndScore({ prediction: 8, score: 0 }),
+      placement9: new PredictionAndScore({ prediction: 9, score: 0 }),
+      placement10: new PredictionAndScore({ prediction: 10, score: 0 }),
+      placement11: new PredictionAndScore({ prediction: 11, score: 0 }),
+      placement12: new PredictionAndScore({ prediction: 12, score: 0 }),
     });
     let expectedScore = 40;
 
-    let result = new FinalPredictionOrResult({
+    let result = new FinalResult({
       placement1: 1,
       placement2: 2,
       placement3: 3,
@@ -668,23 +669,23 @@ describe("calculateTotalScores", function () {
     const competitionPath = `competitions/${competition}`;
 
     let user = new User("user1", "testUser1", 0);
-    let prediction = new FinalPredictionOrResult({
-      placement1: 8,
-      placement2: 7,
-      placement3: 4,
-      placement4: 5,
-      placement5: 12,
-      placement6: 10,
-      placement7: 3,
-      placement8: 6,
-      placement9: 1,
-      placement10: 11,
-      placement11: 2,
-      placement12: 9,
+    let prediction = new FinalPredictionAndScore({
+      placement1: new PredictionAndScore({ prediction: 8, score: 0 }),
+      placement2: new PredictionAndScore({ prediction: 7, score: 0 }),
+      placement3: new PredictionAndScore({ prediction: 4, score: 0 }),
+      placement4: new PredictionAndScore({ prediction: 5, score: 0 }),
+      placement5: new PredictionAndScore({ prediction: 12, score: 0 }),
+      placement6: new PredictionAndScore({ prediction: 10, score: 0 }),
+      placement7: new PredictionAndScore({ prediction: 3, score: 0 }),
+      placement8: new PredictionAndScore({ prediction: 6, score: 0 }),
+      placement9: new PredictionAndScore({ prediction: 1, score: 0 }),
+      placement10: new PredictionAndScore({ prediction: 11, score: 0 }),
+      placement11: new PredictionAndScore({ prediction: 2, score: 0 }),
+      placement12: new PredictionAndScore({ prediction: 9, score: 0 }),
     });
     let expectedScore = 40;
 
-    let result = new FinalPredictionOrResult({
+    let result = new FinalResult({
       placement1: 8,
       placement2: 7,
       placement3: 4,
@@ -723,23 +724,23 @@ describe("calculateTotalScores", function () {
     const competitionPath = `competitions/${competition}`;
 
     let user = new User("user1", "testUser1", 17);
-    let prediction = new FinalPredictionOrResult({
-      placement1: 7,
-      placement2: 3,
-      placement3: 8,
-      placement4: 12,
-      placement5: 9,
-      placement6: 4,
-      placement7: 2,
-      placement8: 5,
-      placement9: 1,
-      placement10: 6,
-      placement11: 10,
-      placement12: 11,
+    let prediction = new FinalPredictionAndScore({
+      placement1: new PredictionAndScore({ prediction: 7, score: 0 }),
+      placement2: new PredictionAndScore({ prediction: 3, score: 0 }),
+      placement3: new PredictionAndScore({ prediction: 8, score: 0 }),
+      placement4: new PredictionAndScore({ prediction: 12, score: 0 }),
+      placement5: new PredictionAndScore({ prediction: 9, score: 0 }),
+      placement6: new PredictionAndScore({ prediction: 4, score: 0 }),
+      placement7: new PredictionAndScore({ prediction: 2, score: 0 }),
+      placement8: new PredictionAndScore({ prediction: 5, score: 0 }),
+      placement9: new PredictionAndScore({ prediction: 1, score: 0 }),
+      placement10: new PredictionAndScore({ prediction: 6, score: 0 }),
+      placement11: new PredictionAndScore({ prediction: 10, score: 0 }),
+      placement12: new PredictionAndScore({ prediction: 11, score: 0 }),
     });
     let expectedScore = 32;
 
-    let result = new FinalPredictionOrResult({
+    let result = new FinalResult({
       placement1: 8,
       placement2: 7,
       placement3: 4,
@@ -778,23 +779,23 @@ describe("calculateTotalScores", function () {
     const competitionPath = `competitions/${competition}`;
 
     let user = new User("user1", "testUser1", 99);
-    let prediction = new FinalPredictionOrResult({
-      placement1: 7,
-      placement2: 3,
-      placement3: 8,
-      placement4: 12,
-      placement5: 9,
-      placement6: 4,
-      placement7: 2,
-      placement8: 5,
-      placement9: 1,
-      placement10: 6,
-      placement11: 10,
-      placement12: 11,
+    let prediction = new FinalPredictionAndScore({
+      placement1: new PredictionAndScore({ prediction: 7, score: 0 }),
+      placement2: new PredictionAndScore({ prediction: 3, score: 0 }),
+      placement3: new PredictionAndScore({ prediction: 8, score: 0 }),
+      placement4: new PredictionAndScore({ prediction: 12, score: 0 }),
+      placement5: new PredictionAndScore({ prediction: 9, score: 0 }),
+      placement6: new PredictionAndScore({ prediction: 4, score: 0 }),
+      placement7: new PredictionAndScore({ prediction: 2, score: 0 }),
+      placement8: new PredictionAndScore({ prediction: 5, score: 0 }),
+      placement9: new PredictionAndScore({ prediction: 1, score: 0 }),
+      placement10: new PredictionAndScore({ prediction: 6, score: 0 }),
+      placement11: new PredictionAndScore({ prediction: 10, score: 0 }),
+      placement12: new PredictionAndScore({ prediction: 11, score: 0 }),
     });
     let expectedScore = 108;
 
-    let result = new FinalPredictionOrResult({
+    let result = new FinalResult({
       placement1: 5,
       placement2: 1,
       placement3: 4,
@@ -836,7 +837,7 @@ describe("calculateTotalScores", function () {
     let prediction = undefined;
     let expectedScore = 33;
 
-    let result = new FinalPredictionOrResult({
+    let result = new FinalResult({
       placement1: 8,
       placement2: 7,
       placement3: 4,
@@ -876,37 +877,37 @@ describe("calculateTotalScores", function () {
     let usersWithPredictionAndExpectedScore = [
       {
         user: new User("user1", "testUser1", 17),
-        prediction: new FinalPredictionOrResult({
-          placement1: 7,
-          placement2: 3,
-          placement3: 8,
-          placement4: 11,
-          placement5: 12,
-          placement6: 4,
-          placement7: 10,
-          placement8: 5,
-          placement9: 1,
-          placement10: 6,
-          placement11: 2,
-          placement12: 9,
+        prediction: new FinalPredictionAndScore({
+          placement1: new PredictionAndScore({ prediction: 7, score: 0 }),
+          placement2: new PredictionAndScore({ prediction: 3, score: 0 }),
+          placement3: new PredictionAndScore({ prediction: 8, score: 0 }),
+          placement4: new PredictionAndScore({ prediction: 11, score: 0 }),
+          placement5: new PredictionAndScore({ prediction: 12, score: 0 }),
+          placement6: new PredictionAndScore({ prediction: 4, score: 0 }),
+          placement7: new PredictionAndScore({ prediction: 10, score: 0 }),
+          placement8: new PredictionAndScore({ prediction: 5, score: 0 }),
+          placement9: new PredictionAndScore({ prediction: 1, score: 0 }),
+          placement10: new PredictionAndScore({ prediction: 6, score: 0 }),
+          placement11: new PredictionAndScore({ prediction: 2, score: 0 }),
+          placement12: new PredictionAndScore({ prediction: 9, score: 0 }),
         }),
         expectedScore: 39,
       },
       {
         user: new User("user2", "username 2", 78),
-        prediction: new FinalPredictionOrResult({
-          placement1: 5,
-          placement2: 3,
-          placement3: 8,
-          placement4: 11,
-          placement5: 12,
-          placement6: 4,
-          placement7: 10,
-          placement8: 7,
-          placement9: 1,
-          placement10: 6,
-          placement11: 9,
-          placement12: 2,
+        prediction: new FinalPredictionAndScore({
+          placement1: new PredictionAndScore({ prediction: 5, score: 0 }),
+          placement2: new PredictionAndScore({ prediction: 3, score: 0 }),
+          placement3: new PredictionAndScore({ prediction: 8, score: 0 }),
+          placement4: new PredictionAndScore({ prediction: 11, score: 0 }),
+          placement5: new PredictionAndScore({ prediction: 12, score: 0 }),
+          placement6: new PredictionAndScore({ prediction: 4, score: 0 }),
+          placement7: new PredictionAndScore({ prediction: 10, score: 0 }),
+          placement8: new PredictionAndScore({ prediction: 7, score: 0 }),
+          placement9: new PredictionAndScore({ prediction: 1, score: 0 }),
+          placement10: new PredictionAndScore({ prediction: 6, score: 0 }),
+          placement11: new PredictionAndScore({ prediction: 9, score: 0 }),
+          placement12: new PredictionAndScore({ prediction: 2, score: 0 }),
         }),
         expectedScore: 95,
       },
@@ -917,7 +918,7 @@ describe("calculateTotalScores", function () {
       },
     ];
 
-    let result = new FinalPredictionOrResult({
+    let result = new FinalResult({
       placement1: 8,
       placement2: 7,
       placement3: 4,
@@ -984,7 +985,7 @@ async function addHeatPredictionToDatabase(
 
   return await db
     .doc(`${competitionPath}/predictionsAndScores/${uid}`)
-    .withConverter(heatPredictionConverter)
+    .withConverter(heatPredictionAndScoreConverter)
     .set(prediction);
 }
 
@@ -999,14 +1000,14 @@ async function addSemifinalPredictionToDatabase(
 
   return await db
     .doc(`${competitionPath}/predictionsAndScores/${uid}`)
-    .withConverter(semifinalPredictionConverter)
+    .withConverter(semifinalPredictionAndScoreConverter)
     .set(prediction);
 }
 
 async function addFinalPredictionToDatabase(
   competitionPath: string,
   uid: string,
-  prediction: FinalPredictionOrResult | undefined
+  prediction: FinalPredictionAndScore | undefined
 ) {
   if (prediction == undefined) {
     return;
@@ -1014,7 +1015,7 @@ async function addFinalPredictionToDatabase(
 
   return await db
     .doc(`${competitionPath}/predictionsAndScores/${uid}`)
-    .withConverter(finalPredictionOrResultConverter)
+    .withConverter(finalPredictionAndScoreConverter)
     .set(prediction);
 }
 

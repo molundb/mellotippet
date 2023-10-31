@@ -25,7 +25,7 @@ export default class SemifinalPredictionAndScore {
   }
 }
 
-const semifinalPredictionConverter = {
+const semifinalPredictionAndScoreConverter = {
   toFirestore(semifinalPrediction: SemifinalPredictionAndScore): DocumentData {
     return {
       finalist1: semifinalPrediction.finalist1.toJson(),
@@ -47,4 +47,4 @@ const semifinalPredictionConverter = {
   },
 };
 
-export { SemifinalPredictionAndScore, semifinalPredictionConverter };
+export { SemifinalPredictionAndScore, semifinalPredictionAndScoreConverter };

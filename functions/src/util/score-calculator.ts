@@ -1,30 +1,29 @@
 import { HeatResult } from "../models/heat-result";
-import { HeatPredictionAndScore } from "../models/heat-prediction";
-import SemifinalPredictionAndScore from "../models/semifinal-prediction";
+import { HeatPredictionAndScore } from "../models/heat-prediction-and-score";
+import SemifinalPredictionAndScore from "../models/semifinal-prediction-and-score";
 import SemifinalResult from "../models/semifinal-result";
-import FinalPredictionOrResult from "../models/final-prediction-or-result";
+import FinalPredictionAndScore from "../models/final-prediction-and-score";
+import FinalResult from "../models/final-result";
 
 class ScoreCalculator {
   calculateFinalScore(
-    result: FinalPredictionOrResult,
-    prediction: FinalPredictionOrResult
-  ) {
-    var score = 0;
-
+    result: FinalResult,
+    predictionAndScore: FinalPredictionAndScore
+  ): FinalPredictionAndScore {
     for (let i = 0; i < result.toList().length; i++) {
       let placement = i + 1;
       let startNumber = result.toList()[i];
-      let predictedPlacement = prediction.toList().indexOf(startNumber) + 1;
+      let predictedPlacement = predictionAndScore.predictions().indexOf(startNumber) + 1;
 
       if (predictedPlacement != -1) {
-        score += this.calculateScoreForFinalPlacement(
+        predictionAndScore.toList()[i].score = this.calculateScoreForFinalPlacement(
           placement,
           predictedPlacement
         );
       }
     }
 
-    return score;
+    return predictionAndScore;
   }
 
   private calculateScoreForFinalPlacement(
@@ -44,14 +43,16 @@ class ScoreCalculator {
     result: SemifinalResult,
     predictionAndScore: SemifinalPredictionAndScore
   ): SemifinalPredictionAndScore {
-    predictionAndScore.finalist1.score += this.calculateScoreForSemifinalFinalist(
-      result.finalist1,
-      predictionAndScore
-    );
-    predictionAndScore.finalist2.score += this.calculateScoreForSemifinalFinalist(
-      result.finalist2,
-      predictionAndScore
-    );
+    predictionAndScore.finalist1.score +=
+      this.calculateScoreForSemifinalFinalist(
+        result.finalist1,
+        predictionAndScore
+      );
+    predictionAndScore.finalist2.score +=
+      this.calculateScoreForSemifinalFinalist(
+        result.finalist2,
+        predictionAndScore
+      );
 
     return predictionAndScore;
   }
@@ -69,9 +70,8 @@ class ScoreCalculator {
 
   calculateHeatScore(
     result: HeatResult,
-    predictionAndScore: HeatPredictionAndScore,
+    predictionAndScore: HeatPredictionAndScore
   ): HeatPredictionAndScore {
-
     predictionAndScore.finalist1.score += this.calculateScoreForHeatFinalist(
       result.finalist1,
       predictionAndScore
@@ -80,14 +80,16 @@ class ScoreCalculator {
       result.finalist2,
       predictionAndScore
     );
-    predictionAndScore.semifinalist1.score += this.calculateScoreForHeatSemifinalist(
-      result.semifinalist1,
-      predictionAndScore
-    );
-    predictionAndScore.semifinalist2.score += this.calculateScoreForHeatSemifinalist(
-      result.semifinalist2,
-      predictionAndScore
-    );
+    predictionAndScore.semifinalist1.score +=
+      this.calculateScoreForHeatSemifinalist(
+        result.semifinalist1,
+        predictionAndScore
+      );
+    predictionAndScore.semifinalist2.score +=
+      this.calculateScoreForHeatSemifinalist(
+        result.semifinalist2,
+        predictionAndScore
+      );
 
     return predictionAndScore;
   }
