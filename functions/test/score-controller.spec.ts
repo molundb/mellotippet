@@ -6,7 +6,7 @@ import { User, userConverter } from "../src/models/user";
 import HeatPredictionAndScore, {
   heatPredictionConverter,
 } from "../src/models/heat-prediction";
-import SemifinalPrediction, {
+import SemifinalPredictionAndScore, {
   semifinalPredictionConverter,
 } from "../src/models/semifinal-prediction";
 import FinalPredictionOrResult, {
@@ -398,9 +398,9 @@ describe("calculateTotalScores", function () {
     const competitionPath = `competitions/${competition}`;
 
     let user = new User("user1", "testUser1", 0);
-    let prediction = new SemifinalPrediction({
-      finalist1: 1,
-      finalist2: 2,
+    let prediction = new SemifinalPredictionAndScore({
+      finalist1: new PredictionAndScore({ prediction: 1, score: 0 }),
+      finalist2: new PredictionAndScore({ prediction: 2, score: 0 }),
     });
     let expectedScore = 6;
 
@@ -437,9 +437,9 @@ describe("calculateTotalScores", function () {
     const competitionPath = `competitions/${competition}`;
 
     let user = new User("user1", "testUser1", 7);
-    let prediction = new SemifinalPrediction({
-      finalist1: 1,
-      finalist2: 3,
+    let prediction = new SemifinalPredictionAndScore({
+      finalist1: new PredictionAndScore({ prediction: 1, score: 0 }),
+      finalist2: new PredictionAndScore({ prediction: 3, score: 0 }),
     });
     let expectedScore = 10;
 
@@ -476,9 +476,9 @@ describe("calculateTotalScores", function () {
     const competitionPath = `competitions/${competition}`;
 
     let user = new User("user1", "testUser1", 99);
-    let prediction = new SemifinalPrediction({
-      finalist1: 2,
-      finalist2: 5,
+    let prediction = new SemifinalPredictionAndScore({
+      finalist1: new PredictionAndScore({ prediction: 2, score: 0 }),
+      finalist2: new PredictionAndScore({ prediction: 5, score: 0 }),
     });
     let expectedScore = 99;
 
@@ -553,17 +553,17 @@ describe("calculateTotalScores", function () {
     let usersWithPredictionAndExpectedScore = [
       {
         user: new User("user1", "testUser1", 3),
-        prediction: new SemifinalPrediction({
-          finalist1: 2,
-          finalist2: 1,
+        prediction: new SemifinalPredictionAndScore({
+          finalist1: new PredictionAndScore({ prediction: 2, score: 0 }),
+          finalist2: new PredictionAndScore({ prediction: 1, score: 0 }),
         }),
         expectedScore: 9,
       },
       {
         user: new User("user2", "username 2", 78),
-        prediction: new SemifinalPrediction({
-          finalist1: 2,
-          finalist2: 5,
+        prediction: new SemifinalPredictionAndScore({
+          finalist1: new PredictionAndScore({ prediction: 2, score: 0 }),
+          finalist2: new PredictionAndScore({ prediction: 5, score: 0 }),
         }),
         expectedScore: 81,
       },
@@ -991,7 +991,7 @@ async function addHeatPredictionToDatabase(
 async function addSemifinalPredictionToDatabase(
   competitionPath: string,
   uid: string,
-  prediction: SemifinalPrediction | undefined
+  prediction: SemifinalPredictionAndScore | undefined
 ) {
   if (prediction == undefined) {
     return;

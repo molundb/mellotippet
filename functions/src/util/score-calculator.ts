@@ -1,6 +1,6 @@
 import { HeatResult } from "../models/heat-result";
 import { HeatPredictionAndScore } from "../models/heat-prediction";
-import SemifinalPrediction from "../models/semifinal-prediction";
+import SemifinalPredictionAndScore from "../models/semifinal-prediction";
 import SemifinalResult from "../models/semifinal-result";
 import FinalPredictionOrResult from "../models/final-prediction-or-result";
 
@@ -42,7 +42,7 @@ class ScoreCalculator {
 
   calculateSemifinalScore(
     result: SemifinalResult,
-    prediction: SemifinalPrediction
+    prediction: SemifinalPredictionAndScore
   ) {
     var score = 0;
 
@@ -60,9 +60,9 @@ class ScoreCalculator {
 
   private calculateScoreForSemifinalFinalist(
     finalist: number,
-    prediction: SemifinalPrediction
+    predictionAndScore: SemifinalPredictionAndScore
   ) {
-    if (prediction.toList().includes(finalist)) {
+    if (predictionAndScore.getPredictions().includes(finalist)) {
       return 3;
     } else {
       return 0;

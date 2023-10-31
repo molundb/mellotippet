@@ -1,39 +1,46 @@
 import { DocumentData, QueryDocumentSnapshot } from "firebase-admin/firestore";
+import { PredictionAndScore } from "./prediction-and-score";
 
-export default class SemifinalPrediction {
-  readonly finalist1: number;
-  readonly finalist2: number;
+export default class SemifinalPredictionAndScore {
+  finalist1: PredictionAndScore;
+  finalist2: PredictionAndScore;
 
   constructor({
     finalist1,
     finalist2,
   }: {
-    finalist1: number;
-    finalist2: number;
+    finalist1: PredictionAndScore;
+    finalist2: PredictionAndScore;
   }) {
     this.finalist1 = finalist1;
     this.finalist2 = finalist2;
   }
 
-  toList() {
-    return [this.finalist1, this.finalist2];
+  getPredictions() {
+    return [this.finalist1.prediction, this.finalist2.prediction];
   }
 }
 
 const semifinalPredictionConverter = {
-  toFirestore(semifinalPrediction: SemifinalPrediction): DocumentData {
+  toFirestore(semifinalPrediction: SemifinalPredictionAndScore): DocumentData {
     return {
-      finalist1: semifinalPrediction.finalist1,
-      finalist2: semifinalPrediction.finalist2,
+      finalist1: semifinalPrediction.finalist1.toJson(),
+      finalist2: semifinalPrediction.finalist2.toJson(),
     };
   },
-  fromFirestore(snapshot: QueryDocumentSnapshot): SemifinalPrediction {
+  fromFirestore(snapshot: QueryDocumentSnapshot): SemifinalPredictionAndScore {
     const data = snapshot.data();
-    return new SemifinalPrediction({
-      finalist1: data.finalist1,
-      finalist2: data.finalist2,
+    return new SemifinalPredictionAndScore({
+      finalist1: new PredictionAndScore({
+        prediction: data.finalist1.prediction,
+        score: data.finalist1.score,
+      }),
+      finalist2: new PredictionAndScore({
+        prediction: data.finalist2.prediction,
+        score: data.finalist2.score,
+      }),
     });
   },
 };
 
-export { SemifinalPrediction, semifinalPredictionConverter };
+export { SemifinalPredictionAndScore, semifinalPredictionConverter };
