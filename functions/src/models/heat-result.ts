@@ -40,6 +40,14 @@ export default class HeatResult {
       },
     };
   }
+
+  finalists() {
+    return [this.finalist1, this.finalist2];
+  }
+
+  semifinalists() {
+    return [this.semifinalist1, this.semifinalist2];
+  }
 }
 
 export { HeatResult };

@@ -71,6 +71,22 @@ describe("calculateTotalScores", function () {
       const userAfter = await getUserFromDatabase(user.id);
       expect(userAfter?.totalScore).to.equal(expectedScore);
 
+      const expectedHeatPredictionAndScore = new HeatPredictionAndScore({
+        finalist1: new PredictionAndScore({ prediction: 1, score: 5 }),
+        finalist2: new PredictionAndScore({ prediction: 2, score: 5 }),
+        semifinalist1: new PredictionAndScore({ prediction: 3, score: 2 }),
+        semifinalist2: new PredictionAndScore({ prediction: 4, score: 2 }),
+        fifthPlace: new PredictionAndScore({ prediction: 5, score: 0 }),
+      });
+
+      const predictionAndScoreAfter = await getHeatPredictionToDatabase(
+        competitionPath,
+        user.id
+      );
+      expect(predictionAndScoreAfter).to.deep.equal(
+        expectedHeatPredictionAndScore
+      );
+
       // Reset the database
       await resetDatabase(user.id, competition);
     });
@@ -113,6 +129,22 @@ describe("calculateTotalScores", function () {
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
 
+    const expectedHeatPredictionAndScore = new HeatPredictionAndScore({
+      finalist1: new PredictionAndScore({ prediction: 1, score: 5 }),
+      finalist2: new PredictionAndScore({ prediction: 3, score: 1 }),
+      semifinalist1: new PredictionAndScore({ prediction: 2, score: 3 }),
+      semifinalist2: new PredictionAndScore({ prediction: 4, score: 2 }),
+      fifthPlace: new PredictionAndScore({ prediction: 5, score: 0 }),
+    });
+
+    const predictionAndScoreAfter = await getHeatPredictionToDatabase(
+      competitionPath,
+      user.id
+    );
+    expect(predictionAndScoreAfter).to.deep.equal(
+      expectedHeatPredictionAndScore
+    );
+
     // Reset the database
     await resetDatabase(user.id, competition);
   });
@@ -153,6 +185,22 @@ describe("calculateTotalScores", function () {
     // Then
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
+
+    const expectedHeatPredictionAndScore = new HeatPredictionAndScore({
+      finalist1: new PredictionAndScore({ prediction: 3, score: 1 }),
+      finalist2: new PredictionAndScore({ prediction: 4, score: 1 }),
+      semifinalist1: new PredictionAndScore({ prediction: 1, score: 3 }),
+      semifinalist2: new PredictionAndScore({ prediction: 2, score: 3 }),
+      fifthPlace: new PredictionAndScore({ prediction: 5, score: 0 }),
+    });
+
+    const predictionAndScoreAfter = await getHeatPredictionToDatabase(
+      competitionPath,
+      user.id
+    );
+    expect(predictionAndScoreAfter).to.deep.equal(
+      expectedHeatPredictionAndScore
+    );
 
     // Reset the database
     await resetDatabase(user.id, competition);
@@ -195,6 +243,22 @@ describe("calculateTotalScores", function () {
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
 
+    const expectedHeatPredictionAndScore = new HeatPredictionAndScore({
+      finalist1: new PredictionAndScore({ prediction: 3, score: 1 }),
+      finalist2: new PredictionAndScore({ prediction: 4, score: 1 }),
+      semifinalist1: new PredictionAndScore({ prediction: 6, score: 0 }),
+      semifinalist2: new PredictionAndScore({ prediction: 5, score: 0 }),
+      fifthPlace: new PredictionAndScore({ prediction: 1, score: 1 }),
+    });
+
+    const predictionAndScoreAfter = await getHeatPredictionToDatabase(
+      competitionPath,
+      user.id
+    );
+    expect(predictionAndScoreAfter).to.deep.equal(
+      expectedHeatPredictionAndScore
+    );
+
     // Reset the database
     await resetDatabase(user.id, competition);
   });
@@ -236,6 +300,22 @@ describe("calculateTotalScores", function () {
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
 
+    const expectedHeatPredictionAndScore = new HeatPredictionAndScore({
+      finalist1: new PredictionAndScore({ prediction: 3, score: 5 }),
+      finalist2: new PredictionAndScore({ prediction: 4, score: 5 }),
+      semifinalist1: new PredictionAndScore({ prediction: 6, score: 0 }),
+      semifinalist2: new PredictionAndScore({ prediction: 5, score: 0 }),
+      fifthPlace: new PredictionAndScore({ prediction: 1, score: 1 }),
+    });
+
+    const predictionAndScoreAfter = await getHeatPredictionToDatabase(
+      competitionPath,
+      user.id
+    );
+    expect(predictionAndScoreAfter).to.deep.equal(
+      expectedHeatPredictionAndScore
+    );
+
     // Reset the database
     await resetDatabase(user.id, competition);
   });
@@ -255,7 +335,14 @@ describe("calculateTotalScores", function () {
           semifinalist2: new PredictionAndScore({ prediction: 5, score: 0 }),
           fifthPlace: new PredictionAndScore({ prediction: 1, score: 0 }),
         }),
-        expectedScore: 7,
+        expectedTotalScore: 7,
+        expectedHeatPredictionAndScore: new HeatPredictionAndScore({
+          finalist1: new PredictionAndScore({ prediction: 3, score: 1 }),
+          finalist2: new PredictionAndScore({ prediction: 4, score: 1 }),
+          semifinalist1: new PredictionAndScore({ prediction: 6, score: 0 }),
+          semifinalist2: new PredictionAndScore({ prediction: 5, score: 0 }),
+          fifthPlace: new PredictionAndScore({ prediction: 1, score: 1 }),
+        }),
       },
       {
         user: new User("user2", "funny username", 101),
@@ -266,12 +353,20 @@ describe("calculateTotalScores", function () {
           semifinalist2: new PredictionAndScore({ prediction: 4, score: 0 }),
           fifthPlace: new PredictionAndScore({ prediction: 5, score: 0 }),
         }),
-        expectedScore: 115,
+        expectedTotalScore: 115,
+        expectedHeatPredictionAndScore: new HeatPredictionAndScore({
+          finalist1: new PredictionAndScore({ prediction: 1, score: 5 }),
+          finalist2: new PredictionAndScore({ prediction: 2, score: 5 }),
+          semifinalist1: new PredictionAndScore({ prediction: 3, score: 2 }),
+          semifinalist2: new PredictionAndScore({ prediction: 4, score: 2 }),
+          fifthPlace: new PredictionAndScore({ prediction: 5, score: 0 }),
+        }),
       },
       {
         user: new User("user3", "good name", 1),
         prediction: undefined,
-        expectedScore: 1,
+        expectedTotalScore: 1,
+        expectedHeatPredictionAndScore: undefined,
       },
     ];
 
@@ -296,9 +391,21 @@ describe("calculateTotalScores", function () {
     await wrappedCalculateTotalScores(event);
 
     // Then
-    for (var { user, expectedScore } of usersWithPredictionAndExpectedScore) {
+    for (var {
+      user,
+      expectedTotalScore,
+      expectedHeatPredictionAndScore,
+    } of usersWithPredictionAndExpectedScore) {
       const userAfter = await getUserFromDatabase(user.id);
-      expect(userAfter?.totalScore).to.equal(expectedScore);
+      expect(userAfter?.totalScore).to.equal(expectedTotalScore);
+
+      const predictionAndScoreAfter = await getHeatPredictionToDatabase(
+        competitionPath,
+        user.id
+      );
+      expect(predictionAndScoreAfter).to.deep.equal(
+        expectedHeatPredictionAndScore
+      );
     }
 
     // Reset the database
@@ -338,57 +445,14 @@ describe("calculateTotalScores", function () {
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
 
-    // Reset the database
-    await resetDatabase(user.id, competition);
-  });
-
-  it(`heat: should update score for each prediction correctly`, async function () {
-    // Given
-    const competition = "heat1";
-    const competitionPath = `competitions/${competition}`;
-
-    let user = new User("user1", "testUser1", 6);
-    let prediction = new HeatPredictionAndScore({
-      finalist1: new PredictionAndScore({ prediction: 1, score: 0 }),
-      finalist2: new PredictionAndScore({ prediction: 2, score: 0 }),
-      semifinalist1: new PredictionAndScore({ prediction: 3, score: 0 }),
-      semifinalist2: new PredictionAndScore({ prediction: 4, score: 0 }),
-      fifthPlace: new PredictionAndScore({ prediction: 5, score: 0 }),
-    });
-    let expectedPredictionAndScore = new HeatPredictionAndScore({
-      finalist1: new PredictionAndScore({ prediction: 1, score: 5 }),
-      finalist2: new PredictionAndScore({ prediction: 2, score: 5 }),
-      semifinalist1: new PredictionAndScore({ prediction: 3, score: 2 }),
-      semifinalist2: new PredictionAndScore({ prediction: 4, score: 2 }),
-      fifthPlace: new PredictionAndScore({ prediction: 5, score: 0 }),
-    });
-
-    let result = new HeatResult({
-      finalist1: 1,
-      finalist2: 2,
-      semifinalist1: 3,
-      semifinalist2: 4,
-    }).toResult();
-
-    await addUserToDatabase(user);
-    await addHeatPredictionToDatabase(competitionPath, user.id, prediction);
-    await addResultToDatabase(competitionPath, result);
-
-    const change = createChange(competitionPath, result);
-    const event = createEvent(change, competition);
-
-    // When
-    const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
-    await wrappedCalculateTotalScores(event);
-
-    // Then
-    const predictionAndScoreAfter = (
-      await db
-        .doc(`competitions/${competition}/predictionsAndScores/${user.id}`)
-        .withConverter(heatPredictionAndScoreConverter)
-        .get()
-    ).data();
-    expect(predictionAndScoreAfter).to.deep.equal(expectedPredictionAndScore);
+    const expectedHeatPredictionAndScore = undefined
+    const predictionAndScoreAfter = await getHeatPredictionToDatabase(
+      competitionPath,
+      user.id
+    );
+    expect(predictionAndScoreAfter).to.deep.equal(
+      expectedHeatPredictionAndScore
+    );
 
     // Reset the database
     await resetDatabase(user.id, competition);
@@ -1026,6 +1090,18 @@ async function addResultToDatabase(competitionPath: string, result: any) {
 async function getUserFromDatabase(uid: string) {
   return (
     await db.doc(`users/${uid}`).withConverter(userConverter).get()
+  ).data();
+}
+
+async function getHeatPredictionToDatabase(
+  competitionPath: string,
+  uid: string
+) {
+  return (
+    await db
+      .doc(`${competitionPath}/predictionsAndScores/${uid}`)
+      .withConverter(heatPredictionAndScoreConverter)
+      .get()
   ).data();
 }
 
