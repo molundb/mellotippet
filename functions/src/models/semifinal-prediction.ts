@@ -16,8 +16,12 @@ export default class SemifinalPredictionAndScore {
     this.finalist2 = finalist2;
   }
 
-  getPredictions() {
+  predictions() {
     return [this.finalist1.prediction, this.finalist2.prediction];
+  }
+
+  totalScore() {
+    return this.finalist1.score + this.finalist2.score;
   }
 }
 

@@ -96,21 +96,27 @@ async function calculateScoreForSemifinalAndUpdateTotalScore(
   scoreCalculator: ScoreCalculator,
   result: SemifinalResult
 ) {
-  const snapshot = await db
+  const predictionAndScoresSnapshot = await db
     .collection(`competitions/${competition}/predictionsAndScores`)
     .doc(userSnapshot.id)
     .withConverter(semifinalPredictionConverter)
     .get();
 
-  const prediction = snapshot.data();
+  const prediction = predictionAndScoresSnapshot.data();
   if (prediction !== undefined) {
-    let scoreForSemifinal = scoreCalculator.calculateSemifinalScore(
+    let semifinalPredictionAndscore = scoreCalculator.calculateSemifinalScore(
       result,
       prediction
     );
 
+    await db
+        .collection(`competitions/${competition}/predictionsAndScores`)
+        .doc(userSnapshot.id)
+        .withConverter(semifinalPredictionConverter)
+        .set(semifinalPredictionAndscore);
+
     let user = userSnapshot.data();
-    user.totalScore += scoreForSemifinal;
+    user.totalScore += semifinalPredictionAndscore.totalScore();
     return userSnapshot.ref.set(user);
   }
 

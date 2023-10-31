@@ -42,27 +42,25 @@ class ScoreCalculator {
 
   calculateSemifinalScore(
     result: SemifinalResult,
-    prediction: SemifinalPredictionAndScore
-  ) {
-    var score = 0;
-
-    score += this.calculateScoreForSemifinalFinalist(
+    predictionAndScore: SemifinalPredictionAndScore
+  ): SemifinalPredictionAndScore {
+    predictionAndScore.finalist1.score += this.calculateScoreForSemifinalFinalist(
       result.finalist1,
-      prediction
+      predictionAndScore
     );
-    score += this.calculateScoreForSemifinalFinalist(
+    predictionAndScore.finalist2.score += this.calculateScoreForSemifinalFinalist(
       result.finalist2,
-      prediction
+      predictionAndScore
     );
 
-    return score;
+    return predictionAndScore;
   }
 
   private calculateScoreForSemifinalFinalist(
     finalist: number,
     predictionAndScore: SemifinalPredictionAndScore
   ) {
-    if (predictionAndScore.getPredictions().includes(finalist)) {
+    if (predictionAndScore.predictions().includes(finalist)) {
       return 3;
     } else {
       return 0;
