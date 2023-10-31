@@ -1,6 +1,6 @@
 class PredictionAndScore {
-  readonly prediction: number;
-  readonly score: number;
+  prediction: number;
+  score: number;
 
   constructor({ prediction, score }: { prediction: number; score: number }) {
     this.prediction = prediction;

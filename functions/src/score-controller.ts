@@ -69,16 +69,21 @@ async function calculateScoreForHeatAndUpdateTotalScore(
     .withConverter(heatPredictionConverter)
     .get();
 
-  const predictionAndScore = predictionAndScoresSnapshot.data();
-  if (predictionAndScore !== undefined) {
-    let scoreForHeat = scoreCalculator.calculateHeatScore(
+  const prediction = predictionAndScoresSnapshot.data();
+  if (prediction !== undefined) {
+    let heatPredictionAndscore = scoreCalculator.calculateHeatScore(
       result,
-      predictionAndScore,
-      predictionAndScoresSnapshot
+      prediction
     );
 
+    await db
+        .collection(`competitions/${competition}/predictionsAndScores`)
+        .doc(userSnapshot.id)
+        .withConverter(heatPredictionConverter)
+        .set(heatPredictionAndscore);
+
     let user = userSnapshot.data();
-    user.totalScore += scoreForHeat;
+    user.totalScore += heatPredictionAndscore.totalScore();
     return await userSnapshot.ref.set(user);
   }
 

@@ -1,7 +1,7 @@
 import { DocumentData, QueryDocumentSnapshot } from "firebase-admin/firestore";
 import { PredictionAndScore } from "./prediction-and-score";
 
-export default class HeatPrediction {
+export default class HeatPredictionAndScore {
   readonly finalist1: PredictionAndScore;
   readonly finalist2: PredictionAndScore;
   readonly semifinalist1: PredictionAndScore;
@@ -27,10 +27,28 @@ export default class HeatPrediction {
     this.semifinalist2 = semifinalist2;
     this.fifthPlace = fifthPlace;
   }
+
+  finalistPredictions() {
+    return [this.finalist1.prediction, this.finalist2.prediction];
+  }
+
+  semifinalistPredictions() {
+    return [this.semifinalist1.prediction, this.semifinalist2.prediction];
+  }
+
+  totalScore() {
+    return (
+      this.finalist1.score +
+      this.finalist2.score +
+      this.semifinalist1.score +
+      this.semifinalist2.score +
+      this.fifthPlace.score
+    );
+  }
 }
 
 const heatPredictionConverter = {
-  toFirestore(heatPrediction: HeatPrediction): DocumentData {
+  toFirestore(heatPrediction: HeatPredictionAndScore): DocumentData {
     return {
       finalist1: heatPrediction.finalist1.toJson(),
       finalist2: heatPrediction.finalist2.toJson(),
@@ -39,9 +57,9 @@ const heatPredictionConverter = {
       fifthPlace: heatPrediction.fifthPlace.toJson(),
     };
   },
-  fromFirestore(snapshot: QueryDocumentSnapshot): HeatPrediction {
+  fromFirestore(snapshot: QueryDocumentSnapshot): HeatPredictionAndScore {
     const data = snapshot.data();
-    return new HeatPrediction({
+    return new HeatPredictionAndScore({
       finalist1: new PredictionAndScore({
         prediction: data.finalist1.prediction,
         score: data.finalist1.score,
@@ -66,4 +84,4 @@ const heatPredictionConverter = {
   },
 };
 
-export { HeatPrediction, heatPredictionConverter };
+export { HeatPredictionAndScore, heatPredictionConverter };

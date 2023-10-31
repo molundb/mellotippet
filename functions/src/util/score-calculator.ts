@@ -1,5 +1,5 @@
 import { HeatResult } from "../models/heat-result";
-import { HeatPrediction as HeatPredictionAndScore } from "../models/heat-prediction";
+import { HeatPredictionAndScore } from "../models/heat-prediction";
 import SemifinalPrediction from "../models/semifinal-prediction";
 import SemifinalResult from "../models/semifinal-result";
 import FinalPredictionOrResult from "../models/final-prediction-or-result";
@@ -72,47 +72,38 @@ class ScoreCalculator {
   calculateHeatScore(
     result: HeatResult,
     predictionAndScore: HeatPredictionAndScore,
-    predictionAndScoresSnapshot: FirebaseFirestore.DocumentSnapshot<HeatPredictionAndScore>
-  ) {
-    var score = 0;
+  ): HeatPredictionAndScore {
 
-    score += this.calculateScoreForHeatFinalist(
+    predictionAndScore.finalist1.score += this.calculateScoreForHeatFinalist(
       result.finalist1,
-      predictionAndScore,
-      predictionAndScoresSnapshot
+      predictionAndScore
     );
-    score += this.calculateScoreForHeatFinalist(
+    predictionAndScore.finalist2.score += this.calculateScoreForHeatFinalist(
       result.finalist2,
-      predictionAndScore,
-      predictionAndScoresSnapshot
+      predictionAndScore
     );
-    score += this.calculateScoreForHeatSemifinalist(
+    predictionAndScore.semifinalist1.score += this.calculateScoreForHeatSemifinalist(
       result.semifinalist1,
       predictionAndScore
     );
-    score += this.calculateScoreForHeatSemifinalist(
+    predictionAndScore.semifinalist2.score += this.calculateScoreForHeatSemifinalist(
       result.semifinalist2,
       predictionAndScore
     );
 
-    return score;
+    return predictionAndScore;
   }
 
   private calculateScoreForHeatFinalist(
     finalist: number,
-    predictionAndScore: HeatPredictionAndScore,
-    predictionAndScoresSnapshot: FirebaseFirestore.DocumentSnapshot<HeatPredictionAndScore>
+    predictionAndScore: HeatPredictionAndScore
   ): number {
     var score = 0;
 
-    if (finalist == predictionAndScore.finalist1.prediction) {
-      score = 5;
-      predictionAndScoresSnapshot.ref.set
-    }else if (finalist == predictionAndScore.finalist2.prediction){
+    if (predictionAndScore.finalistPredictions().includes(finalist)) {
       score = 5;
     } else if (
-      finalist == predictionAndScore.semifinalist1.prediction ||
-      finalist == predictionAndScore.semifinalist2.prediction
+      predictionAndScore.semifinalistPredictions().includes(finalist)
     ) {
       score = 3;
     } else if (finalist == predictionAndScore.fifthPlace.prediction) {
@@ -124,21 +115,17 @@ class ScoreCalculator {
 
   private calculateScoreForHeatSemifinalist(
     semifinalist: number,
-    prediction: HeatPredictionAndScore
+    predictionAndScore: HeatPredictionAndScore
   ): number {
     var score = 0;
 
-    if (
-      semifinalist == prediction.finalist1.prediction ||
-      semifinalist == prediction.finalist2.prediction
-    ) {
+    if (predictionAndScore.finalistPredictions().includes(semifinalist)) {
       score = 1;
     } else if (
-      semifinalist == prediction.semifinalist1.prediction ||
-      semifinalist == prediction.semifinalist2.prediction
+      predictionAndScore.semifinalistPredictions().includes(semifinalist)
     ) {
       score = 2;
-    } else if (semifinalist == prediction.fifthPlace.prediction) {
+    } else if (semifinalist == predictionAndScore.fifthPlace.prediction) {
       score = 1;
     }
 
