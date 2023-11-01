@@ -44,23 +44,23 @@ class ScoreCalculator {
   ): SemifinalPredictionAndScore {
     predictionAndScore.finalist1.score +=
       this.calculateScoreForSemifinalFinalist(
-        result.finalist1,
-        predictionAndScore
+        predictionAndScore.finalist1.prediction,
+        result
       );
     predictionAndScore.finalist2.score +=
       this.calculateScoreForSemifinalFinalist(
-        result.finalist2,
-        predictionAndScore
+        predictionAndScore.finalist2.prediction,
+        result
       );
 
     return predictionAndScore;
   }
 
   private calculateScoreForSemifinalFinalist(
-    finalist: number,
-    predictionAndScore: SemifinalPredictionAndScore
+    prediction: number,
+    result: SemifinalResult
   ) {
-    if (predictionAndScore.predictions().includes(finalist)) {
+    if (result.finalists().includes(prediction)) {
       return 3;
     } else {
       return 0;

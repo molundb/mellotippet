@@ -28,6 +28,10 @@ export default class SemifinalResult {
       },
     };
   }
+
+  finalists() {
+    return [this.finalist1, this.finalist2];
+  }
 }
 
 export { SemifinalResult };
