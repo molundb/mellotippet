@@ -8,21 +8,26 @@ import FinalResult from "../models/final-result";
 class ScoreCalculator {
   calculateFinalScore(
     result: FinalResult,
-    predictionAndScore: FinalPredictionAndScore
+    predictionAndScores: FinalPredictionAndScore
   ): FinalPredictionAndScore {
     for (let i = 0; i < result.toList().length; i++) {
       let placement = i + 1;
-      let startNumber = result.toList()[i];
+      let songStartNumber = result.toList()[i];
       let predictedPlacement =
-        predictionAndScore.predictions().indexOf(startNumber) + 1;
+        predictionAndScores
+          .toList()
+          .findIndex((i) => i.prediction == songStartNumber);
+      let predictionAndScore = predictionAndScores.toList()[predictedPlacement];
 
-      if (predictedPlacement != -1) {
-        predictionAndScore.toList()[i].score =
-          this.calculateScoreForFinalPlacement(placement, predictedPlacement);
+      if (predictionAndScore != undefined) {
+        predictionAndScore.score = this.calculateScoreForFinalPlacement(
+          placement,
+          predictedPlacement+1
+        );
       }
     }
 
-    return predictionAndScore;
+    return predictionAndScores;
   }
 
   private calculateScoreForFinalPlacement(

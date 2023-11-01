@@ -797,6 +797,26 @@ describe("calculateTotalScores", function () {
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
 
+    const expectedFinalPredictionAndScore = new FinalPredictionAndScore({
+      placement1: new PredictionAndScore({ prediction: 1, score: 5 }),
+      placement2: new PredictionAndScore({ prediction: 2, score: 5 }),
+      placement3: new PredictionAndScore({ prediction: 3, score: 5 }),
+      placement4: new PredictionAndScore({ prediction: 4, score: 5 }),
+      placement5: new PredictionAndScore({ prediction: 5, score: 3 }),
+      placement6: new PredictionAndScore({ prediction: 6, score: 3 }),
+      placement7: new PredictionAndScore({ prediction: 7, score: 3 }),
+      placement8: new PredictionAndScore({ prediction: 8, score: 3 }),
+      placement9: new PredictionAndScore({ prediction: 9, score: 2 }),
+      placement10: new PredictionAndScore({ prediction: 10, score: 2 }),
+      placement11: new PredictionAndScore({ prediction: 11, score: 2 }),
+      placement12: new PredictionAndScore({ prediction: 12, score: 2 }),
+    });
+    const predictionAndScoreAfter =
+      await getFinalPredictionAndScoreFromDatabase(competitionPath, user.id);
+    expect(predictionAndScoreAfter).to.deep.equal(
+      expectedFinalPredictionAndScore
+    );
+
     // Reset the database
     await resetDatabase(user.id, competition);
   });
@@ -852,11 +872,31 @@ describe("calculateTotalScores", function () {
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
 
+    const expectedFinalPredictionAndScore = new FinalPredictionAndScore({
+      placement1: new PredictionAndScore({ prediction: 8, score: 5 }),
+      placement2: new PredictionAndScore({ prediction: 7, score: 5 }),
+      placement3: new PredictionAndScore({ prediction: 4, score: 5 }),
+      placement4: new PredictionAndScore({ prediction: 5, score: 5 }),
+      placement5: new PredictionAndScore({ prediction: 12, score: 3 }),
+      placement6: new PredictionAndScore({ prediction: 10, score: 3 }),
+      placement7: new PredictionAndScore({ prediction: 3, score: 3 }),
+      placement8: new PredictionAndScore({ prediction: 6, score: 3 }),
+      placement9: new PredictionAndScore({ prediction: 1, score: 2 }),
+      placement10: new PredictionAndScore({ prediction: 11, score: 2 }),
+      placement11: new PredictionAndScore({ prediction: 2, score: 2 }),
+      placement12: new PredictionAndScore({ prediction: 9, score: 2 }),
+    });
+    const predictionAndScoreAfter =
+      await getFinalPredictionAndScoreFromDatabase(competitionPath, user.id);
+    expect(predictionAndScoreAfter).to.deep.equal(
+      expectedFinalPredictionAndScore
+    );
+
     // Reset the database
     await resetDatabase(user.id, competition);
   });
 
-  it("final: should calculate score correctly when mistakes", async function () {
+  it.only("final: should calculate score correctly when mistakes", async function () {
     const competition = "final";
     const competitionPath = `competitions/${competition}`;
 
@@ -906,6 +946,26 @@ describe("calculateTotalScores", function () {
     // Then
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
+
+    const expectedFinalPredictionAndScore = new FinalPredictionAndScore({
+      placement1: new PredictionAndScore({ prediction: 7, score: 4 }),
+      placement2: new PredictionAndScore({ prediction: 3, score: 0 }),
+      placement3: new PredictionAndScore({ prediction: 8, score: 3 }),
+      placement4: new PredictionAndScore({ prediction: 12, score: 2 }),
+      placement5: new PredictionAndScore({ prediction: 9, score: 0 }),
+      placement6: new PredictionAndScore({ prediction: 4, score: 2 }),
+      placement7: new PredictionAndScore({ prediction: 2, score: 0 }),
+      placement8: new PredictionAndScore({ prediction: 5, score: 1 }),
+      placement9: new PredictionAndScore({ prediction: 1, score: 2 }),
+      placement10: new PredictionAndScore({ prediction: 6, score: 1 }),
+      placement11: new PredictionAndScore({ prediction: 10, score: 0 }),
+      placement12: new PredictionAndScore({ prediction: 11, score: 0 }),
+    });
+    const predictionAndScoreAfter =
+      await getFinalPredictionAndScoreFromDatabase(competitionPath, user.id);
+    expect(predictionAndScoreAfter).to.deep.equal(
+      expectedFinalPredictionAndScore
+    );
 
     // Reset the database
     await resetDatabase(user.id, competition);
@@ -1190,17 +1250,17 @@ async function getSemifinalPredictionAndScoreFromDatabase(
   ).data();
 }
 
-// async function getFinalPredictionAndScoreFromDatabase(
-//   competitionPath: string,
-//   uid: string
-// ) {
-//   return (
-//     await db
-//       .doc(`${competitionPath}/predictionsAndScores/${uid}`)
-//       .withConverter(finalPredictionAndScoreConverter)
-//       .get()
-//   ).data();
-// }
+async function getFinalPredictionAndScoreFromDatabase(
+  competitionPath: string,
+  uid: string
+) {
+  return (
+    await db
+      .doc(`${competitionPath}/predictionsAndScores/${uid}`)
+      .withConverter(finalPredictionAndScoreConverter)
+      .get()
+  ).data();
+}
 
 function createChange(competitionPath: string, result: { result: any }) {
   const beforeSnap = test.firestore.makeDocumentSnapshot({}, competitionPath);
