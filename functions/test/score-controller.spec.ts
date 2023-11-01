@@ -1,5 +1,5 @@
 import { db } from "../src/config/firebase";
-import { calculateTotalScores } from "../src/index";
+import { calculateScores } from "../src/index";
 import functions from "firebase-functions-test";
 import { expect } from "chai";
 import { User, userConverter } from "../src/models/user";
@@ -25,7 +25,7 @@ const test = functions(
   ".firebase/service-account-test.json"
 );
 
-describe("calculateTotalScores", function () {
+describe("calculateScores", function () {
   afterEach(async function () {
     // Do cleanup tasks.
     test.cleanup();
@@ -64,8 +64,8 @@ describe("calculateTotalScores", function () {
       const event = createEvent(change, competition);
 
       // When
-      const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
-      await wrappedCalculateTotalScores(event);
+      const wrappedCalculateScores = test.wrap(calculateScores);
+      await wrappedCalculateScores(event);
 
       // Then
       const userAfter = await getUserFromDatabase(user.id);
@@ -120,8 +120,8 @@ describe("calculateTotalScores", function () {
     const event = createEvent(change, competition);
 
     // When
-    const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
-    await wrappedCalculateTotalScores(event);
+    const wrappedCalculateScores = test.wrap(calculateScores);
+    await wrappedCalculateScores(event);
 
     // Then
     const userAfter = await getUserFromDatabase(user.id);
@@ -177,8 +177,8 @@ describe("calculateTotalScores", function () {
     const event = createEvent(change, competition);
 
     // When
-    const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
-    await wrappedCalculateTotalScores(event);
+    const wrappedCalculateScores = test.wrap(calculateScores);
+    await wrappedCalculateScores(event);
 
     // Then
     const userAfter = await getUserFromDatabase(user.id);
@@ -234,8 +234,8 @@ describe("calculateTotalScores", function () {
     const event = createEvent(change, competition);
 
     // When
-    const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
-    await wrappedCalculateTotalScores(event);
+    const wrappedCalculateScores = test.wrap(calculateScores);
+    await wrappedCalculateScores(event);
 
     // Then
     const userAfter = await getUserFromDatabase(user.id);
@@ -291,8 +291,8 @@ describe("calculateTotalScores", function () {
     const event = createEvent(change, competition);
 
     // When
-    const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
-    await wrappedCalculateTotalScores(event);
+    const wrappedCalculateScores = test.wrap(calculateScores);
+    await wrappedCalculateScores(event);
 
     // Then
     const userAfter = await getUserFromDatabase(user.id);
@@ -385,8 +385,8 @@ describe("calculateTotalScores", function () {
     const event = createEvent(change, competition);
 
     // When
-    const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
-    await wrappedCalculateTotalScores(event);
+    const wrappedCalculateScores = test.wrap(calculateScores);
+    await wrappedCalculateScores(event);
 
     // Then
     for (var {
@@ -434,8 +434,8 @@ describe("calculateTotalScores", function () {
     const event = createEvent(change, competition);
 
     // When
-    const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
-    await wrappedCalculateTotalScores(event);
+    const wrappedCalculateScores = test.wrap(calculateScores);
+    await wrappedCalculateScores(event);
 
     // Then
     const userAfter = await getUserFromDatabase(user.id);
@@ -482,8 +482,8 @@ describe("calculateTotalScores", function () {
     const event = createEvent(change, competition);
 
     // When
-    const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
-    await wrappedCalculateTotalScores(event);
+    const wrappedCalculateScores = test.wrap(calculateScores);
+    await wrappedCalculateScores(event);
 
     // Then
     const userAfter = await getUserFromDatabase(user.id);
@@ -536,8 +536,8 @@ describe("calculateTotalScores", function () {
     const event = createEvent(change, competition);
 
     // When
-    const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
-    await wrappedCalculateTotalScores(event);
+    const wrappedCalculateScores = test.wrap(calculateScores);
+    await wrappedCalculateScores(event);
 
     // Then
     const userAfter = await getUserFromDatabase(user.id);
@@ -590,8 +590,8 @@ describe("calculateTotalScores", function () {
     const event = createEvent(change, competition);
 
     // When
-    const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
-    await wrappedCalculateTotalScores(event);
+    const wrappedCalculateScores = test.wrap(calculateScores);
+    await wrappedCalculateScores(event);
 
     // Then
     const userAfter = await getUserFromDatabase(user.id);
@@ -641,8 +641,8 @@ describe("calculateTotalScores", function () {
     const event = createEvent(change, competition);
 
     // When
-    const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
-    await wrappedCalculateTotalScores(event);
+    const wrappedCalculateScores = test.wrap(calculateScores);
+    await wrappedCalculateScores(event);
 
     // Then
     const userAfter = await getUserFromDatabase(user.id);
@@ -718,8 +718,8 @@ describe("calculateTotalScores", function () {
     const event = createEvent(change, competition);
 
     // When
-    const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
-    await wrappedCalculateTotalScores(event);
+    const wrappedCalculateScores = test.wrap(calculateScores);
+    await wrappedCalculateScores(event);
 
     // Then
     for (var {
@@ -790,8 +790,8 @@ describe("calculateTotalScores", function () {
     const event = createEvent(change, competition);
 
     // When
-    const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
-    await wrappedCalculateTotalScores(event);
+    const wrappedCalculateScores = test.wrap(calculateScores);
+    await wrappedCalculateScores(event);
 
     // Then
     const userAfter = await getUserFromDatabase(user.id);
@@ -865,8 +865,8 @@ describe("calculateTotalScores", function () {
     const event = createEvent(change, competition);
 
     // When
-    const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
-    await wrappedCalculateTotalScores(event);
+    const wrappedCalculateScores = test.wrap(calculateScores);
+    await wrappedCalculateScores(event);
 
     // Then
     const userAfter = await getUserFromDatabase(user.id);
@@ -896,7 +896,7 @@ describe("calculateTotalScores", function () {
     await resetDatabase(user.id, competition);
   });
 
-  it.only("final: should calculate score correctly when mistakes", async function () {
+  it("final: should calculate score correctly when mistakes", async function () {
     const competition = "final";
     const competitionPath = `competitions/${competition}`;
 
@@ -940,8 +940,8 @@ describe("calculateTotalScores", function () {
     const event = createEvent(change, competition);
 
     // When
-    const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
-    await wrappedCalculateTotalScores(event);
+    const wrappedCalculateScores = test.wrap(calculateScores);
+    await wrappedCalculateScores(event);
 
     // Then
     const userAfter = await getUserFromDatabase(user.id);
@@ -1015,12 +1015,32 @@ describe("calculateTotalScores", function () {
     const event = createEvent(change, competition);
 
     // When
-    const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
-    await wrappedCalculateTotalScores(event);
+    const wrappedCalculateScores = test.wrap(calculateScores);
+    await wrappedCalculateScores(event);
 
     // Then
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
+
+    const expectedFinalPredictionAndScore = new FinalPredictionAndScore({
+      placement1: new PredictionAndScore({ prediction: 7, score: 0 }),
+      placement2: new PredictionAndScore({ prediction: 3, score: 0 }),
+      placement3: new PredictionAndScore({ prediction: 8, score: 4 }),
+      placement4: new PredictionAndScore({ prediction: 12, score: 2 }),
+      placement5: new PredictionAndScore({ prediction: 9, score: 0 }),
+      placement6: new PredictionAndScore({ prediction: 4, score: 2 }),
+      placement7: new PredictionAndScore({ prediction: 2, score: 0 }),
+      placement8: new PredictionAndScore({ prediction: 5, score: 0 }),
+      placement9: new PredictionAndScore({ prediction: 1, score: 0 }),
+      placement10: new PredictionAndScore({ prediction: 6, score: 0 }),
+      placement11: new PredictionAndScore({ prediction: 10, score: 1 }),
+      placement12: new PredictionAndScore({ prediction: 11, score: 0 }),
+    });
+    const predictionAndScoreAfter =
+      await getFinalPredictionAndScoreFromDatabase(competitionPath, user.id);
+    expect(predictionAndScoreAfter).to.deep.equal(
+      expectedFinalPredictionAndScore
+    );
 
     // Reset the database
     await resetDatabase(user.id, competition);
@@ -1057,12 +1077,19 @@ describe("calculateTotalScores", function () {
     const event = createEvent(change, competition);
 
     // When
-    const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
-    await wrappedCalculateTotalScores(event);
+    const wrappedCalculateScores = test.wrap(calculateScores);
+    await wrappedCalculateScores(event);
 
     // Then
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
+
+    const expectedFinalPredictionAndScore = undefined;
+    const predictionAndScoreAfter =
+      await getFinalPredictionAndScoreFromDatabase(competitionPath, user.id);
+    expect(predictionAndScoreAfter).to.deep.equal(
+      expectedFinalPredictionAndScore
+    );
 
     await resetDatabase(user.id, competition);
   });
@@ -1089,6 +1116,20 @@ describe("calculateTotalScores", function () {
           placement12: new PredictionAndScore({ prediction: 9, score: 0 }),
         }),
         expectedScore: 39,
+        expectedFinalPredictionAndScore: new FinalPredictionAndScore({
+          placement1: new PredictionAndScore({ prediction: 7, score: 4 }),
+          placement2: new PredictionAndScore({ prediction: 3, score: 0 }),
+          placement3: new PredictionAndScore({ prediction: 8, score: 3 }),
+          placement4: new PredictionAndScore({ prediction: 11, score: 0 }),
+          placement5: new PredictionAndScore({ prediction: 12, score: 3 }),
+          placement6: new PredictionAndScore({ prediction: 4, score: 2 }),
+          placement7: new PredictionAndScore({ prediction: 10, score: 2 }),
+          placement8: new PredictionAndScore({ prediction: 5, score: 1 }),
+          placement9: new PredictionAndScore({ prediction: 1, score: 2 }),
+          placement10: new PredictionAndScore({ prediction: 6, score: 1 }),
+          placement11: new PredictionAndScore({ prediction: 2, score: 2 }),
+          placement12: new PredictionAndScore({ prediction: 9, score: 2 }),
+        }),
       },
       {
         user: new User("user2", "username 2", 78),
@@ -1107,11 +1148,26 @@ describe("calculateTotalScores", function () {
           placement12: new PredictionAndScore({ prediction: 2, score: 0 }),
         }),
         expectedScore: 95,
+        expectedFinalPredictionAndScore: new FinalPredictionAndScore({
+          placement1: new PredictionAndScore({ prediction: 5, score: 2 }),
+          placement2: new PredictionAndScore({ prediction: 3, score: 0 }),
+          placement3: new PredictionAndScore({ prediction: 8, score: 3 }),
+          placement4: new PredictionAndScore({ prediction: 11, score: 0 }),
+          placement5: new PredictionAndScore({ prediction: 12, score: 3 }),
+          placement6: new PredictionAndScore({ prediction: 4, score: 2 }),
+          placement7: new PredictionAndScore({ prediction: 10, score: 2 }),
+          placement8: new PredictionAndScore({ prediction: 7, score: 0 }),
+          placement9: new PredictionAndScore({ prediction: 1, score: 2 }),
+          placement10: new PredictionAndScore({ prediction: 6, score: 1 }),
+          placement11: new PredictionAndScore({ prediction: 9, score: 1 }),
+          placement12: new PredictionAndScore({ prediction: 2, score: 1 }),
+        }),
       },
       {
         user: new User("user3", "third name", 46),
         prediction: undefined,
         expectedScore: 46,
+        expectedFinalPredictionAndScore: undefined,
       },
     ];
 
@@ -1140,13 +1196,23 @@ describe("calculateTotalScores", function () {
     const event = createEvent(change, competition);
 
     // When
-    const wrappedCalculateTotalScores = test.wrap(calculateTotalScores);
-    await wrappedCalculateTotalScores(event);
+    const wrappedCalculateScores = test.wrap(calculateScores);
+    await wrappedCalculateScores(event);
 
     // Then
-    for (var { user, expectedScore } of usersWithPredictionAndExpectedScore) {
+    for (var {
+      user,
+      expectedScore,
+      expectedFinalPredictionAndScore,
+    } of usersWithPredictionAndExpectedScore) {
       const userAfter = await getUserFromDatabase(user.id);
       expect(userAfter?.totalScore).to.equal(expectedScore);
+
+      const predictionAndScoreAfter =
+        await getFinalPredictionAndScoreFromDatabase(competitionPath, user.id);
+      expect(predictionAndScoreAfter).to.deep.equal(
+        expectedFinalPredictionAndScore
+      );
     }
 
     // Reset the database

@@ -8,7 +8,7 @@ import {
   deleteEntry,
 } from "./entry-controller";
 
-import { calculateTotalScores } from "./score-controller";
+import { calculateScores } from "./score-controller";
 
 
 const app = express();
@@ -21,4 +21,4 @@ app.delete("/entries/:entryId", deleteEntry);
 
 let app2 = onRequest(app);
 
-export { app2, calculateTotalScores };
+export { app2, calculateScores };

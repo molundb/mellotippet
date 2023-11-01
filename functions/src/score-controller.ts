@@ -11,7 +11,7 @@ import { finalPredictionAndScoreConverter } from "./models/final-prediction-and-
 
 import { ScoreCalculator } from "./util/score-calculator";
 
-const calculateTotalScores = onDocumentWritten(
+const calculateScores = onDocumentWritten(
   "competitions/{competition}",
   async (event) => {
     const result = event.data?.after.data()?.result;
@@ -152,4 +152,4 @@ async function calculateScoreForFinalAndUpdateTotalScore(
   return Promise.resolve();
 }
 
-export { calculateTotalScores };
+export { calculateScores };
