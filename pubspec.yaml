@@ -54,7 +54,7 @@ dev_dependencies:
   flutter_flavorizr: ^2.1.5
   mockito: ^5.4.2
   fake_cloud_firestore: ^2.4.1+1
-  firebase_auth_mocks: ^0.11.0
+  firebase_auth_mocks: ^0.12.0
   build_runner: ^2.4.5
 
 flavorizr:
