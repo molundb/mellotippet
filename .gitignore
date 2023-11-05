@@ -139,7 +139,7 @@ testers.txt
 # scan temporary files
 **/fastlane/test_output
 
-lib/secrets.dart
+lib/firebase_environment.dart
 
 .fvm/flutter_sdk
 

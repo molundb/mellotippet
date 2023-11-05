@@ -5,10 +5,10 @@ import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 import 'package:melodifestivalen_competition/config/config.dart';
 import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
-import 'package:melodifestivalen_competition/secrets.dart';
+import 'package:melodifestivalen_competition/firebase_environment.dart';
 
 final config = getIt.get<Config>();
-final secrets = getIt.get<Secrets>();
+final firebaseEnv = getIt.get<FirebaseEnvironment>();
 
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
@@ -46,20 +46,20 @@ class DefaultFirebaseOptions {
   }
 
   static FirebaseOptions get android => FirebaseOptions(
-    apiKey: secrets.firebaseAPIKeyAndroid(config.flavor),
-    appId: secrets.firebaseAppIdAndroid(config.flavor),
-    messagingSenderId: secrets.firebaseMessagingSenderId(config.flavor),
-    projectId: secrets.firebaseProjectId(config.flavor),
-    storageBucket: secrets.firebaseAPIKeyAndroid(config.flavor),
-  );
+        apiKey: firebaseEnv.firebaseAPIKeyAndroid(config.flavor),
+        appId: firebaseEnv.firebaseAppIdAndroid(config.flavor),
+        messagingSenderId: firebaseEnv.firebaseMessagingSenderId(config.flavor),
+        projectId: firebaseEnv.firebaseProjectId(config.flavor),
+        storageBucket: firebaseEnv.firebaseAPIKeyAndroid(config.flavor),
+      );
 
   static FirebaseOptions get ios => FirebaseOptions(
-    apiKey: secrets.firebaseAPIKeyIos(config.flavor),
-    appId: secrets.firebaseAppIdIos(config.flavor),
-    messagingSenderId: secrets.firebaseMessagingSenderId(config.flavor),
-    projectId: secrets.firebaseProjectId(config.flavor),
-    storageBucket: secrets.firebaseStorageBucket(config.flavor),
-    iosClientId: secrets.firebaseIosClientId(config.flavor),
-    iosBundleId: secrets.firebaseIosBundleId(config.flavor),
-  );
+        apiKey: firebaseEnv.firebaseAPIKeyIos(config.flavor),
+        appId: firebaseEnv.firebaseAppIdIos(config.flavor),
+        messagingSenderId: firebaseEnv.firebaseMessagingSenderId(config.flavor),
+        projectId: firebaseEnv.firebaseProjectId(config.flavor),
+        storageBucket: firebaseEnv.firebaseStorageBucket(config.flavor),
+        iosClientId: firebaseEnv.firebaseIosClientId(config.flavor),
+        iosBundleId: firebaseEnv.firebaseIosBundleId(config.flavor),
+      );
 }

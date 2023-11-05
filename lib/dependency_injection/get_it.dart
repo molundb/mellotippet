@@ -6,7 +6,7 @@ import 'package:logger/logger.dart';
 import 'package:melodifestivalen_competition/common/repositories/repositories.dart';
 import 'package:melodifestivalen_competition/config/config.dart';
 import 'package:melodifestivalen_competition/config/flavor.dart';
-import 'package:melodifestivalen_competition/secrets.dart';
+import 'package:melodifestivalen_competition/firebase_environment.dart';
 import 'package:melodifestivalen_competition/services/mello_predix_package_info.dart';
 import 'package:melodifestivalen_competition/snackbar/snackbar_handler.dart';
 
@@ -14,7 +14,7 @@ final getIt = GetIt.instance;
 
 Future<void> setUpGetIt(Flavor flavor) async {
   getIt.registerSingleton<Config>(Config(flavor));
-  getIt.registerSingleton<Secrets>(Secrets());
+  getIt.registerSingleton<FirebaseEnvironment>(FirebaseEnvironment());
 
   getIt.registerSingleton<Logger>(Logger());
 
