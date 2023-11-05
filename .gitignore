@@ -139,8 +139,12 @@ testers.txt
 # scan temporary files
 **/fastlane/test_output
 
+# Firebase
 lib/firebase_environment.dart
+**google-services.json
 
+
+
+# Other
 .fvm/flutter_sdk
-
 **.mocks.dart
