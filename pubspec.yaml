@@ -49,6 +49,7 @@ dependencies:
   collection: ^1.17.0
   http: ^1.1.0
   package_info_plus: ^4.1.0
+  cloud_functions: ^4.4.2
 
 dev_dependencies:
   flutter_test:
