@@ -142,8 +142,7 @@ testers.txt
 # Firebase
 lib/firebase_environment.dart
 **google-services.json
-
-
+**GoogleService-Info.plist
 
 # Other
 .fvm/flutter_sdk
