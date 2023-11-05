@@ -12,9 +12,9 @@ class Config {
   String get title {
     switch (flavor) {
       case Flavor.prod:
-        return 'Mello Predix';
+        return 'Mellotippet';
       case Flavor.stage:
-        return 'Mello Predix Stage';
+        return 'Mellotippet Stage';
     }
   }
 }

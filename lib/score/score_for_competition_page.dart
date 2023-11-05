@@ -60,7 +60,7 @@ class _ScoreForCompetitionPageState
         title: Text(
           competition.id,
           style: const TextStyle(
-            color: MelloPredixColors.melloYellow,
+            color: MellotippetColors.melloYellow,
             fontSize: 32,
           ),
         ),
@@ -400,7 +400,7 @@ class _ScoreForCompetitionPageState
       child: Container(
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          border: Border.all(color: MelloPredixColors.melloOrange),
+          border: Border.all(color: MellotippetColors.melloOrange),
           borderRadius: const BorderRadius.all(
             Radius.circular(
               5.0,

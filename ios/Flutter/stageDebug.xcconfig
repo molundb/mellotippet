@@ -1,6 +1,8 @@
 #include "Generated.xcconfig"
 
-FLUTTER_TARGET=lib/main_stage.dart
-ASSET_PREFIX=stage
-BUNDLE_NAME=Mello Predix Stage
-BUNDLE_DISPLAY_NAME=Mello Predix Stage
+        FLUTTER_TARGET = lib / main_stage.dart
+ASSET_PREFIX = stage
+BUNDLE_NAME = Mellotippet
+Stage
+        BUNDLE_DISPLAY_NAME = Mellotippet
+Stage

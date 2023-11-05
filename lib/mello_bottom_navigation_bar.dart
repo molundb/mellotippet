@@ -37,7 +37,7 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
         title: Text(
           config.title,
           style: const TextStyle(
-            color: MelloPredixColors.melloYellow,
+            color: MellotippetColors.melloYellow,
             fontSize: 32,
           ),
         ),
@@ -50,7 +50,7 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.edit_note_sharp),
-            label: 'Predix',
+            label: 'Tippa',
           ),
           // BottomNavigationBarItem(
           //   icon: Icon(Icons.calendar_month),

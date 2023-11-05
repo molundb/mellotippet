@@ -30,13 +30,13 @@ class SnackbarHandler {
       behavior: SnackBarBehavior.floating,
       padding: const EdgeInsets.only(top: 20.0, bottom: 20.0, right: 10.0),
       margin: const EdgeInsets.only(
-        left: MelloPredixDimensions.horizontalPadding,
-        right: MelloPredixDimensions.horizontalPadding,
+        left: MellotippetDimensions.horizontalPadding,
+        right: MellotippetDimensions.horizontalPadding,
         bottom: 120.0,
       ),
       shape: RoundedRectangleBorder(
         borderRadius:
-            BorderRadius.circular(MelloPredixDimensions.cornerRadiusSmall),
+            BorderRadius.circular(MellotippetDimensions.cornerRadiusSmall),
       ),
       duration: duration,
       dismissDirection: DismissDirection.horizontal,
@@ -66,7 +66,7 @@ class SnackbarHandler {
           Text(
             title,
             key: const Key('snackbar_title_text'),
-            style: MelloPredixTextStyle.defaultStyle.copyWith(
+            style: MellotippetTextStyle.defaultStyle.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
@@ -76,7 +76,7 @@ class SnackbarHandler {
               : Text(
                   description!,
                   key: const Key('snackbar_description_text'),
-                  style: MelloPredixTextStyle.defaultStyle.copyWith(
+            style: MellotippetTextStyle.defaultStyle.copyWith(
                     color: Colors.white,
                   ),
                 ),
@@ -92,11 +92,11 @@ extension SnackBarAlertLevelColor on SnackbarAlertLevel {
   Color get backgroundColor {
     switch (this) {
       case SnackbarAlertLevel.info:
-        return MelloPredixColors.info;
+        return MellotippetColors.info;
       case SnackbarAlertLevel.success:
-        return MelloPredixColors.success;
+        return MellotippetColors.success;
       case SnackbarAlertLevel.error:
-        return MelloPredixColors.danger;
+        return MellotippetColors.danger;
     }
   }
 }

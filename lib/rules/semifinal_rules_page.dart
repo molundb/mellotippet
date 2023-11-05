@@ -15,19 +15,19 @@ class SemifinalRulesPage extends ConsumerWidget {
           Text('Rules for the Semifinal',
               style: TextStyle(
                 fontSize: 32,
-                color: MelloPredixColors.melloYellow,
+                color: MellotippetColors.melloYellow,
               )),
           SizedBox(height: 16),
           Text(
             'Predict which songs will make it to the final. You can change your prediction as many times as you want - it is the last one that counts. The predictions close shortly before the first voting result is announced.'
             ''
             '\n\nIf you miss predicting the Semifinal, you get 1p less than the person who got the lowest score.',
-            style: MelloPredixTextStyle.defaultStyle,
+            style: MellotippetTextStyle.defaultStyle,
           ),
           SizedBox(height: 32),
           Text(
             'For each of the four songs that go to the final, you will get 0 or 2 points depending on if your prediction is correct or not.',
-            style: MelloPredixTextStyle.defaultStyle,
+            style: MellotippetTextStyle.defaultStyle,
           ),
         ],
       ),

@@ -452,7 +452,7 @@
 				DEVELOPMENT_TEAM = V8ZXXTLCAM;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Mello Predix";
+				INFOPLIST_KEY_CFBundleDisplayName = "Mellotippet";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -790,7 +790,7 @@
 				DEVELOPMENT_TEAM = V8ZXXTLCAM;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Mello Predix";
+				INFOPLIST_KEY_CFBundleDisplayName = "Mellotippet";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -820,7 +820,7 @@
 				DEVELOPMENT_TEAM = V8ZXXTLCAM;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Mello Predix";
+				INFOPLIST_KEY_CFBundleDisplayName = "Mellotippet";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -40,7 +40,7 @@ class _ScorePageState extends ConsumerState<ScorePage> {
                   'Highscore',
                   style: TextStyle(
                     fontSize: 32,
-                    color: MelloPredixColors.melloYellow,
+                    color: MellotippetColors.melloYellow,
                   ),
                 ),
                 SizedBox(height: 16),
@@ -66,7 +66,7 @@ class _ScorePageState extends ConsumerState<ScorePage> {
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
                         border:
-                            Border.all(color: MelloPredixColors.melloOrange),
+                            Border.all(color: MellotippetColors.melloOrange),
                         borderRadius: const BorderRadius.all(Radius.circular(
                                 5.0) //                 <--- border radius here
                             ),

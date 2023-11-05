@@ -49,7 +49,7 @@ class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
                     'Welcome, ${state.username}!',
                     style: const TextStyle(
                       fontSize: 32,
-                      color: MelloPredixColors.melloYellow,
+                      color: MellotippetColors.melloYellow,
                     ),
                   ),
                   const SizedBox(height: 32),
@@ -57,7 +57,7 @@ class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
                     'Please make your prediction for the ${state.currentCompetition}!',
                     style: const TextStyle(
                       fontSize: 16,
-                      color: MelloPredixColors.melloYellow,
+                      color: MellotippetColors.melloYellow,
                     ),
                   ),
                   const SizedBox(height: 8),

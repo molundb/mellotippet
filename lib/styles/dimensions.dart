@@ -1,4 +1,4 @@
-class MelloPredixDimensions {
+class MellotippetDimensions {
   static const one = 1.0;
 
   static const xxxSmall = one;

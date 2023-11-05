@@ -39,7 +39,7 @@ class _ScorePerCompetitionPageState
         title: Text(
           widget.userEntity.username ?? '',
           style: const TextStyle(
-            color: MelloPredixColors.melloYellow,
+            color: MellotippetColors.melloYellow,
             fontSize: 32,
           ),
         ),
@@ -74,7 +74,7 @@ class _ScorePerCompetitionPageState
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
                             border: Border.all(
-                                color: MelloPredixColors.melloOrange),
+                                color: MellotippetColors.melloOrange),
                             borderRadius: const BorderRadius.all(
                               Radius.circular(
                                 5.0,

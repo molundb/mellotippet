@@ -1,7 +1,6 @@
 import 'package:package_info_plus/package_info_plus.dart';
 
-class MelloPredixPackageInfo {
-
+class MellotippetPackageInfo {
   late String version;
 
   Future<void> initialize() async {

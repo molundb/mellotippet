@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class MelloPredixColors {
+class MellotippetColors {
   static const melloPurple = Color(0xFF82509F);
   static const melloPink = Color(0xFFEB3791);
   static const melloMagenta = Color(0xFFD6098B);

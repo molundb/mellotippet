@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 
-class MelloPredixTextStyle {
+class MellotippetTextStyle {
   static const defaultStyle = TextStyle(fontSize: 16);
   static const inputStyle = TextStyle(
     color: Colors.black,

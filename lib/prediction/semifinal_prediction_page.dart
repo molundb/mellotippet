@@ -50,7 +50,7 @@ class _SemifinalPredictionPageState
                     'Welcome, ${state.username}!',
                     style: const TextStyle(
                       fontSize: 32,
-                      color: MelloPredixColors.melloYellow,
+                      color: MellotippetColors.melloYellow,
                     ),
                   ),
                   const SizedBox(height: 64),
@@ -58,7 +58,7 @@ class _SemifinalPredictionPageState
                     'Please make your prediction for the ${state.currentCompetition}!',
                     style: const TextStyle(
                       fontSize: 16,
-                      color: MelloPredixColors.melloYellow,
+                      color: MellotippetColors.melloYellow,
                     ),
                   ),
                   const SizedBox(height: 8),

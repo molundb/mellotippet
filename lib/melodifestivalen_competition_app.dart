@@ -25,14 +25,14 @@ class MelodifestivalenCompetitionApp extends StatelessWidget {
         title: config.title,
         scaffoldMessengerKey: snackbarKey,
         theme: ThemeData(
-          primaryColor: MelloPredixColors.melloPurple,
+          primaryColor: MellotippetColors.melloPurple,
           appBarTheme: const AppBarTheme(
-            color: MelloPredixColors.melloPurple,
+            color: MellotippetColors.melloPurple,
             shape: RoundedRectangleBorder(),
           ),
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
-              backgroundColor: MelloPredixColors.melloYellow,
+              backgroundColor: MellotippetColors.melloYellow,
               // textStyle: const TextStyle(
               //   fontSize: 12,
               // )
@@ -41,7 +41,7 @@ class MelodifestivalenCompetitionApp extends StatelessWidget {
           fontFamily: 'Hind',
           textTheme: const TextTheme(
             bodyLarge: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-            bodyMedium: MelloPredixTextStyle.defaultStyle,
+            bodyMedium: MellotippetTextStyle.defaultStyle,
             bodySmall: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
           ),
         ),

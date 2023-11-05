@@ -27,14 +27,14 @@ class TextFormFieldWidget extends StatefulWidget {
 }
 
 class TextFormFieldWidgetState extends State<TextFormFieldWidget> {
-  var _borderColor = MelloPredixColors.melloPurple;
+  var _borderColor = MellotippetColors.melloPurple;
   var _textColor = Colors.black;
   double bottomPaddingToError = 12;
 
   @override
   Widget build(BuildContext context) {
     final textStyle =
-        MelloPredixTextStyle.inputStyle.copyWith(color: _textColor);
+        MellotippetTextStyle.inputStyle.copyWith(color: _textColor);
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -50,7 +50,7 @@ class TextFormFieldWidgetState extends State<TextFormFieldWidget> {
             borderSide: BorderSide(color: _borderColor),
           ),
           focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: MelloPredixColors.melloYellow),
+            borderSide: BorderSide(color: MellotippetColors.melloYellow),
           ),
           hintStyle: const TextStyle(
             color: Colors.grey,
@@ -74,10 +74,10 @@ class TextFormFieldWidgetState extends State<TextFormFieldWidget> {
             letterSpacing: 1.2,
           ),
           errorBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: MelloPredixColors.danger),
+            borderSide: BorderSide(color: MellotippetColors.danger),
           ),
           focusedErrorBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: MelloPredixColors.danger),
+            borderSide: BorderSide(color: MellotippetColors.danger),
           ),
         ),
         onSaved: widget.onSaved,
@@ -97,8 +97,8 @@ class TextFormFieldWidgetState extends State<TextFormFieldWidget> {
 
   void _onError(bool hasError) {
     final borderColor =
-        hasError ? MelloPredixColors.danger : MelloPredixColors.melloPurple;
-    final textColor = hasError ? MelloPredixColors.danger : Colors.black;
+        hasError ? MellotippetColors.danger : MellotippetColors.melloPurple;
+    final textColor = hasError ? MellotippetColors.danger : Colors.black;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (!mounted) return;
 
