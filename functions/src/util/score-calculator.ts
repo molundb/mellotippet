@@ -1,9 +1,9 @@
 import { HeatResult } from "../models/heat-result";
 import { HeatPredictionAndScore } from "../models/heat-prediction-and-score";
-import SemifinalPredictionAndScore from "../models/semifinal-prediction-and-score";
-import SemifinalResult from "../models/semifinal-result";
-import FinalPredictionAndScore from "../models/final-prediction-and-score";
-import FinalResult from "../models/final-result";
+import { SemifinalPredictionAndScore } from "../models/semifinal-prediction-and-score";
+import { SemifinalResult } from "../models/semifinal-result";
+import { FinalPredictionAndScore } from "../models/final-prediction-and-score";
+import { FinalResult } from "../models/final-result";
 
 class ScoreCalculator {
   calculateFinalScore(
@@ -11,18 +11,17 @@ class ScoreCalculator {
     predictionAndScores: FinalPredictionAndScore
   ): FinalPredictionAndScore {
     for (let i = 0; i < result.toList().length; i++) {
-      let placement = i + 1;
-      let songStartNumber = result.toList()[i];
-      let predictedPlacement =
-        predictionAndScores
-          .toList()
-          .findIndex((i) => i.prediction == songStartNumber);
-      let predictionAndScore = predictionAndScores.toList()[predictedPlacement];
+      const placement = i + 1;
+      const songStartNumber = result.toList()[i];
+      const predictedPlacement = predictionAndScores
+        .toList()
+        .findIndex((i) => i.prediction == songStartNumber);
+      const predictionAndScore = predictionAndScores.toList()[predictedPlacement];
 
       if (predictionAndScore != undefined) {
         predictionAndScore.score = this.calculateScoreForFinalPlacement(
           placement,
-          predictedPlacement+1
+          predictedPlacement + 1
         );
       }
     }
@@ -109,7 +108,7 @@ class ScoreCalculator {
     prediction: number,
     result: HeatResult
   ): number {
-    var score = 0;
+    let score = 0;
 
     if (result.finalists().includes(prediction)) {
       score = 5;
@@ -124,7 +123,7 @@ class ScoreCalculator {
     prediction: number,
     result: HeatResult
   ): number {
-    var score = 0;
+    let score = 0;
 
     if (result.finalists().includes(prediction)) {
       score = 3;
@@ -139,7 +138,7 @@ class ScoreCalculator {
     prediction: number,
     result: HeatResult
   ): number {
-    var score = 0;
+    let score = 0;
 
     if (result.finalists().includes(prediction)) {
       score = 1;

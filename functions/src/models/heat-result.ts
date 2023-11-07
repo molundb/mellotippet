@@ -21,6 +21,7 @@ export default class HeatResult {
     this.semifinalist2 = semifinalist2;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static fromJson(result: any) {
     return new HeatResult({
       finalist1: result.finalist1,

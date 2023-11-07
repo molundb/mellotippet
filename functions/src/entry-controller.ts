@@ -39,6 +39,7 @@ const getAllEntries = async (req: Request, res: Response) => {
   try {
     const allEntries: EntryType[] = [];
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (await db.collection("entries").get()).forEach((doc: any) =>
       allEntries.push(doc.data())
     );

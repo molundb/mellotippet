@@ -56,6 +56,7 @@ export default class FinalPredictionAndScore {
     this.placement12 = placement12;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static fromJson(result?: any) {
     return new FinalPredictionAndScore({
       placement1: result.placement1,

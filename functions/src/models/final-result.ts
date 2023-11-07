@@ -55,6 +55,7 @@ export default class FinalResult {
     this.placement12 = placement12;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static fromJson(result?: any) {
     return new FinalResult({
       placement1: result.placement1,

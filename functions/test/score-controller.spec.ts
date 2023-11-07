@@ -1,20 +1,24 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { db } from "../src/config/firebase";
 import { calculateScores } from "../src/index";
 import functions from "firebase-functions-test";
 import { expect } from "chai";
 import { User, userConverter } from "../src/models/user";
-import HeatPredictionAndScore, {
+import {
+  HeatPredictionAndScore,
   heatPredictionAndScoreConverter,
 } from "../src/models/heat-prediction-and-score";
-import SemifinalPredictionAndScore, {
+import {
+  SemifinalPredictionAndScore,
   semifinalPredictionAndScoreConverter,
 } from "../src/models/semifinal-prediction-and-score";
-import FinalPredictionAndScore, {
+import {
+  FinalPredictionAndScore,
   finalPredictionAndScoreConverter,
 } from "../src/models/final-prediction-and-score";
-import HeatResult from "../src/models/heat-result";
-import SemifinalResult from "../src/models/semifinal-result";
-import FinalResult from "../src/models/final-result";
+import { HeatResult } from "../src/models/heat-result";
+import { SemifinalResult } from "../src/models/semifinal-result";
+import { FinalResult } from "../src/models/final-result";
 import { Change } from "firebase-functions/v1";
 import { PredictionAndScore } from "../src/models/prediction-and-score";
 
@@ -39,17 +43,17 @@ describe("calculateScores", function () {
       const competition = heat;
       const competitionPath = `competitions/${competition}`;
 
-      let user = new User("user1", "testUser1", 6);
-      let prediction = new HeatPredictionAndScore({
+      const user = new User("user1", "testUser1", 6);
+      const prediction = new HeatPredictionAndScore({
         finalist1: new PredictionAndScore({ prediction: 1, score: 0 }),
         finalist2: new PredictionAndScore({ prediction: 2, score: 0 }),
         semifinalist1: new PredictionAndScore({ prediction: 3, score: 0 }),
         semifinalist2: new PredictionAndScore({ prediction: 4, score: 0 }),
         fifthPlace: new PredictionAndScore({ prediction: 5, score: 0 }),
       });
-      let expectedScore = 20;
+      const expectedScore = 20;
 
-      let result = new HeatResult({
+      const result = new HeatResult({
         finalist1: 1,
         finalist2: 2,
         semifinalist1: 3,
@@ -90,22 +94,22 @@ describe("calculateScores", function () {
     });
   });
 
-  it(`heat: should calculate score correctly when one finalist on semifinal`, async function () {
+  it("heat: should calculate score correctly when one finalist on semifinal", async function () {
     // Given
     const competition = "heat1";
     const competitionPath = `competitions/${competition}`;
 
-    let user = new User("user1", "testUser1", 7);
-    let prediction = new HeatPredictionAndScore({
+    const user = new User("user1", "testUser1", 7);
+    const prediction = new HeatPredictionAndScore({
       finalist1: new PredictionAndScore({ prediction: 1, score: 0 }),
       finalist2: new PredictionAndScore({ prediction: 3, score: 0 }),
       semifinalist1: new PredictionAndScore({ prediction: 2, score: 0 }),
       semifinalist2: new PredictionAndScore({ prediction: 4, score: 0 }),
       fifthPlace: new PredictionAndScore({ prediction: 5, score: 0 }),
     });
-    let expectedScore = 18;
+    const expectedScore = 18;
 
-    let result = new HeatResult({
+    const result = new HeatResult({
       finalist1: 1,
       finalist2: 2,
       semifinalist1: 3,
@@ -147,22 +151,22 @@ describe("calculateScores", function () {
     await resetDatabase(user.id, competition);
   });
 
-  it(`heat: should calculate score correctly when two finalists on semifinal`, async function () {
+  it("heat: should calculate score correctly when two finalists on semifinal", async function () {
     // Given
     const competition = "heat1";
     const competitionPath = `competitions/${competition}`;
 
-    let user = new User("user1", "testUser1", 2);
-    let prediction = new HeatPredictionAndScore({
+    const user = new User("user1", "testUser1", 2);
+    const prediction = new HeatPredictionAndScore({
       finalist1: new PredictionAndScore({ prediction: 3, score: 0 }),
       finalist2: new PredictionAndScore({ prediction: 4, score: 0 }),
       semifinalist1: new PredictionAndScore({ prediction: 1, score: 0 }),
       semifinalist2: new PredictionAndScore({ prediction: 2, score: 0 }),
       fifthPlace: new PredictionAndScore({ prediction: 5, score: 0 }),
     });
-    let expectedScore = 10;
+    const expectedScore = 10;
 
-    let result = new HeatResult({
+    const result = new HeatResult({
       finalist1: 1,
       finalist2: 2,
       semifinalist1: 3,
@@ -204,22 +208,22 @@ describe("calculateScores", function () {
     await resetDatabase(user.id, competition);
   });
 
-  it(`heat: should calculate score correctly when finalist on fifth place`, async function () {
+  it("heat: should calculate score correctly when finalist on fifth place", async function () {
     // Given
     const competition = "heat1";
     const competitionPath = `competitions/${competition}`;
 
-    let user = new User("user1", "testUser1", 3);
-    let prediction = new HeatPredictionAndScore({
+    const user = new User("user1", "testUser1", 3);
+    const prediction = new HeatPredictionAndScore({
       finalist1: new PredictionAndScore({ prediction: 3, score: 0 }),
       finalist2: new PredictionAndScore({ prediction: 4, score: 0 }),
       semifinalist1: new PredictionAndScore({ prediction: 6, score: 0 }),
       semifinalist2: new PredictionAndScore({ prediction: 5, score: 0 }),
       fifthPlace: new PredictionAndScore({ prediction: 1, score: 0 }),
     });
-    let expectedScore = 6;
+    const expectedScore = 6;
 
-    let result = new HeatResult({
+    const result = new HeatResult({
       finalist1: 1,
       finalist2: 2,
       semifinalist1: 3,
@@ -261,22 +265,22 @@ describe("calculateScores", function () {
     await resetDatabase(user.id, competition);
   });
 
-  it(`heat: should calculate score correctly when semifinalist on fifth place`, async function () {
+  it("heat: should calculate score correctly when semifinalist on fifth place", async function () {
     // Given
     const competition = "heat1";
     const competitionPath = `competitions/${competition}`;
 
-    let user = new User("user1", "testUser1", 4);
-    let prediction = new HeatPredictionAndScore({
+    const user = new User("user1", "testUser1", 4);
+    const prediction = new HeatPredictionAndScore({
       finalist1: new PredictionAndScore({ prediction: 3, score: 0 }),
       finalist2: new PredictionAndScore({ prediction: 4, score: 0 }),
       semifinalist1: new PredictionAndScore({ prediction: 6, score: 0 }),
       semifinalist2: new PredictionAndScore({ prediction: 5, score: 0 }),
       fifthPlace: new PredictionAndScore({ prediction: 1, score: 0 }),
     });
-    let expectedScore = 15;
+    const expectedScore = 15;
 
-    let result = new HeatResult({
+    const result = new HeatResult({
       finalist1: 3,
       finalist2: 4,
       semifinalist1: 2,
@@ -318,12 +322,12 @@ describe("calculateScores", function () {
     await resetDatabase(user.id, competition);
   });
 
-  it(`heat: should calculate score correctly for multiple users`, async function () {
+  it("heat: should calculate score correctly for multiple users", async function () {
     // Given
     const competition = "heat1";
     const competitionPath = `competitions/${competition}`;
 
-    let usersWithPredictionAndExpectedScore = [
+    const usersWithPredictionAndExpectedScore = [
       {
         user: new User("user1", "testUser1", 4),
         prediction: new HeatPredictionAndScore({
@@ -368,14 +372,14 @@ describe("calculateScores", function () {
       },
     ];
 
-    let result = new HeatResult({
+    const result = new HeatResult({
       finalist1: 1,
       finalist2: 2,
       semifinalist1: 3,
       semifinalist2: 4,
     }).toResult();
 
-    for (var { user, prediction } of usersWithPredictionAndExpectedScore) {
+    for (const { user, prediction } of usersWithPredictionAndExpectedScore) {
       await addUserToDatabase(user);
       await addHeatPredictionToDatabase(competitionPath, user.id, prediction);
     }
@@ -389,7 +393,7 @@ describe("calculateScores", function () {
     await wrappedCalculateScores(event);
 
     // Then
-    for (var {
+    for (const {
       user,
       expectedTotalScore,
       expectedHeatPredictionAndScore,
@@ -405,21 +409,21 @@ describe("calculateScores", function () {
     }
 
     // Reset the database
-    for (var { user } of usersWithPredictionAndExpectedScore) {
+    for (const { user } of usersWithPredictionAndExpectedScore) {
       await resetDatabase(user.id, competition);
     }
   });
 
-  it(`heat: should not change score when no prediction`, async function () {
+  it("heat: should not change score when no prediction", async function () {
     // Given
     const competition = "heat1";
     const competitionPath = `competitions/${competition}`;
 
-    let user = new User("user1", "testUser1", 6);
-    let prediction = undefined;
-    let expectedScore = 6;
+    const user = new User("user1", "testUser1", 6);
+    const prediction = undefined;
+    const expectedScore = 6;
 
-    let result = new HeatResult({
+    const result = new HeatResult({
       finalist1: 1,
       finalist2: 2,
       semifinalist1: 3,
@@ -458,14 +462,14 @@ describe("calculateScores", function () {
     const competition = "semifinal";
     const competitionPath = `competitions/${competition}`;
 
-    let user = new User("user1", "testUser1", 0);
-    let prediction = new SemifinalPredictionAndScore({
+    const user = new User("user1", "testUser1", 0);
+    const prediction = new SemifinalPredictionAndScore({
       finalist1: new PredictionAndScore({ prediction: 1, score: 0 }),
       finalist2: new PredictionAndScore({ prediction: 2, score: 0 }),
     });
-    let expectedScore = 6;
+    const expectedScore = 6;
 
-    let result = new SemifinalResult({
+    const result = new SemifinalResult({
       finalist1: 1,
       finalist2: 2,
     }).toResult();
@@ -512,14 +516,14 @@ describe("calculateScores", function () {
     const competition = "semifinal";
     const competitionPath = `competitions/${competition}`;
 
-    let user = new User("user1", "testUser1", 7);
-    let prediction = new SemifinalPredictionAndScore({
+    const user = new User("user1", "testUser1", 7);
+    const prediction = new SemifinalPredictionAndScore({
       finalist1: new PredictionAndScore({ prediction: 1, score: 0 }),
       finalist2: new PredictionAndScore({ prediction: 3, score: 0 }),
     });
-    let expectedScore = 10;
+    const expectedScore = 10;
 
-    let result = new SemifinalResult({
+    const result = new SemifinalResult({
       finalist1: 1,
       finalist2: 2,
     }).toResult();
@@ -566,14 +570,14 @@ describe("calculateScores", function () {
     const competition = "semifinal";
     const competitionPath = `competitions/${competition}`;
 
-    let user = new User("user1", "testUser1", 99);
-    let prediction = new SemifinalPredictionAndScore({
+    const user = new User("user1", "testUser1", 99);
+    const prediction = new SemifinalPredictionAndScore({
       finalist1: new PredictionAndScore({ prediction: 2, score: 0 }),
       finalist2: new PredictionAndScore({ prediction: 5, score: 0 }),
     });
-    let expectedScore = 99;
+    const expectedScore = 99;
 
-    let result = new SemifinalResult({
+    const result = new SemifinalResult({
       finalist1: 4,
       finalist2: 8,
     }).toResult();
@@ -620,11 +624,11 @@ describe("calculateScores", function () {
     const competition = "semifinal";
     const competitionPath = `competitions/${competition}`;
 
-    let user = new User("user1", "testUser1", 5);
-    let prediction = undefined;
-    let expectedScore = 5;
+    const user = new User("user1", "testUser1", 5);
+    const prediction = undefined;
+    const expectedScore = 5;
 
-    let result = new SemifinalResult({
+    const result = new SemifinalResult({
       finalist1: 1,
       finalist2: 2,
     }).toResult();
@@ -666,7 +670,7 @@ describe("calculateScores", function () {
     const competition = "semifinal";
     const competitionPath = `competitions/${competition}`;
 
-    let usersWithPredictionAndExpectedScore = [
+    const usersWithPredictionAndExpectedScore = [
       {
         user: new User("user1", "testUser1", 3),
         prediction: new SemifinalPredictionAndScore({
@@ -699,12 +703,12 @@ describe("calculateScores", function () {
       },
     ];
 
-    let result = new SemifinalResult({
+    const result = new SemifinalResult({
       finalist1: 1,
       finalist2: 2,
     }).toResult();
 
-    for (var { user, prediction } of usersWithPredictionAndExpectedScore) {
+    for (const { user, prediction } of usersWithPredictionAndExpectedScore) {
       await addUserToDatabase(user);
       await addSemifinalPredictionToDatabase(
         competitionPath,
@@ -722,7 +726,7 @@ describe("calculateScores", function () {
     await wrappedCalculateScores(event);
 
     // Then
-    for (var {
+    for (const {
       user,
       expectedScore,
       expectedSemifinalPredictionAndScore,
@@ -741,7 +745,7 @@ describe("calculateScores", function () {
     }
 
     // Reset the database
-    for (var { user } of usersWithPredictionAndExpectedScore) {
+    for (const { user } of usersWithPredictionAndExpectedScore) {
       await resetDatabase(user.id, competition);
     }
   });
@@ -750,8 +754,8 @@ describe("calculateScores", function () {
     const competition = "final";
     const competitionPath = `competitions/${competition}`;
 
-    let user = new User("user1", "testUser1", 0);
-    let prediction = new FinalPredictionAndScore({
+    const user = new User("user1", "testUser1", 0);
+    const prediction = new FinalPredictionAndScore({
       placement1: new PredictionAndScore({ prediction: 1, score: 0 }),
       placement2: new PredictionAndScore({ prediction: 2, score: 0 }),
       placement3: new PredictionAndScore({ prediction: 3, score: 0 }),
@@ -765,9 +769,9 @@ describe("calculateScores", function () {
       placement11: new PredictionAndScore({ prediction: 11, score: 0 }),
       placement12: new PredictionAndScore({ prediction: 12, score: 0 }),
     });
-    let expectedScore = 40;
+    const expectedScore = 40;
 
-    let result = new FinalResult({
+    const result = new FinalResult({
       placement1: 1,
       placement2: 2,
       placement3: 3,
@@ -825,8 +829,8 @@ describe("calculateScores", function () {
     const competition = "final";
     const competitionPath = `competitions/${competition}`;
 
-    let user = new User("user1", "testUser1", 0);
-    let prediction = new FinalPredictionAndScore({
+    const user = new User("user1", "testUser1", 0);
+    const prediction = new FinalPredictionAndScore({
       placement1: new PredictionAndScore({ prediction: 8, score: 0 }),
       placement2: new PredictionAndScore({ prediction: 7, score: 0 }),
       placement3: new PredictionAndScore({ prediction: 4, score: 0 }),
@@ -840,9 +844,9 @@ describe("calculateScores", function () {
       placement11: new PredictionAndScore({ prediction: 2, score: 0 }),
       placement12: new PredictionAndScore({ prediction: 9, score: 0 }),
     });
-    let expectedScore = 40;
+    const expectedScore = 40;
 
-    let result = new FinalResult({
+    const result = new FinalResult({
       placement1: 8,
       placement2: 7,
       placement3: 4,
@@ -900,8 +904,8 @@ describe("calculateScores", function () {
     const competition = "final";
     const competitionPath = `competitions/${competition}`;
 
-    let user = new User("user1", "testUser1", 17);
-    let prediction = new FinalPredictionAndScore({
+    const user = new User("user1", "testUser1", 17);
+    const prediction = new FinalPredictionAndScore({
       placement1: new PredictionAndScore({ prediction: 7, score: 0 }),
       placement2: new PredictionAndScore({ prediction: 3, score: 0 }),
       placement3: new PredictionAndScore({ prediction: 8, score: 0 }),
@@ -915,9 +919,9 @@ describe("calculateScores", function () {
       placement11: new PredictionAndScore({ prediction: 10, score: 0 }),
       placement12: new PredictionAndScore({ prediction: 11, score: 0 }),
     });
-    let expectedScore = 32;
+    const expectedScore = 32;
 
-    let result = new FinalResult({
+    const result = new FinalResult({
       placement1: 8,
       placement2: 7,
       placement3: 4,
@@ -975,8 +979,8 @@ describe("calculateScores", function () {
     const competition = "final";
     const competitionPath = `competitions/${competition}`;
 
-    let user = new User("user1", "testUser1", 99);
-    let prediction = new FinalPredictionAndScore({
+    const user = new User("user1", "testUser1", 99);
+    const prediction = new FinalPredictionAndScore({
       placement1: new PredictionAndScore({ prediction: 7, score: 0 }),
       placement2: new PredictionAndScore({ prediction: 3, score: 0 }),
       placement3: new PredictionAndScore({ prediction: 8, score: 0 }),
@@ -990,9 +994,9 @@ describe("calculateScores", function () {
       placement11: new PredictionAndScore({ prediction: 10, score: 0 }),
       placement12: new PredictionAndScore({ prediction: 11, score: 0 }),
     });
-    let expectedScore = 108;
+    const expectedScore = 108;
 
-    let result = new FinalResult({
+    const result = new FinalResult({
       placement1: 5,
       placement2: 1,
       placement3: 4,
@@ -1050,11 +1054,11 @@ describe("calculateScores", function () {
     const competition = "final";
     const competitionPath = `competitions/${competition}`;
 
-    let user = new User("user1", "testUser1", 33);
-    let prediction = undefined;
-    let expectedScore = 33;
+    const user = new User("user1", "testUser1", 33);
+    const prediction = undefined;
+    const expectedScore = 33;
 
-    let result = new FinalResult({
+    const result = new FinalResult({
       placement1: 8,
       placement2: 7,
       placement3: 4,
@@ -1098,7 +1102,7 @@ describe("calculateScores", function () {
     const competition = "final";
     const competitionPath = `competitions/${competition}`;
 
-    let usersWithPredictionAndExpectedScore = [
+    const usersWithPredictionAndExpectedScore = [
       {
         user: new User("user1", "testUser1", 17),
         prediction: new FinalPredictionAndScore({
@@ -1171,7 +1175,7 @@ describe("calculateScores", function () {
       },
     ];
 
-    let result = new FinalResult({
+    const result = new FinalResult({
       placement1: 8,
       placement2: 7,
       placement3: 4,
@@ -1186,7 +1190,7 @@ describe("calculateScores", function () {
       placement12: 9,
     }).toResult();
 
-    for (var { user, prediction } of usersWithPredictionAndExpectedScore) {
+    for (const { user, prediction } of usersWithPredictionAndExpectedScore) {
       await addUserToDatabase(user);
       await addFinalPredictionToDatabase(competitionPath, user.id, prediction);
     }
@@ -1200,7 +1204,7 @@ describe("calculateScores", function () {
     await wrappedCalculateScores(event);
 
     // Then
-    for (var {
+    for (const {
       user,
       expectedScore,
       expectedFinalPredictionAndScore,
@@ -1216,7 +1220,7 @@ describe("calculateScores", function () {
     }
 
     // Reset the database
-    for (var { user } of usersWithPredictionAndExpectedScore) {
+    for (const { user } of usersWithPredictionAndExpectedScore) {
       await resetDatabase(user.id, competition);
     }
   });

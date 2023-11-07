@@ -2,9 +2,9 @@ import { db } from "./config/firebase";
 import { onDocumentWritten } from "firebase-functions/v2/firestore";
 
 import { User, userConverter } from "./models/user";
-import HeatResult from "./models/heat-result";
-import SemifinalResult from "./models/semifinal-result";
-import FinalResult from "./models/final-result";
+import { HeatResult } from "./models/heat-result";
+import { SemifinalResult } from "./models/semifinal-result";
+import { FinalResult } from "./models/final-result";
 import { heatPredictionAndScoreConverter } from "./models/heat-prediction-and-score";
 import { semifinalPredictionAndScoreConverter } from "./models/semifinal-prediction-and-score";
 import { finalPredictionAndScoreConverter } from "./models/final-prediction-and-score";
@@ -51,7 +51,7 @@ const calculateScores = onDocumentWritten(
         })
       );
     } else {
-      return Promise.reject();
+      return Promise.reject(new Error("result was undefined"));
     }
   }
 );
@@ -70,18 +70,18 @@ async function calculateScoreForHeatAndUpdateTotalScore(
 
   const prediction = predictionAndScoresSnapshot.data();
   if (prediction !== undefined) {
-    let heatPredictionAndscore = scoreCalculator.calculateHeatScore(
+    const heatPredictionAndscore = scoreCalculator.calculateHeatScore(
       result,
       prediction
     );
 
     await db
-        .collection(`competitions/${competition}/predictionsAndScores`)
-        .doc(userSnapshot.id)
-        .withConverter(heatPredictionAndScoreConverter)
-        .set(heatPredictionAndscore);
+      .collection(`competitions/${competition}/predictionsAndScores`)
+      .doc(userSnapshot.id)
+      .withConverter(heatPredictionAndScoreConverter)
+      .set(heatPredictionAndscore);
 
-    let user = userSnapshot.data();
+    const user = userSnapshot.data();
     user.totalScore += heatPredictionAndscore.totalScore();
     return await userSnapshot.ref.set(user);
   }
@@ -103,18 +103,18 @@ async function calculateScoreForSemifinalAndUpdateTotalScore(
 
   const prediction = predictionAndScoresSnapshot.data();
   if (prediction !== undefined) {
-    let semifinalPredictionAndscore = scoreCalculator.calculateSemifinalScore(
+    const semifinalPredictionAndscore = scoreCalculator.calculateSemifinalScore(
       result,
       prediction
     );
 
     await db
-        .collection(`competitions/${competition}/predictionsAndScores`)
-        .doc(userSnapshot.id)
-        .withConverter(semifinalPredictionAndScoreConverter)
-        .set(semifinalPredictionAndscore);
+      .collection(`competitions/${competition}/predictionsAndScores`)
+      .doc(userSnapshot.id)
+      .withConverter(semifinalPredictionAndScoreConverter)
+      .set(semifinalPredictionAndscore);
 
-    let user = userSnapshot.data();
+    const user = userSnapshot.data();
     user.totalScore += semifinalPredictionAndscore.totalScore();
     return userSnapshot.ref.set(user);
   }
@@ -136,15 +136,18 @@ async function calculateScoreForFinalAndUpdateTotalScore(
 
   const prediction = snapshot.data();
   if (prediction !== undefined && prediction.placement1 !== undefined) {
-    let finalPredictionAndScore = scoreCalculator.calculateFinalScore(result, prediction);
+    const finalPredictionAndScore = scoreCalculator.calculateFinalScore(
+      result,
+      prediction
+    );
 
     await db
-        .collection(`competitions/${competition}/predictionsAndScores`)
-        .doc(userSnapshot.id)
-        .withConverter(finalPredictionAndScoreConverter)
-        .set(finalPredictionAndScore);
+      .collection(`competitions/${competition}/predictionsAndScores`)
+      .doc(userSnapshot.id)
+      .withConverter(finalPredictionAndScoreConverter)
+      .set(finalPredictionAndScore);
 
-    let user = userSnapshot.data();
+    const user = userSnapshot.data();
     user.totalScore += finalPredictionAndScore.totalScore();
     return userSnapshot.ref.set(user);
   }

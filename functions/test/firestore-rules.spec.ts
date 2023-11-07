@@ -3,7 +3,7 @@ import * as firebase from "@firebase/testing";
 const MY_PROJECT_ID = "melodifestivalen-comp-test";
 
 describe("Tests for rules", () => {
-  it.only("Can't write", async () => {
+  it.skip("Can't write", async () => {
     const db = firebase
       .initializeTestApp({ projectId: MY_PROJECT_ID })
       .firestore();

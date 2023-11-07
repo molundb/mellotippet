@@ -13,6 +13,7 @@ export default class SemifinalResult {
     this.finalist2 = finalist2;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static fromJson(result: any) {
     return new SemifinalResult({
       finalist1: result.finalist1,

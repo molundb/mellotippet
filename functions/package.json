@@ -1,6 +1,6 @@
 {
   "name": "functions",
-  "main": "lib/src/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "lint": "eslint --ext .js,.ts .",
     "lintf": "eslint --ext .js,.ts . --fix",
@@ -26,6 +26,7 @@
   "devDependencies": {
     "@firebase/testing": "^0.20.11",
     "@types/chai": "^4.3.8",
+    "@types/express": "^4.17.20",
     "@types/mocha": "^10.0.2",
     "@typescript-eslint/eslint-plugin": "^5.12.0",
     "@typescript-eslint/parser": "^5.12.0",
@@ -33,6 +34,7 @@
     "dotenv": "^16.3.1",
     "eslint": "^8.9.0",
     "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-import": "^2.25.4",
     "firebase-functions-test": "^3.1.0",
     "mocha": "^10.2.0",

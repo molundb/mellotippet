@@ -4,6 +4,5 @@ admin.initializeApp({
   credential: admin.credential.applicationDefault(),
 });
 
-
 const db = admin.firestore();
 export { admin, db };
