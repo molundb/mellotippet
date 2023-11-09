@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:melodifestivalen_competition/config/config.dart';
 import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
-import 'package:melodifestivalen_competition/login/login_page.dart';
+import 'package:melodifestivalen_competition/force_upgrade/force_upgrade_page.dart';
 import 'package:melodifestivalen_competition/styles/colors.dart';
 import 'package:melodifestivalen_competition/styles/text_styles.dart';
 
@@ -45,7 +45,7 @@ class MelodifestivalenCompetitionApp extends StatelessWidget {
             bodySmall: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
           ),
         ),
-        home: const LoginPage(),
+        home: ForceUpgradePage(),
       ),
     );
   }

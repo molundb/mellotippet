@@ -12,11 +12,23 @@ class FeatureFlagRepository {
 
     await remoteConfig.setDefaults(const {
       'currentCompetition': 'ok',
+      'requiredMinimumVersion': '4.0.0',
+      'recommendedMinimumVersion': '4.0.0',
     });
 
     await remoteConfig.fetchAndActivate();
+
+    remoteConfig.onConfigUpdated.listen((event) async {
+      await remoteConfig.activate();
+    });
   }
 
   String getCurrentCompetition() =>
       remoteConfig.getString('currentCompetition');
+
+  String getRequiredMinimumVersion() =>
+      remoteConfig.getString('requiredMinimumVersion');
+
+  String getRecommendedMinimumVersion() =>
+      remoteConfig.getString('recommendedMinimumVersion');
 }
