@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { db } from "../src/config/firebase";
 import { calculateScores } from "../src/index";
 import functions from "firebase-functions-test";
