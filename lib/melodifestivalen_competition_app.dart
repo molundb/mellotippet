@@ -9,7 +9,7 @@ class MelodifestivalenCompetitionApp extends StatelessWidget {
   final config = getIt.get<Config>();
   final snackbarKey = getIt.get<GlobalKey<ScaffoldMessengerState>>();
 
-  MelodifestivalenCompetitionApp({Key? key}) : super(key: key);
+  MelodifestivalenCompetitionApp({super.key});
 
   @override
   Widget build(BuildContext context) {
