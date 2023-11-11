@@ -7,6 +7,7 @@ import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
 import 'package:melodifestivalen_competition/force_upgrade/force_upgrade_controller.dart';
 import 'package:melodifestivalen_competition/login/login_page.dart';
 import 'package:melodifestivalen_competition/services/mello_tippet_package_info.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ForceUpgradePage extends ConsumerStatefulWidget {
   const ForceUpgradePage({super.key});
@@ -95,12 +96,31 @@ class _ForceUpgradeState extends ConsumerState<ForceUpgradePage> {
             TextButton(
               child: const Text('Uppdatera'),
               onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => const LoginPage(),
-                  ),
-                );
+                if (Platform.isAndroid || Platform.isIOS) {
+                  // TODO: Add appIDs and enable
+                  // final appId = Platform.isAndroid
+                  //     ? 'com.molundb.melodifestivalen_competition'
+                  //     : 'com.molundb.melodifestivalen-competition';
+
+                  // final appId = Platform.isAndroid
+                  //     ? 'com.instagram.android'
+                  //     : '389801252';
+                  //
+                  // final url = Uri.parse(
+                  //   Platform.isAndroid
+                  //       ? "https://play.google.com/store/apps/details?id=$appId"
+                  //       : "https://apps.apple.com/app/id$appId",
+
+                  final url = Uri.parse(
+                    Platform.isAndroid
+                        ? "https://play.google.com/store/apps"
+                        : "https://apps.apple.com/",
+                  );
+                  launchUrl(
+                    url,
+                    mode: LaunchMode.externalApplication,
+                  );
+                }
               },
             ),
           ],

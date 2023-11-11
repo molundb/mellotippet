@@ -50,6 +50,7 @@ dependencies:
   http: ^1.1.0
   package_info_plus: ^4.2.0
   cloud_functions: ^4.4.2
+  url_launcher: ^6.2.1
 
 dev_dependencies:
   flutter_test:
