@@ -452,7 +452,7 @@
 				DEVELOPMENT_TEAM = V8ZXXTLCAM;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Mellotippet";
+				INFOPLIST_KEY_CFBundleDisplayName = Mellotippet;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -543,6 +543,7 @@
 			baseConfigurationReference = B32B1FA067EFAB68060ADE83 /* Pods-Runner.debug-prod.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = V8ZXXTLCAM;
+				FLUTTER_TARGET = lib/main_prod.dart;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				PRODUCT_NAME = Runner;
 			};
@@ -553,6 +554,7 @@
 			baseConfigurationReference = 4532D3EC35124DD319493509 /* Pods-Runner.profile-prod.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = V8ZXXTLCAM;
+				FLUTTER_TARGET = lib/main_prod.dart;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				PRODUCT_NAME = Runner;
 			};
@@ -563,6 +565,7 @@
 			baseConfigurationReference = D3D0D472923BB50BDDA9C78E /* Pods-Runner.release-prod.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = V8ZXXTLCAM;
+				FLUTTER_TARGET = lib/main_prod.dart;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				PRODUCT_NAME = Runner;
 			};
@@ -573,6 +576,7 @@
 			baseConfigurationReference = 1B6927F42E7FC01FE67AE087 /* Pods-Runner.debug-stage.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = V8ZXXTLCAM;
+				FLUTTER_TARGET = lib/main_stage.dart;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				PRODUCT_NAME = Runner;
 			};
@@ -583,6 +587,7 @@
 			baseConfigurationReference = 1347AC579F95BE118FD1765E /* Pods-Runner.profile-stage.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = V8ZXXTLCAM;
+				FLUTTER_TARGET = lib/main_stage.dart;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				PRODUCT_NAME = Runner;
 			};
@@ -593,6 +598,7 @@
 			baseConfigurationReference = E36CB0329D15B693E8E41BD6 /* Pods-Runner.release-stage.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = V8ZXXTLCAM;
+				FLUTTER_TARGET = lib/main_stage.dart;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				PRODUCT_NAME = Runner;
 			};
@@ -790,7 +796,7 @@
 				DEVELOPMENT_TEAM = V8ZXXTLCAM;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Mellotippet";
+				INFOPLIST_KEY_CFBundleDisplayName = Mellotippet;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -820,7 +826,7 @@
 				DEVELOPMENT_TEAM = V8ZXXTLCAM;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Mellotippet";
+				INFOPLIST_KEY_CFBundleDisplayName = Mellotippet;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
