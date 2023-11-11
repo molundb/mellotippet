@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:melodifestivalen_competition/common/repositories/feature_flag_repository.dart';
 import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
-import 'package:melodifestivalen_competition/force_upgrade/force_upgrade_controller.dart';
 import 'package:melodifestivalen_competition/login/login_page.dart';
 import 'package:melodifestivalen_competition/services/mello_tippet_package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -17,9 +16,6 @@ class ForceUpgradePage extends ConsumerStatefulWidget {
 }
 
 class _ForceUpgradeState extends ConsumerState<ForceUpgradePage> {
-  ForceUpgradeController get controller =>
-      ref.read(ForceUpgradeController.provider.notifier);
-
   final packageInfo = getIt.get<MellotippetPackageInfo>();
   final featureFlagRepository = getIt.get<FeatureFlagRepository>();
 
@@ -27,7 +23,6 @@ class _ForceUpgradeState extends ConsumerState<ForceUpgradePage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // controller.checkIfUpdateRequiredOrRecommended();
       var appVersion = _getExtendedVersionNumber(packageInfo.version);
       var requiredMinVersion = _getExtendedVersionNumber(
           featureFlagRepository.getRequiredMinimumVersion());
@@ -64,8 +59,13 @@ class _ForceUpgradeState extends ConsumerState<ForceUpgradePage> {
       store = "App Store";
     }
 
-    String text =
-        "Det finns en ny version tillgänglig i $store. Ladda ned den nu!";
+    String text;
+    if (isSkippable) {
+      text = "Det finns en ny version tillgänglig i $store. Uppdatera nu!";
+    } else {
+      text =
+          "Det finns en ny obligatorisk version tillgänglig i $store. Uppdatera för att kunna fortsätta att använda appen!";
+    }
 
     return showDialog<void>(
       context: context,
