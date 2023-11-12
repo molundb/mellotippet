@@ -5,11 +5,11 @@ import 'package:melodifestivalen_competition/force_upgrade/force_upgrade_page.da
 import 'package:melodifestivalen_competition/styles/colors.dart';
 import 'package:melodifestivalen_competition/styles/text_styles.dart';
 
-class MelodifestivalenCompetitionApp extends StatelessWidget {
+class MellotippetApp extends StatelessWidget {
   final config = getIt.get<Config>();
   final snackbarKey = getIt.get<GlobalKey<ScaffoldMessengerState>>();
 
-  MelodifestivalenCompetitionApp({super.key});
+  MellotippetApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class MelodifestivalenCompetitionApp extends StatelessWidget {
             bodySmall: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
           ),
         ),
-        home: ForceUpgradePage(),
+        home: const ForceUpgradePage(),
       ),
     );
   }

@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:melodifestivalen_competition/common/repositories/repositories.dart';
 import 'package:melodifestivalen_competition/config/flavor.dart';
 import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
-import 'package:melodifestivalen_competition/melodifestivalen_competition_app.dart';
+import 'package:melodifestivalen_competition/mellotippet_app.dart';
 import 'package:melodifestivalen_competition/services/crash_reporting.dart';
 import 'package:melodifestivalen_competition/services/mello_tippet_package_info.dart';
 
@@ -15,5 +15,5 @@ void main() async {
   await getIt.get<MellotippetPackageInfo>().initialize();
   CrashReporting.initialize();
 
-  runApp(ProviderScope(child: MelodifestivalenCompetitionApp()));
+  runApp(ProviderScope(child: MellotippetApp()));
 }
