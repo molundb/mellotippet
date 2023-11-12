@@ -1,21 +1,20 @@
 import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:melodifestivalen_competition/common/repositories/feature_flag_repository.dart';
 import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
 import 'package:melodifestivalen_competition/login/login_page.dart';
 import 'package:melodifestivalen_competition/services/mello_tippet_package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ForceUpgradePage extends ConsumerStatefulWidget {
+class ForceUpgradePage extends StatefulWidget {
   const ForceUpgradePage({super.key});
 
   @override
-  ConsumerState<ForceUpgradePage> createState() => _ForceUpgradeState();
+  State<ForceUpgradePage> createState() => _ForceUpgradeState();
 }
 
-class _ForceUpgradeState extends ConsumerState<ForceUpgradePage> {
+class _ForceUpgradeState extends State<ForceUpgradePage> {
   final packageInfo = getIt.get<MellotippetPackageInfo>();
   final featureFlagRepository = getIt.get<FeatureFlagRepository>();
 
@@ -30,9 +29,9 @@ class _ForceUpgradeState extends ConsumerState<ForceUpgradePage> {
           featureFlagRepository.getRecommendedMinimumVersion());
 
       if (appVersion < requiredMinVersion) {
-        _showMyDialog(context, false);
+        _showUpdateVersionDialog(context, false);
       } else if (appVersion < recommendedMinVersion) {
-        _showMyDialog(context, true);
+        _showUpdateVersionDialog(context, true);
       } else {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
@@ -50,7 +49,8 @@ class _ForceUpgradeState extends ConsumerState<ForceUpgradePage> {
     );
   }
 
-  Future<void> _showMyDialog(BuildContext context, bool isSkippable) async {
+  Future<void> _showUpdateVersionDialog(
+      BuildContext context, bool isSkippable) async {
     String store;
 
     if (Platform.isAndroid) {
