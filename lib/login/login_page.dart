@@ -116,10 +116,9 @@ class _LoginPassword extends StatelessWidget {
   final TextEditingController passwordController;
 
   const _LoginPassword({
-    Key? key,
     required this.controller,
     required this.passwordController,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

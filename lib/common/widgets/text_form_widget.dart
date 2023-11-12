@@ -12,7 +12,7 @@ class TextFormFieldWidget extends StatefulWidget {
   final FormFieldValidator<String>? validator;
 
   const TextFormFieldWidget({
-    Key? key,
+    super.key,
     required this.textInputType,
     this.hintText,
     this.defaultText,
@@ -20,7 +20,7 @@ class TextFormFieldWidget extends StatefulWidget {
     this.onSaved,
     this.validator,
     this.prefixIcon,
-  }) : super(key: key);
+  });
 
   @override
   TextFormFieldWidgetState createState() => TextFormFieldWidgetState();
