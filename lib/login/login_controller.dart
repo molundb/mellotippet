@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:melodifestivalen_competition/common/repositories/repositories.dart';
-import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
+import 'package:mellotippet/common/repositories/repositories.dart';
+import 'package:mellotippet/dependency_injection/get_it.dart';
 
 class LoginController extends StateNotifier<LoginControllerState> {
   LoginController({

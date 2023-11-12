@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:melodifestivalen_competition/common/models/all_models.dart';
-import 'package:melodifestivalen_competition/common/repositories/repositories.dart';
-import 'package:melodifestivalen_competition/common/widgets/upcoming_competition_row.dart';
-import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
+import 'package:mellotippet/common/models/all_models.dart';
+import 'package:mellotippet/common/repositories/repositories.dart';
+import 'package:mellotippet/common/widgets/upcoming_competition_row.dart';
+import 'package:mellotippet/dependency_injection/get_it.dart';
 
 class UpcomingCompetitionsPage extends StatefulWidget {
   const UpcomingCompetitionsPage({super.key});

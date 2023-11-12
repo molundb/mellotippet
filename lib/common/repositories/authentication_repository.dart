@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:firebase_core/firebase_core.dart';
-import 'package:melodifestivalen_competition/common/models/all_models.dart';
-import 'package:melodifestivalen_competition/firebase_options.dart';
+import 'package:mellotippet/common/models/all_models.dart';
+import 'package:mellotippet/firebase_options.dart';
 
 class AuthenticationRepository {
   AuthenticationRepository({

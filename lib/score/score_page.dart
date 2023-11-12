@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:melodifestivalen_competition/score/score_controller.dart';
-import 'package:melodifestivalen_competition/score/score_per_competition_page.dart';
-import 'package:melodifestivalen_competition/styles/colors.dart';
+import 'package:mellotippet/score/score_controller.dart';
+import 'package:mellotippet/score/score_per_competition_page.dart';
+import 'package:mellotippet/styles/colors.dart';
 
 class ScorePage extends ConsumerStatefulWidget {
   const ScorePage({super.key});

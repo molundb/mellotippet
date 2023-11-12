@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:melodifestivalen_competition/common/repositories/authentication_repository.dart';
-import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
-import 'package:melodifestivalen_competition/services/mello_tippet_package_info.dart';
+import 'package:mellotippet/common/repositories/authentication_repository.dart';
+import 'package:mellotippet/dependency_injection/get_it.dart';
+import 'package:mellotippet/services/mello_tippet_package_info.dart';
 
 class SettingsController extends StateNotifier<SettingsControllerState> {
   SettingsController({

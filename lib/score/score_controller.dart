@@ -1,10 +1,10 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:melodifestivalen_competition/common/models/all_models.dart';
-import 'package:melodifestivalen_competition/common/repositories/repositories.dart';
-import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
-import 'package:melodifestivalen_competition/score/score_calculator.dart';
+import 'package:mellotippet/common/models/all_models.dart';
+import 'package:mellotippet/common/repositories/repositories.dart';
+import 'package:mellotippet/dependency_injection/get_it.dart';
+import 'package:mellotippet/score/score_calculator.dart';
 
 class ScoreController extends StateNotifier<ScoreControllerState> {
   ScoreController({

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:melodifestivalen_competition/styles/colors.dart';
-import 'package:melodifestivalen_competition/styles/text_styles.dart';
+import 'package:mellotippet/styles/colors.dart';
+import 'package:mellotippet/styles/text_styles.dart';
 
 class TextFormFieldWidget extends StatefulWidget {
   final TextInputType textInputType;

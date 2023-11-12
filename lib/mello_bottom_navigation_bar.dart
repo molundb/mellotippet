@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:melodifestivalen_competition/config/config.dart';
-import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
-import 'package:melodifestivalen_competition/rules/final_rules_page.dart';
-import 'package:melodifestivalen_competition/snackbar/snackbar_handler.dart';
-import 'package:melodifestivalen_competition/styles/colors.dart';
+import 'package:mellotippet/config/config.dart';
+import 'package:mellotippet/dependency_injection/get_it.dart';
+import 'package:mellotippet/rules/final_rules_page.dart';
+import 'package:mellotippet/snackbar/snackbar_handler.dart';
+import 'package:mellotippet/styles/colors.dart';
 
 import 'prediction/final_prediction_page.dart';
 import 'score/score_page.dart';

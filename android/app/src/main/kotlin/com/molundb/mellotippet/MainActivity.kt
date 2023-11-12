@@ -1,4 +1,4 @@
-package com.molundb.melodifestivalen_competition
+package net.martinlundberg.mellotippet
 
 import io.flutter.embedding.android.FlutterActivity
 

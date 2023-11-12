@@ -42,12 +42,12 @@ android {
     productFlavors {
         prod {
             dimension "flavor-type"
-            applicationId "com.molundb.melodifestivalen_competition"
+            applicationId "net.martinlundberg.mellotippet"
             resValue "string", "app_name", "Mellotippet"
         }
         stage {
             dimension "flavor-type"
-            applicationId "com.molundb.melodifestivalen_competition_stage"
+            applicationId "net.martinlundberg.mellotippet_stage"
             resValue "string", "app_name", "Mellotippet Stage"
         }
     }
@@ -68,7 +68,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.molundb.melodifestivalen_competition"
+        applicationId "net.martinlundberg.mellotippet"
         minSdkVersion localProperties.getProperty('flutter.minSdkVersion').toInteger()
         targetSdkVersion localProperties.getProperty('flutter.targetSdkVersion').toInteger()
         versionCode flutterVersionCode.toInteger()

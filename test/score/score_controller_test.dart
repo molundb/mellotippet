@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:melodifestivalen_competition/common/models/all_models.dart';
-import 'package:melodifestivalen_competition/common/repositories/database_repository.dart';
+import 'package:mellotippet/common/models/all_models.dart';
+import 'package:mellotippet/common/repositories/database_repository.dart';
 
-import 'package:melodifestivalen_competition/score/score_controller.dart';
+import 'package:mellotippet/score/score_controller.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 

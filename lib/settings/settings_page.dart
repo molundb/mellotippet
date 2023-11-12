@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:melodifestivalen_competition/common/widgets/cta_button.dart';
-import 'package:melodifestivalen_competition/login/login_page.dart';
-import 'package:melodifestivalen_competition/settings/settings_controller.dart';
+import 'package:mellotippet/common/widgets/cta_button.dart';
+import 'package:mellotippet/login/login_page.dart';
+import 'package:mellotippet/settings/settings_controller.dart';
 
 class SettingsPage extends ConsumerStatefulWidget {
   const SettingsPage({super.key});

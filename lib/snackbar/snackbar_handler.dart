@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:melodifestivalen_competition/styles/all_styles.dart';
-import 'package:melodifestivalen_competition/common/extensions/all_extensions.dart';
+import 'package:mellotippet/styles/all_styles.dart';
+import 'package:mellotippet/common/extensions/all_extensions.dart';
 
 class SnackbarHandler {
   final GlobalKey<ScaffoldMessengerState> _snackbarKey;

@@ -3,12 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
-import 'package:melodifestivalen_competition/common/repositories/repositories.dart';
-import 'package:melodifestivalen_competition/config/config.dart';
-import 'package:melodifestivalen_competition/config/flavor.dart';
-import 'package:melodifestivalen_competition/firebase_environment.dart';
-import 'package:melodifestivalen_competition/services/mello_tippet_package_info.dart';
-import 'package:melodifestivalen_competition/snackbar/snackbar_handler.dart';
+import 'package:mellotippet/common/repositories/repositories.dart';
+import 'package:mellotippet/config/config.dart';
+import 'package:mellotippet/config/flavor.dart';
+import 'package:mellotippet/firebase_environment.dart';
+import 'package:mellotippet/services/mello_tippet_package_info.dart';
+import 'package:mellotippet/snackbar/snackbar_handler.dart';
 
 final getIt = GetIt.instance;
 

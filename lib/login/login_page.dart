@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:melodifestivalen_competition/common/repositories/repositories.dart';
-import 'package:melodifestivalen_competition/common/widgets/widgets.dart';
-import 'package:melodifestivalen_competition/config/config.dart';
-import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
-import 'package:melodifestivalen_competition/login/login_controller.dart';
-import 'package:melodifestivalen_competition/mello_bottom_navigation_bar.dart';
-import 'package:melodifestivalen_competition/sign_up/sign_up_page.dart';
+import 'package:mellotippet/common/repositories/repositories.dart';
+import 'package:mellotippet/common/widgets/widgets.dart';
+import 'package:mellotippet/config/config.dart';
+import 'package:mellotippet/dependency_injection/get_it.dart';
+import 'package:mellotippet/login/login_controller.dart';
+import 'package:mellotippet/mello_bottom_navigation_bar.dart';
+import 'package:mellotippet/sign_up/sign_up_page.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});

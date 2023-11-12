@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:melodifestivalen_competition/common/widgets/cta_button.dart';
-import 'package:melodifestivalen_competition/common/widgets/text_form_widget.dart';
-import 'package:melodifestivalen_competition/prediction/final_prediction_controller.dart';
-import 'package:melodifestivalen_competition/snackbar/snackbar_handler.dart';
-import 'package:melodifestivalen_competition/styles/colors.dart';
+import 'package:mellotippet/common/widgets/cta_button.dart';
+import 'package:mellotippet/common/widgets/text_form_widget.dart';
+import 'package:mellotippet/prediction/final_prediction_controller.dart';
+import 'package:mellotippet/snackbar/snackbar_handler.dart';
+import 'package:mellotippet/styles/colors.dart';
 
 class FinalPredictionPage extends ConsumerStatefulWidget {
   final SnackbarHandler snackbarHandler;

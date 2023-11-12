@@ -1,4 +1,4 @@
-import 'package:melodifestivalen_competition/common/models/all_models.dart';
+import 'package:mellotippet/common/models/all_models.dart';
 
 class UserScoreEntity {
   const UserScoreEntity({

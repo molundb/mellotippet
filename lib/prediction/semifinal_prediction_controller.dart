@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:melodifestivalen_competition/common/models/all_models.dart';
-import 'package:melodifestivalen_competition/common/repositories/repositories.dart';
-import 'package:melodifestivalen_competition/dependency_injection/get_it.dart';
+import 'package:mellotippet/common/models/all_models.dart';
+import 'package:mellotippet/common/repositories/repositories.dart';
+import 'package:mellotippet/dependency_injection/get_it.dart';
 
-class SemifinalPredictionController extends StateNotifier<SemifinalPredictionControllerState> {
+class SemifinalPredictionController
+    extends StateNotifier<SemifinalPredictionControllerState> {
   SemifinalPredictionController({
     required this.databaseRepository,
     required this.featureFlagRepository,

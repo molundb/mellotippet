@@ -1,4 +1,4 @@
-import 'package:melodifestivalen_competition/config/flavor.dart';
+import 'package:mellotippet/config/flavor.dart';
 
 class Config {
   final Flavor flavor;
