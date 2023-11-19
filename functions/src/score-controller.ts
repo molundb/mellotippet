@@ -177,39 +177,104 @@ const calculateScoresIdempotent = onDocumentWritten(
 
       const scoreCalculator = new ScoreCalculator();
 
-      for (const userSnapshot of userSnapshots.docs) {
-        let userScore = 0;
-        for (const competition of competitionSnapshots) {
-          if (competition.id === "final") {
-            await calculateScoreForFinalAndUpdateTotalScore(
-              competition.id,
-              userSnapshot,
-              scoreCalculator,
-              FinalResult.fromJson(result)
-            );
-          } else if (competition.id === "semifinal") {
-            await calculateScoreForSemifinalAndUpdateTotalScore(
-              competition.id,
-              userSnapshot,
-              scoreCalculator,
-              SemifinalResult.fromJson(result)
-            );
-          } else {
-            userScore +=
-              await calculateScoreForHeatAndUpdateTotalScoreIdempotent(
+      return Promise.all(
+        userSnapshots.docs.map(async (userSnapshot) => {
+          let userScore = 0;
+          // await Promise.all(
+          //   competitionSnapshots.map(async (competition) => {
+          //     if (competition.id === "final") {
+          //       await calculateScoreForFinalAndUpdateTotalScore(
+          //         competition.id,
+          //         userSnapshot,
+          //         scoreCalculator,
+          //         FinalResult.fromJson(result)
+          //       );
+          //     } else if (competition.id === "semifinal") {
+          //       await calculateScoreForSemifinalAndUpdateTotalScore(
+          //         competition.id,
+          //         userSnapshot,
+          //         scoreCalculator,
+          //         SemifinalResult.fromJson(result)
+          //       );
+          //     } else {
+          //       userScore +=
+          //         await calculateScoreForHeatAndUpdateTotalScoreIdempotent(
+          //           competition.id,
+          //           userSnapshot,
+          //           scoreCalculator,
+          //           HeatResult.fromJson(result)
+          //         );
+          //     }
+          //     const user = userSnapshot.data();
+          //     user.totalScore = userScore;
+          //     await userSnapshot.ref.set(user);
+          //   })
+          // );
+
+          for (const competition of competitionSnapshots) {
+            if (competition.id === "final") {
+              await calculateScoreForFinalAndUpdateTotalScore(
                 competition.id,
                 userSnapshot,
                 scoreCalculator,
-                HeatResult.fromJson(result)
+                FinalResult.fromJson(result)
               );
+            } else if (competition.id === "semifinal") {
+              await calculateScoreForSemifinalAndUpdateTotalScore(
+                competition.id,
+                userSnapshot,
+                scoreCalculator,
+                SemifinalResult.fromJson(result)
+              );
+            } else {
+              userScore +=
+                await calculateScoreForHeatAndUpdateTotalScoreIdempotent(
+                  competition.id,
+                  userSnapshot,
+                  scoreCalculator,
+                  HeatResult.fromJson(result)
+                );
+            }
           }
-        }
-        const user = userSnapshot.data();
-        user.totalScore = userScore;
-        return userSnapshot.ref.set(user);
-      }
+          const user = userSnapshot.data();
+          user.totalScore = userScore;
+          return userSnapshot.ref.set(user);
+        })
+      );
 
-      return Promise.resolve();
+      // for (const userSnapshot of userSnapshots.docs) {
+      //   let userScore = 0;
+      //   for (const competition of competitionSnapshots) {
+      //     if (competition.id === "final") {
+      //       await calculateScoreForFinalAndUpdateTotalScore(
+      //         competition.id,
+      //         userSnapshot,
+      //         scoreCalculator,
+      //         FinalResult.fromJson(result)
+      //       );
+      //     } else if (competition.id === "semifinal") {
+      //       await calculateScoreForSemifinalAndUpdateTotalScore(
+      //         competition.id,
+      //         userSnapshot,
+      //         scoreCalculator,
+      //         SemifinalResult.fromJson(result)
+      //       );
+      //     } else {
+      //       userScore +=
+      //         await calculateScoreForHeatAndUpdateTotalScoreIdempotent(
+      //           competition.id,
+      //           userSnapshot,
+      //           scoreCalculator,
+      //           HeatResult.fromJson(result)
+      //         );
+      //     }
+      //   }
+      //   const user = userSnapshot.data();
+      //   user.totalScore = userScore;
+      //   await userSnapshot.ref.set(user);
+      // }
+
+      // return Promise.resolve();
 
       // return Promise.all(
       //   userSnapshots.docs.map(async (userSnapshot) => {

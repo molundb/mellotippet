@@ -31,13 +31,126 @@ const test = functions(
 describe("calculateScoresIdempotent", function () {
   afterEach(async function () {
     // Reset the database
-    await resetDatabase("user1", "heat1");
-    await resetDatabase("user1", "heat2");
-    await resetDatabase("user1", "heat3");
-    await resetDatabase("user1", "heat4");
+
+    const users = [
+      "user1",
+      "user2",
+      "user3",
+      "user4",
+      "user5",
+      "user6",
+      "user7",
+      "user8",
+      "user9",
+      "user10",
+      "user11",
+    ];
+
+    await Promise.all(
+      users.map(async (user) => {
+        await resetDatabase(user, "heat1");
+        await resetDatabase(user, "heat2");
+        await resetDatabase(user, "heat3");
+        await resetDatabase(user, "heat4");
+      })
+    );
+
+    // for (const user of users) {
+    //   await resetDatabase(user, "heat1");
+    //   await resetDatabase(user, "heat2");
+    //   await resetDatabase(user, "heat3");
+    //   await resetDatabase(user, "heat4");
+    // }
 
     // Do cleanup tasks.
     test.cleanup();
+  });
+
+  it.only("heat: should calculate perfect scores correctly on heat result multiple users", async function () {
+    // Given
+    const competition = "heat4";
+    const competitionPath = `competitions/${competition}`;
+
+    const users = [
+      new User("user1", "testUser1", 0),
+      new User("user2", "testUser2", 0),
+      new User("user3", "testUser3", 0),
+      new User("user4", "testUser3", 0),
+      new User("user5", "testUser3", 0),
+      new User("user6", "testUser3", 0),
+      new User("user7", "testUser3", 0),
+      new User("user8", "testUser3", 0),
+      new User("user9", "testUser3", 0),
+      new User("user10", "testUser3", 0),
+      new User("user11", "testUser3", 0),
+    ];
+    const prediction = new HeatPredictionAndScore({
+      finalist1: new PredictionAndScore({ prediction: 1, score: 0 }),
+      finalist2: new PredictionAndScore({ prediction: 2, score: 0 }),
+      semifinalist1: new PredictionAndScore({ prediction: 3, score: 0 }),
+      semifinalist2: new PredictionAndScore({ prediction: 4, score: 0 }),
+      fifthPlace: new PredictionAndScore({ prediction: 5, score: 0 }),
+    });
+    const expectedScore = 56;
+
+    const result = new HeatResult({
+      finalist1: 1,
+      finalist2: 2,
+      semifinalist1: 3,
+      semifinalist2: 4,
+    }).toResult();
+
+    for (const user of users) {
+      await addUserToDatabase(user);
+
+      await addHeatPredictionToDatabase(
+        "competitions/heat1",
+        user.id,
+        prediction
+      );
+      await addHeatPredictionToDatabase(
+        "competitions/heat2",
+        user.id,
+        prediction
+      );
+      await addHeatPredictionToDatabase(
+        "competitions/heat3",
+        user.id,
+        prediction
+      );
+      await addHeatPredictionToDatabase(competitionPath, user.id, prediction);
+    }
+    await addResultToDatabase("competitions/heat1", result);
+    await addResultToDatabase("competitions/heat2", result);
+    await addResultToDatabase("competitions/heat3", result);
+    await addResultToDatabase(competitionPath, result);
+
+    const change = createChange(competitionPath, result);
+    const event = createEvent(change, competition);
+
+    // When
+    const wrappedCalculateScores = test.wrap(calculateScoresIdempotent);
+    await wrappedCalculateScores(event);
+
+    // Then
+    for (const user of users) {
+      const userAfter = await getUserFromDatabase(user.id);
+      expect(userAfter?.totalScore).to.equal(expectedScore);
+
+      const expectedHeatPredictionAndScore = new HeatPredictionAndScore({
+        finalist1: new PredictionAndScore({ prediction: 1, score: 5 }),
+        finalist2: new PredictionAndScore({ prediction: 2, score: 5 }),
+        semifinalist1: new PredictionAndScore({ prediction: 3, score: 2 }),
+        semifinalist2: new PredictionAndScore({ prediction: 4, score: 2 }),
+        fifthPlace: new PredictionAndScore({ prediction: 5, score: 0 }),
+      });
+
+      const predictionAndScoreAfter =
+        await getHeatPredictionAndScoreFromDatabase(competitionPath, user.id);
+      expect(predictionAndScoreAfter).to.deep.equal(
+        expectedHeatPredictionAndScore
+      );
+    }
   });
 
   it.only("heat: should calculate perfect scores correctly on heat result", async function () {
