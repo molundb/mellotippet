@@ -1,6 +1,6 @@
 import * as firebase from "@firebase/testing";
 
-const MY_PROJECT_ID = "melodifestivalen-comp-test";
+const MY_PROJECT_ID = "mellotippet-test";
 
 describe("Tests for rules", () => {
   it.skip("Can't write", async () => {

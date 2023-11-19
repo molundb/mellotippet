@@ -12,7 +12,10 @@ import { finalPredictionAndScoreConverter } from "./models/final-prediction-and-
 import { ScoreCalculator } from "./util/score-calculator";
 
 const calculateScores = onDocumentWritten(
-  "competitions/{competition}",
+  {
+    document: "competitions/{competition}",
+    region: "europe-west1",
+  },
   async (event) => {
     const result = event.data?.after.data()?.result;
     if (result !== undefined) {
@@ -155,4 +158,131 @@ async function calculateScoreForFinalAndUpdateTotalScore(
   return Promise.resolve();
 }
 
-export { calculateScores };
+const calculateScoresIdempotent = onDocumentWritten(
+  {
+    document: "competitions/{competition}",
+    region: "europe-west1",
+  },
+  async (event) => {
+    const result = event.data?.after.data()?.result;
+    if (result !== undefined) {
+      const userSnapshots = await db
+        .collection("users")
+        .withConverter(userConverter)
+        .get();
+
+      const competitionSnapshots = await db
+        .collection("competitions")
+        .listDocuments();
+
+      const scoreCalculator = new ScoreCalculator();
+
+      for (const userSnapshot of userSnapshots.docs) {
+        let userScore = 0;
+        for (const competition of competitionSnapshots) {
+          if (competition.id === "final") {
+            await calculateScoreForFinalAndUpdateTotalScore(
+              competition.id,
+              userSnapshot,
+              scoreCalculator,
+              FinalResult.fromJson(result)
+            );
+          } else if (competition.id === "semifinal") {
+            await calculateScoreForSemifinalAndUpdateTotalScore(
+              competition.id,
+              userSnapshot,
+              scoreCalculator,
+              SemifinalResult.fromJson(result)
+            );
+          } else {
+            userScore +=
+              await calculateScoreForHeatAndUpdateTotalScoreIdempotent(
+                competition.id,
+                userSnapshot,
+                scoreCalculator,
+                HeatResult.fromJson(result)
+              );
+          }
+        }
+        const user = userSnapshot.data();
+        user.totalScore = userScore;
+        return userSnapshot.ref.set(user);
+      }
+
+      return Promise.resolve();
+
+      // return Promise.all(
+      //   userSnapshots.docs.map(async (userSnapshot) => {
+      //     let userScore = 0;
+      //     for (const competition of competitionSnapshots) {
+      //       // await Promise.all(
+      //       //   competitionSnapshots.map(async (competition) => {
+      //       if (competition.id === "final") {
+      //         await calculateScoreForFinalAndUpdateTotalScore(
+      //           competition.id,
+      //           userSnapshot,
+      //           scoreCalculator,
+      //           FinalResult.fromJson(result)
+      //         );
+      //       } else if (competition.id === "semifinal") {
+      //         await calculateScoreForSemifinalAndUpdateTotalScore(
+      //           competition.id,
+      //           userSnapshot,
+      //           scoreCalculator,
+      //           SemifinalResult.fromJson(result)
+      //         );
+      //       } else {
+      //         userScore +=
+      //           await calculateScoreForHeatAndUpdateTotalScoreIdempotent(
+      //             competition.id,
+      //             userSnapshot,
+      //             scoreCalculator,
+      //             HeatResult.fromJson(result)
+      //           );
+      //       }
+      //       //   })
+      //       // );
+      //     }
+      //     const user = userSnapshot.data();
+      //     user.totalScore += userScore;
+      //     return userSnapshot.ref.set(user);
+      //   })
+      // );
+    } else {
+      return Promise.reject(new Error("result was undefined"));
+    }
+  }
+);
+
+async function calculateScoreForHeatAndUpdateTotalScoreIdempotent(
+  competition: string,
+  userSnapshot: FirebaseFirestore.QueryDocumentSnapshot<User>,
+  scoreCalculator: ScoreCalculator,
+  result: HeatResult
+): Promise<number> {
+  const predictionAndScoresSnapshot = await db
+    .collection(`competitions/${competition}/predictionsAndScores`)
+    .doc(userSnapshot.id)
+    .withConverter(heatPredictionAndScoreConverter)
+    .get();
+
+  const prediction = predictionAndScoresSnapshot.data();
+  if (prediction !== undefined) {
+    const heatPredictionAndscore = scoreCalculator.calculateHeatScore(
+      result,
+      prediction
+    );
+
+    await db
+      .collection(`competitions/${competition}/predictionsAndScores`)
+      .doc(userSnapshot.id)
+      .withConverter(heatPredictionAndScoreConverter)
+      .set(heatPredictionAndscore);
+
+    return heatPredictionAndscore.totalScore();
+  }
+
+  return Promise.resolve(0);
+}
+
+export { calculateScores, calculateScoresIdempotent };

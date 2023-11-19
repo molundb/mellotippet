@@ -1,5 +1,10 @@
 {
   "projects": {
-    "default": "melodifestivalen-comp-stage"
-  }
+    "default": "melodifestivalen-comp-stage",
+    "test": "mellotippet-test",
+    "stage": "mellotippet-stage",
+    "prod": "mellotippet-prod"
+  },
+  "targets": {},
+  "etags": {}
 }

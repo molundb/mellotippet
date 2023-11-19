@@ -46,12 +46,12 @@ class ScoreCalculator {
     result: SemifinalResult,
     predictionAndScore: SemifinalPredictionAndScore
   ): SemifinalPredictionAndScore {
-    predictionAndScore.finalist1.score +=
+    predictionAndScore.finalist1.score =
       this.calculateScoreForSemifinalFinalist(
         predictionAndScore.finalist1.prediction,
         result
       );
-    predictionAndScore.finalist2.score +=
+    predictionAndScore.finalist2.score =
       this.calculateScoreForSemifinalFinalist(
         predictionAndScore.finalist2.prediction,
         result
@@ -75,27 +75,27 @@ class ScoreCalculator {
     result: HeatResult,
     predictionAndScore: HeatPredictionAndScore
   ): HeatPredictionAndScore {
-    predictionAndScore.finalist1.score +=
+    predictionAndScore.finalist1.score =
       this.calculateScoreForHeatFinalistPrediction(
         predictionAndScore.finalist1.prediction,
         result
       );
-    predictionAndScore.finalist2.score +=
+    predictionAndScore.finalist2.score =
       this.calculateScoreForHeatFinalistPrediction(
         predictionAndScore.finalist2.prediction,
         result
       );
-    predictionAndScore.semifinalist1.score +=
+    predictionAndScore.semifinalist1.score =
       this.calculateScoreForHeatSemifinalistPrediction(
         predictionAndScore.semifinalist1.prediction,
         result
       );
-    predictionAndScore.semifinalist2.score +=
+    predictionAndScore.semifinalist2.score =
       this.calculateScoreForHeatSemifinalistPrediction(
         predictionAndScore.semifinalist2.prediction,
         result
       );
-    predictionAndScore.fifthPlace.score +=
+    predictionAndScore.fifthPlace.score =
       this.calculateScoreForHeatFifthPlacePrediction(
         predictionAndScore.fifthPlace.prediction,
         result
