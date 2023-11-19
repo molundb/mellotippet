@@ -7,7 +7,7 @@ import {
   deleteEntry,
 } from "./entry-controller";
 
-import { calculateScores, calculateScoresIdempotent } from "./score-controller";
+import { calculateScores } from "./score-controller";
 
 const expressApp = express();
 
@@ -19,4 +19,4 @@ expressApp.delete("/entries/:entryId", deleteEntry);
 
 const app = onRequest(expressApp);
 
-export { app, calculateScores, calculateScoresIdempotent };
+export { app, calculateScores };
