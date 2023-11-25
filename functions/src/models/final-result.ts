@@ -110,7 +110,7 @@ export default class FinalResult {
   }
 }
 
-const finalPredictionOrResultConverter = {
+const finalResultConverter = {
   toFirestore(finalPredictionOrResult: FinalResult): DocumentData {
     return {
       placement1: finalPredictionOrResult.placement1,
@@ -130,20 +130,20 @@ const finalPredictionOrResultConverter = {
   fromFirestore(snapshot: QueryDocumentSnapshot): FinalResult {
     const data = snapshot.data();
     return new FinalResult({
-      placement1: data.placement1,
-      placement2: data.placement2,
-      placement3: data.placement3,
-      placement4: data.placement4,
-      placement5: data.placement5,
-      placement6: data.placement6,
-      placement7: data.placement7,
-      placement8: data.placement8,
-      placement9: data.placement9,
-      placement10: data.placement10,
-      placement11: data.placement11,
-      placement12: data.placement12,
+      placement1: data.result.placement1,
+      placement2: data.result.placement2,
+      placement3: data.result.placement3,
+      placement4: data.result.placement4,
+      placement5: data.result.placement5,
+      placement6: data.result.placement6,
+      placement7: data.result.placement7,
+      placement8: data.result.placement8,
+      placement9: data.result.placement9,
+      placement10: data.result.placement10,
+      placement11: data.result.placement11,
+      placement12: data.result.placement12,
     });
   },
 };
 
-export { FinalResult, finalPredictionOrResultConverter };
+export { FinalResult, finalResultConverter };
