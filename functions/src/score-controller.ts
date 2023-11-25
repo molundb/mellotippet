@@ -2,7 +2,7 @@ import { db } from "./config/firebase";
 import { onDocumentWritten } from "firebase-functions/v2/firestore";
 
 import { User, userConverter } from "./models/user";
-import { HeatResult } from "./models/heat-result";
+import { heatResultConverter } from "./models/heat-result";
 import { SemifinalResult } from "./models/semifinal-result";
 import { FinalResult } from "./models/final-result";
 import { heatPredictionAndScoreConverter } from "./models/heat-prediction-and-score";
@@ -52,8 +52,7 @@ const calculateScores = onDocumentWritten(
               userScore += await calculateScoreForHeat(
                 competition.id,
                 userSnapshot,
-                scoreCalculator,
-                HeatResult.fromJson(result)
+                scoreCalculator
               );
             }
           }
@@ -71,9 +70,14 @@ const calculateScores = onDocumentWritten(
 async function calculateScoreForHeat(
   competition: string,
   userSnapshot: FirebaseFirestore.QueryDocumentSnapshot<User>,
-  scoreCalculator: ScoreCalculator,
-  result: HeatResult
+  scoreCalculator: ScoreCalculator
 ): Promise<number> {
+  const resultSnapshot = await db
+    .collection("competitions")
+    .doc(competition)
+    .withConverter(heatResultConverter)
+    .get();
+
   const predictionAndScoresSnapshot = await db
     .collection(`competitions/${competition}/predictionsAndScores`)
     .doc(userSnapshot.id)
@@ -81,7 +85,8 @@ async function calculateScoreForHeat(
     .get();
 
   const prediction = predictionAndScoresSnapshot.data();
-  if (prediction !== undefined) {
+  const result = resultSnapshot.data();
+  if (prediction !== undefined && result !== undefined) {
     const heatPredictionAndscore = scoreCalculator.calculateHeatScore(
       result,
       prediction

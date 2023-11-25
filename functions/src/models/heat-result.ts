@@ -1,3 +1,5 @@
+import { DocumentData, QueryDocumentSnapshot } from "firebase-admin/firestore";
+
 export default class HeatResult {
   readonly finalist1: number;
   readonly finalist2: number;
@@ -51,4 +53,26 @@ export default class HeatResult {
   }
 }
 
-export { HeatResult };
+const heatResultConverter = {
+  toFirestore(heatResult: HeatResult): DocumentData {
+    return {
+      result: {
+        finalist1: heatResult.finalist1,
+        finalist2: heatResult.finalist2,
+        semifinalist1: heatResult.semifinalist1,
+        semifinalist2: heatResult.semifinalist2,
+      },
+    };
+  },
+  fromFirestore(snapshot: QueryDocumentSnapshot): HeatResult {
+    const data = snapshot.data();
+    return new HeatResult({
+      finalist1: data.result.finalist1,
+      finalist2: data.result.finalist2,
+      semifinalist1: data.result.semifinalist1,
+      semifinalist2: data.result.semifinalist2,
+    });
+  },
+};
+
+export { HeatResult, heatResultConverter };
