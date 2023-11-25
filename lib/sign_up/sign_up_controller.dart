@@ -1,5 +1,5 @@
 import 'package:mellotippet/common/repositories/repositories.dart';
-import 'package:mellotippet/dependency_injection/get_it.dart';
+import 'package:mellotippet/service_location/get_it.dart';
 
 class SignUpController {
   final databaseRepository = getIt.get<DatabaseRepository>();

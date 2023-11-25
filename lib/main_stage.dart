@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/common/repositories/repositories.dart';
 import 'package:mellotippet/config/flavor.dart';
-import 'package:mellotippet/dependency_injection/get_it.dart';
+import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/mellotippet_app.dart';
 import 'package:mellotippet/services/crash_reporting.dart';
 import 'package:mellotippet/services/mello_tippet_package_info.dart';

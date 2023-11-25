@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mellotippet/config/config.dart';
-import 'package:mellotippet/dependency_injection/get_it.dart';
+import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/force_upgrade/force_upgrade_page.dart';
 import 'package:mellotippet/styles/colors.dart';
 import 'package:mellotippet/styles/text_styles.dart';

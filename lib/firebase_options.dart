@@ -4,7 +4,7 @@ import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 import 'package:mellotippet/config/config.dart';
-import 'package:mellotippet/dependency_injection/get_it.dart';
+import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/firebase_environment.dart';
 
 final config = getIt.get<Config>();

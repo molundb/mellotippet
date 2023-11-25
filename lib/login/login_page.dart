@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/common/repositories/repositories.dart';
 import 'package:mellotippet/common/widgets/widgets.dart';
 import 'package:mellotippet/config/config.dart';
-import 'package:mellotippet/dependency_injection/get_it.dart';
+import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/login/login_controller.dart';
 import 'package:mellotippet/mello_bottom_navigation_bar.dart';
 import 'package:mellotippet/sign_up/sign_up_page.dart';

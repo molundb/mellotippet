@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/common/models/all_models.dart';
 import 'package:mellotippet/common/repositories/repositories.dart';
-import 'package:mellotippet/dependency_injection/get_it.dart';
+import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/score/score_calculator.dart';
 
 class ScoreController extends StateNotifier<ScoreControllerState> {
