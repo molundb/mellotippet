@@ -28,37 +28,9 @@ const test = functions(
   ".firebase/service-account-test.json"
 );
 
-describe("calculateScores", function () {
+describe("calculateScores when adding heat result", function () {
   afterEach(async function () {
-    // Reset the database
-
-    const users = [
-      "user1",
-      "user2",
-      "user3",
-      "user4",
-      "user5",
-      "user6",
-      "user7",
-      "user8",
-      "user9",
-      "user10",
-      "user11",
-    ];
-
-    await Promise.all(
-      users.map(async (user) => {
-        await resetDatabase(user, "heat1");
-        await resetDatabase(user, "heat2");
-        await resetDatabase(user, "heat3");
-        await resetDatabase(user, "heat4");
-        await resetDatabase(user, "heat5");
-        await resetDatabase(user, "semifinal");
-        await resetDatabase(user, "final");
-      })
-    );
-
-    // Do cleanup tasks.
+    await resetEntireDatabase();
     test.cleanup();
   });
 
@@ -677,7 +649,13 @@ describe("calculateScores", function () {
       );
     }
   });
+});
 
+describe("calculateScores when adding semifinal result", function () {
+  afterEach(async function () {
+    await resetEntireDatabase();
+    test.cleanup();
+  });
   it("semifinal: should calculate score correctly for perfect prediction", async function () {
     const competition = "semifinal";
     const competitionPath = `competitions/${competition}`;
@@ -952,7 +930,13 @@ describe("calculateScores", function () {
       );
     }
   });
+});
 
+describe("calculateScores when adding final result", function () {
+  afterEach(async function () {
+    await resetEntireDatabase();
+    test.cleanup();
+  });
   it("final: should calculate score correctly for perfect prediction", async function () {
     const competition = "final";
     const competitionPath = `competitions/${competition}`;
@@ -1409,6 +1393,406 @@ describe("calculateScores", function () {
     }
   });
 });
+
+describe("calculateScores in real life scenario", function () {
+  beforeEach(async function () {
+    await resetEntireDatabase();
+    test.cleanup();
+  });
+
+  it("given no previous result, when heat1 is added, then calculate the score correctly for multiple users ", async function () {
+    // Given
+    const competition = "heat1";
+    const competitionPath = `competitions/${competition}`;
+
+    const usersWithPredictionAndExpectedScore = [
+      {
+        user: new User("user1", "testUser1", 0),
+        prediction: new HeatPredictionAndScore({
+          finalist1: new PredictionAndScore({ prediction: 3, score: 0 }),
+          finalist2: new PredictionAndScore({ prediction: 4, score: 0 }),
+          semifinalist1: new PredictionAndScore({ prediction: 6, score: 0 }),
+          semifinalist2: new PredictionAndScore({ prediction: 5, score: 0 }),
+          fifthPlace: new PredictionAndScore({ prediction: 1, score: 0 }),
+        }),
+        expectedTotalScore: 3,
+        expectedHeatPredictionAndScore: new HeatPredictionAndScore({
+          finalist1: new PredictionAndScore({ prediction: 3, score: 1 }),
+          finalist2: new PredictionAndScore({ prediction: 4, score: 1 }),
+          semifinalist1: new PredictionAndScore({ prediction: 6, score: 0 }),
+          semifinalist2: new PredictionAndScore({ prediction: 5, score: 0 }),
+          fifthPlace: new PredictionAndScore({ prediction: 1, score: 1 }),
+        }),
+      },
+      {
+        user: new User("user2", "funny username", 0),
+        prediction: new HeatPredictionAndScore({
+          finalist1: new PredictionAndScore({ prediction: 1, score: 0 }),
+          finalist2: new PredictionAndScore({ prediction: 2, score: 0 }),
+          semifinalist1: new PredictionAndScore({ prediction: 3, score: 0 }),
+          semifinalist2: new PredictionAndScore({ prediction: 4, score: 0 }),
+          fifthPlace: new PredictionAndScore({ prediction: 5, score: 0 }),
+        }),
+        expectedTotalScore: 14,
+        expectedHeatPredictionAndScore: new HeatPredictionAndScore({
+          finalist1: new PredictionAndScore({ prediction: 1, score: 5 }),
+          finalist2: new PredictionAndScore({ prediction: 2, score: 5 }),
+          semifinalist1: new PredictionAndScore({ prediction: 3, score: 2 }),
+          semifinalist2: new PredictionAndScore({ prediction: 4, score: 2 }),
+          fifthPlace: new PredictionAndScore({ prediction: 5, score: 0 }),
+        }),
+      },
+      {
+        user: new User("user3", "good name", 0),
+        prediction: undefined,
+        expectedTotalScore: 0,
+        expectedHeatPredictionAndScore: undefined,
+      },
+      {
+        user: new User("user4", "theking", 0),
+        prediction: new HeatPredictionAndScore({
+          finalist1: new PredictionAndScore({ prediction: 5, score: 0 }),
+          finalist2: new PredictionAndScore({ prediction: 1, score: 0 }),
+          semifinalist1: new PredictionAndScore({ prediction: 3, score: 0 }),
+          semifinalist2: new PredictionAndScore({ prediction: 2, score: 0 }),
+          fifthPlace: new PredictionAndScore({ prediction: 6, score: 0 }),
+        }),
+        expectedTotalScore: 10,
+        expectedHeatPredictionAndScore: new HeatPredictionAndScore({
+          finalist1: new PredictionAndScore({ prediction: 5, score: 0 }),
+          finalist2: new PredictionAndScore({ prediction: 1, score: 5 }),
+          semifinalist1: new PredictionAndScore({ prediction: 3, score: 2 }),
+          semifinalist2: new PredictionAndScore({ prediction: 2, score: 3 }),
+          fifthPlace: new PredictionAndScore({ prediction: 6, score: 0 }),
+        }),
+      },
+      {
+        user: new User("user5", "bb47", 0),
+        prediction: new HeatPredictionAndScore({
+          finalist1: new PredictionAndScore({ prediction: 3, score: 0 }),
+          finalist2: new PredictionAndScore({ prediction: 6, score: 0 }),
+          semifinalist1: new PredictionAndScore({ prediction: 1, score: 0 }),
+          semifinalist2: new PredictionAndScore({ prediction: 4, score: 0 }),
+          fifthPlace: new PredictionAndScore({ prediction: 5, score: 0 }),
+        }),
+        expectedTotalScore: 6,
+        expectedHeatPredictionAndScore: new HeatPredictionAndScore({
+          finalist1: new PredictionAndScore({ prediction: 3, score: 1 }),
+          finalist2: new PredictionAndScore({ prediction: 6, score: 0 }),
+          semifinalist1: new PredictionAndScore({ prediction: 1, score: 3 }),
+          semifinalist2: new PredictionAndScore({ prediction: 4, score: 2 }),
+          fifthPlace: new PredictionAndScore({ prediction: 5, score: 0 }),
+        }),
+      },
+    ];
+
+    const result = new HeatResult({
+      finalist1: 1,
+      finalist2: 2,
+      semifinalist1: 3,
+      semifinalist2: 4,
+    }).toResult();
+
+    for (const { user, prediction } of usersWithPredictionAndExpectedScore) {
+      await addUserToDatabase(user);
+      await addHeatPredictionToDatabase(competitionPath, user.id, prediction);
+    }
+    await addResultToDatabase(competitionPath, result);
+
+    const change = createChange(competitionPath, result);
+    const event = createEvent(change, competition);
+
+    // When
+    const wrappedCalculateScores = test.wrap(calculateScores);
+    await wrappedCalculateScores(event);
+    await wrappedCalculateScores(event);
+    await wrappedCalculateScores(event);
+    await wrappedCalculateScores(event);
+    await wrappedCalculateScores(event);
+
+    // Then
+    for (const {
+      user,
+      expectedTotalScore,
+      expectedHeatPredictionAndScore,
+    } of usersWithPredictionAndExpectedScore) {
+      const userAfter = await getUserFromDatabase(user.id);
+      expect(userAfter?.totalScore).to.equal(expectedTotalScore);
+
+      const predictionAndScoreAfter =
+        await getHeatPredictionAndScoreFromDatabase(competitionPath, user.id);
+      expect(predictionAndScoreAfter).to.deep.equal(
+        expectedHeatPredictionAndScore
+      );
+    }
+  });
+
+  it.only("given previous heat1 result, when heat2 is added, then calculate the score correctly for multiple users ", async function () {
+    // Given
+    const competition = "heat2";
+    const competitionPath = `competitions/${competition}`;
+
+    const usersWithPredictionAndExpectedScoreHeat1 = [
+      {
+        user: new User("user1", "testUser1", 0),
+        prediction: new HeatPredictionAndScore({
+          finalist1: new PredictionAndScore({ prediction: 3, score: 0 }),
+          finalist2: new PredictionAndScore({ prediction: 4, score: 0 }),
+          semifinalist1: new PredictionAndScore({ prediction: 6, score: 0 }),
+          semifinalist2: new PredictionAndScore({ prediction: 5, score: 0 }),
+          fifthPlace: new PredictionAndScore({ prediction: 1, score: 0 }),
+        }),
+        expectedHeatPredictionAndScore: new HeatPredictionAndScore({
+          finalist1: new PredictionAndScore({ prediction: 3, score: 1 }),
+          finalist2: new PredictionAndScore({ prediction: 4, score: 1 }),
+          semifinalist1: new PredictionAndScore({ prediction: 6, score: 0 }),
+          semifinalist2: new PredictionAndScore({ prediction: 5, score: 0 }),
+          fifthPlace: new PredictionAndScore({ prediction: 1, score: 1 }),
+        }),
+      },
+      {
+        user: new User("user2", "funny username", 0),
+        prediction: new HeatPredictionAndScore({
+          finalist1: new PredictionAndScore({ prediction: 1, score: 0 }),
+          finalist2: new PredictionAndScore({ prediction: 2, score: 0 }),
+          semifinalist1: new PredictionAndScore({ prediction: 3, score: 0 }),
+          semifinalist2: new PredictionAndScore({ prediction: 4, score: 0 }),
+          fifthPlace: new PredictionAndScore({ prediction: 5, score: 0 }),
+        }),
+        expectedHeatPredictionAndScore: new HeatPredictionAndScore({
+          finalist1: new PredictionAndScore({ prediction: 1, score: 5 }),
+          finalist2: new PredictionAndScore({ prediction: 2, score: 5 }),
+          semifinalist1: new PredictionAndScore({ prediction: 3, score: 2 }),
+          semifinalist2: new PredictionAndScore({ prediction: 4, score: 2 }),
+          fifthPlace: new PredictionAndScore({ prediction: 5, score: 0 }),
+        }),
+      },
+      {
+        user: new User("user3", "good name", 0),
+        prediction: undefined,
+        expectedHeatPredictionAndScore: undefined,
+      },
+      {
+        user: new User("user4", "theking", 0),
+        prediction: new HeatPredictionAndScore({
+          finalist1: new PredictionAndScore({ prediction: 5, score: 0 }),
+          finalist2: new PredictionAndScore({ prediction: 1, score: 0 }),
+          semifinalist1: new PredictionAndScore({ prediction: 3, score: 0 }),
+          semifinalist2: new PredictionAndScore({ prediction: 2, score: 0 }),
+          fifthPlace: new PredictionAndScore({ prediction: 6, score: 0 }),
+        }),
+        expectedHeatPredictionAndScore: new HeatPredictionAndScore({
+          finalist1: new PredictionAndScore({ prediction: 5, score: 0 }),
+          finalist2: new PredictionAndScore({ prediction: 1, score: 5 }),
+          semifinalist1: new PredictionAndScore({ prediction: 3, score: 2 }),
+          semifinalist2: new PredictionAndScore({ prediction: 2, score: 3 }),
+          fifthPlace: new PredictionAndScore({ prediction: 6, score: 0 }),
+        }),
+      },
+      {
+        user: new User("user5", "bb47", 0),
+        prediction: new HeatPredictionAndScore({
+          finalist1: new PredictionAndScore({ prediction: 3, score: 0 }),
+          finalist2: new PredictionAndScore({ prediction: 6, score: 0 }),
+          semifinalist1: new PredictionAndScore({ prediction: 1, score: 0 }),
+          semifinalist2: new PredictionAndScore({ prediction: 4, score: 0 }),
+          fifthPlace: new PredictionAndScore({ prediction: 5, score: 0 }),
+        }),
+        expectedHeatPredictionAndScore: new HeatPredictionAndScore({
+          finalist1: new PredictionAndScore({ prediction: 3, score: 1 }),
+          finalist2: new PredictionAndScore({ prediction: 6, score: 0 }),
+          semifinalist1: new PredictionAndScore({ prediction: 1, score: 3 }),
+          semifinalist2: new PredictionAndScore({ prediction: 4, score: 2 }),
+          fifthPlace: new PredictionAndScore({ prediction: 5, score: 0 }),
+        }),
+      },
+    ];
+
+    const usersWithPredictionAndExpectedScore = [
+      {
+        user: new User("user1", "testUser1", 3),
+        prediction: new HeatPredictionAndScore({
+          finalist1: new PredictionAndScore({ prediction: 3, score: 0 }),
+          finalist2: new PredictionAndScore({ prediction: 4, score: 0 }),
+          semifinalist1: new PredictionAndScore({ prediction: 6, score: 0 }),
+          semifinalist2: new PredictionAndScore({ prediction: 5, score: 0 }),
+          fifthPlace: new PredictionAndScore({ prediction: 1, score: 0 }),
+        }),
+        expectedTotalScore: 13,
+        expectedHeatPredictionAndScore: new HeatPredictionAndScore({
+          finalist1: new PredictionAndScore({ prediction: 3, score: 1 }),
+          finalist2: new PredictionAndScore({ prediction: 4, score: 5 }),
+          semifinalist1: new PredictionAndScore({ prediction: 6, score: 3 }),
+          semifinalist2: new PredictionAndScore({ prediction: 5, score: 0 }),
+          fifthPlace: new PredictionAndScore({ prediction: 1, score: 1 }),
+        }),
+      },
+      {
+        user: new User("user2", "funny username", 14),
+        prediction: new HeatPredictionAndScore({
+          finalist1: new PredictionAndScore({ prediction: 1, score: 0 }),
+          finalist2: new PredictionAndScore({ prediction: 2, score: 0 }),
+          semifinalist1: new PredictionAndScore({ prediction: 3, score: 0 }),
+          semifinalist2: new PredictionAndScore({ prediction: 4, score: 0 }),
+          fifthPlace: new PredictionAndScore({ prediction: 5, score: 0 }),
+        }),
+        expectedTotalScore: 20,
+        expectedHeatPredictionAndScore: new HeatPredictionAndScore({
+          finalist1: new PredictionAndScore({ prediction: 1, score: 1 }),
+          finalist2: new PredictionAndScore({ prediction: 2, score: 0 }),
+          semifinalist1: new PredictionAndScore({ prediction: 3, score: 2 }),
+          semifinalist2: new PredictionAndScore({ prediction: 4, score: 3 }),
+          fifthPlace: new PredictionAndScore({ prediction: 5, score: 0 }),
+        }),
+      },
+      {
+        user: new User("user3", "good name", 0),
+        prediction: new HeatPredictionAndScore({
+          finalist1: new PredictionAndScore({ prediction: 5, score: 0 }),
+          finalist2: new PredictionAndScore({ prediction: 1, score: 0 }),
+          semifinalist1: new PredictionAndScore({ prediction: 3, score: 0 }),
+          semifinalist2: new PredictionAndScore({ prediction: 2, score: 0 }),
+          fifthPlace: new PredictionAndScore({ prediction: 6, score: 0 }),
+        }),
+        expectedTotalScore: 4,
+        expectedHeatPredictionAndScore: new HeatPredictionAndScore({
+          finalist1: new PredictionAndScore({ prediction: 5, score: 0 }),
+          finalist2: new PredictionAndScore({ prediction: 1, score: 1 }),
+          semifinalist1: new PredictionAndScore({ prediction: 3, score: 2 }),
+          semifinalist2: new PredictionAndScore({ prediction: 2, score: 0 }),
+          fifthPlace: new PredictionAndScore({ prediction: 6, score: 1 }),
+        }),
+      },
+
+      {
+        user: new User("user4", "theking", 10),
+        prediction: undefined,
+        expectedTotalScore: 10,
+        expectedHeatPredictionAndScore: undefined,
+      },
+      {
+        user: new User("user5", "bb47", 6),
+        prediction: new HeatPredictionAndScore({
+          finalist1: new PredictionAndScore({ prediction: 3, score: 0 }),
+          finalist2: new PredictionAndScore({ prediction: 6, score: 0 }),
+          semifinalist1: new PredictionAndScore({ prediction: 1, score: 0 }),
+          semifinalist2: new PredictionAndScore({ prediction: 4, score: 0 }),
+          fifthPlace: new PredictionAndScore({ prediction: 5, score: 0 }),
+        }),
+        expectedTotalScore: 17,
+        expectedHeatPredictionAndScore: new HeatPredictionAndScore({
+          finalist1: new PredictionAndScore({ prediction: 3, score: 1 }),
+          finalist2: new PredictionAndScore({ prediction: 6, score: 5 }),
+          semifinalist1: new PredictionAndScore({ prediction: 1, score: 2 }),
+          semifinalist2: new PredictionAndScore({ prediction: 4, score: 3 }),
+          fifthPlace: new PredictionAndScore({ prediction: 5, score: 0 }),
+        }),
+      },
+    ];
+
+    const resultHeat1 = new HeatResult({
+      finalist1: 1,
+      finalist2: 2,
+      semifinalist1: 3,
+      semifinalist2: 4,
+    }).toResult();
+
+    const resultHeat2 = new HeatResult({
+      finalist1: 6,
+      finalist2: 4,
+      semifinalist1: 1,
+      semifinalist2: 3,
+    }).toResult();
+
+    for (const {
+      user,
+      prediction,
+    } of usersWithPredictionAndExpectedScoreHeat1) {
+      await addUserToDatabase(user);
+      await addHeatPredictionToDatabase(
+        "competitions/heat1",
+        user.id,
+        prediction
+      );
+    }
+    await addResultToDatabase("competitions/heat1", resultHeat1);
+
+    for (const { user, prediction } of usersWithPredictionAndExpectedScore) {
+      await addUserToDatabase(user);
+      await addHeatPredictionToDatabase(competitionPath, user.id, prediction);
+    }
+    await addResultToDatabase(competitionPath, resultHeat2);
+
+    const change = createChange(competitionPath, resultHeat2);
+    const event = createEvent(change, competition);
+
+    // When
+    const wrappedCalculateScores = test.wrap(calculateScores);
+    await wrappedCalculateScores(event);
+    await wrappedCalculateScores(event);
+    await wrappedCalculateScores(event);
+    await wrappedCalculateScores(event);
+    await wrappedCalculateScores(event);
+
+    // Then
+    for (const {
+      user,
+      expectedHeatPredictionAndScore,
+    } of usersWithPredictionAndExpectedScoreHeat1) {
+      const predictionAndScoreAfter =
+        await getHeatPredictionAndScoreFromDatabase(
+          "competitions/heat1",
+          user.id
+        );
+      expect(predictionAndScoreAfter).to.deep.equal(
+        expectedHeatPredictionAndScore
+      );
+    }
+
+    for (const {
+      user,
+      expectedTotalScore,
+      expectedHeatPredictionAndScore,
+    } of usersWithPredictionAndExpectedScore) {
+      const userAfter = await getUserFromDatabase(user.id);
+      expect(userAfter?.totalScore).to.equal(expectedTotalScore);
+
+      const predictionAndScoreAfter =
+        await getHeatPredictionAndScoreFromDatabase(competitionPath, user.id);
+      expect(predictionAndScoreAfter).to.deep.equal(
+        expectedHeatPredictionAndScore
+      );
+    }
+  });
+});
+
+async function resetEntireDatabase() {
+  const users = [
+    "user1",
+    "user2",
+    "user3",
+    "user4",
+    "user5",
+    "user6",
+    "user7",
+    "user8",
+    "user9",
+    "user10",
+    "user11",
+  ];
+
+  await Promise.all(
+    users.map(async (user) => {
+      await resetDatabase(user, "heat1");
+      await resetDatabase(user, "heat2");
+      await resetDatabase(user, "heat3");
+      await resetDatabase(user, "heat4");
+      await resetDatabase(user, "heat5");
+      await resetDatabase(user, "semifinal");
+      await resetDatabase(user, "final");
+    })
+  );
+}
 
 async function resetDatabase(userId: string, competition: string) {
   await db.doc(`users/${userId}`).delete();
