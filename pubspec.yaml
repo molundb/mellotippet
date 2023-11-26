@@ -59,6 +59,7 @@ dependencies:
   logger: ^2.0.2+1
   collection: ^1.17.0
   package_info_plus: ^4.2.0
+  freezed_annotation: ^2.4.1
 
 dev_dependencies:
   flutter_test:
@@ -70,7 +71,8 @@ dev_dependencies:
   mockito: ^5.4.2
   fake_cloud_firestore: ^2.4.1+1
   firebase_auth_mocks: ^0.13.0
-  build_runner: ^2.4.5
+  build_runner: ^2.4.6
+  freezed: ^2.4.5
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
