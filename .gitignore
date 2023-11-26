@@ -147,6 +147,7 @@ lib/firebase_environment.dart
 # Generated
 ## Freezed
 **.freezed.dart
+**.g.dart
 
 # Other
 .fvm/flutter_sdk

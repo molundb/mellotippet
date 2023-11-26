@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mellotippet/common/models/prediction/prediction_and_score.dart';
 import 'package:mellotippet/common/models/prediction/prediction_model.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:flutter/foundation.dart';
 
 part 'heat_prediction_model.freezed.dart';
+
+part 'heat_prediction_model.g.dart';
 
 @freezed
 class HeatPredictionModel extends PredictionModel with _$HeatPredictionModel {
@@ -16,8 +18,8 @@ class HeatPredictionModel extends PredictionModel with _$HeatPredictionModel {
     required PredictionAndScore fifthPlace,
   }) = _HeatPredictionModel;
 
-  // factory HeatPredictionModel.fromJson(Map<String, Object?> json)
-  // => _$HeatPredictionModelFromJson(json);
+  factory HeatPredictionModel.fromJson(Map<String, Object?> json) =>
+      _$HeatPredictionModelFromJson(json);
 
   factory HeatPredictionModel.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
@@ -28,14 +30,14 @@ class HeatPredictionModel extends PredictionModel with _$HeatPredictionModel {
     return HeatPredictionModel.fromJson(data ?? {});
   }
 
-  factory HeatPredictionModel.fromJson(Map<String, dynamic> json) =>
-      HeatPredictionModel(
-        finalist1: PredictionAndScore.fromJson(json['finalist1']),
-        finalist2: PredictionAndScore.fromJson(json['finalist2']),
-        semifinalist1: PredictionAndScore.fromJson(json['semifinalist1']),
-        semifinalist2: PredictionAndScore.fromJson(json['semifinalist2']),
-        fifthPlace: PredictionAndScore.fromJson(json['fifthPlace']),
-      );
+// factory HeatPredictionModel.fromJson(Map<String, dynamic> json) =>
+//     HeatPredictionModel(
+//       finalist1: PredictionAndScore.fromJson(json['finalist1']),
+//       finalist2: PredictionAndScore.fromJson(json['finalist2']),
+//       semifinalist1: PredictionAndScore.fromJson(json['semifinalist1']),
+//       semifinalist2: PredictionAndScore.fromJson(json['semifinalist2']),
+//       fifthPlace: PredictionAndScore.fromJson(json['fifthPlace']),
+//     );
 
 // HeatPredictionModel copyWith({
 //   int? finalist1,
