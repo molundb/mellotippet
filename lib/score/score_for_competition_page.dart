@@ -51,7 +51,7 @@ class _ScoreForCompetitionPageState
       case CompetitionType.heat:
         result = competition.result as HeatResultModel;
         prediction = widget.prediction as HeatPredictionModel?;
-        predictionMap = {}; //(prediction as HeatPredictionModel?)?.toMap();
+        predictionMap = (prediction as HeatPredictionModel?)?.toMap();
         break;
     }
 
@@ -85,17 +85,19 @@ class _ScoreForCompetitionPageState
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: competition.type == CompetitionType.theFinal ? const [
-                            Text('          '),
-                            Text('Result'),
-                            Text('Predix'),
-                            Text('Points'),
-                          ] : const [
-                            Text('                    '),
-                            Text('Result'),
-                            Text('Predix'),
-                            Text('Points'),
-                          ],
+                          children: competition.type == CompetitionType.theFinal
+                              ? const [
+                                  Text('          '),
+                                  Text('Result'),
+                                  Text('Predix'),
+                                  Text('Points'),
+                                ]
+                              : const [
+                                  Text('                    '),
+                                  Text('Result'),
+                                  Text('Predix'),
+                                  Text('Points'),
+                                ],
                         ),
                         if (competition.type == CompetitionType.theFinal) ...[
                           _buildRow(
@@ -451,14 +453,14 @@ class _ScoreForCompetitionPageState
   ) {
     var data = prediction == null ? '-' : '$prediction${toOrdinal(prediction)}';
     return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(position),
-          Text(result.toString()),
-          Text(data),
-          Text('${score}p'),
-        ],
-      );
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(position),
+        Text(result.toString()),
+        Text(data),
+        Text('${score}p'),
+      ],
+    );
   }
 
   int _getHeatSemifinalistScore(
@@ -526,19 +528,24 @@ class _ScoreForCompetitionPageState
   }
 
   String toOrdinal(int number) {
-    if(!(number >= 1 && number <= 12)) {//here you change the range
+    if (!(number >= 1 && number <= 12)) {
+      //here you change the range
       throw Exception('Invalid number');
     }
 
-    if(number >= 11 && number <= 13) {
+    if (number >= 11 && number <= 13) {
       return 'th';
     }
 
-    switch(number % 10) {
-      case 1: return 'st';
-      case 2: return 'nd';
-      case 3: return 'rd';
-      default: return 'th';
+    switch (number % 10) {
+      case 1:
+        return 'st';
+      case 2:
+        return 'nd';
+      case 3:
+        return 'rd';
+      default:
+        return 'th';
     }
   }
 }

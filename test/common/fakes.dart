@@ -1,11 +1,12 @@
 import 'package:mellotippet/common/models/all_models.dart';
+import 'package:mellotippet/common/models/prediction/prediction_and_score.dart';
 
 final fakeHeatPrediction = HeatPredictionModel(
-  finalist1: 1,
-  finalist2: 2,
-  semifinalist1: 3,
-  semifinalist2: 4,
-  fifthPlace: 5,
+  finalist1: PredictionAndScore(prediction: 1, score: 0),
+  finalist2: PredictionAndScore(prediction: 2, score: 0),
+  semifinalist1: PredictionAndScore(prediction: 3, score: 0),
+  semifinalist2: PredictionAndScore(prediction: 4, score: 0),
+  fifthPlace: PredictionAndScore(prediction: 5, score: 0),
 );
 
 final fakeSemifinalPrediction = SemifinalPredictionModel(

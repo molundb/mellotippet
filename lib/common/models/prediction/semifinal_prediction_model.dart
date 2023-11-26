@@ -15,12 +15,17 @@ class SemifinalPredictionModel extends PredictionModel {
   int? finalist4;
 
   factory SemifinalPredictionModel.fromFirestore(
-      DocumentSnapshot<Map<String, dynamic>> snapshot,
-      SnapshotOptions? options,
-      ) {
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
     final data = snapshot.data();
 
     return SemifinalPredictionModel.fromJson(data ?? {});
+  }
+
+  static Map<String, dynamic> toFirestore(
+      PredictionModel model, SetOptions? options) {
+    return {};
   }
 
   factory SemifinalPredictionModel.fromJson(Map<String, dynamic> json) =>

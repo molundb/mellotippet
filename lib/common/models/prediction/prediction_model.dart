@@ -8,9 +8,5 @@ abstract class PredictionModel {
     SnapshotOptions? options,
   );
 
-  Map<String, dynamic> toFirestore() {
-    return {};
-  }
-
   PredictionModel.fromJson(Map<String, dynamic> json);
 }

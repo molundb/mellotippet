@@ -55,6 +55,11 @@ class FinalPredictionModel extends PredictionModel {
         position12: json['position12'] ?? -1,
       );
 
+  static Map<String, dynamic> toFirestore(
+      PredictionModel model, SetOptions? options) {
+    return {};
+  }
+
   FinalPredictionModel copyWith({
     int? position1,
     int? position2,

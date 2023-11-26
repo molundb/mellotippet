@@ -27,44 +27,20 @@ class HeatPredictionModel extends PredictionModel with _$HeatPredictionModel {
   ) =>
       HeatPredictionModel.fromJson(snapshot.data() as Map<String, dynamic>);
 
-// static Map<String, Object?> toFirestore(
-//         HeatPredictionModel model, SetOptions? options) =>
-//     model.toJson();
-
-// factory HeatPredictionModel.fromJson(Map<String, dynamic> json) =>
-//     HeatPredictionModel(
-//       finalist1: PredictionAndScore.fromJson(json['finalist1']),
-//       finalist2: PredictionAndScore.fromJson(json['finalist2']),
-//       semifinalist1: PredictionAndScore.fromJson(json['semifinalist1']),
-//       semifinalist2: PredictionAndScore.fromJson(json['semifinalist2']),
-//       fifthPlace: PredictionAndScore.fromJson(json['fifthPlace']),
-//     );
-
-// HeatPredictionModel copyWith({
-//   int? finalist1,
-//   int? finalist2,
-//   int? semifinalist1,
-//   int? semifinalist2,
-//   int? fifthPlace,
-// }) {
-//   return HeatPredictionModel(
-//     finalist1: finalist1 ?? this.finalist1,
-//     finalist2: finalist2 ?? this.finalist2,
-//     semifinalist1: semifinalist1 ?? this.semifinalist1,
-//     semifinalist2: semifinalist2 ?? this.semifinalist2,
-//     fifthPlace: fifthPlace ?? this.fifthPlace,
-//   );
-// }
+  static Map<String, dynamic> toFirestore(
+      PredictionModel model, SetOptions? options) {
+    return {};
+  }
 }
 
-// extension HeatPredictionToMap on HeatPredictionModel {
-//   Map<int, String> toMap() {
-//     return <int, String>{
-//       finalist1!: 'F',
-//       finalist2!: 'F',
-//       semifinalist1!: 'SF',
-//       semifinalist2!: 'SF',
-//       fifthPlace!: '5th',
-//     };
-//   }
-// }
+extension HeatPredictionToMap on HeatPredictionModel {
+  Map<int, String> toMap() {
+    return <int, String>{
+      finalist1.prediction: 'F',
+      finalist2.prediction: 'F',
+      semifinalist1.prediction: 'SF',
+      semifinalist2.prediction: 'SF',
+      fifthPlace.prediction: '5th',
+    };
+  }
+}

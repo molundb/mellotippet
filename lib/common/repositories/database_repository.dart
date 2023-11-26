@@ -130,8 +130,7 @@ class DatabaseRepository {
               .collection('predictionsAndScores')
               .withConverter(
                 fromFirestore: HeatPredictionModel.fromFirestore,
-                toFirestore: (HeatPredictionModel model, _) =>
-                    model.toFirestore(),
+                toFirestore: HeatPredictionModel.toFirestore,
               )
               .get())
           .docs
@@ -145,10 +144,8 @@ class DatabaseRepository {
               .doc(competitionId)
               .collection('predictionsAndScores')
               .withConverter(
-                fromFirestore: SemifinalPredictionModel.fromFirestore,
-                toFirestore:
-                    (SemifinalPredictionModel semifinalPredictionModel, _) =>
-                        semifinalPredictionModel.toFirestore(),
+        fromFirestore: SemifinalPredictionModel.fromFirestore,
+                toFirestore: SemifinalPredictionModel.toFirestore,
               )
               .get())
           .docs
@@ -162,9 +159,8 @@ class DatabaseRepository {
               .doc(competitionId)
               .collection('predictionsAndScores')
               .withConverter(
-                fromFirestore: FinalPredictionModel.fromFirestore,
-                toFirestore: (FinalPredictionModel finalPredictionModel, _) =>
-                    finalPredictionModel.toFirestore(),
+        fromFirestore: FinalPredictionModel.fromFirestore,
+                toFirestore: FinalPredictionModel.toFirestore,
               )
               .get())
           .docs
@@ -180,9 +176,8 @@ class DatabaseRepository {
               .collection('predictionsAndScores')
               .doc(userId)
               .withConverter(
-                fromFirestore: HeatPredictionModel.fromFirestore,
-                toFirestore: (HeatPredictionModel model, _) =>
-                    model.toFirestore(),
+        fromFirestore: HeatPredictionModel.fromFirestore,
+                toFirestore: HeatPredictionModel.toFirestore,
               )
               .get())
           .data();
@@ -196,10 +191,8 @@ class DatabaseRepository {
               .collection('predictionsAndScores')
               .doc(userId)
               .withConverter(
-                fromFirestore: SemifinalPredictionModel.fromFirestore,
-                toFirestore:
-                    (SemifinalPredictionModel semifinalPredictionModel, _) =>
-                        semifinalPredictionModel.toFirestore(),
+        fromFirestore: SemifinalPredictionModel.fromFirestore,
+                toFirestore: SemifinalPredictionModel.toFirestore,
               )
               .get())
           .data();
@@ -213,9 +206,8 @@ class DatabaseRepository {
               .collection('predictionsAndScores')
               .doc(userId)
               .withConverter(
-                fromFirestore: FinalPredictionModel.fromFirestore,
-                toFirestore: (FinalPredictionModel? finalPredictionModel, _) =>
-                    finalPredictionModel?.toFirestore() ?? {},
+        fromFirestore: FinalPredictionModel.fromFirestore,
+                toFirestore: FinalPredictionModel.toFirestore,
               )
               .get())
           .data();
