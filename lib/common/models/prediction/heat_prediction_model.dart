@@ -1,21 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mellotippet/common/models/prediction/prediction_and_score.dart';
 import 'package:mellotippet/common/models/prediction/prediction_model.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-class HeatPredictionModel extends PredictionModel {
-  HeatPredictionModel({
-    required this.finalist1,
-    required this.finalist2,
-    required this.semifinalist1,
-    required this.semifinalist2,
-    required this.fifthPlace,
-  });
+part 'heat_prediction_model.freezed.dart';
 
-  PredictionAndScore finalist1;
-  PredictionAndScore finalist2;
-  PredictionAndScore semifinalist1;
-  PredictionAndScore semifinalist2;
-  PredictionAndScore fifthPlace;
+@freezed
+class HeatPredictionModel extends PredictionModel with _$HeatPredictionModel {
+  const factory HeatPredictionModel({
+    required PredictionAndScore finalist1,
+    required PredictionAndScore finalist2,
+    required PredictionAndScore semifinalist1,
+    required PredictionAndScore semifinalist2,
+    required PredictionAndScore fifthPlace,
+  }) = _HeatPredictionModel;
+
+  // factory HeatPredictionModel.fromJson(Map<String, Object?> json)
+  // => _$HeatPredictionModelFromJson(json);
 
   factory HeatPredictionModel.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,

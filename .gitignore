@@ -144,6 +144,10 @@ lib/firebase_environment.dart
 **google-services.json
 **GoogleService-Info.plist
 
+# Generated
+## Freezed
+**.freezed.dart
+
 # Other
 .fvm/flutter_sdk
 **.mocks.dart
