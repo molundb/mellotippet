@@ -9,8 +9,9 @@ part 'semifinal_prediction_model.freezed.dart';
 part 'semifinal_prediction_model.g.dart';
 
 @freezed
-class SemifinalPredictionModel extends PredictionModel
-    with _$SemifinalPredictionModel {
+class SemifinalPredictionModel
+    with _$SemifinalPredictionModel
+    implements PredictionModel {
   const factory SemifinalPredictionModel({
     required PredictionAndScore finalist1,
     required PredictionAndScore finalist2,

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mellotippet/common/models/prediction/prediction_model.dart';
 
-class HeatResultModel extends PredictionModel {
+class HeatResultModel implements PredictionModel {
   HeatResultModel({
     required this.finalist1,
     required this.finalist2,

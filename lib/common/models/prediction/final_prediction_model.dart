@@ -9,7 +9,9 @@ part 'final_prediction_model.freezed.dart';
 part 'final_prediction_model.g.dart';
 
 @freezed
-class FinalPredictionModel extends PredictionModel with _$FinalPredictionModel {
+class FinalPredictionModel
+    with _$FinalPredictionModel
+    implements PredictionModel {
   const factory FinalPredictionModel({
     required PredictionAndScore placement1,
     required PredictionAndScore placement2,

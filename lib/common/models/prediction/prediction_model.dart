@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-abstract class PredictionModel {
+interface class PredictionModel {
   PredictionModel();
 
   PredictionModel.fromFirestore(

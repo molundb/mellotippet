@@ -9,7 +9,9 @@ part 'heat_prediction_model.freezed.dart';
 part 'heat_prediction_model.g.dart';
 
 @freezed
-class HeatPredictionModel extends PredictionModel with _$HeatPredictionModel {
+class HeatPredictionModel
+    with _$HeatPredictionModel
+    implements PredictionModel {
   const factory HeatPredictionModel({
     required PredictionAndScore finalist1,
     required PredictionAndScore finalist2,
