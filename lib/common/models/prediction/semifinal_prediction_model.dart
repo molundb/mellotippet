@@ -1,63 +1,41 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:mellotippet/common/models/prediction/prediction_and_score.dart';
 import 'package:mellotippet/common/models/prediction/prediction_model.dart';
+import 'package:flutter/foundation.dart';
 
-class SemifinalPredictionModel extends PredictionModel {
-  SemifinalPredictionModel({
-    this.finalist1,
-    this.finalist2,
-    this.finalist3,
-    this.finalist4,
-  });
+part 'semifinal_prediction_model.freezed.dart';
 
-  int? finalist1;
-  int? finalist2;
-  int? finalist3;
-  int? finalist4;
+part 'semifinal_prediction_model.g.dart';
+
+@freezed
+class SemifinalPredictionModel extends PredictionModel
+    with _$SemifinalPredictionModel {
+  const factory SemifinalPredictionModel({
+    required PredictionAndScore finalist1,
+    required PredictionAndScore finalist2,
+  }) = _SemifinalPredictionModel;
+
+  factory SemifinalPredictionModel.fromJson(Map<String, Object?> json) =>
+      _$SemifinalPredictionModelFromJson(json);
 
   factory SemifinalPredictionModel.fromFirestore(
-    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    DocumentSnapshot snapshot,
     SnapshotOptions? options,
-  ) {
-    final data = snapshot.data();
-
-    return SemifinalPredictionModel.fromJson(data ?? {});
-  }
+  ) =>
+      SemifinalPredictionModel.fromJson(
+          snapshot.data() as Map<String, dynamic>);
 
   static Map<String, dynamic> toFirestore(
-      PredictionModel model, SetOptions? options) {
-    return {};
-  }
-
-  factory SemifinalPredictionModel.fromJson(Map<String, dynamic> json) =>
-      SemifinalPredictionModel(
-        finalist1: json['finalist1'] ?? -1,
-        finalist2: json['finalist2'] ?? -1,
-        finalist3: json['finalist3'] ?? -1,
-        finalist4: json['finalist4'] ?? -1,
-      );
-
-  SemifinalPredictionModel copyWith({
-    int? finalist1,
-    int? finalist2,
-    int? finalist3,
-    int? finalist4,
-  }) {
-    return SemifinalPredictionModel(
-      finalist1: finalist1 ?? this.finalist1,
-      finalist2: finalist2 ?? this.finalist2,
-      finalist3: finalist3 ?? this.finalist3,
-      finalist4: finalist4 ?? this.finalist4,
-    );
-  }
+          PredictionModel model, SetOptions? options) =>
+      {};
 }
 
 extension SemifinalPredictionToMap on SemifinalPredictionModel {
   Map<int, String> toMap() {
     return <int, String>{
-      finalist1!: 'F',
-      finalist2!: 'F',
-      finalist3!: 'F',
-      finalist4!: 'F',
+      finalist1.prediction: 'F',
+      finalist2.prediction: 'F',
     };
   }
 }

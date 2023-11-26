@@ -90,16 +90,14 @@ int _calculateSemifinalScore(
 ) {
   var score = 0;
   final predictions = [
-    prediction.finalist1,
-    prediction.finalist2,
-    prediction.finalist3,
-    prediction.finalist4,
+    prediction.finalist1.prediction,
+    prediction.finalist2.prediction,
   ];
 
-  score += calculateSemifinalFinalistScore(result.finalist1, predictions);
-  score += calculateSemifinalFinalistScore(result.finalist2, predictions);
-  score += calculateSemifinalFinalistScore(result.finalist3, predictions);
-  score += calculateSemifinalFinalistScore(result.finalist4, predictions);
+  score +=
+      calculateSemifinalFinalistScore(result.finalist1.prediction, predictions);
+  score +=
+      calculateSemifinalFinalistScore(result.finalist2.prediction, predictions);
 
   return score;
 }
@@ -122,24 +120,24 @@ int _calculateFinalScore(
   var score = 0;
 
   final from1to4Result = [
-    result.position1!,
-    result.position2!,
-    result.position3!,
-    result.position4!,
+    result.placement1.prediction,
+    result.placement2.prediction,
+    result.placement3.prediction,
+    result.placement4.prediction,
   ];
 
   final from5to8Result = [
-    result.position5!,
-    result.position6!,
-    result.position7!,
-    result.position8!,
+    result.placement5.prediction,
+    result.placement6.prediction,
+    result.placement7.prediction,
+    result.placement8.prediction,
   ];
 
   final from9to12Result = [
-    result.position9!,
-    result.position10!,
-    result.position11!,
-    result.position12!,
+    result.placement9.prediction,
+    result.placement10.prediction,
+    result.placement11.prediction,
+    result.placement12.prediction,
   ];
 
   final predictions = prediction.toList();

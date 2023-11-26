@@ -497,10 +497,8 @@ class _ScoreForCompetitionPageState
     }
 
     final predictions = [
-      prediction.finalist1,
-      prediction.finalist2,
-      prediction.finalist3,
-      prediction.finalist4,
+      prediction.finalist1.prediction,
+      prediction.finalist2.prediction,
     ];
 
     return calculateSemifinalFinalistScore(finalist, predictions);

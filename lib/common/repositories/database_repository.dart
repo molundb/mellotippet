@@ -36,8 +36,6 @@ class DatabaseRepository {
         await predictionsForCompetition(competitionId).doc(uid).set({
           "finalist1": prediction.finalist1,
           "finalist2": prediction.finalist2,
-          "finalist3": prediction.finalist3,
-          "finalist4": prediction.finalist4,
         });
 
         return true;
@@ -57,18 +55,18 @@ class DatabaseRepository {
 
       if (uid != null) {
         await predictionsForCompetition(competitionId).doc(uid).set({
-          "position1": prediction.position1,
-          "position2": prediction.position2,
-          "position3": prediction.position3,
-          "position4": prediction.position4,
-          "position5": prediction.position5,
-          "position6": prediction.position6,
-          "position7": prediction.position7,
-          "position8": prediction.position8,
-          "position9": prediction.position9,
-          "position10": prediction.position10,
-          "position11": prediction.position11,
-          "position12": prediction.position12,
+          "placement1": prediction.placement1,
+          "placement2": prediction.placement2,
+          "placement3": prediction.placement3,
+          "placement4": prediction.placement4,
+          "placement5": prediction.placement5,
+          "placement6": prediction.placement6,
+          "placement7": prediction.placement7,
+          "placement8": prediction.placement8,
+          "placement9": prediction.placement9,
+          "placement10": prediction.placement10,
+          "placement11": prediction.placement11,
+          "placement12": prediction.placement12,
         });
 
         return true;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/common/models/all_models.dart';
+import 'package:mellotippet/common/models/prediction/prediction_and_score.dart';
 import 'package:mellotippet/common/repositories/repositories.dart';
 import 'package:mellotippet/service_location/get_it.dart';
 
@@ -9,18 +10,20 @@ class FinalPredictionController
   FinalPredictionController({
     required this.databaseRepository,
     required this.featureFlagRepository,
-    FinalPredictionControllerState? state,
-  }) : super(state ?? FinalPredictionControllerState.withDefaults());
+    required FinalPredictionControllerState state,
+  }) : super(state);
 
   final DatabaseRepository databaseRepository;
   final FeatureFlagRepository featureFlagRepository;
 
-  static final provider =
-      StateNotifierProvider<FinalPredictionController, FinalPredictionControllerState>(
-          (ref) => FinalPredictionController(
-                databaseRepository: getIt.get<DatabaseRepository>(),
-                featureFlagRepository: getIt.get<FeatureFlagRepository>(),
-              ));
+  static final provider = StateNotifierProvider<FinalPredictionController,
+      FinalPredictionControllerState>(
+    (ref) => FinalPredictionController(
+      databaseRepository: getIt.get<DatabaseRepository>(),
+      featureFlagRepository: getIt.get<FeatureFlagRepository>(),
+      state: const FinalPredictionControllerState(loading: true),
+    ),
+  );
 
   Future<void> getUsernameAndCurrentCompetition() async {
     state = state.copyWith(loading: true);
@@ -33,94 +36,113 @@ class FinalPredictionController
     );
   }
 
-  void setPosition1(String? value) {
+  void setPlacement1(String? value) {
     if (value == null || value.isEmpty) return;
 
     state = state.copyWith(
-        prediction: state.prediction.copyWith(position1: int.parse(value)));
+        prediction: state.prediction?.copyWith(
+            placement1: PredictionAndScore(prediction: int.parse(value))));
   }
 
-  void setPosition2(String? value) {
+  void setPlacement2(String? value) {
     if (value == null || value.isEmpty) return;
 
     state = state.copyWith(
-        prediction: state.prediction.copyWith(position2: int.parse(value)));
+        prediction: state.prediction?.copyWith(
+            placement2: PredictionAndScore(prediction: int.parse(value))));
   }
 
-  void setPosition3(String? value) {
+  void setPlacement3(String? value) {
     if (value == null || value.isEmpty) return;
 
     state = state.copyWith(
-        prediction: state.prediction.copyWith(position3: int.parse(value)));
+        prediction: state.prediction?.copyWith(
+            placement3: PredictionAndScore(prediction: int.parse(value))));
   }
 
-  void setPosition4(String? value) {
+  void setPlacement4(String? value) {
     if (value == null || value.isEmpty) return;
 
     state = state.copyWith(
-        prediction: state.prediction.copyWith(position4: int.parse(value)));
+        prediction: state.prediction?.copyWith(
+            placement4: PredictionAndScore(prediction: int.parse(value))));
   }
 
-  void setPosition5(String? value) {
+  void setPlacement5(String? value) {
     if (value == null || value.isEmpty) return;
 
     state = state.copyWith(
-        prediction: state.prediction.copyWith(position5: int.parse(value)));
+        prediction: state.prediction?.copyWith(
+            placement5: PredictionAndScore(prediction: int.parse(value))));
   }
 
-  void setPosition6(String? value) {
+  void setPlacement6(String? value) {
     if (value == null || value.isEmpty) return;
 
     state = state.copyWith(
-        prediction: state.prediction.copyWith(position6: int.parse(value)));
+        prediction: state.prediction?.copyWith(
+            placement6: PredictionAndScore(prediction: int.parse(value))));
   }
 
-  void setPosition7(String? value) {
+  void setPlacement7(String? value) {
     if (value == null || value.isEmpty) return;
 
     state = state.copyWith(
-        prediction: state.prediction.copyWith(position7: int.parse(value)));
+        prediction: state.prediction?.copyWith(
+            placement7: PredictionAndScore(prediction: int.parse(value))));
   }
 
-  void setPosition8(String? value) {
+  void setPlacement8(String? value) {
     if (value == null || value.isEmpty) return;
 
     state = state.copyWith(
-        prediction: state.prediction.copyWith(position8: int.parse(value)));
+        prediction: state.prediction?.copyWith(
+            placement8: PredictionAndScore(prediction: int.parse(value))));
   }
 
-  void setPosition9(String? value) {
+  void setPlacement9(String? value) {
     if (value == null || value.isEmpty) return;
 
     state = state.copyWith(
-        prediction: state.prediction.copyWith(position9: int.parse(value)));
+        prediction: state.prediction?.copyWith(
+            placement9: PredictionAndScore(prediction: int.parse(value))));
   }
 
-  void setPosition10(String? value) {
+  void setPlacement10(String? value) {
     if (value == null || value.isEmpty) return;
 
     state = state.copyWith(
-        prediction: state.prediction.copyWith(position10: int.parse(value)));
+        prediction: state.prediction?.copyWith(
+            placement10: PredictionAndScore(prediction: int.parse(value))));
   }
 
-  void setPosition11(String? value) {
+  void setPlacement11(String? value) {
     if (value == null || value.isEmpty) return;
 
     state = state.copyWith(
-        prediction: state.prediction.copyWith(position11: int.parse(value)));
+        prediction: state.prediction?.copyWith(
+            placement11: PredictionAndScore(prediction: int.parse(value))));
   }
 
-  void setPosition12(String? value) {
+  void setPlacement12(String? value) {
     if (value == null || value.isEmpty) return;
 
     state = state.copyWith(
-        prediction: state.prediction.copyWith(position12: int.parse(value)));
+        prediction: state.prediction?.copyWith(
+            placement12: PredictionAndScore(prediction: int.parse(value))));
   }
 
-  Future<bool> submitPrediction() => databaseRepository.uploadFinalPrediction(
-        state.currentCompetition,
-        state.prediction,
-      );
+  Future<bool> submitPrediction() {
+    var prediction = state.prediction;
+    if (prediction == null) {
+      return Future.value(false);
+    }
+
+    return databaseRepository.uploadFinalPrediction(
+      state.currentCompetition,
+      prediction,
+    );
+  }
 
   String? validatePredictionInput(String? prediction) {
     if (prediction == null || prediction.isEmpty) {
@@ -145,21 +167,26 @@ class FinalPredictionController
   bool _isNumeric(String s) => int.tryParse(s) != null;
 
   bool duplicatePredictions() {
+    var prediction = state.prediction;
+    if (prediction == null) {
+      return false;
+    }
+
     var duplicate = false;
 
     final List<int> predictions = [
-      state.prediction.position1!,
-      state.prediction.position2!,
-      state.prediction.position3!,
-      state.prediction.position4!,
-      state.prediction.position5!,
-      state.prediction.position6!,
-      state.prediction.position7!,
-      state.prediction.position8!,
-      state.prediction.position9!,
-      state.prediction.position10!,
-      state.prediction.position11!,
-      state.prediction.position12!,
+      prediction.placement1.prediction,
+      prediction.placement2.prediction,
+      prediction.placement3.prediction,
+      prediction.placement4.prediction,
+      prediction.placement5.prediction,
+      prediction.placement6.prediction,
+      prediction.placement7.prediction,
+      prediction.placement8.prediction,
+      prediction.placement9.prediction,
+      prediction.placement10.prediction,
+      prediction.placement11.prediction,
+      prediction.placement12.prediction,
     ];
 
     List<int> tempPredictions = [];
@@ -182,13 +209,13 @@ class FinalPredictionControllerState {
     this.loading = false,
     this.username = "",
     this.currentCompetition = "",
-    required this.prediction,
+    this.prediction,
   });
 
   final bool loading;
   final String username;
   final String currentCompetition;
-  final FinalPredictionModel prediction;
+  final FinalPredictionModel? prediction;
 
   FinalPredictionControllerState copyWith({
     bool? loading,
@@ -203,8 +230,4 @@ class FinalPredictionControllerState {
       prediction: prediction ?? this.prediction,
     );
   }
-
-  factory FinalPredictionControllerState.withDefaults() => FinalPredictionControllerState(
-        prediction: FinalPredictionModel(),
-      );
 }

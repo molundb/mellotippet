@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/common/models/all_models.dart';
+import 'package:mellotippet/common/models/prediction/prediction_and_score.dart';
 import 'package:mellotippet/common/repositories/repositories.dart';
 import 'package:mellotippet/service_location/get_it.dart';
 
@@ -9,18 +10,20 @@ class SemifinalPredictionController
   SemifinalPredictionController({
     required this.databaseRepository,
     required this.featureFlagRepository,
-    SemifinalPredictionControllerState? state,
-  }) : super(state ?? SemifinalPredictionControllerState.withDefaults());
+    required SemifinalPredictionControllerState state,
+  }) : super(state);
 
   final DatabaseRepository databaseRepository;
   final FeatureFlagRepository featureFlagRepository;
 
-  static final provider =
-      StateNotifierProvider<SemifinalPredictionController, SemifinalPredictionControllerState>(
-          (ref) => SemifinalPredictionController(
-                databaseRepository: getIt.get<DatabaseRepository>(),
-                featureFlagRepository: getIt.get<FeatureFlagRepository>(),
-              ));
+  static final provider = StateNotifierProvider<SemifinalPredictionController,
+      SemifinalPredictionControllerState>(
+    (ref) => SemifinalPredictionController(
+      databaseRepository: getIt.get<DatabaseRepository>(),
+      featureFlagRepository: getIt.get<FeatureFlagRepository>(),
+      state: const SemifinalPredictionControllerState(),
+    ),
+  );
 
   Future<void> getUsernameAndCurrentCompetition() async {
     state = state.copyWith(loading: true);
@@ -37,34 +40,29 @@ class SemifinalPredictionController
     if (value == null || value.isEmpty) return;
 
     state = state.copyWith(
-        prediction: state.prediction.copyWith(finalist1: int.parse(value)));
+        prediction: state.prediction?.copyWith(
+            finalist1: PredictionAndScore(prediction: int.parse(value))));
   }
 
   void setFinalist2(String? value) {
     if (value == null || value.isEmpty) return;
 
     state = state.copyWith(
-        prediction: state.prediction.copyWith(finalist2: int.parse(value)));
+        prediction: state.prediction?.copyWith(
+            finalist2: PredictionAndScore(prediction: int.parse(value))));
   }
 
-  void setFinalist3(String? value) {
-    if (value == null || value.isEmpty) return;
+  Future<bool> submitPrediction() {
+    var prediction = state.prediction;
+    if (prediction == null) {
+      return Future.value(false);
+    }
 
-    state = state.copyWith(
-        prediction: state.prediction.copyWith(finalist3: int.parse(value)));
+    return databaseRepository.uploadSemifinalPrediction(
+      state.currentCompetition,
+      prediction,
+    );
   }
-
-  void setFinalist4(String? value) {
-    if (value == null || value.isEmpty) return;
-
-    state = state.copyWith(
-        prediction: state.prediction.copyWith(finalist4: int.parse(value)));
-  }
-
-  Future<bool> submitPrediction() => databaseRepository.uploadSemifinalPrediction(
-        state.currentCompetition,
-        state.prediction,
-      );
 
   String? validatePredictionInput(String? prediction) {
     if (prediction == null || prediction.isEmpty) {
@@ -89,13 +87,16 @@ class SemifinalPredictionController
   bool _isNumeric(String s) => int.tryParse(s) != null;
 
   bool duplicatePredictions() {
+    var prediction = state.prediction;
+    if (prediction == null) {
+      return false;
+    }
+
     var duplicate = false;
 
     final List<int> predictions = [
-      state.prediction.finalist1!,
-      state.prediction.finalist2!,
-      state.prediction.finalist3!,
-      state.prediction.finalist4!,
+      prediction.finalist1.prediction,
+      prediction.finalist2.prediction,
     ];
 
     List<int> tempPredictions = [];
@@ -118,13 +119,13 @@ class SemifinalPredictionControllerState {
     this.loading = false,
     this.username = "",
     this.currentCompetition = "",
-    required this.prediction,
+    this.prediction,
   });
 
   final bool loading;
   final String username;
   final String currentCompetition;
-  final SemifinalPredictionModel prediction;
+  final SemifinalPredictionModel? prediction;
 
   SemifinalPredictionControllerState copyWith({
     bool? loading,
@@ -139,8 +140,4 @@ class SemifinalPredictionControllerState {
       prediction: prediction ?? this.prediction,
     );
   }
-
-  factory SemifinalPredictionControllerState.withDefaults() => SemifinalPredictionControllerState(
-        prediction: SemifinalPredictionModel(),
-      );
 }

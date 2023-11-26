@@ -28,9 +28,8 @@ class HeatPredictionModel extends PredictionModel with _$HeatPredictionModel {
       HeatPredictionModel.fromJson(snapshot.data() as Map<String, dynamic>);
 
   static Map<String, dynamic> toFirestore(
-      PredictionModel model, SetOptions? options) {
-    return {};
-  }
+          PredictionModel model, SetOptions? options) =>
+      {};
 }
 
 extension HeatPredictionToMap on HeatPredictionModel {

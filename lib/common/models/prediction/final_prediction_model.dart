@@ -1,111 +1,59 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:mellotippet/common/models/prediction/prediction_and_score.dart';
 import 'package:mellotippet/common/models/prediction/prediction_model.dart';
+import 'package:flutter/foundation.dart';
 
-class FinalPredictionModel extends PredictionModel {
-  FinalPredictionModel({
-    this.position1,
-    this.position2,
-    this.position3,
-    this.position4,
-    this.position5,
-    this.position6,
-    this.position7,
-    this.position8,
-    this.position9,
-    this.position10,
-    this.position11,
-    this.position12,
-  });
+part 'final_prediction_model.freezed.dart';
 
-  int? position1;
-  int? position2;
-  int? position3;
-  int? position4;
-  int? position5;
-  int? position6;
-  int? position7;
-  int? position8;
-  int? position9;
-  int? position10;
-  int? position11;
-  int? position12;
+part 'final_prediction_model.g.dart';
+
+@freezed
+class FinalPredictionModel extends PredictionModel with _$FinalPredictionModel {
+  const factory FinalPredictionModel({
+    required PredictionAndScore placement1,
+    required PredictionAndScore placement2,
+    required PredictionAndScore placement3,
+    required PredictionAndScore placement4,
+    required PredictionAndScore placement5,
+    required PredictionAndScore placement6,
+    required PredictionAndScore placement7,
+    required PredictionAndScore placement8,
+    required PredictionAndScore placement9,
+    required PredictionAndScore placement10,
+    required PredictionAndScore placement11,
+    required PredictionAndScore placement12,
+  }) = _FinalPredictionModel;
+
+  factory FinalPredictionModel.fromJson(Map<String, Object?> json) =>
+      _$FinalPredictionModelFromJson(json);
 
   factory FinalPredictionModel.fromFirestore(
-    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    DocumentSnapshot snapshot,
     SnapshotOptions? options,
-  ) {
-    final data = snapshot.data();
-
-    return FinalPredictionModel.fromJson(data ?? {});
-  }
-
-  factory FinalPredictionModel.fromJson(Map<String, dynamic> json) =>
-      FinalPredictionModel(
-        position1: json['position1'] ?? -1,
-        position2: json['position2'] ?? -1,
-        position3: json['position3'] ?? -1,
-        position4: json['position4'] ?? -1,
-        position5: json['position5'] ?? -1,
-        position6: json['position6'] ?? -1,
-        position7: json['position7'] ?? -1,
-        position8: json['position8'] ?? -1,
-        position9: json['position9'] ?? -1,
-        position10: json['position10'] ?? -1,
-        position11: json['position11'] ?? -1,
-        position12: json['position12'] ?? -1,
-      );
+  ) =>
+      FinalPredictionModel.fromJson(snapshot.data() as Map<String, dynamic>);
 
   static Map<String, dynamic> toFirestore(
-      PredictionModel model, SetOptions? options) {
-    return {};
-  }
-
-  FinalPredictionModel copyWith({
-    int? position1,
-    int? position2,
-    int? position3,
-    int? position4,
-    int? position5,
-    int? position6,
-    int? position7,
-    int? position8,
-    int? position9,
-    int? position10,
-    int? position11,
-    int? position12,
-  }) {
-    return FinalPredictionModel(
-      position1: position1 ?? this.position1,
-      position2: position2 ?? this.position2,
-      position3: position3 ?? this.position3,
-      position4: position4 ?? this.position4,
-      position5: position5 ?? this.position5,
-      position6: position6 ?? this.position6,
-      position7: position7 ?? this.position7,
-      position8: position8 ?? this.position8,
-      position9: position9 ?? this.position9,
-      position10: position10 ?? this.position10,
-      position11: position11 ?? this.position11,
-      position12: position12 ?? this.position12,
-    );
-  }
+          PredictionModel model, SetOptions? options) =>
+      {};
 }
 
 extension FinalPredictionToMap on FinalPredictionModel {
   Map<int, String> toMap() {
     return <int, String>{
-      position1!: 'F',
-      position2!: 'F',
-      position3!: 'F',
-      position4!: 'F',
-      position5!: 'F',
-      position6!: 'F',
-      position7!: 'F',
-      position8!: 'F',
-      position9!: 'F',
-      position10!: 'F',
-      position11!: 'F',
-      position12!: 'F',
+      placement1.prediction: 'F',
+      placement2.prediction: 'F',
+      placement3.prediction: 'F',
+      placement4.prediction: 'F',
+      placement5.prediction: 'F',
+      placement6.prediction: 'F',
+      placement7.prediction: 'F',
+      placement8.prediction: 'F',
+      placement9.prediction: 'F',
+      placement10.prediction: 'F',
+      placement11.prediction: 'F',
+      placement12.prediction: 'F',
     };
   }
 }
@@ -113,18 +61,18 @@ extension FinalPredictionToMap on FinalPredictionModel {
 extension FinalPredictionToList on FinalPredictionModel {
   List<int> toList() {
     return [
-      position1!,
-      position2!,
-      position3!,
-      position4!,
-      position5!,
-      position6!,
-      position7!,
-      position8!,
-      position9!,
-      position10!,
-      position11!,
-      position12!,
+      placement1.prediction,
+      placement2.prediction,
+      placement3.prediction,
+      placement4.prediction,
+      placement5.prediction,
+      placement6.prediction,
+      placement7.prediction,
+      placement8.prediction,
+      placement9.prediction,
+      placement10.prediction,
+      placement11.prediction,
+      placement12.prediction,
     ];
   }
 }

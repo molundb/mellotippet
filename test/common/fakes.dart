@@ -10,25 +10,23 @@ final fakeHeatPrediction = HeatPredictionModel(
 );
 
 final fakeSemifinalPrediction = SemifinalPredictionModel(
-  finalist1: 1,
-  finalist2: 2,
-  finalist3: 3,
-  finalist4: 4,
+  finalist1: PredictionAndScore(prediction: 1),
+  finalist2: PredictionAndScore(prediction: 2),
 );
 
 final fakeFinalPrediction = FinalPredictionModel(
-  position1: 1,
-  position2: 2,
-  position3: 3,
-  position4: 4,
-  position5: 5,
-  position6: 6,
-  position7: 7,
-  position8: 8,
-  position9: 9,
-  position10: 10,
-  position11: 11,
-  position12: 12,
+  placement1: PredictionAndScore(prediction: 1),
+  placement2: PredictionAndScore(prediction: 2),
+  placement3: PredictionAndScore(prediction: 3),
+  placement4: PredictionAndScore(prediction: 4),
+  placement5: PredictionAndScore(prediction: 5),
+  placement6: PredictionAndScore(prediction: 6),
+  placement7: PredictionAndScore(prediction: 7),
+  placement8: PredictionAndScore(prediction: 8),
+  placement9: PredictionAndScore(prediction: 9),
+  placement10: PredictionAndScore(prediction: 10),
+  placement11: PredictionAndScore(prediction: 11),
+  placement12: PredictionAndScore(prediction: 12),
 );
 
 final fakeUsers = [
@@ -37,32 +35,38 @@ final fakeUsers = [
 ];
 
 final fakeCompetitions = [
-  CompetitionModel(id: "heat1",
+  CompetitionModel(
+    id: "heat1",
     type: CompetitionType.heat,
     lowestScore: 4,
     result: fakeHeatPrediction,
   ),
-  CompetitionModel(id: "heat2",
+  CompetitionModel(
+    id: "heat2",
     type: CompetitionType.heat,
     lowestScore: 2,
     result: fakeHeatPrediction,
   ),
-  CompetitionModel(id: "heat3",
+  CompetitionModel(
+    id: "heat3",
     type: CompetitionType.heat,
     lowestScore: 14,
     result: fakeHeatPrediction,
-  ),CompetitionModel(id: "heat4",
+  ),
+  CompetitionModel(
+    id: "heat4",
     type: CompetitionType.heat,
     lowestScore: 7,
     result: fakeHeatPrediction,
   ),
-
-  CompetitionModel(id: "semifinal",
+  CompetitionModel(
+    id: "semifinal",
     type: CompetitionType.semifinal,
     lowestScore: 5,
     result: fakeSemifinalPrediction,
   ),
-  CompetitionModel(id: "theFinal",
+  CompetitionModel(
+    id: "theFinal",
     type: CompetitionType.theFinal,
     lowestScore: 3,
     result: fakeFinalPrediction,
