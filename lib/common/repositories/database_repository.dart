@@ -15,7 +15,7 @@ class DatabaseRepository {
   CollectionReference<Map<String, dynamic>> get users => db.collection('users');
 
   CollectionReference<Map<String, dynamic>> get predictions =>
-      db.collection('predictions');
+      db.collection('predictionsAndScores');
 
   CollectionReference<Map<String, dynamic>> get competitions =>
       db.collection('competitions');
@@ -23,7 +23,7 @@ class DatabaseRepository {
   CollectionReference<Map<String, dynamic>> predictionsForCompetition(
     String competitionId,
   ) =>
-      competitions.doc(competitionId).collection('predictions');
+      competitions.doc(competitionId).collection('predictionsAndScores');
 
   Future<bool> uploadSemifinalPrediction(
     String competitionId,
@@ -127,7 +127,7 @@ class DatabaseRepository {
   ) async =>
       (await competitions
               .doc(competitionId)
-              .collection('predictions')
+              .collection('predictionsAndScores')
               .withConverter(
                 fromFirestore: HeatPredictionModel.fromFirestore,
                 toFirestore: (HeatPredictionModel heatPredictionModel, _) =>
@@ -143,7 +143,7 @@ class DatabaseRepository {
   ) async =>
       (await competitions
               .doc(competitionId)
-              .collection('predictions')
+              .collection('predictionsAndScores')
               .withConverter(
                 fromFirestore: SemifinalPredictionModel.fromFirestore,
                 toFirestore:
@@ -160,7 +160,7 @@ class DatabaseRepository {
   ) async =>
       (await competitions
               .doc(competitionId)
-              .collection('predictions')
+              .collection('predictionsAndScores')
               .withConverter(
                 fromFirestore: FinalPredictionModel.fromFirestore,
                 toFirestore: (FinalPredictionModel finalPredictionModel, _) =>
@@ -177,7 +177,7 @@ class DatabaseRepository {
   ) async =>
       (await competitions
               .doc(heatId)
-              .collection('predictions')
+              .collection('predictionsAndScores')
               .doc(userId)
               .withConverter(
                 fromFirestore: HeatPredictionModel.fromFirestore,
@@ -193,7 +193,7 @@ class DatabaseRepository {
   ) async =>
       (await competitions
               .doc(heatId)
-              .collection('predictions')
+              .collection('predictionsAndScores')
               .doc(userId)
               .withConverter(
                 fromFirestore: SemifinalPredictionModel.fromFirestore,
@@ -210,7 +210,7 @@ class DatabaseRepository {
   ) async =>
       (await competitions
               .doc(heatId)
-              .collection('predictions')
+              .collection('predictionsAndScores')
               .doc(userId)
               .withConverter(
                 fromFirestore: FinalPredictionModel.fromFirestore,

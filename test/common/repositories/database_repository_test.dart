@@ -76,7 +76,7 @@ Future<void> main() async {
       Map<String, dynamic> expected = {
         'competitions': {
           'competitionId': {
-            'predictions': {
+            'predictionsAndScores': {
               'mockuid': {
                 'finalist1': 1,
                 'finalist2': 2,
@@ -146,7 +146,7 @@ Future<void> main() async {
       Map<String, dynamic> expected = {
         'competitions': {
           'competitionId': {
-            'predictions': {
+            'predictionsAndScores': {
               'mockuid': {
                 'position1': 1,
                 'position2': 2,
