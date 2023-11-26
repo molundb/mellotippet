@@ -1,9 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mellotippet/common/models/all_models.dart';
 import 'package:mellotippet/common/models/prediction/prediction_and_score.dart';
 import 'package:mellotippet/common/repositories/repositories.dart';
 import 'package:mellotippet/service_location/get_it.dart';
+
+part 'semifinal_prediction_controller.freezed.dart';
 
 class SemifinalPredictionController
     extends StateNotifier<SemifinalPredictionControllerState> {
@@ -113,31 +115,13 @@ class SemifinalPredictionController
   }
 }
 
-@immutable
-class SemifinalPredictionControllerState {
-  const SemifinalPredictionControllerState({
-    this.loading = false,
-    this.username = "",
-    this.currentCompetition = "",
-    this.prediction,
-  });
-
-  final bool loading;
-  final String username;
-  final String currentCompetition;
-  final SemifinalPredictionModel? prediction;
-
-  SemifinalPredictionControllerState copyWith({
-    bool? loading,
-    String? username,
-    String? currentCompetition,
+@freezed
+class SemifinalPredictionControllerState
+    with _$SemifinalPredictionControllerState {
+  const factory SemifinalPredictionControllerState({
+    @Default(false) bool loading,
+    @Default("") String username,
+    @Default("") String currentCompetition,
     SemifinalPredictionModel? prediction,
-  }) {
-    return SemifinalPredictionControllerState(
-      loading: loading ?? this.loading,
-      username: username ?? this.username,
-      currentCompetition: currentCompetition ?? this.currentCompetition,
-      prediction: prediction ?? this.prediction,
-    );
-  }
+  }) = _SemifinalPredictionControllerState;
 }

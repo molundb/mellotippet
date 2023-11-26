@@ -1,13 +1,15 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mellotippet/common/repositories/authentication_repository.dart';
 import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/services/mello_tippet_package_info.dart';
 
+part 'settings_controller.freezed.dart';
+
 class SettingsController extends StateNotifier<SettingsControllerState> {
   SettingsController({
-    SettingsControllerState? state,
-  }) : super(state ?? SettingsControllerState.withDefaults());
+    required SettingsControllerState state,
+  }) : super(state);
 
   final AuthenticationRepository authRepository =
       getIt.get<AuthenticationRepository>();
@@ -17,7 +19,10 @@ class SettingsController extends StateNotifier<SettingsControllerState> {
 
   static final provider =
       StateNotifierProvider<SettingsController, SettingsControllerState>(
-          (ref) => SettingsController());
+    (ref) => SettingsController(
+      state: const SettingsControllerState(appVersion: null),
+    ),
+  );
 
   Future<void> signOut() => authRepository.firebaseAuth.signOut();
 
@@ -26,20 +31,8 @@ class SettingsController extends StateNotifier<SettingsControllerState> {
   }
 }
 
-@immutable
-class SettingsControllerState {
-  const SettingsControllerState({required this.appVersion});
-
-  final String? appVersion;
-
-  SettingsControllerState copyWith({
-    String? appVersion,
-  }) {
-    return SettingsControllerState(
-      appVersion: appVersion ?? this.appVersion,
-    );
-  }
-
-  factory SettingsControllerState.withDefaults() =>
-      const SettingsControllerState(appVersion: null);
+@freezed
+class SettingsControllerState with _$SettingsControllerState {
+  const factory SettingsControllerState({String? appVersion}) =
+      _SettingsControllerState;
 }

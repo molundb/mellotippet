@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mellotippet/common/repositories/repositories.dart';
 import 'package:mellotippet/service_location/get_it.dart';
+
+part 'login_controller.freezed.dart';
 
 class LoginController extends StateNotifier<LoginControllerState> {
   LoginController({
@@ -42,31 +44,12 @@ class LoginController extends StateNotifier<LoginControllerState> {
   }
 }
 
-@immutable
-class LoginControllerState {
-  const LoginControllerState({
-    this.loading = true,
-    this.loggedIn = false,
-    this.email = "",
-    this.password = "",
-  });
-
-  final bool loading;
-  final bool loggedIn;
-  final String email;
-  final String password;
-
-  LoginControllerState copyWith({
-    bool? loading,
-    bool? loggedIn,
-    String? email,
-    String? password,
-  }) {
-    return LoginControllerState(
-      loading: loading ?? this.loading,
-      loggedIn: loggedIn ?? this.loggedIn,
-      email: email ?? this.email,
-      password: password ?? this.password,
-    );
-  }
+@freezed
+class LoginControllerState with _$LoginControllerState {
+  const factory LoginControllerState({
+    @Default(true) bool loading,
+    @Default(false) bool loggedIn,
+    @Default("") String email,
+    @Default("") String password,
+  }) = _LoginControllerState;
 }
