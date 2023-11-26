@@ -2,37 +2,34 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mellotippet/common/models/prediction/prediction_and_score.dart';
 import 'package:mellotippet/common/models/prediction/prediction_model.dart';
 
-class HeatPredictionModel extends PredictionModel {
-  HeatPredictionModel({
+class HeatResultModel extends PredictionModel {
+  HeatResultModel({
     required this.finalist1,
     required this.finalist2,
     required this.semifinalist1,
     required this.semifinalist2,
-    required this.fifthPlace,
   });
 
-  PredictionAndScore finalist1;
-  PredictionAndScore finalist2;
-  PredictionAndScore semifinalist1;
-  PredictionAndScore semifinalist2;
-  PredictionAndScore fifthPlace;
+  int finalist1;
+  int finalist2;
+  int semifinalist1;
+  int semifinalist2;
 
-  factory HeatPredictionModel.fromFirestore(
+  factory HeatResultModel.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
     SnapshotOptions? options,
   ) {
     final data = snapshot.data();
 
-    return HeatPredictionModel.fromJson(data ?? {});
+    return HeatResultModel.fromJson(data ?? {});
   }
 
-  factory HeatPredictionModel.fromJson(Map<String, dynamic> json) =>
-      HeatPredictionModel(
-        finalist1: PredictionAndScore.fromJson(json['finalist1']),
-        finalist2: PredictionAndScore.fromJson(json['finalist2']),
-        semifinalist1: PredictionAndScore.fromJson(json['semifinalist1']),
-        semifinalist2: PredictionAndScore.fromJson(json['semifinalist2']),
-        fifthPlace: PredictionAndScore.fromJson(json['fifthPlace']),
+  factory HeatResultModel.fromJson(Map<String, dynamic> json) =>
+      HeatResultModel(
+        finalist1: json['finalist1'],
+        finalist2: json['finalist2'],
+        semifinalist1: json['semifinalist1'],
+        semifinalist2: json['semifinalist2'],
       );
 
 // HeatPredictionModel copyWith({

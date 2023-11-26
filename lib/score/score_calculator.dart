@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:mellotippet/common/models/all_models.dart';
+import 'package:mellotippet/common/models/heat_result_model.dart';
 
 int calculateScore(CompetitionModel competition, PredictionModel? prediction) {
   if (prediction == null) {
@@ -24,7 +25,7 @@ int calculateScore(CompetitionModel competition, PredictionModel? prediction) {
       break;
     case CompetitionType.heat:
       score = _calculateHeatScore(
-        competition.result as HeatPredictionModel,
+        competition.result as HeatResultModel,
         prediction as HeatPredictionModel,
       );
       break;
@@ -34,7 +35,7 @@ int calculateScore(CompetitionModel competition, PredictionModel? prediction) {
 }
 
 int _calculateHeatScore(
-  HeatPredictionModel result,
+  HeatResultModel result,
   HeatPredictionModel prediction,
 ) {
   var score = 0;
@@ -53,12 +54,13 @@ int calculateHeatFinalistScore(
 ) {
   var score = 0;
 
-  if (finalist == prediction.finalist1 || finalist == prediction.finalist2) {
+  if (finalist == prediction.finalist1.prediction ||
+      finalist == prediction.finalist2.prediction) {
     score = 5;
-  } else if (finalist == prediction.semifinalist1 ||
-      finalist == prediction.semifinalist2) {
+  } else if (finalist == prediction.semifinalist1.prediction ||
+      finalist == prediction.semifinalist2.prediction) {
     score = 3;
-  } else if (finalist == prediction.fifthPlace) {
+  } else if (finalist == prediction.fifthPlace.prediction) {
     score = 1;
   }
   return score;
@@ -70,13 +72,13 @@ int calculateHeatSemifinalistScore(
 ) {
   var score = 0;
 
-  if (semifinalist == prediction.finalist1 ||
-      semifinalist == prediction.finalist2) {
+  if (semifinalist == prediction.finalist1.prediction ||
+      semifinalist == prediction.finalist2.prediction) {
     score = 1;
-  } else if (semifinalist == prediction.semifinalist1 ||
-      semifinalist == prediction.semifinalist2) {
+  } else if (semifinalist == prediction.semifinalist1.prediction ||
+      semifinalist == prediction.semifinalist2.prediction) {
     score = 2;
-  } else if (semifinalist == prediction.fifthPlace) {
+  } else if (semifinalist == prediction.fifthPlace.prediction) {
     score = 1;
   }
   return score;

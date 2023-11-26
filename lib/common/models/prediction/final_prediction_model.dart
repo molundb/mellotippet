@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:mellotippet/common/models/prediction_model.dart';
+import 'package:mellotippet/common/models/prediction/prediction_model.dart';
 
 class FinalPredictionModel extends PredictionModel {
   FinalPredictionModel({

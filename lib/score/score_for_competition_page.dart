@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/common/models/all_models.dart';
+import 'package:mellotippet/common/models/heat_result_model.dart';
 import 'package:mellotippet/config/config.dart';
 import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/score/score_calculator.dart';
@@ -48,9 +49,9 @@ class _ScoreForCompetitionPageState
         predictionMap = (prediction as SemifinalPredictionModel?)?.toMap();
         break;
       case CompetitionType.heat:
-        result = competition.result as HeatPredictionModel;
+        result = competition.result as HeatResultModel;
         prediction = widget.prediction as HeatPredictionModel?;
-        predictionMap = (prediction as HeatPredictionModel?)?.toMap();
+        predictionMap = {}; //(prediction as HeatPredictionModel?)?.toMap();
         break;
     }
 

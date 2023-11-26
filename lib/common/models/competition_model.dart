@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mellotippet/common/models/all_models.dart';
+import 'package:mellotippet/common/models/heat_result_model.dart';
 
 class CompetitionModel {
   String id;
@@ -33,7 +34,7 @@ class CompetitionModel {
         break;
       default:
         type = CompetitionType.heat;
-        result = HeatPredictionModel.fromJson(data?['result']);
+        result = HeatResultModel.fromJson(data?['result']);
         break;
     }
 
