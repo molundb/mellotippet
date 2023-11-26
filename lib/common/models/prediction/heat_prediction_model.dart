@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:mellotippet/common/models/all_models.dart';
 import 'package:mellotippet/common/models/prediction/prediction_and_score.dart';
-import 'package:mellotippet/common/models/prediction/prediction_model.dart';
 
 part 'heat_prediction_model.freezed.dart';
 
@@ -22,13 +22,14 @@ class HeatPredictionModel extends PredictionModel with _$HeatPredictionModel {
       _$HeatPredictionModelFromJson(json);
 
   factory HeatPredictionModel.fromFirestore(
-    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    DocumentSnapshot snapshot,
     SnapshotOptions? options,
-  ) {
-    final data = snapshot.data();
+  ) =>
+      HeatPredictionModel.fromJson(snapshot.data() as Map<String, dynamic>);
 
-    return HeatPredictionModel.fromJson(data ?? {});
-  }
+// static Map<String, Object?> toFirestore(
+//         HeatPredictionModel model, SetOptions? options) =>
+//     model.toJson();
 
 // factory HeatPredictionModel.fromJson(Map<String, dynamic> json) =>
 //     HeatPredictionModel(

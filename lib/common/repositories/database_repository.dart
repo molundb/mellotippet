@@ -122,7 +122,7 @@ class DatabaseRepository {
       .map((e) => e.data())
       .toList();
 
-  Future<List<PredictionModel>> getAllPredictionsForHeat(
+  Future<List<HeatPredictionModel>> getAllPredictionsForHeat(
     String competitionId,
   ) async =>
       (await competitions
@@ -130,8 +130,8 @@ class DatabaseRepository {
               .collection('predictionsAndScores')
               .withConverter(
                 fromFirestore: HeatPredictionModel.fromFirestore,
-                toFirestore: (HeatPredictionModel heatPredictionModel, _) =>
-                    heatPredictionModel.toFirestore(),
+                toFirestore: (HeatPredictionModel model, _) =>
+                    model.toFirestore(),
               )
               .get())
           .docs
@@ -171,7 +171,7 @@ class DatabaseRepository {
           .map((e) => e.data())
           .toList();
 
-  Future<HeatPredictionModel?> getPredictionsForHeatForUser(
+  Future<PredictionModel?> getPredictionsForHeatForUser(
     String heatId,
     String? userId,
   ) async =>
@@ -181,8 +181,8 @@ class DatabaseRepository {
               .doc(userId)
               .withConverter(
                 fromFirestore: HeatPredictionModel.fromFirestore,
-                toFirestore: (HeatPredictionModel heatPredictionModel, _) =>
-                    heatPredictionModel.toFirestore(),
+                toFirestore: (HeatPredictionModel model, _) =>
+                    model.toFirestore(),
               )
               .get())
           .data();
