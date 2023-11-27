@@ -1,19 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mellotippet/common/models/all_models.dart';
 import 'package:mellotippet/common/models/heat_result_model.dart';
 
-class CompetitionModel {
-  String id;
-  CompetitionType type;
-  int lowestScore;
-  PredictionModel result;
+part 'competition_model.freezed.dart';
 
-  CompetitionModel({
-    required this.id,
-    required this.type,
-    required this.lowestScore,
-    required this.result,
-  });
+@freezed
+class CompetitionModel with _$CompetitionModel {
+  const factory CompetitionModel({
+    required String id,
+    required CompetitionType type,
+    required int lowestScore,
+    required PredictionModel result,
+  }) = _CompetitionModel;
 
   factory CompetitionModel.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
@@ -46,9 +45,11 @@ class CompetitionModel {
     );
   }
 
-  Map<String, dynamic> toFirestore() {
-    return {};
-  }
+  static Map<String, dynamic> toFirestore(
+    CompetitionModel model,
+    SetOptions? options,
+  ) =>
+      {};
 }
 
 enum CompetitionType {

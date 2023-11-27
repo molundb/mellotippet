@@ -102,7 +102,7 @@ class DatabaseRepository {
   Future<List<User>> getUsers() async => (await users
           .withConverter(
             fromFirestore: User.fromFirestore,
-            toFirestore: (User user, _) => user.toFirestore(),
+            toFirestore: User.toFirestore,
           )
           .get())
       .docs
@@ -111,9 +111,8 @@ class DatabaseRepository {
 
   Future<List<CompetitionModel>> getCompetitions() async => (await competitions
           .withConverter(
-            fromFirestore: CompetitionModel.fromFirestore,
-            toFirestore: (CompetitionModel competition, _) =>
-                competition.toFirestore(),
+    fromFirestore: CompetitionModel.fromFirestore,
+            toFirestore: CompetitionModel.toFirestore,
           )
           .get())
       .docs

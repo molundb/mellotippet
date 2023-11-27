@@ -1,61 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mellotippet/common/models/prediction/prediction_model.dart';
 
-class HeatResultModel implements PredictionModel {
-  HeatResultModel({
-    required this.finalist1,
-    required this.finalist2,
-    required this.semifinalist1,
-    required this.semifinalist2,
-  });
+part 'heat_result_model.freezed.dart';
 
-  int finalist1;
-  int finalist2;
-  int semifinalist1;
-  int semifinalist2;
+part 'heat_result_model.g.dart';
+
+@freezed
+class HeatResultModel with _$HeatResultModel implements PredictionModel {
+  const factory HeatResultModel({
+    required int finalist1,
+    required int finalist2,
+    required int semifinalist1,
+    required int semifinalist2,
+  }) = _HeatResultModel;
+
+  factory HeatResultModel.fromJson(Map<String, Object?> json) =>
+      _$HeatResultModelFromJson(json);
 
   factory HeatResultModel.fromFirestore(
-    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    DocumentSnapshot snapshot,
     SnapshotOptions? options,
-  ) {
-    final data = snapshot.data();
-
-    return HeatResultModel.fromJson(data ?? {});
-  }
-
-  factory HeatResultModel.fromJson(Map<String, dynamic> json) =>
-      HeatResultModel(
-        finalist1: json['finalist1'],
-        finalist2: json['finalist2'],
-        semifinalist1: json['semifinalist1'],
-        semifinalist2: json['semifinalist2'],
-      );
-
-// HeatPredictionModel copyWith({
-//   int? finalist1,
-//   int? finalist2,
-//   int? semifinalist1,
-//   int? semifinalist2,
-//   int? fifthPlace,
-// }) {
-//   return HeatPredictionModel(
-//     finalist1: finalist1 ?? this.finalist1,
-//     finalist2: finalist2 ?? this.finalist2,
-//     semifinalist1: semifinalist1 ?? this.semifinalist1,
-//     semifinalist2: semifinalist2 ?? this.semifinalist2,
-//     fifthPlace: fifthPlace ?? this.fifthPlace,
-//   );
-// }
+  ) =>
+      HeatResultModel.fromJson(snapshot.data() as Map<String, dynamic>);
 }
-
-// extension HeatPredictionToMap on HeatPredictionModel {
-//   Map<int, String> toMap() {
-//     return <int, String>{
-//       finalist1!: 'F',
-//       finalist2!: 'F',
-//       semifinalist1!: 'SF',
-//       semifinalist2!: 'SF',
-//       fifthPlace!: '5th',
-//     };
-//   }
-// }

@@ -1,32 +1,16 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mellotippet/common/models/all_models.dart';
 
-class UserScoreEntity {
-  const UserScoreEntity({
-    this.username,
-    this.competitionToPrediction,
-    this.totalScore,
-    this.competitionToScore,
-  });
+part 'user_score_entity.freezed.dart';
 
-  final String? username;
-  final int? totalScore;
-  final Map<String, int>? competitionToScore;
-  final Map<CompetitionModel, PredictionModel?>? competitionToPrediction;
-
-  factory UserScoreEntity.fromJson(Map<String, dynamic> json) =>
-      UserScoreEntity(
-        username: json['username'],
-        totalScore: json['totalScore'],
-        competitionToScore: json['competitionToScore'],
-        competitionToPrediction: json['competitionToScore'],
-      );
-
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'username': username,
-        'totalScore': totalScore,
-        'competitionToScore': competitionToScore,
-        'competitionToPrediction': competitionToPrediction,
-      };
+@freezed
+class UserScoreEntity with _$UserScoreEntity {
+  const factory UserScoreEntity({
+    String? username,
+    int? totalScore,
+    Map<String, int>? competitionToScore,
+    Map<CompetitionModel, PredictionModel?>? competitionToPrediction,
+  }) = _UserScoreEntity;
 
   factory UserScoreEntity.empty() => const UserScoreEntity(
         username: null,

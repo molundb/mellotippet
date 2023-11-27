@@ -74,7 +74,7 @@ class AuthenticationRepository {
       'emailVerified': user.emailVerified,
       'isAnonymous': user.isAnonymous,
     };
-    return UserScoreEntity.fromJson(map);
+    return UserScoreEntity.empty();
   }
 
   AuthError _determineError(auth.FirebaseAuthException exception) {
