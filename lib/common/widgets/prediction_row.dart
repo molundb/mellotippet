@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:mellotippet/styles/colors.dart';
 
 class PredictionRow extends StatefulWidget {
+  final String imageAsset;
+
   const PredictionRow({
     super.key,
+    this.imageAsset = 'assets/images/tone-sekelius.png',
   });
 
   @override
@@ -21,8 +24,8 @@ class PredictionRowState extends State<PredictionRow> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Container(
-                color: MellotippetColors.melloMagenta,
+              Image.asset(
+                widget.imageAsset,
                 width: 45,
                 height: 40,
               ),
@@ -51,15 +54,22 @@ class PredictionRowState extends State<PredictionRow> {
               SizedBox(
                 width: 27,
                 height: 27,
-                child: Stack(children: [
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: MellotippetColors.melloOrange,
-                      shape: BoxShape.circle,
+                child: Stack(
+                  children: [
+                    Container(
+                      decoration: const BoxDecoration(
+                        color: MellotippetColors.melloLightOrange,
+                        shape: BoxShape.circle,
+                      ),
                     ),
-                  ),
-                  const Center(child: Text("1")),
-                ]),
+                    const Center(
+                      child: Text(
+                        "1",
+                        style: TextStyle(color: MellotippetColors.melloPurple),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

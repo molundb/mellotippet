@@ -15,7 +15,7 @@ class SemifinalRulesPage extends ConsumerWidget {
           Text('Rules for the Semifinal',
               style: TextStyle(
                 fontSize: 32,
-                color: MellotippetColors.melloYellow,
+                color: MellotippetColors.melloLightOrange,
               )),
           SizedBox(height: 16),
           Text(

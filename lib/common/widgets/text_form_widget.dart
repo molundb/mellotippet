@@ -50,7 +50,7 @@ class TextFormFieldWidgetState extends State<TextFormFieldWidget> {
             borderSide: BorderSide(color: _borderColor),
           ),
           focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: MellotippetColors.melloYellow),
+            borderSide: BorderSide(color: MellotippetColors.melloLightOrange),
           ),
           hintStyle: const TextStyle(
             color: Colors.grey,

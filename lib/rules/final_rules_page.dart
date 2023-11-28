@@ -17,7 +17,7 @@ class FinalRulesPage extends ConsumerWidget {
               'Rules for the Final',
               style: TextStyle(
                 fontSize: 32,
-                color: MellotippetColors.melloYellow,
+                color: MellotippetColors.melloLightOrange,
               ),
             ),
           ),

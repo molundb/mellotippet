@@ -37,7 +37,7 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
         title: Text(
           config.title,
           style: const TextStyle(
-            color: MellotippetColors.melloYellow,
+            color: MellotippetColors.melloLightOrange,
             fontSize: 32,
           ),
         ),

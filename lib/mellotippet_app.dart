@@ -32,7 +32,7 @@ class MellotippetApp extends StatelessWidget {
           ),
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
-              backgroundColor: MellotippetColors.melloYellow,
+              backgroundColor: MellotippetColors.melloLightOrange,
               // textStyle: const TextStyle(
               //   fontSize: 12,
               // )

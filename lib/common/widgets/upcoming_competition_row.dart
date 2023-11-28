@@ -24,7 +24,7 @@ class _UpcomingCompetitionRowState extends State<UpcomingCompetitionRow> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: MellotippetColors.melloYellow,
+      color: MellotippetColors.melloLightOrange,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
