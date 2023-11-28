@@ -19,6 +19,9 @@ class FinalPredictionPage extends ConsumerStatefulWidget {
 }
 
 class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
+  final List<PredictionRow> _items = List<PredictionRow>.generate(
+      6, (int index) => PredictionRow(key: Key('$index')));
+
   final _formKey = GlobalKey<FormState>();
 
   FinalPredictionController get controller =>
@@ -40,56 +43,31 @@ class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
-      child: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  Text(
-                    'Welcome, ${state.username}!',
-                    style: const TextStyle(
-                      fontSize: 32,
-                      color: MellotippetColors.melloLightOrange,
-                    ),
-                  ),
-                  const SizedBox(height: 32),
-                  Text(
-                    'Please make your prediction for the ${state.currentCompetition}!',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: MellotippetColors.melloLightOrange,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  const PredictionRow(
-                      imageAsset: 'assets/images/tone-sekelius.png'),
-                  const PredictionRowListTile(),
-                  const PredictionRow(),
-                  const PredictionRow(),
-                  const PredictionRow(),
-                  const PredictionRow(),
-                  const SizedBox(height: 8),
-                  const SizedBox(height: 16),
-                ],
-              ),
-            ),
-          ),
-          SliverFillRemaining(
-            hasScrollBody: false,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                CtaButton(
-                  text: 'Submit',
-                  onPressed: () => _submitPressed(context),
-                )
-              ],
-            ),
-          )
-        ],
+      child: Form(
+        key: _formKey,
+        child: ReorderableListView(
+          children: <Widget>[
+            for (int index = 0; index < _items.length; index += 1)
+              // _items[index]
+              _items[index]
+          ],
+          onReorder: (int oldIndex, int newIndex) {
+            setState(() {
+              if (oldIndex < newIndex) {
+                newIndex -= 1;
+              }
+              final PredictionRow item = _items.removeAt(oldIndex);
+              _items.insert(newIndex, item);
+            });
+          },
+        ),
+        // const PredictionRow(
+        //     imageAsset: 'assets/images/tone-sekelius.png'),
+        // const PredictionRowListTile(),
+        // const PredictionRow(),
+        // const PredictionRow(),
+        // const PredictionRow(),
+        // const PredictionRow(),
       ),
     );
   }
