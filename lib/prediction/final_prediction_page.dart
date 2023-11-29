@@ -49,97 +49,98 @@ class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
       padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
       child: Form(
         key: _formKey,
-        child: Container(
-          color: Colors.black,
-          child: Column(
-            children: [
-              const Center(child: Text('Final')),
-              const SizedBox(height: 8.0),
-              DragTarget(
-                builder: (
-                  BuildContext context,
-                  List<dynamic> accepted,
-                  List<dynamic> rejected,
-                ) {
-                  return finalist1 != null
-                      ? finalist1!
-                      : Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                          child: Container(
-                            height: 50.0,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4.0),
-                              color: Colors.grey,
-                            ),
-                            child: const Padding(
-                              padding: EdgeInsets.all(6.0),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      child: Center(
-                                          child: Text("You can drag here!")))
-                                ],
-                              ),
+        child: Column(
+          children: [
+            const Center(child: Text('Final')),
+            const SizedBox(height: 8.0),
+            DragTarget(
+              builder: (
+                BuildContext context,
+                List<dynamic> accepted,
+                List<dynamic> rejected,
+              ) {
+                return finalist1 != null
+                    ? finalist1!
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                        child: Container(
+                          height: 50.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4.0),
+                            color: Colors.grey,
+                          ),
+                          child: const Padding(
+                            padding: EdgeInsets.all(6.0),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                    child: Center(
+                                        child: Text("You can drag here!")))
+                              ],
                             ),
                           ),
-                        );
-                },
-                onWillAccept: (data) {
-                  return true;
-                },
-                onAccept: (PredictionRow data) {
-                  setState(() {
-                    print('dropped');
-                    finalist1 = data;
-                    finalist2Selected = true;
-                  });
-                },
-              ),
-              const SizedBox(height: 8.0),
-              DragTarget(
-                builder: (
-                  BuildContext context,
-                  List<dynamic> accepted,
-                  List<dynamic> rejected,
-                ) {
-                  return finalist2Selected
-                      ? Container()
-                      : Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                          child: Container(
-                            height: 50.0,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4.0),
-                              color: Colors.grey,
-                            ),
-                            child: const Padding(
-                              padding: EdgeInsets.all(6.0),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      child: Center(
-                                          child:
-                                              Text("You can drag here too!")))
-                                ],
-                              ),
+                        ),
+                      );
+              },
+              onWillAccept: (data) {
+                return true;
+              },
+              onAccept: (PredictionRow data) {
+                setState(() {
+                  print('dropped');
+                  finalist1 = data;
+                  finalist2Selected = true;
+                });
+              },
+            ),
+            const SizedBox(height: 8.0),
+            DragTarget(
+              builder: (
+                BuildContext context,
+                List<dynamic> accepted,
+                List<dynamic> rejected,
+              ) {
+                return finalist2Selected
+                    ? Container()
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                        child: Container(
+                          height: 50.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4.0),
+                            color: Colors.grey,
+                          ),
+                          child: const Padding(
+                            padding: EdgeInsets.all(6.0),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                    child: Center(
+                                        child: Text("You can drag here too!")))
+                              ],
                             ),
                           ),
-                        );
-                },
-                onWillAccept: (data) {
-                  return true;
-                },
-                onAccept: (PredictionRow data) {
-                  setState(() {
-                    print('dropped');
-                    finalist1 = data;
-                    finalist2Selected = true;
-                  });
-                },
-              ),
-              const SizedBox(height: 8.0),
-              LayoutBuilder(
-                builder: (context, constraints) => Draggable<PredictionRow>(
+                        ),
+                      );
+              },
+              onWillAccept: (data) {
+                return true;
+              },
+              onAccept: (PredictionRow data) {
+                setState(() {
+                  print('dropped');
+                  finalist1 = data;
+                  finalist2Selected = true;
+                });
+              },
+            ),
+            const SizedBox(height: 8.0),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(child: Text('Övriga')),
+            ),
+            LayoutBuilder(
+              builder: (context, constraints) => Draggable<PredictionRow>(
                   axis: Axis.vertical,
                   data: _items[0],
                   feedback: Material(
@@ -151,53 +152,29 @@ class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
                     height: 60.0,
                   ),
                   child: const PredictionRow(),
-                ),
+                  onDragCompleted: () {}),
+            ),
+            const SizedBox(height: 8.0),
+            Flexible(
+              child: ReorderableListView(
+                // header: const Center(child: Text('Startfältet')),
+                children: <Widget>[
+                  for (int index = 0; index < _items.length; index += 1)
+                    // _items[index]
+                    _items[index]
+                ],
+                onReorder: (int oldIndex, int newIndex) {
+                  setState(() {
+                    if (oldIndex < newIndex) {
+                      newIndex -= 1;
+                    }
+                    final PredictionRow item = _items.removeAt(oldIndex);
+                    _items.insert(newIndex, item);
+                  });
+                },
               ),
-              // Flexible(
-              //   child: ReorderableListView(
-              //     // header: const Center(child: Text('Final')),
-              //     shrinkWrap: true,
-              //     children: <Widget>[
-              //       for (int index = 0; index < 2; index += 1)
-              //         // _items[index]
-              //         _items[index]
-              //     ],
-              //     onReorder: (int oldIndex, int newIndex) {
-              //       setState(() {
-              //         if (oldIndex < newIndex) {
-              //           newIndex -= 1;
-              //         }
-              //         final PredictionRow item = _items.removeAt(oldIndex);
-              //         _items.insert(newIndex, item);
-              //       });
-              //     },
-              //   ),
-              // ),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Center(child: Text('Startfältet')),
-              ),
-              Flexible(
-                child: ReorderableListView(
-                  // header: const Center(child: Text('Startfältet')),
-                  children: <Widget>[
-                    for (int index = 0; index < _items.length; index += 1)
-                      // _items[index]
-                      _items[index]
-                  ],
-                  onReorder: (int oldIndex, int newIndex) {
-                    setState(() {
-                      if (oldIndex < newIndex) {
-                        newIndex -= 1;
-                      }
-                      final PredictionRow item = _items.removeAt(oldIndex);
-                      _items.insert(newIndex, item);
-                    });
-                  },
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
         // const PredictionRow(
         //     imageAsset: 'assets/images/tone-sekelius.png'),

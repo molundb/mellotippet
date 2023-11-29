@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mellotippet/config/config.dart';
+import 'package:mellotippet/prediction/final_prediction_page_with_drag_and_drop_lists.dart';
 import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/rules/final_rules_page.dart';
 import 'package:mellotippet/snackbar/snackbar_handler.dart';
@@ -22,7 +23,8 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
 
   int _selectedIndex = 0;
   static final List<Widget> _widgetOptions = <Widget>[
-    FinalPredictionPage(snackbarHandler: getIt.get<SnackbarHandler>()),
+    FinalPredictionPageWithDragAndDropLists(
+        snackbarHandler: getIt.get<SnackbarHandler>()),
     // UpcomingCompetitionsPage(),
     const FinalRulesPage(),
     const ScorePage(),

@@ -61,6 +61,7 @@ dependencies:
   package_info_plus: ^4.2.0
   freezed_annotation: ^2.4.1
   json_annotation: ^4.8.1
+  drag_and_drop_lists: ^0.3.3
 
 dev_dependencies:
   flutter_test:
