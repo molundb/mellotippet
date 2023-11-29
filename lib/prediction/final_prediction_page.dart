@@ -88,6 +88,8 @@ class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
               onAccept: (PredictionRow data) {
                 setState(() {
                   print('dropped');
+                  final prevFinalist =
+                      finalist1; // TODO: Add to övriga if not null
                   finalist1 = data;
                   finalist2Selected = true;
                 });
@@ -124,6 +126,7 @@ class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
                       );
               },
               onWillAccept: (data) {
+                print('trueDrop');
                 return true;
               },
               onAccept: (PredictionRow data) {
@@ -139,39 +142,33 @@ class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
               padding: EdgeInsets.all(8.0),
               child: Center(child: Text('Övriga')),
             ),
-            LayoutBuilder(
-              builder: (context, constraints) => Draggable<PredictionRow>(
-                  axis: Axis.vertical,
-                  data: _items[0],
-                  feedback: Material(
-                    child: SizedBox(
-                        width: constraints.maxWidth,
-                        child: const PredictionRowFeedbackDuringDrag()),
-                  ),
-                  childWhenDragging: Container(
-                    height: 60.0,
-                  ),
-                  child: const PredictionRow(),
-                  onDragCompleted: () {}),
-            ),
             const SizedBox(height: 8.0),
             Flexible(
-              child: ReorderableListView(
-                // header: const Center(child: Text('Startfältet')),
+              child: ListView(
                 children: <Widget>[
                   for (int index = 0; index < _items.length; index += 1)
                     // _items[index]
-                    _items[index]
+                    LayoutBuilder(
+                      key: Key('$index'),
+                      builder: (context, constraints) =>
+                          Draggable<PredictionRow>(
+                        axis: Axis.vertical,
+                        data: _items[index],
+                        feedback: Material(
+                          child: SizedBox(
+                              width: constraints.maxWidth,
+                              child: const PredictionRowFeedbackDuringDrag()),
+                        ),
+                        childWhenDragging: Container(
+                          height: 60.0,
+                        ),
+                        child: const PredictionRow(),
+                        onDragCompleted: () {
+                          _items.removeAt(index);
+                        },
+                      ),
+                    ),
                 ],
-                onReorder: (int oldIndex, int newIndex) {
-                  setState(() {
-                    if (oldIndex < newIndex) {
-                      newIndex -= 1;
-                    }
-                    final PredictionRow item = _items.removeAt(oldIndex);
-                    _items.insert(newIndex, item);
-                  });
-                },
               ),
             ),
           ],

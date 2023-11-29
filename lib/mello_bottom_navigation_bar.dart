@@ -23,8 +23,7 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
 
   int _selectedIndex = 0;
   static final List<Widget> _widgetOptions = <Widget>[
-    FinalPredictionPageWithDragAndDropLists(
-        snackbarHandler: getIt.get<SnackbarHandler>()),
+    FinalPredictionPage(snackbarHandler: getIt.get<SnackbarHandler>()),
     // UpcomingCompetitionsPage(),
     const FinalRulesPage(),
     const ScorePage(),
