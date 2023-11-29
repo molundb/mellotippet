@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/common/widgets/cta_button.dart';
 import 'package:mellotippet/common/widgets/prediction_row.dart';
+import 'package:mellotippet/common/widgets/prediction_row_feedback_during_drag.dart';
 import 'package:mellotippet/common/widgets/prediction_row_list_tile.dart';
 import 'package:mellotippet/common/widgets/text_form_widget.dart';
 import 'package:mellotippet/prediction/final_prediction_controller.dart';
@@ -85,24 +86,17 @@ class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
               },
             ),
             const SizedBox(height: 8.0),
-            Draggable<String>(
-              // Data is the value this Draggable stores.
-              data: 'red',
-              feedback: Container(
-                height: 120.0,
-                width: 120.0,
-                decoration:
-                    const BoxDecoration(color: MellotippetColors.melloBlue),
-                child: const Center(
-                  child: Text(
-                    'Moving',
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                ),
+            LayoutBuilder(
+              builder: (context, constraints) => Draggable<String>(
+                axis: Axis.vertical,
+                data: 'red',
+                feedback: SizedBox(
+                    width: constraints.maxWidth,
+                    child: const PredictionRowFeedbackDuringDrag()),
+                child: const PredictionRowFeedbackDuringDrag(),
+                // feedback: PredictionRow(),
+                // child: PredictionRow(),
               ),
-              child: const PredictionRow(),
-              // feedback: PredictionRow(),
-              // child: PredictionRow(),
             ),
             // Flexible(
             //   child: ReorderableListView(
