@@ -10,4 +10,5 @@ class RowWithDragVersion with _$RowWithDragVersion {
     required PredictionRow row,
     required PredictionRowFeedbackDuringDrag rowFeedbackDuringDrag,
   }) = _RowWithDragVersion;
+
 }

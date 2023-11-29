@@ -1,14 +1,8 @@
 import 'package:drag_and_drop_lists/drag_and_drop_lists.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mellotippet/common/widgets/cta_button.dart';
-import 'package:mellotippet/common/widgets/prediction_row.dart';
-import 'package:mellotippet/common/widgets/prediction_row_feedback_during_drag.dart';
-import 'package:mellotippet/common/widgets/prediction_row_list_tile.dart';
-import 'package:mellotippet/common/widgets/text_form_widget.dart';
 import 'package:mellotippet/prediction/final_prediction_controller.dart';
 import 'package:mellotippet/snackbar/snackbar_handler.dart';
-import 'package:mellotippet/styles/colors.dart';
 
 class FinalPredictionPageWithDragAndDropLists extends ConsumerStatefulWidget {
   final SnackbarHandler snackbarHandler;
