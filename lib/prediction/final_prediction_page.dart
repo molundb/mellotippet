@@ -60,9 +60,33 @@ class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
             DragTarget(
               builder: (
                 BuildContext context,
-                List<dynamic> accepted,
-                List<dynamic> rejected,
+                List<PredictionRow?> candidateData,
+                List rejectedData,
               ) {
+                if (candidateData.isNotEmpty) {
+                  return finalist1 != null
+                      ? Opacity(opacity: 0.5, child: finalist1!)
+                      : Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          child: Container(
+                            height: 50.0,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4.0),
+                              color: Colors.orangeAccent,
+                            ),
+                            child: const Padding(
+                              padding: EdgeInsets.all(6.0),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      child: Center(child: Text("Finalist")))
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                }
+
                 return finalist1 != null
                     ? finalist1!
                     : Padding(
@@ -73,18 +97,19 @@ class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
                             borderRadius: BorderRadius.circular(4.0),
                             color: Colors.grey,
                           ),
-                          child: const Padding(
-                            padding: EdgeInsets.all(6.0),
-                            child: Row(
-                              children: [
-                                Expanded(child: Center(child: Text("Finalist")))
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
+                    child: const Padding(
+                      padding: EdgeInsets.all(6.0),
+                      child: Row(
+                        children: [
+                          Expanded(child: Center(child: Text("Finalist")))
+                        ],
+                      ),
+                    ),
+                  ),
+                );
               },
               onWillAccept: (data) {
+                print('tryDrop');
                 return true;
               },
               onAccept: (PredictionRow data) {
@@ -137,16 +162,16 @@ class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
                             borderRadius: BorderRadius.circular(4.0),
                             color: Colors.grey,
                           ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(6.0),
-                      child: Row(
-                        children: [
-                          Expanded(child: Center(child: Text("Finalist")))
+                          child: const Padding(
+                            padding: EdgeInsets.all(6.0),
+                            child: Row(
+                              children: [
+                                Expanded(child: Center(child: Text("Finalist")))
                               ],
-                      ),
-                    ),
-                  ),
-                );
+                            ),
+                          ),
+                        ),
+                      );
               },
               onWillAccept: (data) {
                 print('tryDrop');
@@ -182,7 +207,7 @@ class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
                           child: SizedBox(
                               width: constraints.maxWidth,
                               child: PredictionRowFeedbackDuringDrag(
-                                  startNumber: index + 1)),
+                                  startNumber: _items[index].startNumber)),
                         ),
                         childWhenDragging: Container(
                           height: 60.0,
