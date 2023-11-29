@@ -20,9 +20,8 @@ class PredictionRowFeedbackDuringDragState
   Widget build(BuildContext context) {
     return IntrinsicHeight(
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: MellotippetColors.melloPurple,
-          borderRadius: BorderRadius.circular(8.0),
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
