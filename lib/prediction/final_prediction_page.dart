@@ -6,6 +6,7 @@ import 'package:mellotippet/common/widgets/prediction_row_feedback_during_drag.d
 import 'package:mellotippet/common/widgets/prediction_row_list_tile.dart';
 import 'package:mellotippet/common/widgets/text_form_widget.dart';
 import 'package:mellotippet/prediction/final_prediction_controller.dart';
+import 'package:mellotippet/prediction/row_with_drag_version.dart';
 import 'package:mellotippet/snackbar/snackbar_handler.dart';
 import 'package:mellotippet/styles/colors.dart';
 
@@ -20,13 +21,22 @@ class FinalPredictionPage extends ConsumerStatefulWidget {
 }
 
 class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
-  final List<PredictionRow> _items = List<PredictionRow>.generate(
-      6, (int index) => PredictionRow(key: Key('$index')));
+  final List<RowWithDragVersion> _items = List<RowWithDragVersion>.generate(
+      6,
+      (int index) => RowWithDragVersion(
+          row: PredictionRow(
+            key: Key('$index'),
+            startNumber: index + 1,
+          ),
+          rowFeedbackDuringDrag: PredictionRowFeedbackDuringDrag(
+            key: Key('$index'),
+            startNumber: index + 1,
+          )));
 
   final _formKey = GlobalKey<FormState>();
 
-  PredictionRow? finalist1;
-  bool finalist2Selected = false;
+  RowWithDragVersion? finalist1;
+  RowWithDragVersion? finalist2;
 
   FinalPredictionController get controller =>
       ref.read(FinalPredictionController.provider.notifier);
@@ -59,8 +69,8 @@ class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
                 List<dynamic> accepted,
                 List<dynamic> rejected,
               ) {
-                return finalist1 != null
-                    ? finalist1!
+                return finalist1?.row != null
+                    ? finalist1!.row
                     : Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 4.0),
                         child: Container(
@@ -85,13 +95,12 @@ class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
               onWillAccept: (data) {
                 return true;
               },
-              onAccept: (PredictionRow data) {
+              onAccept: (PredictionRowFeedbackDuringDrag data) {
                 setState(() {
-                  print('dropped');
-                  final prevFinalist =
-                      finalist1; // TODO: Add to övriga if not null
-                  finalist1 = data;
-                  finalist2Selected = true;
+                  if (finalist1?.row != null) {
+                    _items.add(finalist1!);
+                  }
+                  finalist1?.row = data;
                 });
               },
             ),
@@ -102,8 +111,8 @@ class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
                 List<dynamic> accepted,
                 List<dynamic> rejected,
               ) {
-                return finalist2Selected
-                    ? Container()
+                return finalist2?.row != null
+                    ? finalist2!.row
                     : Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 4.0),
                         child: Container(
@@ -129,11 +138,12 @@ class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
                 print('trueDrop');
                 return true;
               },
-              onAccept: (PredictionRow data) {
+              onAccept: (PredictionRowFeedbackDuringDrag data) {
                 setState(() {
-                  print('dropped');
-                  finalist1 = data;
-                  finalist2Selected = true;
+                  if (finalist2 != null) {
+                    _items.add(finalist2!);
+                  }
+                  finalist2 = data;
                 });
               },
             ),
@@ -148,24 +158,32 @@ class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
                 children: <Widget>[
                   for (int index = 0; index < _items.length; index += 1)
                     // _items[index]
-                    LayoutBuilder(
-                      key: Key('$index'),
-                      builder: (context, constraints) =>
-                          Draggable<PredictionRow>(
-                        axis: Axis.vertical,
-                        data: _items[index],
-                        feedback: Material(
-                          child: SizedBox(
-                              width: constraints.maxWidth,
-                              child: const PredictionRowFeedbackDuringDrag()),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4.0),
+                      child: LayoutBuilder(
+                        key: Key('$index'),
+                        builder: (context, constraints) =>
+                            Draggable<PredictionRowFeedbackDuringDrag>(
+                          axis: Axis.vertical,
+                          data: _items[index],
+                          feedback: Material(
+                            child: SizedBox(
+                                width: constraints.maxWidth,
+                                child: _items[index]),
+                          ),
+                          childWhenDragging: Container(
+                            height: 60.0,
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            child: _items[index],
+                          ),
+                          onDragCompleted: () {
+                            _items.removeAt(index);
+                          },
                         ),
-                        childWhenDragging: Container(
-                          height: 60.0,
-                        ),
-                        child: const PredictionRow(),
-                        onDragCompleted: () {
-                          _items.removeAt(index);
-                        },
                       ),
                     ),
                 ],

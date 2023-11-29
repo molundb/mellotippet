@@ -3,10 +3,12 @@ import 'package:mellotippet/styles/colors.dart';
 
 class PredictionRowFeedbackDuringDrag extends StatefulWidget {
   final String imageAsset;
+  final int startNumber;
 
   const PredictionRowFeedbackDuringDrag({
     super.key,
     this.imageAsset = 'assets/images/tone-sekelius.png',
+    required this.startNumber,
   });
 
   @override
@@ -65,10 +67,11 @@ class PredictionRowFeedbackDuringDragState
                         shape: BoxShape.circle,
                       ),
                     ),
-                    const Center(
+                    Center(
                       child: Text(
-                        "1",
-                        style: TextStyle(color: MellotippetColors.melloPurple),
+                        '${widget.startNumber}',
+                        style: const TextStyle(
+                            color: MellotippetColors.melloPurple),
                       ),
                     ),
                   ],

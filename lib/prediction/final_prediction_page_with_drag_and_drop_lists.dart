@@ -62,12 +62,12 @@ class _FinalPredictionPageState
         canDrag: false,
         contentsWhenEmpty: Container(),
         children: <DragAndDropItem>[
-          DragAndDropItem(child: const PredictionRow()),
-          DragAndDropItem(child: const PredictionRow()),
-          DragAndDropItem(child: const PredictionRow()),
-          DragAndDropItem(child: const PredictionRow()),
-          DragAndDropItem(child: const PredictionRow()),
-          DragAndDropItem(child: const PredictionRow()),
+          // DragAndDropItem(child: const PredictionRow()),
+          // DragAndDropItem(child: const PredictionRow()),
+          // DragAndDropItem(child: const PredictionRow()),
+          // DragAndDropItem(child: const PredictionRow()),
+          // DragAndDropItem(child: const PredictionRow()),
+          // DragAndDropItem(child: const PredictionRow()),
         ],
       );
 
