@@ -22,7 +22,6 @@ class PredictionRowState extends State<PredictionRow> {
         padding: const EdgeInsets.all(6.0),
         child: IntrinsicHeight(
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Image.asset(
                 widget.imageAsset,
