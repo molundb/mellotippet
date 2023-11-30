@@ -66,50 +66,16 @@ class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
                 if (candidateData.isNotEmpty) {
                   return finalist1 != null
                       ? Opacity(opacity: 0.5, child: finalist1!)
-                      : Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                          child: Container(
-                            height: 50.0,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4.0),
-                              color: Colors.orangeAccent,
-                            ),
-                            child: const Padding(
-                              padding: EdgeInsets.all(6.0),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      child: Center(child: Text("Finalist")))
-                                ],
-                              ),
-                            ),
-                          ),
+                      : const EmptyPredictionRow(
+                          backgroundColor: Colors.orangeAccent,
                         );
                 }
 
                 return finalist1 != null
                     ? finalist1!
-                    : Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                        child: Container(
-                          height: 50.0,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4.0),
-                            color: Colors.grey,
-                          ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(6.0),
-                      child: Row(
-                        children: [
-                          Expanded(child: Center(child: Text("Finalist")))
-                        ],
-                      ),
-                    ),
-                  ),
-                );
+                    : const EmptyPredictionRow();
               },
               onWillAccept: (data) {
-                print('tryDrop');
                 return true;
               },
               onAccept: (PredictionRow data) {
@@ -131,50 +97,15 @@ class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
                 if (candidateData.isNotEmpty) {
                   return finalist2 != null
                       ? Opacity(opacity: 0.5, child: finalist2!)
-                      : Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                          child: Container(
-                            height: 50.0,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4.0),
-                              color: Colors.orangeAccent,
-                            ),
-                            child: const Padding(
-                              padding: EdgeInsets.all(6.0),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      child: Center(child: Text("Finalist")))
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
+                      : const EmptyPredictionRow(
+                          backgroundColor: Colors.orangeAccent);
                 }
 
                 return finalist2 != null
                     ? finalist2!
-                    : Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                        child: Container(
-                          height: 50.0,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4.0),
-                            color: Colors.grey,
-                          ),
-                          child: const Padding(
-                            padding: EdgeInsets.all(6.0),
-                            child: Row(
-                              children: [
-                                Expanded(child: Center(child: Text("Finalist")))
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
+                    : const EmptyPredictionRow();
               },
               onWillAccept: (data) {
-                print('tryDrop');
                 return true;
               },
               onAccept: (PredictionRow data) {
@@ -262,5 +193,34 @@ class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
         level: SnackbarAlertLevel.error,
       );
     }
+  }
+}
+
+class EmptyPredictionRow extends StatelessWidget {
+  const EmptyPredictionRow({
+    super.key,
+    this.backgroundColor = Colors.grey,
+  });
+
+  final Color backgroundColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+      child: Container(
+        height: 50.0,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4.0),
+          color: backgroundColor,
+        ),
+        child: const Padding(
+          padding: EdgeInsets.all(6.0),
+          child: Row(
+            children: [Expanded(child: Center(child: Text("Finalist")))],
+          ),
+        ),
+      ),
+    );
   }
 }
