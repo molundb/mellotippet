@@ -26,8 +26,8 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
 
   final _formKey = GlobalKey<FormState>();
 
-  PredictionRow? finalist1;
-  PredictionRow? finalist2;
+  PredictionRowWrapper finalist1PredictionRow = PredictionRowWrapper();
+  PredictionRowWrapper finalist2PredictionRow = PredictionRowWrapper();
 
   FinalPredictionController get controller =>
       ref.read(FinalPredictionController.provider.notifier);
@@ -54,66 +54,9 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
           children: [
             const Center(child: Text('Final')),
             const SizedBox(height: 8.0),
-            // TODO: Figure out how to reuse DragTargets
-            DragTarget(
-              builder: (
-                BuildContext context,
-                List<PredictionRow?> candidateData,
-                List rejectedData,
-              ) {
-                if (candidateData.isNotEmpty) {
-                  return finalist1 != null
-                      ? Opacity(opacity: 0.5, child: finalist1!)
-                      : const EmptyPredictionRow(
-                          backgroundColor: Colors.orangeAccent);
-                } else {
-                  return finalist1 != null
-                      ? finalist1!
-                      : const EmptyPredictionRow();
-                }
-              },
-              onWillAccept: (data) {
-                return true;
-              },
-              onAccept: (PredictionRow data) {
-                setState(() {
-                  if (finalist1 != null) {
-                    _items.add(finalist1!);
-                  }
-                  finalist1 = data;
-                });
-              },
-            ),
+            _createDragTarget(finalist1PredictionRow),
             const SizedBox(height: 8.0),
-            DragTarget(
-              builder: (
-                BuildContext context,
-                List<PredictionRow?> candidateData,
-                List rejectedData,
-              ) {
-                if (candidateData.isNotEmpty) {
-                  return finalist2 != null
-                      ? Opacity(opacity: 0.5, child: finalist2!)
-                      : const EmptyPredictionRow(
-                          backgroundColor: Colors.orangeAccent);
-                } else {
-                  return finalist2 != null
-                      ? finalist2!
-                      : const EmptyPredictionRow();
-                }
-              },
-              onWillAccept: (data) {
-                return true;
-              },
-              onAccept: (PredictionRow data) {
-                setState(() {
-                  if (finalist2 != null) {
-                    _items.add(finalist2!);
-                  }
-                  finalist2 = data;
-                });
-              },
-            ),
+            _createDragTarget(finalist2PredictionRow),
             const SizedBox(height: 8.0),
             const Padding(
               padding: EdgeInsets.all(8.0),
@@ -159,6 +102,37 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
         // const PredictionRow(),
         // const PredictionRow(),
       ),
+    );
+  }
+
+  DragTarget<PredictionRow> _createDragTarget(PredictionRowWrapper rowWrapper) {
+    return DragTarget(
+      builder: (
+        BuildContext context,
+        List<PredictionRow?> candidateData,
+        List rejectedData,
+      ) {
+        if (candidateData.isNotEmpty) {
+          return rowWrapper.row != null
+              ? Opacity(opacity: 0.5, child: rowWrapper.row!)
+              : const EmptyPredictionRow(backgroundColor: Colors.orangeAccent);
+        } else {
+          return rowWrapper.row != null
+              ? rowWrapper.row!
+              : const EmptyPredictionRow();
+        }
+      },
+      onWillAccept: (data) {
+        return true;
+      },
+      onAccept: (PredictionRow data) {
+        setState(() {
+          if (rowWrapper.row != null) {
+            _items.add(rowWrapper.row!);
+          }
+          rowWrapper.row = data;
+        });
+      },
     );
   }
 
@@ -220,4 +194,10 @@ class EmptyPredictionRow extends StatelessWidget {
       ),
     );
   }
+}
+
+class PredictionRowWrapper {
+  PredictionRow? row;
+
+  PredictionRowWrapper({this.row});
 }

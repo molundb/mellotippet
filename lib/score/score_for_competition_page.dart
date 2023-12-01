@@ -285,26 +285,26 @@ class _ScoreForCompetitionPageState
                           _buildRow(
                             position: "Final       ",
                             prediction: predictionMap != null
-                                ? predictionMap[result.finalist1]
+                                ? predictionMap[result.finalist1PredictionRow]
                                 : null,
                             score: _getSemifinalistFinalistScore(
                               competition.lowestScore,
-                              result.finalist1!,
+                              result.finalist1PredictionRow!,
                               prediction,
                             ),
-                            result: result.finalist1,
+                            result: result.finalist1PredictionRow,
                           ),
                           _buildRow(
                             position: "Final       ",
                             prediction: predictionMap != null
-                                ? predictionMap[result.finalist2]
+                                ? predictionMap[result.finalist2PredictionRow]
                                 : null,
                             score: _getSemifinalistFinalistScore(
                               competition.lowestScore,
-                              result.finalist2!,
+                              result.finalist2PredictionRow!,
                               prediction,
                             ),
-                            result: result.finalist2,
+                            result: result.finalist2PredictionRow,
                           ),
                           _buildRow(
                             position: "Final       ",
@@ -335,26 +335,26 @@ class _ScoreForCompetitionPageState
                           _buildRow(
                             position: "Final       ",
                             prediction: predictionMap != null
-                                ? predictionMap[result.finalist1]
+                                ? predictionMap[result.finalist1PredictionRow]
                                 : null,
                             score: _getHeatFinalistScore(
                               competition.lowestScore,
-                              result.finalist1!,
+                              result.finalist1PredictionRow!,
                               prediction,
                             ),
-                            result: result.finalist1,
+                            result: result.finalist1PredictionRow,
                           ),
                           _buildRow(
                             position: "Final       ",
                             prediction: predictionMap != null
-                                ? predictionMap[result.finalist2]
+                                ? predictionMap[result.finalist2PredictionRow]
                                 : null,
                             score: _getHeatFinalistScore(
                               competition.lowestScore,
-                              result.finalist2!,
+                              result.finalist2PredictionRow!,
                               prediction,
                             ),
-                            result: result.finalist2,
+                            result: result.finalist2PredictionRow,
                           ),
                           _buildRow(
                             position: "Semifinal",
