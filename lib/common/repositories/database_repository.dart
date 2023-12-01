@@ -25,6 +25,30 @@ class DatabaseRepository {
   ) =>
       competitions.doc(competitionId).collection('predictionsAndScores');
 
+  Future<bool> uploadHeatPrediction(
+    String competitionId,
+    HeatPredictionModel prediction,
+  ) async {
+    try {
+      var uid = authRepository.currentUser?.uid;
+
+      if (uid != null) {
+        await predictionsForCompetition(competitionId).doc(uid).set({
+          "finalist1": prediction.finalist1,
+          "finalist2": prediction.finalist2,
+          "semifinalist1": prediction.semifinalist1,
+          "semifinalist2": prediction.semifinalist2,
+          "fifthPlace": prediction.fifthPlace,
+        });
+
+        return true;
+      }
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
+
   Future<bool> uploadSemifinalPrediction(
     String competitionId,
     SemifinalPredictionModel prediction,

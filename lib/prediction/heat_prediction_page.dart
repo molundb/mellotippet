@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/common/widgets/prediction_row.dart';
 import 'package:mellotippet/common/widgets/prediction_row_feedback_during_drag.dart';
 import 'package:mellotippet/prediction/final_prediction_controller.dart';
+import 'package:mellotippet/prediction/heat_prediction_controller.dart';
 import 'package:mellotippet/snackbar/snackbar_handler.dart';
 
 class HeatPredictionPage extends ConsumerStatefulWidget {
@@ -41,7 +42,7 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(FinalPredictionController.provider);
+    final state = ref.watch(HeatPredictionController.provider);
 
     // TODO: Figure out how to handle loading
 
