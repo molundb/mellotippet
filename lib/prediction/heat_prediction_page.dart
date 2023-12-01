@@ -5,17 +5,17 @@ import 'package:mellotippet/common/widgets/prediction_row_feedback_during_drag.d
 import 'package:mellotippet/prediction/final_prediction_controller.dart';
 import 'package:mellotippet/snackbar/snackbar_handler.dart';
 
-class FinalPredictionPage extends ConsumerStatefulWidget {
+class HeatPredictionPage extends ConsumerStatefulWidget {
   final SnackbarHandler snackbarHandler;
 
-  const FinalPredictionPage({super.key, required this.snackbarHandler});
+  const HeatPredictionPage({super.key, required this.snackbarHandler});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _FinalPredictionPageState();
+      _HeatPredictionPageState();
 }
 
-class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
+class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
   final List<PredictionRow> _items = List<PredictionRow>.generate(
       6,
       (int index) => PredictionRow(
