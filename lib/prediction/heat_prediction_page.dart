@@ -115,11 +115,11 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
             },
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(12.0),
+        const Padding(
+          padding: EdgeInsets.all(12.0),
           child: CtaButton(
             text: "Tippa",
-            onPressed: controller.submitPrediction,
+            onPressed: null, //() => _submitPressed(context),
           ),
         )
       ],
@@ -180,13 +180,13 @@ class OtherList extends StatelessWidget {
               child: SizedBox(
                   width: constraints.maxWidth,
                   child: PredictionRowFeedbackDuringDrag(
-                          startNumber: others[index].startNumber)),
-                ),
-                childWhenDragging: Container(
-                  height: 60.0,
-                ),
-                child: others[index],
-              ),
+                      startNumber: others[index].startNumber)),
+            ),
+            childWhenDragging: Container(
+              height: 60.0,
+            ),
+            child: others[index],
+          ),
         );
       },
     );

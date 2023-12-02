@@ -9,11 +9,13 @@ class CtaButton extends StatelessWidget {
   });
 
   final String text;
-  final Function() onPressed;
+  final Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
     final ButtonStyle flatButtonStyle = TextButton.styleFrom(
+      disabledBackgroundColor: MellotippetColors.disabledCtaBackground,
+      disabledForegroundColor: MellotippetColors.disabledCtaForeground,
       backgroundColor: MellotippetColors.melloBlue,
       foregroundColor: Colors.white,
       minimumSize: const Size(121, 31),
@@ -25,7 +27,7 @@ class CtaButton extends StatelessWidget {
 
     return TextButton(
       style: flatButtonStyle,
-      onPressed: () {},
+      onPressed: onPressed,
       child: Text(
         text,
         style: const TextStyle(fontSize: 16),
