@@ -58,10 +58,17 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
             const SizedBox(height: 8.0),
             _createDragTargetRow(state.predictions[1], 1),
             const SizedBox(height: 8.0),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Center(child: Text('Övriga')),
-            ),
+            const Center(child: Text('Semifinal')),
+            const SizedBox(height: 8.0),
+            _createDragTargetRow(state.predictions[2], 2),
+            const SizedBox(height: 8.0),
+            _createDragTargetRow(state.predictions[3], 3),
+            const SizedBox(height: 8.0),
+            const Center(child: Text('Plats 5')),
+            const SizedBox(height: 8.0),
+            _createDragTargetRow(state.predictions[4], 4),
+            const SizedBox(height: 8.0),
+            const Center(child: Text('Övriga')),
             const SizedBox(height: 8.0),
             Flexible(
               child: ListView(
