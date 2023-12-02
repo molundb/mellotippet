@@ -103,7 +103,13 @@ class HeatPredictionController
 
     predictions[index] = prediction;
 
-    state = state.copyWith(predictions: predictions, others: others);
+    final ctaDisabled = predictions.any((prediction) => prediction == null);
+
+    state = state.copyWith(
+      predictions: predictions,
+      others: others,
+      ctaEnabled: !ctaDisabled,
+    );
   }
 
   void clearRow(int index) {
@@ -186,5 +192,6 @@ class HeatPredictionControllerState with _$HeatPredictionControllerState {
     HeatPredictionModel? prediction,
     @Default([null, null, null, null, null]) List<PredictionRow?> predictions,
     @Default([]) List<PredictionRow> others,
+    @Default(false) bool ctaEnabled,
   }) = _HeatPredictionControllerState;
 }

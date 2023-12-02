@@ -115,11 +115,11 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
             },
           ),
         ),
-        const Padding(
-          padding: EdgeInsets.all(12.0),
+        Padding(
+          padding: const EdgeInsets.all(12.0),
           child: CtaButton(
             text: "Tippa",
-            onPressed: null, //() => _submitPressed(context),
+            onPressed: state.ctaEnabled ? () => _submitPressed(context) : null,
           ),
         )
       ],
