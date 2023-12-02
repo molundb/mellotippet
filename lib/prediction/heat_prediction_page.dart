@@ -112,9 +112,6 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
                           height: 60.0,
                         ),
                         child: state.others[index],
-                        onDragCompleted: () {
-                          state.others.removeAt(index);
-                        },
                       ),
                     ),
                 ],
@@ -122,13 +119,6 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
             ),
           ],
         ),
-        // const PredictionRow(
-        //     imageAsset: 'assets/images/tone-sekelius.png'),
-        // const PredictionRowListTile(),
-        // const PredictionRow(),
-        // const PredictionRow(),
-        // const PredictionRow(),
-        // const PredictionRow(),
       ),
     );
   }
@@ -152,17 +142,44 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
                   text: emptyText,
                 );
         } else {
-          return row ??
-              EmptyPredictionRow(
-                text: emptyText,
-              );
+          return row != null
+              ? LayoutBuilder(
+                  key: Key('$index'),
+                  builder: (context, constraints) => Draggable<PredictionRow>(
+                    axis: Axis.vertical,
+                    data: row,
+                    feedback: Material(
+                      child: SizedBox(
+                          width: constraints.maxWidth,
+                          child: PredictionRowFeedbackDuringDrag(
+                              startNumber: row.startNumber)),
+                    ),
+                    childWhenDragging: Container(
+                      height: 60.0,
+                    ),
+                    child: row,
+                    onDragStarted: () {
+                      controller.clearRow(index);
+                    },
+                    onDraggableCanceled: (Velocity v, Offset o) {
+                      controller.setRow(row, index);
+                    },
+                  ),
+                )
+              : EmptyPredictionRow(
+                  text: emptyText,
+                );
+          // ??
+          // EmptyPredictionRow(
+          //   text: emptyText,
+          // );
         }
       },
       onWillAccept: (data) {
         return true;
       },
       onAccept: (PredictionRow data) {
-        controller.setFinalist1Row(data, index);
+        controller.setRow(data, index);
       },
     );
   }

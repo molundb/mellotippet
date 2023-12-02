@@ -90,7 +90,7 @@ class HeatPredictionController
             fifthPlace: PredictionAndScore(prediction: int.parse(value))));
   }
 
-  void setFinalist1Row(PredictionRow? prediction, int index) {
+  void setRow(PredictionRow? prediction, int index) {
     final predictions = [...state.predictions];
     final others = [...state.others];
 
@@ -104,6 +104,13 @@ class HeatPredictionController
     predictions[index] = prediction;
 
     state = state.copyWith(predictions: predictions, others: others);
+  }
+
+  void clearRow(int index) {
+    final predictions = [...state.predictions];
+    predictions[index] = null;
+
+    state = state.copyWith(predictions: predictions);
   }
 
   Future<bool> submitPrediction() {
