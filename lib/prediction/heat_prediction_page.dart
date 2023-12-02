@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mellotippet/common/widgets/cta_button.dart';
 import 'package:mellotippet/common/widgets/prediction_row.dart';
 import 'package:mellotippet/common/widgets/prediction_row_feedback_during_drag.dart';
 import 'package:mellotippet/prediction/heat_prediction_controller.dart';
@@ -91,9 +92,12 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
             const SizedBox(height: 8.0),
             const Center(child: Text('Övriga')),
             const SizedBox(height: 8.0),
-            Flexible(
-              child: OtherList(others: state.others),
-            ),
+            Flexible(child: OtherList(others: state.others)),
+            const SizedBox(height: 8.0),
+            CtaButton(
+              text: "Tippa",
+              onPressed: controller.submitPrediction,
+            )
           ],
         ),
       ),
@@ -141,28 +145,27 @@ class OtherList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        for (int index = 0; index < others.length; index += 1)
-          // _items[index]
-          LayoutBuilder(
-            key: Key('$index'),
-            builder: (context, constraints) => Draggable<PredictionRow>(
-              axis: Axis.vertical,
-              data: others[index],
-              feedback: Material(
-                child: SizedBox(
-                    width: constraints.maxWidth,
-                    child: PredictionRowFeedbackDuringDrag(
-                        startNumber: others[index].startNumber)),
-              ),
-              childWhenDragging: Container(
-                height: 60.0,
-              ),
-              child: others[index],
+    return ListView.builder(
+      itemCount: others.length,
+      itemBuilder: (context, index) {
+        return LayoutBuilder(
+          key: Key('$index'),
+          builder: (context, constraints) => Draggable<PredictionRow>(
+            axis: Axis.vertical,
+            data: others[index],
+            feedback: Material(
+              child: SizedBox(
+                  width: constraints.maxWidth,
+                  child: PredictionRowFeedbackDuringDrag(
+                      startNumber: others[index].startNumber)),
             ),
+            childWhenDragging: Container(
+              height: 60.0,
+            ),
+            child: others[index],
           ),
-      ],
+        );
+      },
     );
   }
 }
