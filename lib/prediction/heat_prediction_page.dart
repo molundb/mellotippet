@@ -55,38 +55,48 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
           children: [
             const Center(child: Text('Final')),
             const SizedBox(height: 8.0),
-            _createDragTargetRow(
+            DragTargetRow(
               row: state.predictions[0],
               index: 0,
               emptyText: "Finalist",
+              setRow: controller.setRow,
+              clearRow: controller.clearRow,
             ),
             const SizedBox(height: 8.0),
-            _createDragTargetRow(
+            DragTargetRow(
               row: state.predictions[1],
               index: 1,
               emptyText: "Finalist",
+              setRow: controller.setRow,
+              clearRow: controller.clearRow,
             ),
             const SizedBox(height: 8.0),
             const Center(child: Text('Semifinal')),
             const SizedBox(height: 8.0),
-            _createDragTargetRow(
+            DragTargetRow(
               row: state.predictions[2],
               index: 2,
               emptyText: "Semifinalist",
+              setRow: controller.setRow,
+              clearRow: controller.clearRow,
             ),
             const SizedBox(height: 8.0),
-            _createDragTargetRow(
+            DragTargetRow(
               row: state.predictions[3],
               index: 3,
               emptyText: "Semifinalist",
+              setRow: controller.setRow,
+              clearRow: controller.clearRow,
             ),
             const SizedBox(height: 8.0),
             const Center(child: Text('Plats 5')),
             const SizedBox(height: 8.0),
-            _createDragTargetRow(
+            DragTargetRow(
               row: state.predictions[4],
               index: 4,
               emptyText: "Plats 5",
+              setRow: controller.setRow,
+              clearRow: controller.clearRow,
             ),
             const SizedBox(height: 8.0),
             const Center(child: Text('Övriga')),
@@ -208,6 +218,77 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
         level: SnackbarAlertLevel.error,
       );
     }
+  }
+}
+
+class DragTargetRow extends StatelessWidget {
+  const DragTargetRow({
+    super.key,
+    required this.row,
+    required this.index,
+    required this.emptyText,
+    required this.setRow,
+    required this.clearRow,
+  });
+
+  final PredictionRow? row;
+  final int index;
+  final String emptyText;
+  final Function(PredictionRow? row, int index) setRow;
+  final Function(int index) clearRow;
+
+  @override
+  Widget build(BuildContext context) {
+    return DragTarget(
+      builder: (
+        BuildContext context,
+        List<PredictionRow?> candidateData,
+        List rejectedData,
+      ) {
+        if (candidateData.isNotEmpty) {
+          return Opacity(opacity: 0.5, child: candidateData.first);
+        } else {
+          final row = this.row;
+          return row != null
+              ? LayoutBuilder(
+                  key: Key('$index'),
+                  builder: (context, constraints) => Draggable<PredictionRow>(
+                    axis: Axis.vertical,
+                    data: row,
+                    feedback: Material(
+                      child: SizedBox(
+                          width: constraints.maxWidth,
+                          child: PredictionRowFeedbackDuringDrag(
+                              startNumber: row.startNumber)),
+                    ),
+                    childWhenDragging: Container(
+                      height: 60.0,
+                    ),
+                    child: row,
+                    onDragStarted: () {
+                      clearRow(index);
+                    },
+                    onDraggableCanceled: (Velocity v, Offset o) {
+                      setRow(row, index);
+                    },
+                  ),
+                )
+              : EmptyPredictionRow(
+                  text: emptyText,
+                );
+          // ??
+          // EmptyPredictionRow(
+          //   text: emptyText,
+          // );
+        }
+      },
+      onWillAccept: (data) {
+        return true;
+      },
+      onAccept: (PredictionRow data) {
+        setRow(data, index);
+      },
+    );
   }
 }
 
