@@ -92,31 +92,7 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
             const Center(child: Text('Övriga')),
             const SizedBox(height: 8.0),
             Flexible(
-              child: ListView(
-                children: <Widget>[
-                  for (int index = 0; index < state.others.length; index += 1)
-                    // _items[index]
-                    LayoutBuilder(
-                      key: Key('$index'),
-                      builder: (context, constraints) =>
-                          Draggable<PredictionRow>(
-                        axis: Axis.vertical,
-                        data: state.others[index],
-                        feedback: Material(
-                          child: SizedBox(
-                              width: constraints.maxWidth,
-                              child: PredictionRowFeedbackDuringDrag(
-                                  startNumber:
-                                      state.others[index].startNumber)),
-                        ),
-                        childWhenDragging: Container(
-                          height: 60.0,
-                        ),
-                        child: state.others[index],
-                      ),
-                    ),
-                ],
-              ),
+              child: OtherList(others: state.others),
             ),
           ],
         ),
@@ -152,6 +128,42 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
         level: SnackbarAlertLevel.error,
       );
     }
+  }
+}
+
+class OtherList extends StatelessWidget {
+  const OtherList({
+    super.key,
+    required this.others,
+  });
+
+  final List<PredictionRow> others;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: <Widget>[
+        for (int index = 0; index < others.length; index += 1)
+          // _items[index]
+          LayoutBuilder(
+            key: Key('$index'),
+            builder: (context, constraints) => Draggable<PredictionRow>(
+              axis: Axis.vertical,
+              data: others[index],
+              feedback: Material(
+                child: SizedBox(
+                    width: constraints.maxWidth,
+                    child: PredictionRowFeedbackDuringDrag(
+                        startNumber: others[index].startNumber)),
+              ),
+              childWhenDragging: Container(
+                height: 60.0,
+              ),
+              child: others[index],
+            ),
+          ),
+      ],
+    );
   }
 }
 
