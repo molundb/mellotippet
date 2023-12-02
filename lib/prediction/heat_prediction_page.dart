@@ -38,69 +38,80 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
 
     // TODO: Figure out how to handle loading
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            const Center(child: Text('Final')),
-            const SizedBox(height: 8.0),
-            DragTargetRow(
-              row: state.predictions[0],
-              index: 0,
-              emptyText: "Finalist",
-              setRow: controller.setRow,
-              clearRow: controller.clearRow,
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints viewportConstraints) {
+        return SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
+            child: Form(
+              key: _formKey,
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: viewportConstraints.maxHeight,
+                ),
+                child: Column(
+                  children: [
+                    const Center(child: Text('Final')),
+                    const SizedBox(height: 8.0),
+                    DragTargetRow(
+                      row: state.predictions[0],
+                      index: 0,
+                      emptyText: "Finalist",
+                      setRow: controller.setRow,
+                      clearRow: controller.clearRow,
+                    ),
+                    const SizedBox(height: 8.0),
+                    DragTargetRow(
+                      row: state.predictions[1],
+                      index: 1,
+                      emptyText: "Finalist",
+                      setRow: controller.setRow,
+                      clearRow: controller.clearRow,
+                    ),
+                    const SizedBox(height: 8.0),
+                    const Center(child: Text('Semifinal')),
+                    const SizedBox(height: 8.0),
+                    DragTargetRow(
+                      row: state.predictions[2],
+                      index: 2,
+                      emptyText: "Semifinalist",
+                      setRow: controller.setRow,
+                      clearRow: controller.clearRow,
+                    ),
+                    const SizedBox(height: 8.0),
+                    DragTargetRow(
+                      row: state.predictions[3],
+                      index: 3,
+                      emptyText: "Semifinalist",
+                      setRow: controller.setRow,
+                      clearRow: controller.clearRow,
+                    ),
+                    const SizedBox(height: 8.0),
+                    const Center(child: Text('Plats 5')),
+                    const SizedBox(height: 8.0),
+                    DragTargetRow(
+                      row: state.predictions[4],
+                      index: 4,
+                      emptyText: "Plats 5",
+                      setRow: controller.setRow,
+                      clearRow: controller.clearRow,
+                    ),
+                    const SizedBox(height: 8.0),
+                    const Center(child: Text('Övriga')),
+                    const SizedBox(height: 8.0),
+                    OtherList(others: state.others),
+                    const SizedBox(height: 8.0),
+                    CtaButton(
+                      text: "Tippa",
+                      onPressed: controller.submitPrediction,
+                    )
+                  ],
+                ),
+              ),
             ),
-            const SizedBox(height: 8.0),
-            DragTargetRow(
-              row: state.predictions[1],
-              index: 1,
-              emptyText: "Finalist",
-              setRow: controller.setRow,
-              clearRow: controller.clearRow,
-            ),
-            const SizedBox(height: 8.0),
-            const Center(child: Text('Semifinal')),
-            const SizedBox(height: 8.0),
-            DragTargetRow(
-              row: state.predictions[2],
-              index: 2,
-              emptyText: "Semifinalist",
-              setRow: controller.setRow,
-              clearRow: controller.clearRow,
-            ),
-            const SizedBox(height: 8.0),
-            DragTargetRow(
-              row: state.predictions[3],
-              index: 3,
-              emptyText: "Semifinalist",
-              setRow: controller.setRow,
-              clearRow: controller.clearRow,
-            ),
-            const SizedBox(height: 8.0),
-            const Center(child: Text('Plats 5')),
-            const SizedBox(height: 8.0),
-            DragTargetRow(
-              row: state.predictions[4],
-              index: 4,
-              emptyText: "Plats 5",
-              setRow: controller.setRow,
-              clearRow: controller.clearRow,
-            ),
-            const SizedBox(height: 8.0),
-            const Center(child: Text('Övriga')),
-            const SizedBox(height: 8.0),
-            Flexible(child: OtherList(others: state.others)),
-            const SizedBox(height: 8.0),
-            CtaButton(
-              text: "Tippa",
-              onPressed: controller.submitPrediction,
-            )
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -146,6 +157,7 @@ class OtherList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      shrinkWrap: true,
       itemCount: others.length,
       itemBuilder: (context, index) {
         return LayoutBuilder(
@@ -157,13 +169,13 @@ class OtherList extends StatelessWidget {
               child: SizedBox(
                   width: constraints.maxWidth,
                   child: PredictionRowFeedbackDuringDrag(
-                      startNumber: others[index].startNumber)),
-            ),
-            childWhenDragging: Container(
-              height: 60.0,
-            ),
-            child: others[index],
-          ),
+                          startNumber: others[index].startNumber)),
+                ),
+                childWhenDragging: Container(
+                  height: 60.0,
+                ),
+                child: others[index],
+              ),
         );
       },
     );
