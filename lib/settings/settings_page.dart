@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mellotippet/common/widgets/cta_button.dart';
+import 'package:mellotippet/common/widgets/old_cta_button.dart';
 import 'package:mellotippet/login/login_page.dart';
 import 'package:mellotippet/settings/settings_controller.dart';
 
@@ -31,7 +31,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
       children: [
         Expanded(
           child: Center(
-            child: CtaButton(
+            child: OldCtaButton(
               text: 'Sign Out',
               onPressed: () => _logoutPressed(),
             ),

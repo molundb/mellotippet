@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mellotippet/common/widgets/cta_button.dart';
+import 'package:mellotippet/common/widgets/old_cta_button.dart';
 import 'package:mellotippet/common/widgets/text_form_widget.dart';
 import 'package:mellotippet/prediction/semifinal_prediction_controller.dart';
 import 'package:mellotippet/snackbar/snackbar_handler.dart';
@@ -86,7 +86,7 @@ class _SemifinalPredictionPageState
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                CtaButton(
+                OldCtaButton(
                   text: 'Submit',
                   onPressed: () => _submitPressed(context),
                 )

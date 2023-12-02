@@ -147,7 +147,7 @@ class _SubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CtaButton(
+    return OldCtaButton(
       text: 'Login',
       onPressed: () => _loginPressed(
         context,

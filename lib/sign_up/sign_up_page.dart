@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mellotippet/common/repositories/repositories.dart';
-import 'package:mellotippet/common/widgets/cta_button.dart';
+import 'package:mellotippet/common/widgets/old_cta_button.dart';
 import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/mello_bottom_navigation_bar.dart';
 import 'package:mellotippet/sign_up/sign_up_controller.dart';
@@ -134,7 +134,7 @@ class _SubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CtaButton(
+    return OldCtaButton(
       text: 'Create Account',
       onPressed: () => _submitPressed(context, formKey),
     );
