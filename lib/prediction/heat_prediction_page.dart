@@ -54,19 +54,39 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
           children: [
             const Center(child: Text('Final')),
             const SizedBox(height: 8.0),
-            _createDragTargetRow(state.predictions[0], 0),
+            _createDragTargetRow(
+              row: state.predictions[0],
+              index: 0,
+              emptyText: "Finalist",
+            ),
             const SizedBox(height: 8.0),
-            _createDragTargetRow(state.predictions[1], 1),
+            _createDragTargetRow(
+              row: state.predictions[1],
+              index: 1,
+              emptyText: "Finalist",
+            ),
             const SizedBox(height: 8.0),
             const Center(child: Text('Semifinal')),
             const SizedBox(height: 8.0),
-            _createDragTargetRow(state.predictions[2], 2),
+            _createDragTargetRow(
+              row: state.predictions[2],
+              index: 2,
+              emptyText: "Semifinalist",
+            ),
             const SizedBox(height: 8.0),
-            _createDragTargetRow(state.predictions[3], 3),
+            _createDragTargetRow(
+              row: state.predictions[3],
+              index: 3,
+              emptyText: "Semifinalist",
+            ),
             const SizedBox(height: 8.0),
             const Center(child: Text('Plats 5')),
             const SizedBox(height: 8.0),
-            _createDragTargetRow(state.predictions[4], 4),
+            _createDragTargetRow(
+              row: state.predictions[4],
+              index: 4,
+              emptyText: "Plats 5",
+            ),
             const SizedBox(height: 8.0),
             const Center(child: Text('Övriga')),
             const SizedBox(height: 8.0),
@@ -113,40 +133,11 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
     );
   }
 
-  DragTarget<PredictionRow> _createDragTarget(PredictionRowWrapper rowWrapper) {
-    return DragTarget(
-      builder: (
-        BuildContext context,
-        List<PredictionRow?> candidateData,
-        List rejectedData,
-      ) {
-        if (candidateData.isNotEmpty) {
-          return rowWrapper.row != null
-              ? Opacity(opacity: 0.5, child: rowWrapper.row!)
-              : const EmptyPredictionRow(backgroundColor: Colors.orangeAccent);
-        } else {
-          return rowWrapper.row != null
-              ? rowWrapper.row!
-              : const EmptyPredictionRow();
-        }
-      },
-      onWillAccept: (data) {
-        return true;
-      },
-      onAccept: (PredictionRow data) {
-        // TODO: Update controller state
-        setState(() {
-          if (rowWrapper.row != null) {
-            _items.add(rowWrapper.row!);
-          }
-          rowWrapper.row = data;
-        });
-      },
-    );
-  }
-
-  DragTarget<PredictionRow> _createDragTargetRow(
-      PredictionRow? row, int index) {
+  DragTarget<PredictionRow> _createDragTargetRow({
+    PredictionRow? row,
+    required int index,
+    required String emptyText,
+  }) {
     return DragTarget(
       builder: (
         BuildContext context,
@@ -156,9 +147,15 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
         if (candidateData.isNotEmpty) {
           return row != null
               ? Opacity(opacity: 0.5, child: row)
-              : const EmptyPredictionRow(backgroundColor: Colors.orangeAccent);
+              : EmptyPredictionRow(
+                  backgroundColor: Colors.orangeAccent,
+                  text: emptyText,
+                );
         } else {
-          return row ?? const EmptyPredictionRow();
+          return row ??
+              EmptyPredictionRow(
+                text: emptyText,
+              );
         }
       },
       onWillAccept: (data) {
@@ -205,9 +202,11 @@ class EmptyPredictionRow extends StatelessWidget {
   const EmptyPredictionRow({
     super.key,
     this.backgroundColor = Colors.grey,
+    required this.text,
   });
 
   final Color backgroundColor;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -219,10 +218,10 @@ class EmptyPredictionRow extends StatelessWidget {
           borderRadius: BorderRadius.circular(4.0),
           color: backgroundColor,
         ),
-        child: const Padding(
-          padding: EdgeInsets.all(6.0),
+        child: Padding(
+          padding: const EdgeInsets.all(6.0),
           child: Row(
-            children: [Expanded(child: Center(child: Text("Finalist")))],
+            children: [Expanded(child: Center(child: Text(text)))],
           ),
         ),
       ),
