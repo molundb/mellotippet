@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/common/widgets/prediction_row.dart';
 import 'package:mellotippet/common/widgets/prediction_row_feedback_during_drag.dart';
-import 'package:mellotippet/prediction/final_prediction_controller.dart';
 import 'package:mellotippet/prediction/heat_prediction_controller.dart';
 import 'package:mellotippet/snackbar/snackbar_handler.dart';
 
@@ -29,14 +28,15 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
   PredictionRowWrapper finalist1PredictionRow = PredictionRowWrapper();
   PredictionRowWrapper finalist2PredictionRow = PredictionRowWrapper();
 
-  FinalPredictionController get controller =>
-      ref.read(FinalPredictionController.provider.notifier);
+  HeatPredictionController get controller =>
+      ref.read(HeatPredictionController.provider.notifier);
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       controller.getUsernameAndCurrentCompetition();
+      controller.setOthers();
     });
   }
 
@@ -54,9 +54,9 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
           children: [
             const Center(child: Text('Final')),
             const SizedBox(height: 8.0),
-            _createDragTarget(finalist1PredictionRow),
+            _createDragTargetRow(state.predictions[0], 0),
             const SizedBox(height: 8.0),
-            _createDragTarget(finalist2PredictionRow),
+            _createDragTargetRow(state.predictions[1], 1),
             const SizedBox(height: 8.0),
             const Padding(
               padding: EdgeInsets.all(8.0),
@@ -66,26 +66,27 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
             Flexible(
               child: ListView(
                 children: <Widget>[
-                  for (int index = 0; index < _items.length; index += 1)
+                  for (int index = 0; index < state.others.length; index += 1)
                     // _items[index]
                     LayoutBuilder(
                       key: Key('$index'),
                       builder: (context, constraints) =>
                           Draggable<PredictionRow>(
                         axis: Axis.vertical,
-                        data: _items[index],
+                        data: state.others[index],
                         feedback: Material(
                           child: SizedBox(
                               width: constraints.maxWidth,
                               child: PredictionRowFeedbackDuringDrag(
-                                  startNumber: _items[index].startNumber)),
+                                  startNumber:
+                                      state.others[index].startNumber)),
                         ),
                         childWhenDragging: Container(
                           height: 60.0,
                         ),
-                        child: _items[index],
+                        child: state.others[index],
                         onDragCompleted: () {
-                          _items.removeAt(index);
+                          state.others.removeAt(index);
                         },
                       ),
                     ),
@@ -126,12 +127,38 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
         return true;
       },
       onAccept: (PredictionRow data) {
+        // TODO: Update controller state
         setState(() {
           if (rowWrapper.row != null) {
             _items.add(rowWrapper.row!);
           }
           rowWrapper.row = data;
         });
+      },
+    );
+  }
+
+  DragTarget<PredictionRow> _createDragTargetRow(
+      PredictionRow? row, int index) {
+    return DragTarget(
+      builder: (
+        BuildContext context,
+        List<PredictionRow?> candidateData,
+        List rejectedData,
+      ) {
+        if (candidateData.isNotEmpty) {
+          return row != null
+              ? Opacity(opacity: 0.5, child: row)
+              : const EmptyPredictionRow(backgroundColor: Colors.orangeAccent);
+        } else {
+          return row ?? const EmptyPredictionRow();
+        }
+      },
+      onWillAccept: (data) {
+        return true;
+      },
+      onAccept: (PredictionRow data) {
+        controller.setFinalist1Row(data, index);
       },
     );
   }

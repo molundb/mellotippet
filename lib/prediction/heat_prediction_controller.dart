@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mellotippet/common/models/all_models.dart';
 import 'package:mellotippet/common/models/prediction/prediction_and_score.dart';
 import 'package:mellotippet/common/repositories/repositories.dart';
+import 'package:mellotippet/common/widgets/prediction_row.dart';
 import 'package:mellotippet/service_location/get_it.dart';
 
 part 'heat_prediction_controller.freezed.dart';
@@ -36,6 +37,17 @@ class HeatPredictionController
       username: username,
       currentCompetition: currentCompetition,
     );
+  }
+
+  void setOthers() {
+    final others = List<PredictionRow>.generate(
+        6,
+        (int index) => PredictionRow(
+              // key: Key('$index'),
+              startNumber: index + 1,
+            ));
+
+    state = state.copyWith(others: others);
   }
 
   void setFinalist1(String? value) {
@@ -76,6 +88,22 @@ class HeatPredictionController
     state = state.copyWith(
         prediction: state.prediction?.copyWith(
             fifthPlace: PredictionAndScore(prediction: int.parse(value))));
+  }
+
+  void setFinalist1Row(PredictionRow? prediction, int index) {
+    final predictions = [...state.predictions];
+    final others = [...state.others];
+
+    others.remove(prediction);
+
+    final previous = predictions[index];
+    if (previous != null) {
+      others.add(previous);
+    }
+
+    predictions[index] = prediction;
+
+    state = state.copyWith(predictions: predictions, others: others);
   }
 
   Future<bool> submitPrediction() {
@@ -149,5 +177,7 @@ class HeatPredictionControllerState with _$HeatPredictionControllerState {
     @Default("") String username,
     @Default("") String currentCompetition,
     HeatPredictionModel? prediction,
+    @Default([null, null, null, null, null]) List<PredictionRow?> predictions,
+    @Default([]) List<PredictionRow> others,
   }) = _HeatPredictionControllerState;
 }
