@@ -136,12 +136,7 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
         List rejectedData,
       ) {
         if (candidateData.isNotEmpty) {
-          return row != null
-              ? Opacity(opacity: 0.5, child: row)
-              : EmptyPredictionRow(
-                  backgroundColor: Colors.orangeAccent,
-                  text: emptyText,
-                );
+          return Opacity(opacity: 0.5, child: candidateData.first);
         } else {
           return row != null
               ? LayoutBuilder(
