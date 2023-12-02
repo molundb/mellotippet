@@ -4,6 +4,7 @@ import 'package:mellotippet/common/widgets/prediction_row.dart';
 import 'package:mellotippet/common/widgets/prediction_row_feedback_during_drag.dart';
 import 'package:mellotippet/prediction/heat_prediction_controller.dart';
 import 'package:mellotippet/snackbar/snackbar_handler.dart';
+import 'package:mellotippet/styles/all_styles.dart';
 
 class HeatPredictionPage extends ConsumerStatefulWidget {
   final SnackbarHandler snackbarHandler;
@@ -218,7 +219,7 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
 class EmptyPredictionRow extends StatelessWidget {
   const EmptyPredictionRow({
     super.key,
-    this.backgroundColor = Colors.grey,
+    this.backgroundColor = Colors.transparent,
     required this.text,
   });
 
@@ -228,18 +229,13 @@ class EmptyPredictionRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+      padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 4.0),
       child: Container(
-        height: 50.0,
+        height: 52.0,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(4.0),
           color: backgroundColor,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(6.0),
-          child: Row(
-            children: [Expanded(child: Center(child: Text(text)))],
-          ),
+          border: Border.all(color: MellotippetColors.melloPurple),
         ),
       ),
     );
