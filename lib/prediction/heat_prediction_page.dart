@@ -17,17 +17,7 @@ class HeatPredictionPage extends ConsumerStatefulWidget {
 }
 
 class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
-  final List<PredictionRow> _items = List<PredictionRow>.generate(
-      6,
-      (int index) => PredictionRow(
-            key: Key('$index'),
-            startNumber: index + 1,
-          ));
-
   final _formKey = GlobalKey<FormState>();
-
-  PredictionRowWrapper finalist1PredictionRow = PredictionRowWrapper();
-  PredictionRowWrapper finalist2PredictionRow = PredictionRowWrapper();
 
   HeatPredictionController get controller =>
       ref.read(HeatPredictionController.provider.notifier);
@@ -134,62 +124,6 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
     );
   }
 
-  DragTarget<PredictionRow> _createDragTargetRow({
-    PredictionRow? row,
-    required int index,
-    required String emptyText,
-  }) {
-    return DragTarget(
-      builder: (
-        BuildContext context,
-        List<PredictionRow?> candidateData,
-        List rejectedData,
-      ) {
-        if (candidateData.isNotEmpty) {
-          return Opacity(opacity: 0.5, child: candidateData.first);
-        } else {
-          return row != null
-              ? LayoutBuilder(
-                  key: Key('$index'),
-                  builder: (context, constraints) => Draggable<PredictionRow>(
-                    axis: Axis.vertical,
-                    data: row,
-                    feedback: Material(
-                      child: SizedBox(
-                          width: constraints.maxWidth,
-                          child: PredictionRowFeedbackDuringDrag(
-                              startNumber: row.startNumber)),
-                    ),
-                    childWhenDragging: Container(
-                      height: 60.0,
-                    ),
-                    child: row,
-                    onDragStarted: () {
-                      controller.clearRow(index);
-                    },
-                    onDraggableCanceled: (Velocity v, Offset o) {
-                      controller.setRow(row, index);
-                    },
-                  ),
-                )
-              : EmptyPredictionRow(
-                  text: emptyText,
-                );
-          // ??
-          // EmptyPredictionRow(
-          //   text: emptyText,
-          // );
-        }
-      },
-      onWillAccept: (data) {
-        return true;
-      },
-      onAccept: (PredictionRow data) {
-        controller.setRow(data, index);
-      },
-    );
-  }
-
   void _submitPressed(BuildContext context) {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
@@ -276,10 +210,6 @@ class DragTargetRow extends StatelessWidget {
               : EmptyPredictionRow(
                   text: emptyText,
                 );
-          // ??
-          // EmptyPredictionRow(
-          //   text: emptyText,
-          // );
         }
       },
       onWillAccept: (data) {
@@ -316,10 +246,4 @@ class EmptyPredictionRow extends StatelessWidget {
       ),
     );
   }
-}
-
-class PredictionRowWrapper {
-  PredictionRow? row;
-
-  PredictionRowWrapper({this.row});
 }
