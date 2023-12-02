@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mellotippet/styles/all_styles.dart';
 
 class CtaButton extends StatelessWidget {
   const CtaButton({
@@ -12,17 +13,22 @@ class CtaButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 52,
-      child: ElevatedButton(
-        onPressed: () => onPressed(),
-        style: ElevatedButton.styleFrom(
-          shape: const StadiumBorder(),
-        ),
-        child: Text(
-          text,
-          style: const TextStyle(fontSize: 24),
-        ),
+    final ButtonStyle flatButtonStyle = TextButton.styleFrom(
+      backgroundColor: MellotippetColors.melloBlue,
+      foregroundColor: Colors.white,
+      minimumSize: const Size(121, 31),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(2)),
+      ),
+    );
+
+    return TextButton(
+      style: flatButtonStyle,
+      onPressed: () {},
+      child: Text(
+        text,
+        style: const TextStyle(fontSize: 16),
       ),
     );
   }

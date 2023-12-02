@@ -115,9 +115,12 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
             },
           ),
         ),
-        CtaButton(
-          text: "Tippa",
-          onPressed: controller.submitPrediction,
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: CtaButton(
+            text: "Tippa",
+            onPressed: controller.submitPrediction,
+          ),
         )
       ],
     );
