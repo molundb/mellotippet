@@ -120,66 +120,32 @@ class HeatPredictionController
   }
 
   Future<bool> submitPrediction() {
-    var prediction = state.prediction;
-    if (prediction == null) {
+    var finalist1 = state.predictions[0]?.startNumber;
+    var finalist2 = state.predictions[1]?.startNumber;
+    var semifinalist1 = state.predictions[2]?.startNumber;
+    var semifinalist2 = state.predictions[3]?.startNumber;
+    var fifthPlace = state.predictions[4]?.startNumber;
+
+    if (finalist1 == null ||
+        finalist2 == null ||
+        semifinalist1 == null ||
+        semifinalist2 == null ||
+        fifthPlace == null) {
       return Future.value(false);
     }
+
+    var prediction = HeatPredictionModel(
+      finalist1: PredictionAndScore(prediction: finalist1),
+      finalist2: PredictionAndScore(prediction: finalist2),
+      semifinalist1: PredictionAndScore(prediction: semifinalist1),
+      semifinalist2: PredictionAndScore(prediction: semifinalist2),
+      fifthPlace: PredictionAndScore(prediction: fifthPlace),
+    );
 
     return databaseRepository.uploadHeatPrediction(
       state.currentCompetition,
       prediction,
     );
-  }
-
-  String? validatePredictionInput(String? prediction) {
-    if (prediction == null || prediction.isEmpty) {
-      return 'Prediction can not be empty';
-    }
-
-    if (prediction.length > 2) {
-      return 'Prediction is too long';
-    }
-
-    if (!_isNumeric(prediction)) {
-      return 'Prediction is not a number';
-    }
-
-    if (int.tryParse(prediction)! < 1 || int.tryParse(prediction)! > 12) {
-      return 'Prediction must be between 1 and 12';
-    }
-
-    return null;
-  }
-
-  bool _isNumeric(String s) => int.tryParse(s) != null;
-
-  bool duplicatePredictions() {
-    var prediction = state.prediction;
-    if (prediction == null) {
-      return false;
-    }
-
-    var duplicate = false;
-
-    final List<int> predictions = [
-      prediction.finalist1.prediction,
-      prediction.finalist2.prediction,
-      prediction.semifinalist1.prediction,
-      prediction.semifinalist2.prediction,
-      prediction.fifthPlace.prediction,
-    ];
-
-    List<int> tempPredictions = [];
-    for (var element in predictions) {
-      if (tempPredictions.contains(element)) {
-        duplicate = true;
-        break;
-      } else {
-        tempPredictions.add(element);
-      }
-    }
-
-    return duplicate;
   }
 }
 

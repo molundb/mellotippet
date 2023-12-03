@@ -10,4 +10,11 @@ class PredictionAndScore with _$PredictionAndScore {
 
   factory PredictionAndScore.fromJson(Map<String, dynamic> json) =>
       _$PredictionAndScoreFromJson(json);
+
+// static _toJson() {
+//   return <String, dynamic>{
+//     'prediction': prediction,
+//     'score': score,
+//   }
+// }
 }

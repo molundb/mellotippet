@@ -18,8 +18,6 @@ class HeatPredictionPage extends ConsumerStatefulWidget {
 }
 
 class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
-  final _formKey = GlobalKey<FormState>();
-
   HeatPredictionController get controller =>
       ref.read(HeatPredictionController.provider.notifier);
 
@@ -48,66 +46,63 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
-                  child: Form(
-                    key: _formKey,
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minHeight: viewportConstraints.maxHeight,
-                      ),
-                      child: Column(
-                        children: [
-                          const Center(child: Text('Final')),
-                          const SizedBox(height: 8.0),
-                          DragTargetRow(
-                            row: state.predictions[0],
-                            index: 0,
-                            emptyText: "Finalist",
-                            setRow: controller.setRow,
-                            clearRow: controller.clearRow,
-                          ),
-                          const SizedBox(height: 8.0),
-                          DragTargetRow(
-                            row: state.predictions[1],
-                            index: 1,
-                            emptyText: "Finalist",
-                            setRow: controller.setRow,
-                            clearRow: controller.clearRow,
-                          ),
-                          const SizedBox(height: 8.0),
-                          const Center(child: Text('Semifinal')),
-                          const SizedBox(height: 8.0),
-                          DragTargetRow(
-                            row: state.predictions[2],
-                            index: 2,
-                            emptyText: "Semifinalist",
-                            setRow: controller.setRow,
-                            clearRow: controller.clearRow,
-                          ),
-                          const SizedBox(height: 8.0),
-                          DragTargetRow(
-                            row: state.predictions[3],
-                            index: 3,
-                            emptyText: "Semifinalist",
-                            setRow: controller.setRow,
-                            clearRow: controller.clearRow,
-                          ),
-                          const SizedBox(height: 8.0),
-                          const Center(child: Text('Plats 5')),
-                          const SizedBox(height: 8.0),
-                          DragTargetRow(
-                            row: state.predictions[4],
-                            index: 4,
-                            emptyText: "Plats 5",
-                            setRow: controller.setRow,
-                            clearRow: controller.clearRow,
-                          ),
-                          const SizedBox(height: 8.0),
-                          const Center(child: Text('Övriga')),
-                          const SizedBox(height: 8.0),
-                          OtherList(others: state.others),
-                          const SizedBox(height: 8.0),
-                        ],
-                      ),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: viewportConstraints.maxHeight,
+                    ),
+                    child: Column(
+                      children: [
+                        const Center(child: Text('Final')),
+                        const SizedBox(height: 8.0),
+                        DragTargetRow(
+                          row: state.predictions[0],
+                          index: 0,
+                          emptyText: "Finalist",
+                          setRow: controller.setRow,
+                          clearRow: controller.clearRow,
+                        ),
+                        const SizedBox(height: 8.0),
+                        DragTargetRow(
+                          row: state.predictions[1],
+                          index: 1,
+                          emptyText: "Finalist",
+                          setRow: controller.setRow,
+                          clearRow: controller.clearRow,
+                        ),
+                        const SizedBox(height: 8.0),
+                        const Center(child: Text('Semifinal')),
+                        const SizedBox(height: 8.0),
+                        DragTargetRow(
+                          row: state.predictions[2],
+                          index: 2,
+                          emptyText: "Semifinalist",
+                          setRow: controller.setRow,
+                          clearRow: controller.clearRow,
+                        ),
+                        const SizedBox(height: 8.0),
+                        DragTargetRow(
+                          row: state.predictions[3],
+                          index: 3,
+                          emptyText: "Semifinalist",
+                          setRow: controller.setRow,
+                          clearRow: controller.clearRow,
+                        ),
+                        const SizedBox(height: 8.0),
+                        const Center(child: Text('Plats 5')),
+                        const SizedBox(height: 8.0),
+                        DragTargetRow(
+                          row: state.predictions[4],
+                          index: 4,
+                          emptyText: "Plats 5",
+                          setRow: controller.setRow,
+                          clearRow: controller.clearRow,
+                        ),
+                        const SizedBox(height: 8.0),
+                        const Center(child: Text('Övriga')),
+                        const SizedBox(height: 8.0),
+                        OtherList(others: state.others),
+                        const SizedBox(height: 8.0),
+                      ],
                     ),
                   ),
                 ),
@@ -127,17 +122,9 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
   }
 
   void _submitPressed(BuildContext context) {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
+    // if (_formKey.currentState!.validate()) {
 
-      if (!controller.duplicatePredictions()) {
-        _submit(context);
-      } else {
-        widget.snackbarHandler.showText(
-          title: 'Error: same prediction in multiple positions',
-        );
-      }
-    }
+    _submit(context);
   }
 
   void _submit(BuildContext context) async {
