@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mellotippet/common/models/all_models.dart';
+import 'package:mellotippet/common/models/song.dart';
 import 'package:mellotippet/common/repositories/repositories.dart';
 
 // TODO: Create an abstract class
@@ -218,17 +219,29 @@ class DatabaseRepository {
           .data();
 
   Future<FinalPredictionModel?> getPredictionsForFinalForUser(
-    String heatId,
-    String? userId,
-  ) async =>
+          String heatId, String? userId) async =>
       (await competitions
               .doc(heatId)
               .collection('predictionsAndScores')
               .doc(userId)
               .withConverter(
-        fromFirestore: FinalPredictionModel.fromFirestore,
+                fromFirestore: FinalPredictionModel.fromFirestore,
                 toFirestore: FinalPredictionModel.toFirestore,
               )
               .get())
           .data();
+
+  Future<List<Song>> getSongs(String heatId) async {
+    return (await competitions
+            .doc(heatId)
+            .collection('songs')
+            .withConverter(
+              fromFirestore: Song.fromFirestore,
+              toFirestore: Song.toFirestore,
+            )
+            .get())
+        .docs
+        .map((e) => e.data())
+        .toList();
+  }
 }

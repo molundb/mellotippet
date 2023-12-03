@@ -30,8 +30,8 @@ class HeatPredictionModel
       HeatPredictionModel.fromJson(snapshot.data() as Map<String, dynamic>);
 
   static Map<String, dynamic> toFirestore(
-          HeatPredictionModel model, SetOptions? options) =>
-      model.toJson();
+          HeatPredictionModel prediction, SetOptions? options) =>
+      prediction.toJson();
 }
 
 extension HeatPredictionToMap on HeatPredictionModel {

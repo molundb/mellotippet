@@ -39,13 +39,17 @@ class HeatPredictionController
     );
   }
 
-  void setOthers() {
-    final others = List<PredictionRow>.generate(
-        6,
-        (int index) => PredictionRow(
-              // key: Key('$index'),
-              startNumber: index + 1,
-            ));
+  void fetchSongs() async {
+    final songs = await databaseRepository.getSongs('heat1');
+
+    final others = songs
+        .map((song) => PredictionRow(
+              artist: song.artist,
+              song: song.song,
+              imageAsset: 'assets/images/${song.image}',
+              startNumber: song.startNumber,
+            ))
+        .toList();
 
     state = state.copyWith(others: others);
   }

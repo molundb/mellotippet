@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/common/widgets/cta_button.dart';
 import 'package:mellotippet/common/widgets/prediction_row.dart';
-import 'package:mellotippet/common/widgets/prediction_row_feedback_during_drag.dart';
 import 'package:mellotippet/prediction/heat_prediction_controller.dart';
 import 'package:mellotippet/snackbar/snackbar_handler.dart';
 import 'package:mellotippet/styles/all_styles.dart';
@@ -26,7 +25,7 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       controller.getUsernameAndCurrentCompetition();
-      controller.setOthers();
+      controller.fetchSongs();
     });
   }
 
@@ -165,9 +164,9 @@ class OtherList extends StatelessWidget {
             data: others[index],
             feedback: Material(
               child: SizedBox(
-                  width: constraints.maxWidth,
-                  child: PredictionRowFeedbackDuringDrag(
-                      startNumber: others[index].startNumber)),
+                width: constraints.maxWidth,
+                child: others[index].copyWithDraggingTrue(),
+              ),
             ),
             childWhenDragging: Container(
               height: 60.0,
@@ -216,9 +215,9 @@ class DragTargetRow extends StatelessWidget {
                     data: row,
                     feedback: Material(
                       child: SizedBox(
-                          width: constraints.maxWidth,
-                          child: PredictionRowFeedbackDuringDrag(
-                              startNumber: row.startNumber)),
+                        width: constraints.maxWidth,
+                        child: row.copyWithDraggingTrue(),
+                      ),
                     ),
                     childWhenDragging: Container(
                       height: 60.0,

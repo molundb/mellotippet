@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/common/widgets/prediction_row.dart';
-import 'package:mellotippet/common/widgets/prediction_row_feedback_during_drag.dart';
 import 'package:mellotippet/prediction/final_prediction_controller.dart';
 import 'package:mellotippet/snackbar/snackbar_handler.dart';
 
@@ -16,12 +15,7 @@ class FinalPredictionPage extends ConsumerStatefulWidget {
 }
 
 class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
-  final List<PredictionRow> _items = List<PredictionRow>.generate(
-      6,
-      (int index) => PredictionRow(
-            key: Key('$index'),
-            startNumber: index + 1,
-          ));
+  final List<PredictionRow> _items = [];
 
   final _formKey = GlobalKey<FormState>();
 
@@ -133,8 +127,7 @@ class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
                         feedback: Material(
                           child: SizedBox(
                               width: constraints.maxWidth,
-                              child: PredictionRowFeedbackDuringDrag(
-                                  startNumber: _items[index].startNumber)),
+                              child: _items[index]),
                         ),
                         childWhenDragging: Container(
                           height: 60.0,
