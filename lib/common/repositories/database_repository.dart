@@ -14,9 +14,6 @@ class DatabaseRepository {
 
   CollectionReference<Map<String, dynamic>> get users => db.collection('users');
 
-  CollectionReference<Map<String, dynamic>> get predictions =>
-      db.collection('predictionsAndScores');
-
   CollectionReference<Map<String, dynamic>> get competitions =>
       db.collection('competitions');
 
@@ -24,6 +21,16 @@ class DatabaseRepository {
     String competitionId,
   ) =>
       competitions.doc(competitionId).collection('predictionsAndScores');
+
+  CollectionReference<HeatPredictionModel> getPredictionsAndScoresForHeat(
+          String competitionId) =>
+      competitions
+          .doc(competitionId)
+          .collection('predictionsAndScores')
+          .withConverter(
+            fromFirestore: HeatPredictionModel.fromFirestore,
+            toFirestore: HeatPredictionModel.toFirestore,
+          );
 
   Future<bool> uploadHeatPrediction(
     String competitionId,
@@ -33,7 +40,7 @@ class DatabaseRepository {
       var uid = authRepository.currentUser?.uid;
 
       if (uid != null) {
-        await getHeatPredictionsAndScoreCollection(competitionId)
+        await getPredictionsAndScoresForHeat(competitionId)
             .doc(uid)
             .set(prediction);
 
@@ -143,22 +150,11 @@ class DatabaseRepository {
     String competitionId,
   ) async {
     final heatPredictionsAndScores =
-        getHeatPredictionsAndScoreCollection(competitionId);
+        getPredictionsAndScoresForHeat(competitionId);
     return (await heatPredictionsAndScores.get())
         .docs
         .map((e) => e.data())
         .toList();
-  }
-
-  CollectionReference<HeatPredictionModel> getHeatPredictionsAndScoreCollection(
-      String competitionId) {
-    return competitions
-        .doc(competitionId)
-        .collection('predictionsAndScores')
-        .withConverter(
-          fromFirestore: HeatPredictionModel.fromFirestore,
-          toFirestore: HeatPredictionModel.toFirestore,
-        );
   }
 
   Future<List<PredictionModel>> getAllPredictionsForSemifinal(
