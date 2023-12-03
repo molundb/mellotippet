@@ -13,7 +13,7 @@ class FeatureFlagRepository {
     );
 
     await remoteConfig.setDefaults(const {
-      'currentCompetition': 'ok',
+      'currentCompetition': 'heat1',
       'requiredMinimumAppVersion': '4.0.0',
       'recommendedMinimumAppVersion': '4.0.0',
     });
