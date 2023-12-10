@@ -74,7 +74,7 @@ dev_dependencies:
   fake_cloud_firestore: ^2.4.1+1
   firebase_auth_mocks: ^0.13.0
   build_runner: ^2.4.6
-  custom_lint: ^0.5.7
+#  custom_lint: ^0.5.7
   riverpod_generator: ^2.3.9
   riverpod_lint: ^2.3.7
   freezed: ^2.4.5
