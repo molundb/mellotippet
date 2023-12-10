@@ -11,14 +11,13 @@ class User {
 const userConverter = {
   toFirestore(user: User): DocumentData {
     return {
-      id: user.id,
       username: user.username,
       totalScore: user.totalScore,
     };
   },
   fromFirestore(snapshot: QueryDocumentSnapshot): User {
     const data = snapshot.data();
-    return new User(data.id, data.username, data.totalScore);
+    return new User(snapshot.id, data.username, data.totalScore);
   },
 };
 
