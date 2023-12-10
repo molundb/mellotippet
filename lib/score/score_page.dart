@@ -43,21 +43,33 @@ class _ScorePageState extends ConsumerState<ScorePage> {
           ),
           child: Container(),
         ),
-        Center(
-          child: Opacity(
-            opacity: 0.6,
-            child: Container(
-              width: 282,
-              decoration: BoxDecoration(
-                color: MellotippetColors.melloBlue,
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: MellotippetColors.scorePageBorder,
-                  width: 20,
+        Stack(
+          children: [
+            Center(
+              child: Opacity(
+                opacity: 0.6,
+                child: Container(
+                  width: 253,
+                  decoration: const BoxDecoration(
+                    color: MellotippetColors.melloBlue,
+                    shape: BoxShape.circle,
+                  ),
                 ),
               ),
             ),
-          ),
+            Center(
+              child: Opacity(
+                opacity: 0.3,
+                child: Container(
+                  width: 282,
+                  decoration: const BoxDecoration(
+                    color: MellotippetColors.scorePageBorder,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+            ),
+          ],
         )
       ],
     );
