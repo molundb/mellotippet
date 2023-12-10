@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mellotippet/config/config.dart';
 import 'package:mellotippet/prediction/heat_prediction_page.dart';
+import 'package:mellotippet/rules/final_rules_page_old.dart';
+import 'package:mellotippet/rules/rules_page.dart';
 import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/snackbar/snackbar_handler.dart';
 import 'package:mellotippet/styles/colors.dart';
@@ -23,6 +25,7 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
   static final List<Widget> _widgetOptions = <Widget>[
     const ScorePage(),
     HeatPredictionPage(snackbarHandler: getIt.get<SnackbarHandler>()),
+    const RulesPage(),
   ];
 
   final Widget trophyInactive = SvgPicture.asset(
@@ -65,6 +68,10 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
             BottomNavigationBarItem(
               icon: Icon(Icons.edit_note_sharp),
               label: 'Tippa',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.list_alt),
+              label: 'Regler',
             ),
           ],
           currentIndex: _selectedIndex,

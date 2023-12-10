@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/styles/colors.dart';
 import 'package:mellotippet/styles/text_styles.dart';
 
-class FinalRulesPage extends ConsumerWidget {
-  const FinalRulesPage({super.key});
+class FinalRulesPageOld extends ConsumerWidget {
+  const FinalRulesPageOld({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
