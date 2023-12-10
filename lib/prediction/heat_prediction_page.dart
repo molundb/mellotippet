@@ -21,12 +21,6 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
       ref.read(HeatPredictionController.provider.notifier);
 
   @override
-  void initState() {
-    super.initState();
-    controller.fetchSongs();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final state = ref.watch(HeatPredictionController.provider);
 
