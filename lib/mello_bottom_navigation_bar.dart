@@ -46,19 +46,23 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
           backgroundColor: MellotippetColors.melloPurple,
           unselectedItemColor: Colors.white,
           selectedItemColor: MellotippetColors.melloLightOrange,
-          items: <BottomNavigationBarItem>[
+          items: const <BottomNavigationBarItem>[
+            // BottomNavigationBarItem(
+            //   icon: Padding(
+            //     padding: const EdgeInsets.only(bottom: 4.0),
+            //     child: trophyInactive,
+            //   ),
+            //   label: 'Poäng',
+            //   activeIcon: Padding(
+            //     padding: const EdgeInsets.only(bottom: 4.0),
+            //     child: trophyActive,
+            //   ),
+            // ),
             BottomNavigationBarItem(
-              icon: Padding(
-                padding: const EdgeInsets.only(bottom: 4.0),
-                child: trophyInactive,
-              ),
+              icon: Icon(Icons.star),
               label: 'Poäng',
-              activeIcon: Padding(
-                padding: const EdgeInsets.only(bottom: 4.0),
-                child: trophyActive,
-              ),
             ),
-            const BottomNavigationBarItem(
+            BottomNavigationBarItem(
               icon: Icon(Icons.edit_note_sharp),
               label: 'Tippa',
             ),
