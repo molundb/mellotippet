@@ -25,38 +25,47 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
     HeatPredictionPage(snackbarHandler: getIt.get<SnackbarHandler>()),
   ];
 
+  final Widget trophyInactive = SvgPicture.asset(
+    'assets/icons/navbar_trophy_inactive.svg',
+  );
+
+  final Widget trophyActive = SvgPicture.asset(
+    'assets/icons/navbar_trophy_active.svg',
+  );
+
   @override
   Widget build(BuildContext context) {
-    final Widget trophyInactive = SvgPicture.asset(
-      'assets/icons/navbar_trophy_inactive.svg',
-    );
-
-    final Widget trophyActive = SvgPicture.asset(
-      'assets/icons/navbar_trophy_active.svg',
-    );
-
     return Scaffold(
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: MellotippetColors.melloPurple,
-        unselectedItemColor: Colors.white,
-        selectedItemColor: MellotippetColors.melloLightOrange,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: trophyInactive,
-            label: 'Poäng',
-            activeIcon: trophyActive,
-          ),
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.edit_note_sharp),
-            label: 'Tippa',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+      bottomNavigationBar: SizedBox(
+        height: 64,
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: MellotippetColors.melloPurple,
+          unselectedItemColor: Colors.white,
+          selectedItemColor: MellotippetColors.melloLightOrange,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: const EdgeInsets.only(bottom: 4.0),
+                child: trophyInactive,
+              ),
+              label: 'Poäng',
+              activeIcon: Padding(
+                padding: const EdgeInsets.only(bottom: 4.0),
+                child: trophyActive,
+              ),
+            ),
+            const BottomNavigationBarItem(
+              icon: Icon(Icons.edit_note_sharp),
+              label: 'Tippa',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+        ),
       ),
     );
   }
