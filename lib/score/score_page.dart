@@ -69,6 +69,14 @@ class _ScorePageState extends ConsumerState<ScorePage> {
                 ),
               ),
             ),
+            const Center(
+                child: Text(
+              '17 p',
+              style: TextStyle(
+                  fontSize: 92,
+                  fontFamily: 'Lalezar',
+                  color: MellotippetColors.melloLightOrange),
+            ))
           ],
         )
       ],

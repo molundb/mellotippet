@@ -127,6 +127,9 @@ flutter:
           weight: 500
         - asset: assets/fonts/roboto/Roboto-Bold.ttf
           weight: 700
+    - family: Lalezar
+      fonts:
+        - asset: assets/fonts/lalezar/Lalezar-Regular.ttf
 
 
   # For details regarding fonts from package dependencies,
