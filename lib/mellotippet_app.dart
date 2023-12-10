@@ -4,6 +4,7 @@ import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/force_upgrade/force_upgrade_page.dart';
 import 'package:mellotippet/styles/colors.dart';
 import 'package:mellotippet/styles/text_styles.dart';
+import 'package:mellotippet/theme.dart';
 
 class MellotippetApp extends StatelessWidget {
   final config = getIt.get<Config>();
@@ -13,6 +14,7 @@ class MellotippetApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const theme = MelloTippetTheme();
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
@@ -24,27 +26,7 @@ class MellotippetApp extends StatelessWidget {
       child: MaterialApp(
         title: config.title,
         scaffoldMessengerKey: snackbarKey,
-        theme: ThemeData(
-          primaryColor: MellotippetColors.melloPurple,
-          appBarTheme: const AppBarTheme(
-            color: MellotippetColors.melloLightPink,
-            shape: RoundedRectangleBorder(),
-          ),
-          elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: MellotippetColors.melloLightOrange,
-              // textStyle: const TextStyle(
-              //   fontSize: 12,
-              // )
-            ),
-          ),
-          fontFamily: 'Roboto',
-          textTheme: const TextTheme(
-            bodyLarge: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-            bodyMedium: MellotippetTextStyle.defaultStyle,
-            bodySmall: TextStyle(fontSize: 14.0, fontFamily: 'Roboto'),
-          ),
-        ),
+        theme: theme.toThemeData(),
         home: const ForceUpgradePage(),
       ),
     );
