@@ -136,6 +136,9 @@ flutter:
     - family: Lalezar
       fonts:
         - asset: assets/fonts/lalezar/Lalezar-Regular.ttf
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/inter/Inter-Regular.ttf
 
 
   # For details regarding fonts from package dependencies,
