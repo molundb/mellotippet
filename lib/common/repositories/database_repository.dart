@@ -180,7 +180,7 @@ class DatabaseRepository {
               .doc(competitionId)
               .collection('predictionsAndScores')
               .withConverter(
-        fromFirestore: FinalPredictionModel.fromFirestore,
+                fromFirestore: FinalPredictionModel.fromFirestore,
                 toFirestore: FinalPredictionModel.toFirestore,
               )
               .get())
@@ -243,5 +243,17 @@ class DatabaseRepository {
         .docs
         .map((e) => e.data())
         .toList();
+  }
+
+  Future<User> getCurrentUser() async {
+    final uid = authRepository.currentUser?.uid;
+    return (await users
+            .doc(uid)
+            .withConverter(
+              fromFirestore: User.fromFirestore,
+              toFirestore: User.toFirestore,
+            )
+            .get())
+        .data()!; // TODO: add try-catch and handle error
   }
 }

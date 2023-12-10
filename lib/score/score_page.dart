@@ -26,8 +26,6 @@ class _ScorePageState extends ConsumerState<ScorePage> {
   Widget build(BuildContext context) {
     final state = ref.watch(ScoreController.provider);
 
-    // TODO: Figure out how to handle loading
-
     return Stack(
       children: [
         Container(
@@ -67,14 +65,15 @@ class _ScorePageState extends ConsumerState<ScorePage> {
                 ),
               ),
             ),
-            const Center(
-                child: Text(
-              '17 p',
-              style: TextStyle(
-                  fontSize: 92,
-                  fontFamily: 'Lalezar',
-                  color: MellotippetColors.melloLightOrange),
-            ))
+            Center(
+              child: Text(
+                '${state.userScore} p',
+                style: const TextStyle(
+                    fontSize: 92,
+                    fontFamily: 'Lalezar',
+                    color: MellotippetColors.melloLightOrange),
+              ),
+            )
           ],
         )
       ],

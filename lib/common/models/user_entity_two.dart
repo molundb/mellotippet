@@ -10,24 +10,17 @@ class User with _$User {
   const factory User({
     String? id,
     String? username,
+    required num totalScore,
   }) = _User;
 
   factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);
 
   factory User.fromFirestore(
-    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    DocumentSnapshot snapshot,
     SnapshotOptions? options,
-  ) {
-    final data = snapshot.data();
+  ) =>
+      User.fromJson(snapshot.data() as Map<String, dynamic>);
 
-    return User.fromJson({'id': snapshot.id, 'username': data?['username']});
-  }
-
-  static Map<String, dynamic> toFirestore(User model, SetOptions? options) {
-    return {
-      // if (participants != null) "participants": participants,
-      // "time": time,
-      // if (locationName != null) "locationName": locationName,
-    };
-  }
+  static Map<String, dynamic> toFirestore(User model, SetOptions? options) =>
+      model.toJson();
 }
