@@ -9,21 +9,23 @@ class HeatRules extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
+      padding: const EdgeInsets.all(16),
       child: ListView(
         children: const [
           Text(
-            'Efter att alla låtar har spelats och innan det första resultatet har visats så röstar alla på vilka låtar de tror kommer till final, semifinal samt femte plats.'
+            'Man får tippa hur många gånger man vill. Det är enbart den sista tippningen som räknas. Tippningen stängs strax innan det första resultatet för deltävlingen tillkännages.'
             ''
-            '\n\nOm man har finalist på final (rätt på finalist): 5p'
-            '\nOm man har finalist på semifinal: 3p'
-            '\nOm man har finalist på 5e plats: 1p'
+            '\n\nPoäng för finalist:'
+            '\n\u2022 Finalist tippad som finalist: 5p'
+            '\n\u2022 Finalist tippad som semifinalist: 3p'
+            '\n\u2022 Finalist tippad som 5e plats: 1p'
             ''
-            '\n\nOm man har semifinalist på semifinalist (rätt på semifinalist): 2p'
-            '\nOm man har semifinalist på final: 1p'
-            '\nOm man har semifinalist på 5e plats: 1p'
+            '\n\nPoäng för semifinalist:'
+            '\n\u2022 Semifinalist tippad som finalist: 1p'
+            '\n\u2022 Semifinalist tippad som semifinalist: 2p'
+            '\n\u2022 Semifinalist tippad som 5e plats: 1p'
             ''
-            '\n\nOm man missar en deltävling / semifinalist / final får man 1p mindre än den som fick lägst poäng.',
+            '\n\nOm man missar att tippa på en deltävling får man 1 poäng mindre än den som tippade och fick lägst poäng på den deltävlingen.',
             style: TextStyle(fontFamily: 'Inter'),
           ),
         ],
