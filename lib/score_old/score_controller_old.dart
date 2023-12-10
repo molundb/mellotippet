@@ -4,10 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/common/models/all_models.dart';
 import 'package:mellotippet/common/repositories/repositories.dart';
 import 'package:mellotippet/service_location/get_it.dart';
-import 'package:mellotippet/score/score_calculator.dart';
+import 'package:mellotippet/score_old/score_calculator.dart';
 
-class ScoreController extends StateNotifier<ScoreControllerState> {
-  ScoreController({
+class ScoreControllerOld extends StateNotifier<ScoreControllerState> {
+  ScoreControllerOld({
     required DatabaseRepository databaseRepository,
     ScoreControllerState? state,
   })  : _databaseRepository = databaseRepository,
@@ -16,8 +16,8 @@ class ScoreController extends StateNotifier<ScoreControllerState> {
   final DatabaseRepository _databaseRepository;
 
   static final provider =
-      StateNotifierProvider<ScoreController, ScoreControllerState>(
-          (ref) => ScoreController(
+      StateNotifierProvider<ScoreControllerOld, ScoreControllerState>(
+          (ref) => ScoreControllerOld(
                 databaseRepository: getIt.get<DatabaseRepository>(),
               ));
 

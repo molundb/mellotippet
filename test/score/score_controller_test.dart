@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mellotippet/common/models/all_models.dart';
 import 'package:mellotippet/common/repositories/database_repository.dart';
 
-import 'package:mellotippet/score/score_controller.dart';
+import 'package:mellotippet/score_old/score_controller_old.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
@@ -23,8 +23,8 @@ void main() {
       'given no users, when getting user scores, then there are no user scores',
       () async {
     // Given
-    final scoreController =
-        ScoreController(databaseRepository: mockDatabaseRepo);
+        final scoreController =
+        ScoreControllerOld(databaseRepository: mockDatabaseRepo);
 
     final List<User> fakeUsers = [];
 
@@ -45,8 +45,8 @@ void main() {
   test('given no competition, when getting user scores, then all scores are 0',
       () async {
     // Given
-    final scoreController =
-        ScoreController(databaseRepository: mockDatabaseRepo);
+        final scoreController =
+        ScoreControllerOld(databaseRepository: mockDatabaseRepo);
 
     final fakeUsers = [
       const User(id: "id1", username: "username1"),
@@ -75,8 +75,8 @@ void main() {
       'given two users, when getting user scores, then there are two user scores',
       () async {
     // Given
-    final scoreController =
-        ScoreController(databaseRepository: mockDatabaseRepo);
+        final scoreController =
+        ScoreControllerOld(databaseRepository: mockDatabaseRepo);
 
     final fakeUsers = [
       const User(id: "id1", username: "username1"),
@@ -101,8 +101,8 @@ void main() {
       'given user with null username, when getting user scores, then there is no score for that user',
       () async {
     // Given
-    final scoreController =
-        ScoreController(databaseRepository: mockDatabaseRepo);
+        final scoreController =
+        ScoreControllerOld(databaseRepository: mockDatabaseRepo);
 
     final fakeUsers = [
       const User(id: "id1", username: "username1"),

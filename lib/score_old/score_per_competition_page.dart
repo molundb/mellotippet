@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/common/models/all_models.dart';
 import 'package:mellotippet/config/config.dart';
 import 'package:mellotippet/service_location/get_it.dart';
-import 'package:mellotippet/score/score_controller.dart';
-import 'package:mellotippet/score/score_for_competition_page.dart';
+import 'package:mellotippet/score_old/score_controller_old.dart';
+import 'package:mellotippet/score_old/score_for_competition_page.dart';
 import 'package:mellotippet/styles/colors.dart';
 
 class ScorePerCompetitionPage extends ConsumerStatefulWidget {
@@ -20,7 +20,8 @@ class ScorePerCompetitionPage extends ConsumerStatefulWidget {
 
 class _ScorePerCompetitionPageState
     extends ConsumerState<ScorePerCompetitionPage> {
-  ScoreController get controller => ref.read(ScoreController.provider.notifier);
+  ScoreControllerOld get controller =>
+      ref.read(ScoreControllerOld.provider.notifier);
   final config = getIt.get<Config>();
 
   @override

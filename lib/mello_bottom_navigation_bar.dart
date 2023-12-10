@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mellotippet/config/config.dart';
-import 'package:mellotippet/prediction/final_prediction_page_with_drag_and_drop_lists.dart';
 import 'package:mellotippet/prediction/heat_prediction_page.dart';
-import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/rules/final_rules_page.dart';
+import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/snackbar/snackbar_handler.dart';
 import 'package:mellotippet/styles/colors.dart';
 
-import 'prediction/final_prediction_page.dart';
-import 'score/score_page.dart';
+import 'score_old/score_page_old.dart';
 import 'settings/settings_page.dart';
 
 class MelloBottomNavigationBar extends StatefulWidget {
@@ -27,7 +25,7 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
     HeatPredictionPage(snackbarHandler: getIt.get<SnackbarHandler>()),
     // UpcomingCompetitionsPage(),
     const FinalRulesPage(),
-    const ScorePage(),
+    const ScorePageOld(),
     const SettingsPage(),
   ];
 
