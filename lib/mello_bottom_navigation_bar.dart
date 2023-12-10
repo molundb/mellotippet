@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:mellotippet/config/config.dart';
 import 'package:mellotippet/prediction/heat_prediction_page.dart';
 import 'package:mellotippet/service_location/get_it.dart';
@@ -26,6 +27,14 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
 
   @override
   Widget build(BuildContext context) {
+    final Widget trophyInactive = SvgPicture.asset(
+      'assets/icons/navbar_trophy_inactive.svg',
+    );
+
+    final Widget trophyActive = SvgPicture.asset(
+      'assets/icons/navbar_trophy_active.svg',
+    );
+
     return Scaffold(
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
@@ -35,12 +44,13 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
         backgroundColor: MellotippetColors.melloPurple,
         unselectedItemColor: Colors.white,
         selectedItemColor: MellotippetColors.melloLightOrange,
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.star),
-            label: 'Score',
+            icon: trophyInactive,
+            label: 'Poäng',
+            activeIcon: trophyActive,
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.edit_note_sharp),
             label: 'Tippa',
           ),

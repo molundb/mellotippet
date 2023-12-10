@@ -63,6 +63,7 @@ dependencies:
   package_info_plus: ^4.2.0
   json_annotation: ^4.8.1
   drag_and_drop_lists: ^0.3.3
+  flutter_svg: ^2.0.9
 
 dev_dependencies:
   flutter_test:
@@ -98,6 +99,8 @@ flutter:
   assets:
     - assets/images/tone-sekelius.png
     - assets/images/score_page_background.png
+    - assets/icons/navbar_trophy_inactive.svg
+    - assets/icons/navbar_trophy_active.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
