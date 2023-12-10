@@ -30,16 +30,36 @@ class _ScorePageState extends ConsumerState<ScorePage> {
 
     // TODO: Figure out how to handle loading
 
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(
-            'assets/images/score_page_background.png',
+    return Stack(
+      children: [
+        Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                'assets/images/score_page_background.png',
+              ),
+              fit: BoxFit.cover,
+            ),
           ),
-          fit: BoxFit.cover,
+          child: Container(),
         ),
-      ),
-      child: Container(),
+        Center(
+          child: Opacity(
+            opacity: 0.6,
+            child: Container(
+              width: 282,
+              decoration: BoxDecoration(
+                color: MellotippetColors.melloBlue,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: MellotippetColors.scorePageBorder,
+                  width: 20,
+                ),
+              ),
+            ),
+          ),
+        )
+      ],
     );
   }
 }
