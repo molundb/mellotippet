@@ -5,14 +5,14 @@ import 'package:mellotippet/score_old/score_controller_old.dart';
 import 'package:mellotippet/score_old/score_per_competition_page.dart';
 import 'package:mellotippet/styles/colors.dart';
 
-class ScorePageOld extends ConsumerStatefulWidget {
-  const ScorePageOld({super.key});
+class ScorePage extends ConsumerStatefulWidget {
+  const ScorePage({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ScorePageState();
 }
 
-class _ScorePageState extends ConsumerState<ScorePageOld> {
+class _ScorePageState extends ConsumerState<ScorePage> {
   ScoreControllerOld get controller =>
       ref.read(ScoreControllerOld.provider.notifier);
 

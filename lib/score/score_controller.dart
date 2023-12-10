@@ -6,8 +6,8 @@ import 'package:mellotippet/common/repositories/repositories.dart';
 import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/score_old/score_calculator.dart';
 
-class ScoreControllerOld extends StateNotifier<ScoreControllerState> {
-  ScoreControllerOld({
+class ScoreController extends StateNotifier<ScoreControllerState> {
+  ScoreController({
     required DatabaseRepository databaseRepository,
     ScoreControllerState? state,
   })  : _databaseRepository = databaseRepository,
@@ -16,12 +16,12 @@ class ScoreControllerOld extends StateNotifier<ScoreControllerState> {
   final DatabaseRepository _databaseRepository;
 
   static final provider =
-      StateNotifierProvider<ScoreControllerOld, ScoreControllerState>(
-          (ref) => ScoreControllerOld(
+      StateNotifierProvider<ScoreController, ScoreControllerState>(
+          (ref) => ScoreController(
                 databaseRepository: getIt.get<DatabaseRepository>(),
               ));
 
-  Future<void> getUserScore() async {
+  Future<void> getUserScores() async {
     state = state.copyWith(loading: true);
     final filteredAndSortedUserScores = (await _getUserScores())
         .filterNullsAndTesterAccounts()

@@ -6,7 +6,7 @@ import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/snackbar/snackbar_handler.dart';
 import 'package:mellotippet/styles/colors.dart';
 
-import 'score_old/score_page_old.dart';
+import 'score/score_page.dart';
 import 'settings/settings_page.dart';
 
 class MelloBottomNavigationBar extends StatefulWidget {
@@ -25,7 +25,7 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
     HeatPredictionPage(snackbarHandler: getIt.get<SnackbarHandler>()),
     // UpcomingCompetitionsPage(),
     const FinalRulesPage(),
-    const ScorePageOld(),
+    const ScorePage(),
     const SettingsPage(),
   ];
 

@@ -36,7 +36,7 @@ void main() {
     mockGetPredictionsCalls(fakeUsers, fakeCompetitions, mockDatabaseRepo);
 
     // When
-    await scoreController.getUserScores();
+    await scoreController.getUserScore();
 
     // Then
     expect(scoreController.state.userScores.length, 0);
@@ -63,7 +63,7 @@ void main() {
     mockGetPredictionsCalls(fakeUsers, fakeCompetitions, mockDatabaseRepo);
 
     // When
-    await scoreController.getUserScores();
+    await scoreController.getUserScore();
 
     // Then
     for (final score in scoreController.state.userScores) {
@@ -91,7 +91,7 @@ void main() {
     mockGetPredictionsCalls(fakeUsers, fakeCompetitions, mockDatabaseRepo);
 
     // When
-    await scoreController.getUserScores();
+    await scoreController.getUserScore();
 
     // Then
     expect(scoreController.state.userScores.length, 2);
@@ -118,7 +118,7 @@ void main() {
     mockGetPredictionsCalls(fakeUsers, fakeCompetitions, mockDatabaseRepo);
 
     // When
-    await scoreController.getUserScores();
+    await scoreController.getUserScore();
 
     // Then
     expect(scoreController.state.userScores.length, 2);
