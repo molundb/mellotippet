@@ -17,9 +17,7 @@ class _ScorePageState extends ConsumerState<ScorePage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.getUserScore();
-    });
+    controller.getUserScore();
   }
 
   @override

@@ -23,10 +23,7 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.getUsernameAndCurrentCompetition();
-      controller.fetchSongs();
-    });
+    controller.fetchSongs();
   }
 
   @override

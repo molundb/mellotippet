@@ -24,7 +24,8 @@ class DatabaseRepository {
       competitions.doc(competitionId).collection('predictionsAndScores');
 
   CollectionReference<HeatPredictionModel> getPredictionsAndScoresForHeat(
-          String competitionId) =>
+    String competitionId,
+  ) =>
       competitions
           .doc(competitionId)
           .collection('predictionsAndScores')

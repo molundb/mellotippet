@@ -28,17 +28,6 @@ class HeatPredictionController
     ),
   );
 
-  Future<void> getUsernameAndCurrentCompetition() async {
-    state = state.copyWith(loading: true);
-    final username = await databaseRepository.getCurrentUsername();
-    final currentCompetition = featureFlagRepository.getCurrentCompetition();
-    state = state.copyWith(
-      loading: false,
-      username: username,
-      currentCompetition: currentCompetition,
-    );
-  }
-
   void fetchSongs() async {
     final songs = await databaseRepository.getSongs('heat1');
 
@@ -147,7 +136,7 @@ class HeatPredictionController
     );
 
     return databaseRepository.uploadHeatPrediction(
-      state.currentCompetition,
+      featureFlagRepository.getCurrentCompetition(),
       prediction,
     );
   }
@@ -157,8 +146,6 @@ class HeatPredictionController
 class HeatPredictionControllerState with _$HeatPredictionControllerState {
   const factory HeatPredictionControllerState({
     @Default(false) bool loading,
-    @Default("") String username,
-    @Default("") String currentCompetition,
     HeatPredictionModel? prediction,
     @Default([null, null, null, null, null]) List<PredictionRow?> predictions,
     @Default([]) List<PredictionRow> others,
