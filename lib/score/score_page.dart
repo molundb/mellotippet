@@ -67,7 +67,7 @@ class _ScorePageState extends ConsumerState<ScorePage> {
             ),
             Center(
               child: Text(
-                '${state.userScore} p',
+                state.loading ? '0 p' : '${state.userScore} p',
                 style: const TextStyle(
                     fontSize: 92,
                     fontFamily: 'Lalezar',
