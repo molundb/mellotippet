@@ -11,7 +11,7 @@ class MelloTippetTheme {
       primaryColor: MellotippetColors.melloPurple,
       appBarTheme: const AppBarTheme(
         color: MellotippetColors.melloLightPink,
-        shape: RoundedRectangleBorder(),
+        elevation: 0,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
