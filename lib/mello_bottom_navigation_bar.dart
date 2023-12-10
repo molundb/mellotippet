@@ -27,16 +27,6 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          config.title,
-          style: const TextStyle(
-            color: MellotippetColors.melloLightOrange,
-            fontSize: 32,
-          ),
-        ),
-      ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
