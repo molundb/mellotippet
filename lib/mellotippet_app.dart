@@ -48,13 +48,13 @@ class _EagerSongFetcher extends ConsumerStatefulWidget {
 }
 
 class _EagerSongFetcherState extends ConsumerState<_EagerSongFetcher> {
-  HeatPredictionController get controller =>
+  HeatPredictionController get heatPredictionController =>
       ref.read(HeatPredictionController.provider.notifier);
 
   @override
   void initState() {
     super.initState();
-    controller.fetchSongs();
+    heatPredictionController.fetchSongs();
   }
 
   @override
