@@ -21,7 +21,7 @@ class ScoreControllerOld extends StateNotifier<ScoreControllerState> {
                 databaseRepository: getIt.get<DatabaseRepository>(),
               ));
 
-  Future<void> getUserScore() async {
+  Future<void> getUserScores() async {
     state = state.copyWith(loading: true);
     final filteredAndSortedUserScores = (await _getUserScores())
         .filterNullsAndTesterAccounts()

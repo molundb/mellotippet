@@ -20,7 +20,7 @@ class _ScorePageState extends ConsumerState<ScorePageOld> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.getUserScore();
+      controller.getUserScores();
     });
   }
 

@@ -1,17 +1,19 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mellotippet/common/models/all_models.dart';
 import 'package:mellotippet/common/repositories/repositories.dart';
-import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/score_old/score_calculator.dart';
+import 'package:mellotippet/service_location/get_it.dart';
+
+part 'score_controller.freezed.dart';
 
 class ScoreController extends StateNotifier<ScoreControllerState> {
   ScoreController({
     required DatabaseRepository databaseRepository,
     ScoreControllerState? state,
   })  : _databaseRepository = databaseRepository,
-        super(state ?? ScoreControllerState.withDefaults());
+        super(state ?? const ScoreControllerState());
 
   final DatabaseRepository _databaseRepository;
 
@@ -21,7 +23,7 @@ class ScoreController extends StateNotifier<ScoreControllerState> {
                 databaseRepository: getIt.get<DatabaseRepository>(),
               ));
 
-  Future<void> getUserScores() async {
+  Future<void> getUserScore() async {
     state = state.copyWith(loading: true);
     final filteredAndSortedUserScores = (await _getUserScores())
         .filterNullsAndTesterAccounts()
@@ -94,32 +96,12 @@ class ScoreController extends StateNotifier<ScoreControllerState> {
   }
 }
 
-@immutable
-class ScoreControllerState {
-  const ScoreControllerState({
-    this.loading = false,
-    required this.competitions,
-    required this.userScores,
-  });
-
-  final bool loading;
-  final CompetitionModel? competitions;
-  final List<UserScoreEntity> userScores;
-
-  ScoreControllerState copyWith({
-    bool? loading,
-    CompetitionModel? competitions,
-    List<UserScoreEntity>? userScores,
-  }) {
-    return ScoreControllerState(
-      loading: loading ?? this.loading,
-      competitions: competitions ?? this.competitions,
-      userScores: userScores ?? this.userScores,
-    );
-  }
-
-  factory ScoreControllerState.withDefaults() =>
-      const ScoreControllerState(competitions: null, userScores: []);
+@freezed
+class ScoreControllerState with _$ScoreControllerState {
+  const factory ScoreControllerState({
+    @Default(true) bool loading,
+    num? userScore,
+  }) = _ScoreControllerState;
 }
 
 extension FilterScores on List<UserScoreEntity> {

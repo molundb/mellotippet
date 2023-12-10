@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mellotippet/score_old/score_controller_old.dart';
-import 'package:mellotippet/score_old/score_per_competition_page.dart';
+import 'package:mellotippet/score/score_controller.dart';
 import 'package:mellotippet/styles/colors.dart';
 
 class ScorePage extends ConsumerStatefulWidget {
@@ -13,8 +12,7 @@ class ScorePage extends ConsumerStatefulWidget {
 }
 
 class _ScorePageState extends ConsumerState<ScorePage> {
-  ScoreControllerOld get controller =>
-      ref.read(ScoreControllerOld.provider.notifier);
+  ScoreController get controller => ref.read(ScoreController.provider.notifier);
 
   @override
   void initState() {
@@ -26,7 +24,7 @@ class _ScorePageState extends ConsumerState<ScorePage> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(ScoreControllerOld.provider);
+    final state = ref.watch(ScoreController.provider);
 
     // TODO: Figure out how to handle loading
 
