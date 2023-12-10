@@ -37,7 +37,6 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
       appBar: AppBar(
         toolbarHeight: 120,
         centerTitle: true,
-        backgroundColor: MellotippetColors.melloLightPink,
         title: const Text(
           'Tippa',
           style: TextStyle(

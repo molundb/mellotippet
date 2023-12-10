@@ -30,7 +30,6 @@ class _ScorePageState extends ConsumerState<ScorePage> {
       appBar: AppBar(
         toolbarHeight: 120,
         centerTitle: true,
-        backgroundColor: MellotippetColors.melloLightPink,
         title: const Text(
           'Poäng',
           style: TextStyle(

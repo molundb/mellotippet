@@ -27,7 +27,7 @@ class MellotippetApp extends StatelessWidget {
         theme: ThemeData(
           primaryColor: MellotippetColors.melloPurple,
           appBarTheme: const AppBarTheme(
-            color: MellotippetColors.melloPurple,
+            color: MellotippetColors.melloLightPink,
             shape: RoundedRectangleBorder(),
           ),
           elevatedButtonTheme: ElevatedButtonThemeData(
