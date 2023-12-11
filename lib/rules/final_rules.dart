@@ -9,24 +9,40 @@ class FinalRules extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
+      padding: const EdgeInsets.all(16),
       child: ListView(
         children: const [
-          Text(
-            'Predict the position of each song in the final. You can change your prediction as many times as you want - it is the last one that counts. The predictions close shortly before the first voting result is announced.'
-            ''
-            '\n\nIf you miss predicting the Final, you get 1p less than the person who got the lowest score.',
-            style: MellotippetTextStyle.defaultStyle,
+          Padding(
+            padding: EdgeInsets.only(bottom: 4.0),
+            child: Text('Tippning',
+                style: TextStyle(fontFamily: 'Inter', fontSize: 24)),
           ),
-          SizedBox(height: 32),
           Text(
-            'The scoring for the final is divided into three groups:'
-            '\n\ngroup 1: positions 1-4'
-            '\ngroup 2: positions 5-8'
-            '\ngroup 3: positions 9-12'
-            '\n\nFor each of the groups you get points based on how close your prediction is to the actual result. For group 1 the maximum achievable points is 5p, for group 2 it is 3p, and for group 3 it is 2p. If your prediction is exactly right you get the maximum points. If your prediction is one position off you get the maximum points minus 1. If your prediction is two positions off you get the maximum points minus 2. And so on. It is not possible to get minus points.',
-            style: MellotippetTextStyle.defaultStyle,
+            'Man får tippa hur många gånger man vill. Det är enbart den sista tippningen som räknas. Tippningen stängs strax innan det första resultatet för deltävlingen tillkännages.',
+            style: TextStyle(fontFamily: 'Inter'),
           ),
+          Padding(
+            padding: EdgeInsets.only(top: 20.0, bottom: 4.0),
+            child: Text('Poängräkning',
+                style: TextStyle(fontFamily: 'Inter', fontSize: 24)),
+          ),
+          Text(
+            'Poängsättningen för finalen är indelad i tre grupper:'
+            '\n\n\u2022 Grupp 1: låtarna med placering 1-4'
+            '\n\u2022 Grupp 2: låtarna med placering 5-8'
+            '\n\u2022 Grupp 3: låtarna med placering 9-12'
+            '\n\nMan får poäng baserat på hur nära ens tippning är det faktiska resultatet. Man får den högsta möjliga poängen om man prickar helt rätt. Den högsta möjliga poängen är 5 poäng för grupp 1, 3 poäng för grupp 2 och 2 poäng för grupp 3. För varje placering ens tippning är ifrån resultatet får man 1 poäng mindre. Den lägsta poängen man kan få för en låt är 0 poäng - det går inte att få minuspoäng.',
+            style: TextStyle(fontFamily: 'Inter'),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 20.0, bottom: 4.0),
+            child: Text('Miss av deltävling',
+                style: TextStyle(fontFamily: 'Inter', fontSize: 24)),
+          ),
+          Text(
+            'Om man inte tippar på en deltävling får man 1 poäng mindre än den som tippade och fick lägst poäng på den deltävlingen. Man har alltså fortfarande en chans att ta hem hela tävlingen!',
+            style: TextStyle(fontFamily: 'Inter'),
+          )
         ],
       ),
     );

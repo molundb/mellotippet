@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/rules/final_rules.dart';
 import 'package:mellotippet/rules/heat_rules.dart';
+import 'package:mellotippet/rules/semifinal_rules.dart';
 import 'package:mellotippet/styles/colors.dart';
 import 'package:mellotippet/styles/text_styles.dart';
 
@@ -35,7 +36,7 @@ class RulesPage extends ConsumerWidget {
         body: const TabBarView(
           children: [
             HeatRules(),
-            FinalRules(),
+            SemifinalRules(),
             FinalRules(),
           ],
         ),
