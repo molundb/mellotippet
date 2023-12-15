@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mellotippet/config/config.dart';
 import 'package:mellotippet/prediction/heat_prediction_page.dart';
-import 'package:mellotippet/rules/final_rules_page_old.dart';
 import 'package:mellotippet/rules/rules_page.dart';
 import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/snackbar/snackbar_handler.dart';
@@ -42,41 +41,38 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      bottomNavigationBar: SizedBox(
-        height: 64,
-        child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: MellotippetColors.melloPurple,
-          unselectedItemColor: Colors.white,
-          selectedItemColor: MellotippetColors.melloLightOrange,
-          items: const <BottomNavigationBarItem>[
-            // BottomNavigationBarItem(
-            //   icon: Padding(
-            //     padding: const EdgeInsets.only(bottom: 4.0),
-            //     child: trophyInactive,
-            //   ),
-            //   label: 'Poäng',
-            //   activeIcon: Padding(
-            //     padding: const EdgeInsets.only(bottom: 4.0),
-            //     child: trophyActive,
-            //   ),
-            // ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.star),
-              label: 'Poäng',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.edit_note_sharp),
-              label: 'Tippa',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.list_alt),
-              label: 'Regler',
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: MellotippetColors.melloPurple,
+        unselectedItemColor: Colors.white,
+        selectedItemColor: MellotippetColors.melloLightOrange,
+        items: const <BottomNavigationBarItem>[
+          // BottomNavigationBarItem(
+          //   icon: Padding(
+          //     padding: const EdgeInsets.only(bottom: 4.0),
+          //     child: trophyInactive,
+          //   ),
+          //   label: 'Poäng',
+          //   activeIcon: Padding(
+          //     padding: const EdgeInsets.only(bottom: 4.0),
+          //     child: trophyActive,
+          //   ),
+          // ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.star),
+            label: 'Poäng',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.edit_note_sharp),
+            label: 'Tippa',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list_alt),
+            label: 'Regler',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
       ),
     );
   }
