@@ -1,6 +1,6 @@
 # Mellotippet
 
-An app for competing in predicting the results of Melodifestivalen with your friends and family.
+An app for competing in predicting the results of [Melodifestivalen](https://sv.wikipedia.org/wiki/Melodifestivalen) with friends and family.
 
 ## Set Up
 
