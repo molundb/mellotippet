@@ -6,16 +6,6 @@ import 'package:mellotippet/common/repositories/repositories.dart';
 abstract class DatabaseRepository {
   CollectionReference<Map<String, dynamic>> get users;
 
-  CollectionReference<Map<String, dynamic>> get competitions;
-
-  CollectionReference<Map<String, dynamic>> predictionsForCompetition(
-    String competitionId,
-  );
-
-  CollectionReference<HeatPredictionModel> getPredictionsAndScoresForHeat(
-    String competitionId,
-  );
-
   Future<bool> uploadHeatPrediction(
     String competitionId,
     HeatPredictionModel prediction,
@@ -38,6 +28,10 @@ abstract class DatabaseRepository {
   Future<List<Song>> getSongs(String heatId);
 
   Future<User> getCurrentUser();
+
+  Future<User?> getUserWithUsername(String username);
+
+  void setUsername(String username);
 }
 
 class DatabaseRepositoryImpl implements DatabaseRepository {
@@ -52,34 +46,35 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
   @override
   CollectionReference<Map<String, dynamic>> get users => db.collection('users');
 
-  @override
-  CollectionReference<Map<String, dynamic>> get competitions =>
+  CollectionReference<Map<String, dynamic>> get _competitions =>
       db.collection('competitions');
 
-  @override
-  CollectionReference<Map<String, dynamic>> predictionsForCompetition(
-      String competitionId,) =>
-      competitions.doc(competitionId).collection('predictionsAndScores');
+  CollectionReference<Map<String, dynamic>> _predictionsForCompetition(
+    String competitionId,
+  ) =>
+      _competitions.doc(competitionId).collection('predictionsAndScores');
 
-  @override
-  CollectionReference<HeatPredictionModel> getPredictionsAndScoresForHeat(
-      String competitionId,) =>
-      competitions
+  CollectionReference<HeatPredictionModel> _getPredictionsAndScoresForHeat(
+    String competitionId,
+  ) =>
+      _competitions
           .doc(competitionId)
           .collection('predictionsAndScores')
           .withConverter(
-        fromFirestore: HeatPredictionModel.fromFirestore,
-        toFirestore: HeatPredictionModel.toFirestore,
-      );
+            fromFirestore: HeatPredictionModel.fromFirestore,
+            toFirestore: HeatPredictionModel.toFirestore,
+          );
 
   @override
-  Future<bool> uploadHeatPrediction(String competitionId,
-      HeatPredictionModel prediction,) async {
+  Future<bool> uploadHeatPrediction(
+    String competitionId,
+    HeatPredictionModel prediction,
+  ) async {
     try {
       var uid = authRepository.currentUser?.uid;
 
       if (uid != null) {
-        await getPredictionsAndScoresForHeat(competitionId)
+        await _getPredictionsAndScoresForHeat(competitionId)
             .doc(uid)
             .set(prediction);
 
@@ -92,13 +87,15 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
   }
 
   @override
-  Future<bool> uploadSemifinalPrediction(String competitionId,
-      SemifinalPredictionModel prediction,) async {
+  Future<bool> uploadSemifinalPrediction(
+    String competitionId,
+    SemifinalPredictionModel prediction,
+  ) async {
     try {
       var uid = authRepository.currentUser?.uid;
 
       if (uid != null) {
-        await predictionsForCompetition(competitionId).doc(uid).set({
+        await _predictionsForCompetition(competitionId).doc(uid).set({
           "finalist1": prediction.finalist1,
           "finalist2": prediction.finalist2,
         });
@@ -112,13 +109,15 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
   }
 
   @override
-  Future<bool> uploadFinalPrediction(String competitionId,
-      FinalPredictionModel prediction,) async {
+  Future<bool> uploadFinalPrediction(
+    String competitionId,
+    FinalPredictionModel prediction,
+  ) async {
     try {
       var uid = authRepository.currentUser?.uid;
 
       if (uid != null) {
-        await predictionsForCompetition(competitionId).doc(uid).set({
+        await _predictionsForCompetition(competitionId).doc(uid).set({
           "placement1": prediction.placement1,
           "placement2": prediction.placement2,
           "placement3": prediction.placement3,
@@ -160,7 +159,7 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
   }
 
   @override
-  Future<List<CompetitionModel>> getCompetitions() async => (await competitions
+  Future<List<CompetitionModel>> getCompetitions() async => (await _competitions
           .withConverter(
             fromFirestore: CompetitionModel.fromFirestore,
             toFirestore: CompetitionModel.toFirestore,
@@ -172,7 +171,7 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
 
   @override
   Future<List<Song>> getSongs(String heatId) async {
-    return (await competitions
+    return (await _competitions
             .doc(heatId)
             .collection('songs')
             .withConverter(
@@ -189,12 +188,34 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
   Future<User> getCurrentUser() async {
     final uid = authRepository.currentUser?.uid;
     return (await users
-        .doc(uid)
-        .withConverter(
-      fromFirestore: User.fromFirestore,
-      toFirestore: User.toFirestore,
-    )
-        .get())
+            .doc(uid)
+            .withConverter(
+              fromFirestore: User.fromFirestore,
+              toFirestore: User.toFirestore,
+            )
+            .get())
         .data()!; // TODO: add try-catch and handle error
+  }
+
+  @override
+  Future<User?> getUserWithUsername(String username) async {
+    final querySnapshot = await users
+        .where('username', isEqualTo: username)
+        .withConverter(
+          fromFirestore: User.fromFirestore,
+          toFirestore: User.toFirestore,
+        )
+        .get();
+
+    return querySnapshot.docs.firstOrNull?.data();
+  }
+
+  @override
+  void setUsername(String username) async {
+    final uid = authRepository.currentUser?.uid;
+
+    users.doc(uid).set({
+      "username": username,
+    });
   }
 }

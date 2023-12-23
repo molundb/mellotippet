@@ -168,11 +168,7 @@ class _SubmitButton extends StatelessWidget {
         password: controller.password,
       );
 
-      final uid = _authRepository.currentUser?.uid;
-
-      _databaseRepository.users.doc(uid).set({
-        "username": controller.username,
-      });
+      _databaseRepository.setUsername(controller.username);
 
       if (context.mounted) {
         Navigator.of(context).pushAndRemoveUntil(

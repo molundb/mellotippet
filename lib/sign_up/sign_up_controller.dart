@@ -27,10 +27,7 @@ class SignUpController {
   }
 
   Future<bool> isUsernameAlreadyTaken() async {
-    final query = await databaseRepository.users
-        .where('username', isEqualTo: username)
-        .get();
-
-    return query.docs.isNotEmpty;
+    final user = await databaseRepository.getUserWithUsername(username);
+    return user != null;
   }
 }
