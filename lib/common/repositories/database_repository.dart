@@ -4,8 +4,6 @@ import 'package:mellotippet/common/models/song.dart';
 import 'package:mellotippet/common/repositories/repositories.dart';
 
 abstract class DatabaseRepository {
-  CollectionReference<Map<String, dynamic>> get users;
-
   Future<bool> uploadHeatPrediction(
     String competitionId,
     HeatPredictionModel prediction,
@@ -43,8 +41,8 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
     required this.authRepository,
   });
 
-  @override
-  CollectionReference<Map<String, dynamic>> get users => db.collection('users');
+  CollectionReference<Map<String, dynamic>> get _users =>
+      db.collection('users');
 
   CollectionReference<Map<String, dynamic>> get _competitions =>
       db.collection('competitions');
@@ -148,7 +146,7 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
   }
 
   Future<String> _getUsername(String? uid) async {
-    return await users.doc(uid).get().then(
+    return await _users.doc(uid).get().then(
       (DocumentSnapshot doc) {
         final data = doc.data() as Map<String, dynamic>;
 
@@ -187,7 +185,7 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
   @override
   Future<User> getCurrentUser() async {
     final uid = authRepository.currentUser?.uid;
-    return (await users
+    return (await _users
             .doc(uid)
             .withConverter(
               fromFirestore: User.fromFirestore,
@@ -199,7 +197,7 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
 
   @override
   Future<User?> getUserWithUsername(String username) async {
-    final querySnapshot = await users
+    final querySnapshot = await _users
         .where('username', isEqualTo: username)
         .withConverter(
           fromFirestore: User.fromFirestore,
@@ -214,7 +212,7 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
   void setUsername(String username) async {
     final uid = authRepository.currentUser?.uid;
 
-    users.doc(uid).set({
+    _users.doc(uid).set({
       "username": username,
     });
   }

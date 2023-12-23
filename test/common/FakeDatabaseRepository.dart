@@ -9,10 +9,6 @@ import 'package:mellotippet/common/repositories/database_repository.dart';
 
 class FakeDatabaseRepository implements DatabaseRepository {
   @override
-  CollectionReference<Map<String, dynamic>> get users =>
-      throw UnimplementedError();
-
-  @override
   Future<List<CompetitionModel>> getCompetitions() {
     // TODO: implement getCompetitions
     throw UnimplementedError();
@@ -55,5 +51,16 @@ class FakeDatabaseRepository implements DatabaseRepository {
       String competitionId, SemifinalPredictionModel prediction) {
     // TODO: implement uploadSemifinalPrediction
     throw UnimplementedError();
+  }
+
+  @override
+  Future<User?> getUserWithUsername(String username) {
+    // TODO: implement getUserWithUsername
+    throw UnimplementedError();
+  }
+
+  @override
+  void setUsername(String username) {
+    // TODO: implement setUsername
   }
 }
