@@ -27,11 +27,42 @@ Future<void> setUpGetIt(Flavor flavor) async {
             firebaseAuth: FirebaseAuth.instance,
           ));
 
-  getIt.registerLazySingleton<DatabaseRepositoryImpl>(
-      () => DatabaseRepositoryImpl(
-            db: FirebaseFirestore.instance,
-            authRepository: getIt.get<AuthenticationRepository>(),
+  getIt.registerLazySingleton<DatabaseRepository>(() => DatabaseRepositoryImpl(
+        db: FirebaseFirestore.instance,
+        authRepository: getIt.get<AuthenticationRepository>(),
+      ));
+
+  getIt.registerLazySingleton<FeatureFlagRepository>(
+      () => FeatureFlagRepository());
+
+  getIt.registerSingleton<SnackbarHandler>(
+    SnackbarHandler(
+      getIt.get<GlobalKey<ScaffoldMessengerState>>(),
+      getIt.get<Logger>(),
+    ),
+  );
+
+  getIt.registerSingleton<MellotippetPackageInfo>(MellotippetPackageInfo());
+
+  return getIt.allReady();
+}
+
+Future<void> setUpGetItForTest(DatabaseRepository databaseRepository) {
+  // getIt.registerSingleton<Config>(Config(flavor));
+  // getIt.registerSingleton<FirebaseEnvironment>(FirebaseEnvironment());
+
+  getIt.registerSingleton<Logger>(Logger());
+
+  getIt.registerSingleton<GlobalKey<ScaffoldMessengerState>>(
+    GlobalKey<ScaffoldMessengerState>(),
+  );
+
+  getIt.registerLazySingleton<AuthenticationRepository>(
+      () => AuthenticationRepository(
+            firebaseAuth: FirebaseAuth.instance,
           ));
+
+  getIt.registerLazySingleton<DatabaseRepository>(() => databaseRepository);
 
   getIt.registerLazySingleton<FeatureFlagRepository>(
       () => FeatureFlagRepository());
