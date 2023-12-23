@@ -7,17 +7,17 @@ part 'score_controller.freezed.dart';
 
 class ScoreController extends StateNotifier<ScoreControllerState> {
   ScoreController({
-    required DatabaseRepository databaseRepository,
+    required DatabaseRepositoryImpl databaseRepository,
     ScoreControllerState? state,
   })  : _databaseRepository = databaseRepository,
         super(state ?? const ScoreControllerState());
 
-  final DatabaseRepository _databaseRepository;
+  final DatabaseRepositoryImpl _databaseRepository;
 
   static final provider =
       StateNotifierProvider<ScoreController, ScoreControllerState>(
           (ref) => ScoreController(
-                databaseRepository: getIt.get<DatabaseRepository>(),
+                databaseRepository: getIt.get<DatabaseRepositoryImpl>(),
               ));
 
   Future<void> getUserScore() async {

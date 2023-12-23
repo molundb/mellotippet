@@ -124,8 +124,8 @@ class _SubmitButton extends StatelessWidget {
   final AuthenticationRepository _authRepository =
       getIt.get<AuthenticationRepository>();
 
-  final DatabaseRepository _databaseRepository =
-      getIt.get<DatabaseRepository>();
+  final DatabaseRepositoryImpl _databaseRepository =
+      getIt.get<DatabaseRepositoryImpl>();
 
   _SubmitButton({
     required this.formKey,

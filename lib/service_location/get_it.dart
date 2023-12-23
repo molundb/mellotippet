@@ -27,10 +27,11 @@ Future<void> setUpGetIt(Flavor flavor) async {
             firebaseAuth: FirebaseAuth.instance,
           ));
 
-  getIt.registerLazySingleton<DatabaseRepository>(() => DatabaseRepository(
-        db: FirebaseFirestore.instance,
-        authRepository: getIt.get<AuthenticationRepository>(),
-      ));
+  getIt.registerLazySingleton<DatabaseRepositoryImpl>(
+      () => DatabaseRepositoryImpl(
+            db: FirebaseFirestore.instance,
+            authRepository: getIt.get<AuthenticationRepository>(),
+          ));
 
   getIt.registerLazySingleton<FeatureFlagRepository>(
       () => FeatureFlagRepository());

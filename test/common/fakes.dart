@@ -30,8 +30,8 @@ final fakeFinalPrediction = FinalPredictionModel(
 );
 
 final fakeUsers = [
-  const User(id: "id1", username: "username1"),
-  const User(id: "id2", username: "username2"),
+  const User(id: "id1", username: "username1", totalScore: 0),
+  const User(id: "id2", username: "username2", totalScore: 0),
 ];
 
 final fakeCompetitions = [
