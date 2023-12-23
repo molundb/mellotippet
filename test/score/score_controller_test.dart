@@ -7,7 +7,7 @@ import '../common/fakes.dart';
 
 void main() {
   test(
-      'given user with totalSCore, when getUserScore is called, then state is set with score',
+      'given user with totalScore, when getUserScore is called, then state is set with score',
       () async {
     // Given
     final scoreController = ScoreController(
