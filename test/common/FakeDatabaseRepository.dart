@@ -7,60 +7,63 @@ import 'package:mellotippet/common/models/song.dart';
 import 'package:mellotippet/common/models/user_entity_two.dart';
 import 'package:mellotippet/common/repositories/database_repository.dart';
 
+import 'fakes.dart';
+
 class FakeDatabaseRepository implements DatabaseRepository {
+  User currentUser;
+
+  FakeDatabaseRepository({User? currentUser})
+      : currentUser = currentUser ?? fakeUser;
+
   @override
   Future<List<CompetitionModel>> getCompetitions() {
-    // TODO: implement getCompetitions
-    throw UnimplementedError();
+    return Future.value([]);
   }
 
   @override
   Future<User> getCurrentUser() {
-    // TODO: implement getCurrentUser
-    throw UnimplementedError();
+    return Future.value(currentUser);
   }
 
   @override
   Future<String> getCurrentUsername() {
-    // TODO: implement getCurrentUsername
-    throw UnimplementedError();
+    return Future.value("username");
   }
 
   @override
   Future<List<Song>> getSongs(String heatId) {
-    // TODO: implement getSongs
-    throw UnimplementedError();
+    return Future.value([]);
   }
 
   @override
   Future<bool> uploadFinalPrediction(
-      String competitionId, FinalPredictionModel prediction) {
-    // TODO: implement uploadFinalPrediction
-    throw UnimplementedError();
+    String competitionId,
+    FinalPredictionModel prediction,
+  ) {
+    return Future.value(true);
   }
 
   @override
   Future<bool> uploadHeatPrediction(
-      String competitionId, HeatPredictionModel prediction) {
-    // TODO: implement uploadHeatPrediction
-    throw UnimplementedError();
+    String competitionId,
+    HeatPredictionModel prediction,
+  ) {
+    return Future.value(true);
   }
 
   @override
   Future<bool> uploadSemifinalPrediction(
-      String competitionId, SemifinalPredictionModel prediction) {
-    // TODO: implement uploadSemifinalPrediction
-    throw UnimplementedError();
+    String competitionId,
+    SemifinalPredictionModel prediction,
+  ) {
+    return Future.value(true);
   }
 
   @override
   Future<User?> getUserWithUsername(String username) {
-    // TODO: implement getUserWithUsername
-    throw UnimplementedError();
+    return Future.value(null);
   }
 
   @override
-  void setUsername(String username) {
-    // TODO: implement setUsername
-  }
+  void setUsername(String username) {}
 }

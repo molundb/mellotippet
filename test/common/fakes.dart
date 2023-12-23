@@ -29,6 +29,8 @@ final fakeFinalPrediction = FinalPredictionModel(
   placement12: PredictionAndScore(prediction: 12),
 );
 
+final fakeUser = fakeUsers[0];
+
 final fakeUsers = [
   const User(id: "id1", username: "username1", totalScore: 0),
   const User(id: "id2", username: "username2", totalScore: 0),
