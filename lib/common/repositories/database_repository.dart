@@ -3,41 +3,78 @@ import 'package:mellotippet/common/models/all_models.dart';
 import 'package:mellotippet/common/models/song.dart';
 import 'package:mellotippet/common/repositories/repositories.dart';
 
-// TODO: Create an abstract class
-class DatabaseRepository {
-  FirebaseFirestore db;
-  AuthenticationRepository authRepository;
+abstract class DatabaseRepository {
+  CollectionReference<Map<String, dynamic>> get users;
 
-  DatabaseRepository({
-    required this.db,
-    required this.authRepository,
-  });
-
-  CollectionReference<Map<String, dynamic>> get users => db.collection('users');
-
-  CollectionReference<Map<String, dynamic>> get competitions =>
-      db.collection('competitions');
+  CollectionReference<Map<String, dynamic>> get competitions;
 
   CollectionReference<Map<String, dynamic>> predictionsForCompetition(
     String competitionId,
-  ) =>
-      competitions.doc(competitionId).collection('predictionsAndScores');
+  );
 
   CollectionReference<HeatPredictionModel> getPredictionsAndScoresForHeat(
     String competitionId,
-  ) =>
-      competitions
-          .doc(competitionId)
-          .collection('predictionsAndScores')
-          .withConverter(
-            fromFirestore: HeatPredictionModel.fromFirestore,
-            toFirestore: HeatPredictionModel.toFirestore,
-          );
+  );
 
   Future<bool> uploadHeatPrediction(
     String competitionId,
     HeatPredictionModel prediction,
-  ) async {
+  );
+
+  Future<bool> uploadSemifinalPrediction(
+    String competitionId,
+    SemifinalPredictionModel prediction,
+  );
+
+  Future<bool> uploadFinalPrediction(
+    String competitionId,
+    FinalPredictionModel prediction,
+  );
+
+  Future<String> getCurrentUsername();
+
+  Future<List<CompetitionModel>> getCompetitions();
+
+  Future<List<Song>> getSongs(String heatId);
+
+  Future<User> getCurrentUser();
+}
+
+class DatabaseRepositoryImpl implements DatabaseRepository {
+  FirebaseFirestore db;
+  AuthenticationRepository authRepository;
+
+  DatabaseRepositoryImpl({
+    required this.db,
+    required this.authRepository,
+  });
+
+  @override
+  CollectionReference<Map<String, dynamic>> get users => db.collection('users');
+
+  @override
+  CollectionReference<Map<String, dynamic>> get competitions =>
+      db.collection('competitions');
+
+  @override
+  CollectionReference<Map<String, dynamic>> predictionsForCompetition(
+      String competitionId,) =>
+      competitions.doc(competitionId).collection('predictionsAndScores');
+
+  @override
+  CollectionReference<HeatPredictionModel> getPredictionsAndScoresForHeat(
+      String competitionId,) =>
+      competitions
+          .doc(competitionId)
+          .collection('predictionsAndScores')
+          .withConverter(
+        fromFirestore: HeatPredictionModel.fromFirestore,
+        toFirestore: HeatPredictionModel.toFirestore,
+      );
+
+  @override
+  Future<bool> uploadHeatPrediction(String competitionId,
+      HeatPredictionModel prediction,) async {
     try {
       var uid = authRepository.currentUser?.uid;
 
@@ -54,10 +91,9 @@ class DatabaseRepository {
     }
   }
 
-  Future<bool> uploadSemifinalPrediction(
-    String competitionId,
-    SemifinalPredictionModel prediction,
-  ) async {
+  @override
+  Future<bool> uploadSemifinalPrediction(String competitionId,
+      SemifinalPredictionModel prediction,) async {
     try {
       var uid = authRepository.currentUser?.uid;
 
@@ -75,10 +111,9 @@ class DatabaseRepository {
     }
   }
 
-  Future<bool> uploadFinalPrediction(
-    String competitionId,
-    FinalPredictionModel prediction,
-  ) async {
+  @override
+  Future<bool> uploadFinalPrediction(String competitionId,
+      FinalPredictionModel prediction,) async {
     try {
       var uid = authRepository.currentUser?.uid;
 
@@ -107,6 +142,7 @@ class DatabaseRepository {
     }
   }
 
+  @override
   Future<String> getCurrentUsername() async {
     final uid = authRepository.currentUser?.uid;
     return await _getUsername(uid);
@@ -123,21 +159,7 @@ class DatabaseRepository {
     );
   }
 
-  Future<List<String>> getUsernames() async => (await users.get())
-      .docs
-      .map((user) => user.data()["username"] as String)
-      .toList();
-
-  Future<List<User>> getUsers() async => (await users
-          .withConverter(
-            fromFirestore: User.fromFirestore,
-            toFirestore: User.toFirestore,
-          )
-          .get())
-      .docs
-      .map((e) => e.data())
-      .toList();
-
+  @override
   Future<List<CompetitionModel>> getCompetitions() async => (await competitions
           .withConverter(
             fromFirestore: CompetitionModel.fromFirestore,
@@ -148,90 +170,7 @@ class DatabaseRepository {
       .map((e) => e.data())
       .toList();
 
-  Future<List<HeatPredictionModel>> getAllPredictionsForHeat(
-    String competitionId,
-  ) async {
-    final heatPredictionsAndScores =
-        getPredictionsAndScoresForHeat(competitionId);
-    return (await heatPredictionsAndScores.get())
-        .docs
-        .map((e) => e.data())
-        .toList();
-  }
-
-  Future<List<PredictionModel>> getAllPredictionsForSemifinal(
-    String competitionId,
-  ) async =>
-      (await competitions
-              .doc(competitionId)
-              .collection('predictionsAndScores')
-              .withConverter(
-                fromFirestore: SemifinalPredictionModel.fromFirestore,
-                toFirestore: SemifinalPredictionModel.toFirestore,
-              )
-              .get())
-          .docs
-          .map((e) => e.data())
-          .toList();
-
-  Future<List<PredictionModel>> getAllPredictionsForFinal(
-    String competitionId,
-  ) async =>
-      (await competitions
-              .doc(competitionId)
-              .collection('predictionsAndScores')
-              .withConverter(
-                fromFirestore: FinalPredictionModel.fromFirestore,
-                toFirestore: FinalPredictionModel.toFirestore,
-              )
-              .get())
-          .docs
-          .map((e) => e.data())
-          .toList();
-
-  Future<HeatPredictionModel?> getPredictionsForHeatForUser(
-    String heatId,
-    String? userId,
-  ) async =>
-      (await competitions
-              .doc(heatId)
-              .collection('predictionsAndScores')
-              .doc(userId)
-              .withConverter(
-                fromFirestore: HeatPredictionModel.fromFirestore,
-                toFirestore: HeatPredictionModel.toFirestore,
-              )
-              .get())
-          .data();
-
-  Future<SemifinalPredictionModel?> getPredictionsForSemifinalForUser(
-    String heatId,
-    String? userId,
-  ) async =>
-      (await competitions
-              .doc(heatId)
-              .collection('predictionsAndScores')
-              .doc(userId)
-              .withConverter(
-        fromFirestore: SemifinalPredictionModel.fromFirestore,
-                toFirestore: SemifinalPredictionModel.toFirestore,
-              )
-              .get())
-          .data();
-
-  Future<FinalPredictionModel?> getPredictionsForFinalForUser(
-          String heatId, String? userId) async =>
-      (await competitions
-              .doc(heatId)
-              .collection('predictionsAndScores')
-              .doc(userId)
-              .withConverter(
-                fromFirestore: FinalPredictionModel.fromFirestore,
-                toFirestore: FinalPredictionModel.toFirestore,
-              )
-              .get())
-          .data();
-
+  @override
   Future<List<Song>> getSongs(String heatId) async {
     return (await competitions
             .doc(heatId)
@@ -246,15 +185,16 @@ class DatabaseRepository {
         .toList();
   }
 
+  @override
   Future<User> getCurrentUser() async {
     final uid = authRepository.currentUser?.uid;
     return (await users
-            .doc(uid)
-            .withConverter(
-              fromFirestore: User.fromFirestore,
-              toFirestore: User.toFirestore,
-            )
-            .get())
+        .doc(uid)
+        .withConverter(
+      fromFirestore: User.fromFirestore,
+      toFirestore: User.toFirestore,
+    )
+        .get())
         .data()!; // TODO: add try-catch and handle error
   }
 }

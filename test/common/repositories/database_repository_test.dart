@@ -28,7 +28,7 @@ Future<void> main() async {
       // Given
       final mockDb = FakeFirebaseFirestore();
 
-      final databaseRepo = DatabaseRepository(
+      final databaseRepo = DatabaseRepositoryImpl(
         db: mockDb,
         authRepository: mockAuthRepo,
       );
@@ -50,7 +50,7 @@ Future<void> main() async {
       // Given
       final mockDb = FakeFirebaseFirestore();
 
-      final databaseRepo = DatabaseRepository(
+      final databaseRepo = DatabaseRepositoryImpl(
         db: mockDb,
         authRepository: mockAuthRepo,
       );
@@ -98,7 +98,7 @@ Future<void> main() async {
       // Given
       final mockDb = FakeFirebaseFirestore();
 
-      final databaseRepo = DatabaseRepository(
+      final databaseRepo = DatabaseRepositoryImpl(
         db: mockDb,
         authRepository: mockAuthRepo,
       );
@@ -120,7 +120,7 @@ Future<void> main() async {
       // Given
       final mockDb = FakeFirebaseFirestore();
 
-      final databaseRepo = DatabaseRepository(
+      final databaseRepo = DatabaseRepositoryImpl(
         db: mockDb,
         authRepository: mockAuthRepo,
       );
