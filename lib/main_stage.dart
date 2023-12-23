@@ -11,7 +11,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setUpGetIt(Flavor.stage);
   await AuthenticationRepository.initialize();
-  await FeatureFlagRepository.initialize();
+  await FeatureFlagRepositoryImpl.initialize();
   await getIt.get<MellotippetPackageInfo>().initialize();
   CrashReporting.initialize();
 

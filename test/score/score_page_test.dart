@@ -4,15 +4,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mellotippet/score/score_page.dart';
 import 'package:mellotippet/service_location/get_it.dart';
 
-import '../common/FakeDatabaseRepository.dart';
+import '../common/fake_database_repository.dart';
 import '../common/fakes.dart';
 
 void main() {
   testWidgets(
-      'Given user with score, when score page is shown, the score is displayed',
+      'given a user with a score, when score page is shown, the score is displayed',
       (tester) async {
     await setUpGetItForTest(
-        FakeDatabaseRepository(currentUser: fakeUser.copyWith(totalScore: 5)));
+        databaseRepository: FakeDatabaseRepository(
+            currentUser: fakeUser.copyWith(totalScore: 5)));
 
     await tester
         .pumpWidget(const ProviderScope(child: MaterialApp(home: ScorePage())));

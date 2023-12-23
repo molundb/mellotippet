@@ -17,7 +17,7 @@ class MellotippetApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const theme = MelloTippetTheme();
-    return _EagerSongFetcher(
+    return EagerSongFetcher(
       child: GestureDetector(
         onTap: () {
           FocusScopeNode currentFocus = FocusScope.of(context);
@@ -37,17 +37,17 @@ class MellotippetApp extends StatelessWidget {
   }
 }
 
-class _EagerSongFetcher extends ConsumerStatefulWidget {
+class EagerSongFetcher extends ConsumerStatefulWidget {
   final Widget child;
 
-  const _EagerSongFetcher({required this.child});
+  const EagerSongFetcher({super.key, required this.child});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
       _EagerSongFetcherState();
 }
 
-class _EagerSongFetcherState extends ConsumerState<_EagerSongFetcher> {
+class _EagerSongFetcherState extends ConsumerState<EagerSongFetcher> {
   HeatPredictionController get heatPredictionController =>
       ref.read(HeatPredictionController.provider.notifier);
 

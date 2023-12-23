@@ -16,13 +16,13 @@ class FinalPredictionController
   }) : super(state);
 
   final DatabaseRepositoryImpl databaseRepository;
-  final FeatureFlagRepository featureFlagRepository;
+  final FeatureFlagRepositoryImpl featureFlagRepository;
 
   static final provider = StateNotifierProvider<FinalPredictionController,
       FinalPredictionControllerState>(
     (ref) => FinalPredictionController(
       databaseRepository: getIt.get<DatabaseRepositoryImpl>(),
-      featureFlagRepository: getIt.get<FeatureFlagRepository>(),
+      featureFlagRepository: getIt.get<FeatureFlagRepositoryImpl>(),
       state: const FinalPredictionControllerState(loading: true),
     ),
   );

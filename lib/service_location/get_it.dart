@@ -32,8 +32,8 @@ Future<void> setUpGetIt(Flavor flavor) async {
         authRepository: getIt.get<AuthenticationRepository>(),
       ));
 
-  getIt.registerLazySingleton<FeatureFlagRepository>(
-      () => FeatureFlagRepository());
+  getIt.registerLazySingleton<FeatureFlagRepositoryImpl>(
+      () => FeatureFlagRepositoryImpl());
 
   getIt.registerSingleton<SnackbarHandler>(
     SnackbarHandler(
@@ -47,7 +47,10 @@ Future<void> setUpGetIt(Flavor flavor) async {
   return getIt.allReady();
 }
 
-Future<void> setUpGetItForTest(DatabaseRepository databaseRepository) {
+Future<void> setUpGetItForTest({
+  required DatabaseRepository databaseRepository,
+  FeatureFlagRepository? featureFlagRepository,
+}) {
   // getIt.registerSingleton<Config>(Config(flavor));
   // getIt.registerSingleton<FirebaseEnvironment>(FirebaseEnvironment());
 
@@ -65,7 +68,7 @@ Future<void> setUpGetItForTest(DatabaseRepository databaseRepository) {
   getIt.registerLazySingleton<DatabaseRepository>(() => databaseRepository);
 
   getIt.registerLazySingleton<FeatureFlagRepository>(
-      () => FeatureFlagRepository());
+      () => featureFlagRepository ?? FeatureFlagRepositoryImpl());
 
   getIt.registerSingleton<SnackbarHandler>(
     SnackbarHandler(

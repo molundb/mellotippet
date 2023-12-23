@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mellotippet/common/repositories/database_repository.dart';
 import 'package:mellotippet/score/score_controller.dart';
 
-import '../common/FakeDatabaseRepository.dart';
+import '../common/fake_database_repository.dart';
 import '../common/fakes.dart';
 
 void main() {

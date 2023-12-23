@@ -16,13 +16,13 @@ class HeatPredictionController
     required HeatPredictionControllerState state,
   }) : super(state);
 
-  final DatabaseRepositoryImpl databaseRepository;
+  final DatabaseRepository databaseRepository;
   final FeatureFlagRepository featureFlagRepository;
 
   static final provider = StateNotifierProvider<HeatPredictionController,
       HeatPredictionControllerState>(
     (ref) => HeatPredictionController(
-      databaseRepository: getIt.get<DatabaseRepositoryImpl>(),
+      databaseRepository: getIt.get<DatabaseRepository>(),
       featureFlagRepository: getIt.get<FeatureFlagRepository>(),
       state: const HeatPredictionControllerState(loading: true),
     ),

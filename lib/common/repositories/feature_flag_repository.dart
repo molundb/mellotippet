@@ -1,7 +1,15 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 
-class FeatureFlagRepository {
-  final remoteConfig = FirebaseRemoteConfig.instance;
+abstract class FeatureFlagRepository {
+  String getCurrentCompetition();
+
+  String getRequiredMinimumVersion();
+
+  String getRecommendedMinimumVersion();
+}
+
+class FeatureFlagRepositoryImpl implements FeatureFlagRepository {
+  final _remoteConfig = FirebaseRemoteConfig.instance;
 
   static Future<void> initialize() async {
     final remoteConfig = FirebaseRemoteConfig.instance;
@@ -25,12 +33,15 @@ class FeatureFlagRepository {
     });
   }
 
+  @override
   String getCurrentCompetition() =>
-      remoteConfig.getString('currentCompetition');
+      _remoteConfig.getString('currentCompetition');
 
+  @override
   String getRequiredMinimumVersion() =>
-      remoteConfig.getString('requiredMinimumAppVersion');
+      _remoteConfig.getString('requiredMinimumAppVersion');
 
+  @override
   String getRecommendedMinimumVersion() =>
-      remoteConfig.getString('recommendedMinimumAppVersion');
+      _remoteConfig.getString('recommendedMinimumAppVersion');
 }

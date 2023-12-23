@@ -16,13 +16,13 @@ class SemifinalPredictionController
   }) : super(state);
 
   final DatabaseRepositoryImpl databaseRepository;
-  final FeatureFlagRepository featureFlagRepository;
+  final FeatureFlagRepositoryImpl featureFlagRepository;
 
   static final provider = StateNotifierProvider<SemifinalPredictionController,
       SemifinalPredictionControllerState>(
     (ref) => SemifinalPredictionController(
       databaseRepository: getIt.get<DatabaseRepositoryImpl>(),
-      featureFlagRepository: getIt.get<FeatureFlagRepository>(),
+      featureFlagRepository: getIt.get<FeatureFlagRepositoryImpl>(),
       state: const SemifinalPredictionControllerState(),
     ),
   );
