@@ -16,7 +16,7 @@ class ForceUpgradePage extends StatefulWidget {
 
 class _ForceUpgradeState extends State<ForceUpgradePage> {
   final packageInfo = getIt.get<MellotippetPackageInfo>();
-  final featureFlagRepository = getIt.get<FeatureFlagRepositoryImpl>();
+  final featureFlagRepository = getIt.get<FeatureFlagRepository>();
 
   @override
   void initState() {

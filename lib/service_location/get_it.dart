@@ -32,7 +32,7 @@ Future<void> setUpGetIt(Flavor flavor) async {
         authRepository: getIt.get<AuthenticationRepository>(),
       ));
 
-  getIt.registerLazySingleton<FeatureFlagRepositoryImpl>(
+  getIt.registerLazySingleton<FeatureFlagRepository>(
       () => FeatureFlagRepositoryImpl());
 
   getIt.registerSingleton<SnackbarHandler>(

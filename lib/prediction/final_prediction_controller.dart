@@ -15,14 +15,14 @@ class FinalPredictionController
     required FinalPredictionControllerState state,
   }) : super(state);
 
-  final DatabaseRepositoryImpl databaseRepository;
-  final FeatureFlagRepositoryImpl featureFlagRepository;
+  final DatabaseRepository databaseRepository;
+  final FeatureFlagRepository featureFlagRepository;
 
   static final provider = StateNotifierProvider<FinalPredictionController,
       FinalPredictionControllerState>(
     (ref) => FinalPredictionController(
-      databaseRepository: getIt.get<DatabaseRepositoryImpl>(),
-      featureFlagRepository: getIt.get<FeatureFlagRepositoryImpl>(),
+      databaseRepository: getIt.get<DatabaseRepository>(),
+      featureFlagRepository: getIt.get<FeatureFlagRepository>(),
       state: const FinalPredictionControllerState(loading: true),
     ),
   );
