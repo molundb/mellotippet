@@ -41,7 +41,7 @@ dependencies:
   firebase_auth: ^4.2.1
   cloud_firestore: ^4.2.0
   cloud_functions: ^4.4.2
-  firebase_crashlytics: ^3.4.8
+  firebase_crashlytics: ^3.4.9
   firebase_remote_config: ^4.2.7
   firebase_analytics: ^10.1.1
 
