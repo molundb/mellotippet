@@ -10,9 +10,9 @@ class AuthenticationRepository {
 
   final auth.FirebaseAuth firebaseAuth;
 
-  static Future<void> initialize() async {
+  static Future<void> initialize({required String name}) async {
     await Firebase.initializeApp(
-      name: 'melodifestivalen-comp-stage',
+      name: name,
       options: DefaultFirebaseOptions.currentPlatform,
     );
   }

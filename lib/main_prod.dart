@@ -10,7 +10,7 @@ import 'package:mellotippet/services/mello_tippet_package_info.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setUpGetIt(Flavor.prod);
-  await AuthenticationRepository.initialize();
+  await AuthenticationRepository.initialize(name: 'mellotippet-prod');
   await FeatureFlagRepositoryImpl.initialize();
   await getIt.get<MellotippetPackageInfo>().initialize();
   CrashReporting.initialize();
