@@ -86,28 +86,6 @@ class Content extends StatelessWidget {
                 ],
               ),
             ),
-            Expanded(child: Container()),
-            SizedBox(
-              width: 27,
-              height: 27,
-              child: Stack(
-                children: [
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: MellotippetColors.melloLightOrange,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                  Center(
-                    child: Text(
-                      '${widget.startNumber}',
-                      style:
-                          const TextStyle(color: MellotippetColors.melloPurple),
-                    ),
-                  ),
-                ],
-              ),
-            ),
           ],
         ),
       ),

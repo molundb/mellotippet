@@ -10,7 +10,7 @@ class MellotippetColors {
 
   static const scorePageBorder = Color(0xFF7FCFEA);
 
-  static const itemGray = Color(0xFFCBD4D5);
+  static const gray = Color(0xFFB8B8B8);
   static const disabledCtaBackground = Color(0xFFD6D6D6);
   static const disabledCtaForeground = Color(0xFF9A9A9A);
 

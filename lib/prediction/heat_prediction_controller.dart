@@ -1,3 +1,4 @@
+import 'package:drag_and_drop_lists/drag_and_drop_item.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mellotippet/common/models/all_models.dart';
@@ -8,8 +9,7 @@ import 'package:mellotippet/service_location/get_it.dart';
 
 part 'heat_prediction_controller.freezed.dart';
 
-class HeatPredictionController
-    extends StateNotifier<HeatPredictionControllerState> {
+class HeatPredictionController extends StateNotifier<HeatPredictionControllerState> {
   HeatPredictionController({
     required this.databaseRepository,
     required this.featureFlagRepository,
@@ -21,7 +21,7 @@ class HeatPredictionController
 
   static final provider = StateNotifierProvider<HeatPredictionController,
       HeatPredictionControllerState>(
-    (ref) => HeatPredictionController(
+        (ref) => HeatPredictionController(
       databaseRepository: getIt.get<DatabaseRepository>(),
       featureFlagRepository: getIt.get<FeatureFlagRepository>(),
       state: const HeatPredictionControllerState(loading: true),
@@ -31,7 +31,7 @@ class HeatPredictionController
   void fetchSongs() async {
     final songs = await databaseRepository.getSongs('heat1');
 
-    final others = songs
+    final predictionRows = songs
         .map((song) => PredictionRow(
               artist: song.artist,
               song: song.song,
@@ -40,92 +40,101 @@ class HeatPredictionController
             ))
         .toList();
 
-    state = state.copyWith(others: others);
+    final songLists = [...state.songLists];
+    songLists[0] = [];
+    songLists[1] = predictionRows;
+    state = state.copyWith(songLists: songLists);
   }
 
-  void setFinalist1(String? value) {
-    if (value == null || value.isEmpty) return;
+  //
+  // void setFinalist1(String? value) {
+  //   if (value == null || value.isEmpty) return;
+  //
+  //   state = state.copyWith(
+  //       prediction: state.prediction?.copyWith(
+  //           finalist1: PredictionAndScore(prediction: int.parse(value))));
+  // }
+  //
+  // void setFinalist2(String? value) {
+  //   if (value == null || value.isEmpty) return;
+  //
+  //   state = state.copyWith(
+  //       prediction: state.prediction?.copyWith(
+  //           finalist2: PredictionAndScore(prediction: int.parse(value))));
+  // }
+  //
+  // void setSemifinalist1(String? value) {
+  //   if (value == null || value.isEmpty) return;
+  //
+  //   state = state.copyWith(
+  //       prediction: state.prediction?.copyWith(
+  //           semifinalist1: PredictionAndScore(prediction: int.parse(value))));
+  // }
+  //
+  // void setSemifinalist2(String? value) {
+  //   if (value == null || value.isEmpty) return;
+  //
+  //   state = state.copyWith(
+  //       prediction: state.prediction?.copyWith(
+  //           semifinalist2: PredictionAndScore(prediction: int.parse(value))));
+  // }
+  //
+  // void setFifthPlace(String? value) {
+  //   if (value == null || value.isEmpty) return;
+  //
+  //   state = state.copyWith(
+  //       prediction: state.prediction?.copyWith(
+  //           fifthPlace: PredictionAndScore(prediction: int.parse(value))));
+  // }
+  //
+  // void setRow(PredictionRow? prediction, int index) {
+  //   final predictions = [...state.predictions];
+  //   final others = [...state.others];
+  //
+  //   others.remove(prediction);
+  //
+  //   final previous = predictions[index];
+  //   if (previous != null) {
+  //     others.add(previous);
+  //   }
+  //
+  //   predictions[index] = prediction;
+  //
+  //   final ctaDisabled = predictions.any((prediction) => prediction == null);
+  //
+  //   state = state.copyWith(
+  //     predictions: predictions,
+  //     others: others,
+  //     ctaEnabled: !ctaDisabled,
+  //   );
+  // }
+  //
+  // void clearRow(int index) {
+  //   final predictions = [...state.predictions];
+  //   predictions[index] = null;
+  //
+  //   state = state.copyWith(predictions: predictions);
+  // }
 
-    state = state.copyWith(
-        prediction: state.prediction?.copyWith(
-            finalist1: PredictionAndScore(prediction: int.parse(value))));
-  }
+  onItemReorder(
+    int oldItemIndex,
+    int oldListIndex,
+    int newItemIndex,
+    int newListIndex,
+  ) {
+    final songLists = [...state.songLists];
+    final movedItem = songLists[oldListIndex].removeAt(oldItemIndex);
+    songLists[newListIndex].insert(newItemIndex, movedItem);
 
-  void setFinalist2(String? value) {
-    if (value == null || value.isEmpty) return;
-
-    state = state.copyWith(
-        prediction: state.prediction?.copyWith(
-            finalist2: PredictionAndScore(prediction: int.parse(value))));
-  }
-
-  void setSemifinalist1(String? value) {
-    if (value == null || value.isEmpty) return;
-
-    state = state.copyWith(
-        prediction: state.prediction?.copyWith(
-            semifinalist1: PredictionAndScore(prediction: int.parse(value))));
-  }
-
-  void setSemifinalist2(String? value) {
-    if (value == null || value.isEmpty) return;
-
-    state = state.copyWith(
-        prediction: state.prediction?.copyWith(
-            semifinalist2: PredictionAndScore(prediction: int.parse(value))));
-  }
-
-  void setFifthPlace(String? value) {
-    if (value == null || value.isEmpty) return;
-
-    state = state.copyWith(
-        prediction: state.prediction?.copyWith(
-            fifthPlace: PredictionAndScore(prediction: int.parse(value))));
-  }
-
-  void setRow(PredictionRow? prediction, int index) {
-    final predictions = [...state.predictions];
-    final others = [...state.others];
-
-    others.remove(prediction);
-
-    final previous = predictions[index];
-    if (previous != null) {
-      others.add(previous);
-    }
-
-    predictions[index] = prediction;
-
-    final ctaDisabled = predictions.any((prediction) => prediction == null);
-
-    state = state.copyWith(
-      predictions: predictions,
-      others: others,
-      ctaEnabled: !ctaDisabled,
-    );
-  }
-
-  void clearRow(int index) {
-    final predictions = [...state.predictions];
-    predictions[index] = null;
-
-    state = state.copyWith(predictions: predictions);
+    state = state.copyWith(songLists: songLists);
   }
 
   Future<bool> submitPrediction() {
-    var finalist1 = state.predictions[0]?.startNumber;
-    var finalist2 = state.predictions[1]?.startNumber;
-    var semifinalist1 = state.predictions[2]?.startNumber;
-    var semifinalist2 = state.predictions[3]?.startNumber;
-    var fifthPlace = state.predictions[4]?.startNumber;
-
-    if (finalist1 == null ||
-        finalist2 == null ||
-        semifinalist1 == null ||
-        semifinalist2 == null ||
-        fifthPlace == null) {
-      return Future.value(false);
-    }
+    final finalist1 = state.songLists[0][0].startNumber;
+    final finalist2 = state.songLists[0][1].startNumber;
+    final semifinalist1 = state.songLists[0][2].startNumber;
+    final semifinalist2 = state.songLists[0][3].startNumber;
+    final fifthPlace = state.songLists[0][4].startNumber;
 
     var prediction = HeatPredictionModel(
       finalist1: PredictionAndScore(prediction: finalist1),
@@ -142,13 +151,12 @@ class HeatPredictionController
   }
 }
 
-@freezed
+@Freezed(makeCollectionsUnmodifiable: false)
 class HeatPredictionControllerState with _$HeatPredictionControllerState {
   const factory HeatPredictionControllerState({
     @Default(false) bool loading,
     HeatPredictionModel? prediction,
-    @Default([null, null, null, null, null]) List<PredictionRow?> predictions,
-    @Default([]) List<PredictionRow> others,
+    @Default([[], []]) List<List<PredictionRow>> songLists,
     @Default(false) bool ctaEnabled,
   }) = _HeatPredictionControllerState;
 }

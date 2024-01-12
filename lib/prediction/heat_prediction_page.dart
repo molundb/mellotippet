@@ -1,3 +1,4 @@
+import 'package:drag_and_drop_lists/drag_and_drop_lists.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/common/widgets/cta_button.dart';
@@ -20,6 +21,33 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
   HeatPredictionController get controller =>
       ref.read(HeatPredictionController.provider.notifier);
 
+  final DragAndDropList _predicted = DragAndDropList(children: []);
+  final DragAndDropList _notPredicted = DragAndDropList(children: []);
+  List<DragAndDropList> _contents = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Generate a list
+    // _contents = List.generate(10, (index) {
+    //   return DragAndDropList(
+    //     header: Text('Header $index'),
+    //     children: <DragAndDropItem>[
+    //       DragAndDropItem(
+    //         child: Text('$index.1'),
+    //       ),
+    //       DragAndDropItem(
+    //         child: Text('$index.2'),
+    //       ),
+    //       DragAndDropItem(
+    //         child: Text('$index.3'),
+    //       ),
+    //     ],
+    //   );
+    // });
+  }
+
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(HeatPredictionController.provider);
@@ -40,89 +68,97 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
       ),
       body: Column(
         children: [
+          const SizedBox(height: 12),
           Expanded(
-            child: LayoutBuilder(
-              builder:
-                  (BuildContext context, BoxConstraints viewportConstraints) {
-                return SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 32, horizontal: 16),
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minHeight: viewportConstraints.maxHeight,
-                      ),
-                      child: Column(
-                        children: [
-                          const Center(child: Text('Final')),
-                          const SizedBox(height: 8.0),
-                          DragTargetRow(
-                            row: state.predictions[0],
-                            index: 0,
-                            emptyText: "Finalist",
-                            setRow: controller.setRow,
-                            clearRow: controller.clearRow,
-                          ),
-                          const SizedBox(height: 8.0),
-                          DragTargetRow(
-                            row: state.predictions[1],
-                            index: 1,
-                            emptyText: "Finalist",
-                            setRow: controller.setRow,
-                            clearRow: controller.clearRow,
-                          ),
-                          const SizedBox(height: 8.0),
-                          const Center(child: Text('Semifinal')),
-                          const SizedBox(height: 8.0),
-                          DragTargetRow(
-                            row: state.predictions[2],
-                            index: 2,
-                            emptyText: "Semifinalist",
-                            setRow: controller.setRow,
-                            clearRow: controller.clearRow,
-                          ),
-                          const SizedBox(height: 8.0),
-                          DragTargetRow(
-                            row: state.predictions[3],
-                            index: 3,
-                            emptyText: "Semifinalist",
-                            setRow: controller.setRow,
-                            clearRow: controller.clearRow,
-                          ),
-                          const SizedBox(height: 8.0),
-                          const Center(child: Text('Plats 5')),
-                          const SizedBox(height: 8.0),
-                          DragTargetRow(
-                            row: state.predictions[4],
-                            index: 4,
-                            emptyText: "Plats 5",
-                            setRow: controller.setRow,
-                            clearRow: controller.clearRow,
-                          ),
-                          const SizedBox(height: 8.0),
-                          const Center(child: Text('Övriga')),
-                          const SizedBox(height: 8.0),
-                          OtherList(others: state.others),
-                          const SizedBox(height: 8.0),
-                        ],
-                      ),
+            child: DragAndDropLists(
+              // children: [
+              //   DragAndDropList(children: state.songLists[0]),
+              //   DragAndDropList(children: state.songLists[1]),
+              // ],
+              children: [
+                DragAndDropList(
+                  children: state.songLists[0]
+                      .map((e) => DragAndDropItem(child: e))
+                      .toList(),
+                  canDrag: false,
+                  contentsWhenEmpty: const Text(
+                    'Dra fem bidrag över linjen och rangordna för att tippa',
+                    style: TextStyle(
+                      color: MellotippetColors.gray,
+                      fontStyle: FontStyle.italic,
                     ),
                   ),
-                );
-              },
+                ),
+                DragAndDropList(
+                  children: state.songLists[1]
+                      .map((e) => DragAndDropItem(child: e))
+                      .toList(),
+                  canDrag: false,
+                ),
+              ],
+              listDivider: const Divider(thickness: 1),
+              listDividerOnLastChild: false,
+              itemDragOnLongPress: false,
+              onItemReorder: controller.onItemReorder,
+              onListReorder: (int x, int y) {},
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: CtaButton(
-              text: "Tippa",
-              onPressed:
-                  state.ctaEnabled ? () => _submitPressed(context) : null,
-            ),
-          )
         ],
       ),
     );
+
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     toolbarHeight: 120,
+    //     centerTitle: true,
+    //     title: const Text(
+    //       'Tippa',
+    //       style: TextStyle(
+    //         color: Colors.white,
+    //         fontSize: 64,
+    //         fontFamily: 'Lalezar',
+    //       ),
+    //     ),
+    //     // TODO: add info about competition
+    //   ),
+    //   body: Column(
+    //     children: [
+    //       Padding(
+    //         padding: const EdgeInsets.symmetric(
+    //           vertical: 32,
+    //           horizontal: 16,
+    //         ),
+    //         child: Column(
+    //           children: [
+    //             const Text(
+    //               'Dra fem bidrag över linjen och rangordna för att tippa',
+    //               style: TextStyle(
+    //                 color: MellotippetColors.gray,
+    //                 fontStyle: FontStyle.italic,
+    //               ),
+    //             ),
+    //             const SizedBox(height: 16.0),
+    //             const Divider(thickness: 1),
+    //             DragAndDropLists(
+    //               children: _contents,
+    //               onItemReorder: _onItemReorder,
+    //               onListReorder: _onListReorder,
+    //             )
+    //             // OtherList(others: state.others),
+    //           ],
+    //         ),
+    //       ),
+    //       Padding(
+    //         padding: const EdgeInsets.all(12.0),
+    //         child: CtaButton(
+    //           text: "Tippa",
+    //           onPressed:
+    //               state.ctaEnabled ? () => _submitPressed(context) : null,
+    //         ),
+    //       )
+    //     ],
+    //   ),
+    // );
   }
 
   void _submitPressed(BuildContext context) {
@@ -203,42 +239,40 @@ class DragTargetRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DragTarget(
-      builder: (
-        BuildContext context,
-        List<PredictionRow?> candidateData,
-        List rejectedData,
-      ) {
+      builder: (BuildContext context,
+          List<PredictionRow?> candidateData,
+          List rejectedData,) {
         if (candidateData.isNotEmpty) {
           return Opacity(opacity: 0.5, child: candidateData.first);
         } else {
           final row = this.row;
           return row != null
               ? LayoutBuilder(
-                  key: Key('$index'),
-                  builder: (context, constraints) => Draggable<PredictionRow>(
-                    axis: Axis.vertical,
-                    data: row,
-                    feedback: Material(
-                      child: SizedBox(
-                        width: constraints.maxWidth,
-                        child: row.copyWithDraggingTrue(),
-                      ),
-                    ),
-                    childWhenDragging: Container(
-                      height: 60.0,
-                    ),
-                    child: row,
-                    onDragStarted: () {
-                      clearRow(index);
-                    },
-                    onDraggableCanceled: (Velocity v, Offset o) {
-                      setRow(row, index);
-                    },
-                  ),
-                )
+            key: Key('$index'),
+            builder: (context, constraints) => Draggable<PredictionRow>(
+              axis: Axis.vertical,
+              data: row,
+              feedback: Material(
+                child: SizedBox(
+                  width: constraints.maxWidth,
+                  child: row.copyWithDraggingTrue(),
+                ),
+              ),
+              childWhenDragging: Container(
+                height: 60.0,
+              ),
+              child: row,
+              onDragStarted: () {
+                clearRow(index);
+              },
+              onDraggableCanceled: (Velocity v, Offset o) {
+                setRow(row, index);
+              },
+            ),
+          )
               : EmptyPredictionRow(
-                  text: emptyText,
-                );
+            text: emptyText,
+          );
         }
       },
       onWillAccept: (data) {
