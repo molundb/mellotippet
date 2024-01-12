@@ -100,20 +100,24 @@ class Content extends StatelessWidget {
             if (widget.prediction != null) ...[
               Expanded(child: Container()),
               SizedBox(
-                width: 24,
+                width: 110,
                 height: 24,
                 child: Stack(
                   children: [
                     Container(
                       decoration: const BoxDecoration(
-                        color: MellotippetColors.melloLightOrange,
-                        shape: BoxShape.circle,
+                        color: Color(0xFFFFD58E),
                       ),
                     ),
                     Center(
                       child: Text(
                         '${widget.prediction}',
-                        style: const TextStyle(color: MellotippetColors.black),
+                        style: const TextStyle(
+                          color: MellotippetColors.black,
+                          fontFamily: 'Roboto',
+                          fontStyle: FontStyle.italic,
+                          fontSize: 10,
+                        ),
                       ),
                     ),
                   ],
