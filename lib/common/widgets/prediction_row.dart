@@ -97,8 +97,8 @@ class Content extends StatelessWidget {
                 ],
               ),
             ),
+            Expanded(child: Container()),
             if (widget.prediction != null) ...[
-              Expanded(child: Container()),
               SizedBox(
                 width: 110,
                 height: 24,
@@ -123,9 +123,14 @@ class Content extends StatelessWidget {
                   ],
                 ),
               ),
+              const SizedBox(width: 18),
             ] else ...[
               Container(),
-            ]
+            ],
+            const Icon(
+              Icons.menu,
+              size: 14,
+            ),
           ],
         ),
       ),
