@@ -6,6 +6,7 @@ class PredictionRow extends StatefulWidget {
   final String song;
   final String imageAsset;
   final int startNumber;
+  final String? prediction;
   final bool dragging;
 
   const PredictionRow({
@@ -14,6 +15,7 @@ class PredictionRow extends StatefulWidget {
     required this.song,
     required this.imageAsset,
     required this.startNumber,
+    this.prediction,
     this.dragging = false,
   });
 
@@ -23,6 +25,15 @@ class PredictionRow extends StatefulWidget {
         imageAsset: imageAsset,
         startNumber: startNumber,
         dragging: true,
+      );
+
+  PredictionRow copyWithPrediction(String? prediction) => PredictionRow(
+        artist: artist,
+        song: song,
+        imageAsset: imageAsset,
+        startNumber: startNumber,
+        prediction: prediction,
+        dragging: dragging,
       );
 
   @override
@@ -86,6 +97,31 @@ class Content extends StatelessWidget {
                 ],
               ),
             ),
+            if (widget.prediction != null) ...[
+              Expanded(child: Container()),
+              SizedBox(
+                width: 24,
+                height: 24,
+                child: Stack(
+                  children: [
+                    Container(
+                      decoration: const BoxDecoration(
+                        color: MellotippetColors.melloLightOrange,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    Center(
+                      child: Text(
+                        '${widget.prediction}',
+                        style: const TextStyle(color: MellotippetColors.black),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ] else ...[
+              Container(),
+            ]
           ],
         ),
       ),

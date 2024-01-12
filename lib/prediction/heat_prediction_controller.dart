@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:drag_and_drop_lists/drag_and_drop_item.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -33,11 +34,11 @@ class HeatPredictionController extends StateNotifier<HeatPredictionControllerSta
 
     final predictionRows = songs
         .map((song) => PredictionRow(
-              artist: song.artist,
-              song: song.song,
-              imageAsset: 'assets/images/${song.image}',
-              startNumber: song.startNumber,
-            ))
+      artist: song.artist,
+      song: song.song,
+      imageAsset: 'assets/images/${song.image}',
+      startNumber: song.startNumber,
+    ))
         .toList();
 
     final songLists = [...state.songLists];
@@ -116,17 +117,31 @@ class HeatPredictionController extends StateNotifier<HeatPredictionControllerSta
   //   state = state.copyWith(predictions: predictions);
   // }
 
-  onItemReorder(
-    int oldItemIndex,
-    int oldListIndex,
-    int newItemIndex,
-    int newListIndex,
-  ) {
+  onItemReorder(int oldItemIndex,
+      int oldListIndex,
+      int newItemIndex,
+      int newListIndex,) {
     final songLists = [...state.songLists];
     final movedItem = songLists[oldListIndex].removeAt(oldItemIndex);
     songLists[newListIndex].insert(newItemIndex, movedItem);
 
-    state = state.copyWith(songLists: songLists);
+    songLists[0] = songLists[0].mapIndexed((index, element) {
+      switch (index) {
+        case < 2:
+          element = element.copyWithPrediction('Final');
+        case < 4:
+          element = element.copyWithPrediction('Andra chansen');
+        case == 4:
+          element = element.copyWithPrediction('5:e plats');
+        default:
+          element = element.copyWithPrediction(null);
+      }
+
+      return element;
+    }).toList();
+
+    final ctaEnabled = songLists[0].length >= 5;
+    state = state.copyWith(songLists: songLists, ctaEnabled: ctaEnabled);
   }
 
   Future<bool> submitPrediction() {

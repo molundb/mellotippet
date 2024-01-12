@@ -71,14 +71,10 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
           const SizedBox(height: 12),
           Expanded(
             child: DragAndDropLists(
-              // children: [
-              //   DragAndDropList(children: state.songLists[0]),
-              //   DragAndDropList(children: state.songLists[1]),
-              // ],
               children: [
                 DragAndDropList(
                   children: state.songLists[0]
-                      .map((e) => DragAndDropItem(child: e))
+                      .map((song) => DragAndDropItem(child: song))
                       .toList(),
                   canDrag: false,
                   contentsWhenEmpty: const Text(
@@ -91,7 +87,7 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
                 ),
                 DragAndDropList(
                   children: state.songLists[1]
-                      .map((e) => DragAndDropItem(child: e))
+                      .map((song) => DragAndDropItem(child: song))
                       .toList(),
                   canDrag: false,
                 ),
@@ -103,6 +99,14 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
               onListReorder: (int x, int y) {},
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: CtaButton(
+              text: "Tippa",
+              onPressed:
+                  state.ctaEnabled ? () => _submitPressed(context) : null,
+            ),
+          )
         ],
       ),
     );
