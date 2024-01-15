@@ -6,7 +6,7 @@ class PredictionRow extends StatefulWidget {
   final String song;
   final String imageAsset;
   final int startNumber;
-  final String? prediction;
+  final PredictedPosition? prediction;
   final bool dragging;
 
   const PredictionRow({
@@ -27,7 +27,8 @@ class PredictionRow extends StatefulWidget {
         dragging: true,
       );
 
-  PredictionRow copyWithPrediction(String? prediction) => PredictionRow(
+  PredictionRow copyWithPredictionPosition(PredictedPosition? prediction) =>
+      PredictionRow(
         artist: artist,
         song: song,
         imageAsset: imageAsset,
@@ -111,7 +112,7 @@ class Content extends StatelessWidget {
                     ),
                     Center(
                       child: Text(
-                        '${widget.prediction}',
+                        '${widget.prediction?.text}',
                         style: const TextStyle(
                           color: MellotippetColors.black,
                           fontFamily: 'Roboto',
@@ -136,4 +137,16 @@ class Content extends StatelessWidget {
       ),
     );
   }
+}
+
+enum PredictedPosition {
+  finalist(text: 'Final'),
+  semifinalist(text: 'Andra chansen'),
+  fifthPlace(text: '5:e plats');
+
+  const PredictedPosition({
+    required this.text,
+  });
+
+  final String text;
 }

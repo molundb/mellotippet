@@ -10,7 +10,8 @@ import 'package:mellotippet/service_location/get_it.dart';
 
 part 'heat_prediction_controller.freezed.dart';
 
-class HeatPredictionController extends StateNotifier<HeatPredictionControllerState> {
+class HeatPredictionController
+    extends StateNotifier<HeatPredictionControllerState> {
   HeatPredictionController({
     required this.databaseRepository,
     required this.featureFlagRepository,
@@ -34,11 +35,11 @@ class HeatPredictionController extends StateNotifier<HeatPredictionControllerSta
 
     final predictionRows = songs
         .map((song) => PredictionRow(
-      artist: song.artist,
-      song: song.song,
-      imageAsset: 'assets/images/${song.image}',
-      startNumber: song.startNumber,
-    ))
+              artist: song.artist,
+              song: song.song,
+              imageAsset: 'assets/images/${song.image}',
+              startNumber: song.startNumber,
+            ))
         .toList();
 
     final songLists = [...state.songLists];
@@ -117,10 +118,12 @@ class HeatPredictionController extends StateNotifier<HeatPredictionControllerSta
   //   state = state.copyWith(predictions: predictions);
   // }
 
-  onItemReorder(int oldItemIndex,
-      int oldListIndex,
-      int newItemIndex,
-      int newListIndex,) {
+  onItemReorder(
+    int oldItemIndex,
+    int oldListIndex,
+    int newItemIndex,
+    int newListIndex,
+  ) {
     final songLists = [...state.songLists];
     final movedItem = songLists[oldListIndex].removeAt(oldItemIndex);
     songLists[newListIndex].insert(newItemIndex, movedItem);
@@ -128,13 +131,16 @@ class HeatPredictionController extends StateNotifier<HeatPredictionControllerSta
     songLists[0] = songLists[0].mapIndexed((index, element) {
       switch (index) {
         case < 2:
-          element = element.copyWithPrediction('Final');
+          element =
+              element.copyWithPredictionPosition(PredictedPosition.finalist);
         case < 4:
-          element = element.copyWithPrediction('Andra chansen');
+          element = element
+              .copyWithPredictionPosition(PredictedPosition.semifinalist);
         case == 4:
-          element = element.copyWithPrediction('5:e plats');
+          element =
+              element.copyWithPredictionPosition(PredictedPosition.fifthPlace);
         default:
-          element = element.copyWithPrediction(null);
+          element = element.copyWithPredictionPosition(null);
       }
 
       return element;
