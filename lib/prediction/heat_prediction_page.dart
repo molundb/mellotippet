@@ -21,33 +21,6 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
   HeatPredictionController get controller =>
       ref.read(HeatPredictionController.provider.notifier);
 
-  final DragAndDropList _predicted = DragAndDropList(children: []);
-  final DragAndDropList _notPredicted = DragAndDropList(children: []);
-  List<DragAndDropList> _contents = [];
-
-  @override
-  void initState() {
-    super.initState();
-
-    // Generate a list
-    // _contents = List.generate(10, (index) {
-    //   return DragAndDropList(
-    //     header: Text('Header $index'),
-    //     children: <DragAndDropItem>[
-    //       DragAndDropItem(
-    //         child: Text('$index.1'),
-    //       ),
-    //       DragAndDropItem(
-    //         child: Text('$index.2'),
-    //       ),
-    //       DragAndDropItem(
-    //         child: Text('$index.3'),
-    //       ),
-    //     ],
-    //   );
-    // });
-  }
-
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(HeatPredictionController.provider);
@@ -110,64 +83,9 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
         ],
       ),
     );
-
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     toolbarHeight: 120,
-    //     centerTitle: true,
-    //     title: const Text(
-    //       'Tippa',
-    //       style: TextStyle(
-    //         color: Colors.white,
-    //         fontSize: 64,
-    //         fontFamily: 'Lalezar',
-    //       ),
-    //     ),
-    //     // TODO: add info about competition
-    //   ),
-    //   body: Column(
-    //     children: [
-    //       Padding(
-    //         padding: const EdgeInsets.symmetric(
-    //           vertical: 32,
-    //           horizontal: 16,
-    //         ),
-    //         child: Column(
-    //           children: [
-    //             const Text(
-    //               'Dra fem bidrag över linjen och rangordna för att tippa',
-    //               style: TextStyle(
-    //                 color: MellotippetColors.gray,
-    //                 fontStyle: FontStyle.italic,
-    //               ),
-    //             ),
-    //             const SizedBox(height: 16.0),
-    //             const Divider(thickness: 1),
-    //             DragAndDropLists(
-    //               children: _contents,
-    //               onItemReorder: _onItemReorder,
-    //               onListReorder: _onListReorder,
-    //             )
-    //             // OtherList(others: state.others),
-    //           ],
-    //         ),
-    //       ),
-    //       Padding(
-    //         padding: const EdgeInsets.all(12.0),
-    //         child: CtaButton(
-    //           text: "Tippa",
-    //           onPressed:
-    //               state.ctaEnabled ? () => _submitPressed(context) : null,
-    //         ),
-    //       )
-    //     ],
-    //   ),
-    // );
   }
 
   void _submitPressed(BuildContext context) {
-    // if (_formKey.currentState!.validate()) {
-
     _submit(context);
   }
 
