@@ -23,7 +23,7 @@ class HeatPredictionController
 
   static final provider = StateNotifierProvider<HeatPredictionController,
       HeatPredictionControllerState>(
-        (ref) => HeatPredictionController(
+    (ref) => HeatPredictionController(
       databaseRepository: getIt.get<DatabaseRepository>(),
       featureFlagRepository: getIt.get<FeatureFlagRepository>(),
       state: const HeatPredictionControllerState(loading: true),
@@ -140,7 +140,8 @@ class HeatPredictionController
           element =
               element.copyWithPredictionPosition(PredictedPosition.fifthPlace);
         default:
-          element = element.copyWithPredictionPosition(null);
+          element =
+              element.copyWithPredictionPosition(PredictedPosition.notPlaced);
       }
 
       return element;

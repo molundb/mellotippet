@@ -15,6 +15,9 @@ class MellotippetColors {
   static const disabledCtaBackground = Color(0xFFD6D6D6);
   static const disabledCtaForeground = Color(0xFF9A9A9A);
 
+  static const semifinalistGradientGray = Color(0xFF9A9A9A);
+  static const fifthPlaceGradientBrown = Color(0xFF8B4747);
+
   static const info = Color(0xFF99D7B1);
   static const success = Color(0xFF009A3D);
   static const danger = Color(0xFFFF2E47);

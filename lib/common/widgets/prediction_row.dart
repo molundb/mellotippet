@@ -6,7 +6,7 @@ class PredictionRow extends StatefulWidget {
   final String song;
   final String imageAsset;
   final int startNumber;
-  final PredictedPosition? prediction;
+  final PredictedPosition prediction;
 
   const PredictionRow({
     super.key,
@@ -14,10 +14,10 @@ class PredictionRow extends StatefulWidget {
     required this.song,
     required this.imageAsset,
     required this.startNumber,
-    this.prediction,
+    this.prediction = PredictedPosition.notPlaced,
   });
 
-  PredictionRow copyWithPredictionPosition(PredictedPosition? prediction) =>
+  PredictionRow copyWithPredictionPosition(PredictedPosition prediction) =>
       PredictionRow(
         artist: artist,
         song: song,
@@ -34,23 +34,19 @@ class PredictionRowState extends State<PredictionRow> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: MellotippetColors.melloPurple,
-      child: Content(widget: widget),
+      child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                widget.prediction.gradientStartColor,
+                widget.prediction.gradientStartColor,
+                Colors.white
+              ],
+              stops: const [0, 0.4, 1.4],
+            ),
+          ),
+          child: Content(widget: widget)),
     );
-
-    // return widget.dragging
-    //     ? Container(
-    //         decoration: const BoxDecoration(
-    //           gradient: LinearGradient(
-    //             colors: [Colors.black, Colors.black, Colors.white],
-    //             stops: [0, 0.4, 1],
-    //           ),
-    //         ),
-    //         child: Content(widget: widget))
-    //     : Card(
-    //         color: MellotippetColors.melloPurple,
-    //         child: Content(widget: widget),
-    //       );
   }
 }
 
@@ -96,7 +92,7 @@ class Content extends StatelessWidget {
               ),
             ),
             Expanded(child: Container()),
-            if (widget.prediction != null) ...[
+            if (widget.prediction != PredictedPosition.notPlaced) ...[
               SizedBox(
                 width: 110,
                 height: 24,
@@ -109,7 +105,7 @@ class Content extends StatelessWidget {
                     ),
                     Center(
                       child: Text(
-                        '${widget.prediction?.text}',
+                        '${widget.prediction.text}',
                         style: const TextStyle(
                           color: MellotippetColors.black,
                           fontFamily: 'Roboto',
@@ -137,13 +133,28 @@ class Content extends StatelessWidget {
 }
 
 enum PredictedPosition {
-  finalist(text: 'Final'),
-  semifinalist(text: 'Andra chansen'),
-  fifthPlace(text: '5:e plats');
+  finalist(
+    text: 'Final',
+    gradientStartColor: MellotippetColors.melloLightOrange,
+  ),
+  semifinalist(
+    text: 'Andra chansen',
+    gradientStartColor: MellotippetColors.semifinalistGradientGray,
+  ),
+  fifthPlace(
+    text: '5:e plats',
+    gradientStartColor: MellotippetColors.fifthPlaceGradientBrown,
+  ),
+  notPlaced(
+    text: '',
+    gradientStartColor: Colors.black,
+  );
 
   const PredictedPosition({
     required this.text,
+    required this.gradientStartColor,
   });
 
   final String text;
+  final Color gradientStartColor;
 }
