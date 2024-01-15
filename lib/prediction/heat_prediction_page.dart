@@ -210,7 +210,7 @@ class OtherList extends StatelessWidget {
             feedback: Material(
               child: SizedBox(
                 width: constraints.maxWidth,
-                child: others[index].copyWithDraggingTrue(),
+                child: others[index],
               ),
             ),
             childWhenDragging: Container(
@@ -259,8 +259,8 @@ class DragTargetRow extends StatelessWidget {
               feedback: Material(
                 child: SizedBox(
                   width: constraints.maxWidth,
-                  child: row.copyWithDraggingTrue(),
-                ),
+                        child: row,
+                      ),
               ),
               childWhenDragging: Container(
                 height: 60.0,

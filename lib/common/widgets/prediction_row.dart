@@ -7,7 +7,6 @@ class PredictionRow extends StatefulWidget {
   final String imageAsset;
   final int startNumber;
   final PredictedPosition? prediction;
-  final bool dragging;
 
   const PredictionRow({
     super.key,
@@ -16,16 +15,7 @@ class PredictionRow extends StatefulWidget {
     required this.imageAsset,
     required this.startNumber,
     this.prediction,
-    this.dragging = false,
   });
-
-  PredictionRow copyWithDraggingTrue() => PredictionRow(
-        artist: artist,
-        song: song,
-        imageAsset: imageAsset,
-        startNumber: startNumber,
-        dragging: true,
-      );
 
   PredictionRow copyWithPredictionPosition(PredictedPosition? prediction) =>
       PredictionRow(
@@ -34,7 +24,6 @@ class PredictionRow extends StatefulWidget {
         imageAsset: imageAsset,
         startNumber: startNumber,
         prediction: prediction,
-        dragging: dragging,
       );
 
   @override
@@ -44,16 +33,24 @@ class PredictionRow extends StatefulWidget {
 class PredictionRowState extends State<PredictionRow> {
   @override
   Widget build(BuildContext context) {
-    return widget.dragging
-        ? Container(
-            decoration: const BoxDecoration(
-              color: MellotippetColors.melloPurple,
-            ),
-            child: Content(widget: widget))
-        : Card(
-            color: MellotippetColors.melloPurple,
-            child: Content(widget: widget),
-          );
+    return Card(
+      color: MellotippetColors.melloPurple,
+      child: Content(widget: widget),
+    );
+
+    // return widget.dragging
+    //     ? Container(
+    //         decoration: const BoxDecoration(
+    //           gradient: LinearGradient(
+    //             colors: [Colors.black, Colors.black, Colors.white],
+    //             stops: [0, 0.4, 1],
+    //           ),
+    //         ),
+    //         child: Content(widget: widget))
+    //     : Card(
+    //         color: MellotippetColors.melloPurple,
+    //         child: Content(widget: widget),
+    //       );
   }
 }
 
