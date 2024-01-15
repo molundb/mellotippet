@@ -43,33 +43,39 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
         children: [
           const SizedBox(height: 12),
           Expanded(
-            child: DragAndDropLists(
-              children: [
-                DragAndDropList(
-                  children: state.songLists[0]
-                      .map((song) => DragAndDropItem(child: song))
-                      .toList(),
-                  canDrag: false,
-                  contentsWhenEmpty: const Text(
-                    'Dra fem bidrag över linjen och rangordna för att tippa',
-                    style: TextStyle(
-                      color: MellotippetColors.gray,
-                      fontStyle: FontStyle.italic,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: DragAndDropLists(
+                children: [
+                  DragAndDropList(
+                    children: state.songLists[0]
+                        .map((song) => DragAndDropItem(child: song))
+                        .toList(),
+                    canDrag: false,
+                    contentsWhenEmpty: const Text(
+                      'Dra fem bidrag över linjen och rangordna för att tippa',
+                      style: TextStyle(
+                        color: MellotippetColors.gray,
+                        fontStyle: FontStyle.italic,
+                      ),
                     ),
                   ),
+                  DragAndDropList(
+                    children: state.songLists[1]
+                        .map((song) => DragAndDropItem(child: song))
+                        .toList(),
+                    canDrag: false,
+                  ),
+                ],
+                listDivider: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 4.0),
+                  child: Divider(thickness: 1),
                 ),
-                DragAndDropList(
-                  children: state.songLists[1]
-                      .map((song) => DragAndDropItem(child: song))
-                      .toList(),
-                  canDrag: false,
-                ),
-              ],
-              listDivider: const Divider(thickness: 1),
-              listDividerOnLastChild: false,
-              itemDragOnLongPress: false,
-              onItemReorder: controller.onItemReorder,
-              onListReorder: (int x, int y) {},
+                listDividerOnLastChild: false,
+                itemDragOnLongPress: false,
+                onItemReorder: controller.onItemReorder,
+                onListReorder: (int x, int y) {},
+              ),
             ),
           ),
           Padding(

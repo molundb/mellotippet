@@ -105,7 +105,7 @@ class Content extends StatelessWidget {
                     ),
                     Center(
                       child: Text(
-                        '${widget.prediction.text}',
+                        widget.prediction.text,
                         style: const TextStyle(
                           color: MellotippetColors.black,
                           fontFamily: 'Roboto',
