@@ -52,11 +52,20 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
                         .map((song) => DragAndDropItem(child: song))
                         .toList(),
                     canDrag: false,
-                    contentsWhenEmpty: const Text(
-                      'Dra fem bidrag över linjen och rangordna för att tippa',
-                      style: TextStyle(
-                        color: MellotippetColors.gray,
-                        fontStyle: FontStyle.italic,
+                    contentsWhenEmpty: const Padding(
+                      padding: EdgeInsets.only(
+                        top: 12.0,
+                        left: 10.0,
+                        right: 10.0,
+                      ),
+                      child: Text(
+                        'Dra fem bidrag ovanför linjen och rangordna för att tippa',
+                        style: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontSize: 12.0,
+                          color: MellotippetColors.gray,
+                          fontStyle: FontStyle.italic,
+                        ),
                       ),
                     ),
                   ),

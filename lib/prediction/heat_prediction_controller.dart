@@ -1,5 +1,4 @@
 import 'package:collection/collection.dart';
-import 'package:drag_and_drop_lists/drag_and_drop_item.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mellotippet/common/models/all_models.dart';
