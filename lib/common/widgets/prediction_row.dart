@@ -114,6 +114,7 @@ class Content extends StatelessWidget {
                             color: MellotippetColors.black,
                             fontFamily: 'Roboto',
                             fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold,
                             fontSize: 10,
                           ),
                         ),
