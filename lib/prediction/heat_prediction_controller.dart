@@ -147,6 +147,10 @@ class HeatPredictionController
       return element;
     }).toList();
 
+    songLists[1] = songLists[1]
+        .map((e) => e.copyWithPredictionPosition(PredictedPosition.notPlaced))
+        .toList();
+
     final ctaEnabled = songLists[0].length >= 5;
     state = state.copyWith(songLists: songLists, ctaEnabled: ctaEnabled);
   }

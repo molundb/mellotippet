@@ -65,6 +65,7 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
                         .map((song) => DragAndDropItem(child: song))
                         .toList(),
                     canDrag: false,
+                    contentsWhenEmpty: Container(),
                   ),
                 ],
                 listDivider: const Padding(
@@ -167,40 +168,42 @@ class DragTargetRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DragTarget(
-      builder: (BuildContext context,
-          List<PredictionRow?> candidateData,
-          List rejectedData,) {
+      builder: (
+        BuildContext context,
+        List<PredictionRow?> candidateData,
+        List rejectedData,
+      ) {
         if (candidateData.isNotEmpty) {
           return Opacity(opacity: 0.5, child: candidateData.first);
         } else {
           final row = this.row;
           return row != null
               ? LayoutBuilder(
-            key: Key('$index'),
-            builder: (context, constraints) => Draggable<PredictionRow>(
-              axis: Axis.vertical,
-              data: row,
-              feedback: Material(
-                child: SizedBox(
-                  width: constraints.maxWidth,
+                  key: Key('$index'),
+                  builder: (context, constraints) => Draggable<PredictionRow>(
+                    axis: Axis.vertical,
+                    data: row,
+                    feedback: Material(
+                      child: SizedBox(
+                        width: constraints.maxWidth,
                         child: row,
                       ),
-              ),
-              childWhenDragging: Container(
-                height: 60.0,
-              ),
-              child: row,
-              onDragStarted: () {
-                clearRow(index);
-              },
-              onDraggableCanceled: (Velocity v, Offset o) {
-                setRow(row, index);
-              },
-            ),
-          )
+                    ),
+                    childWhenDragging: Container(
+                      height: 60.0,
+                    ),
+                    child: row,
+                    onDragStarted: () {
+                      clearRow(index);
+                    },
+                    onDraggableCanceled: (Velocity v, Offset o) {
+                      setRow(row, index);
+                    },
+                  ),
+                )
               : EmptyPredictionRow(
-            text: emptyText,
-          );
+                  text: emptyText,
+                );
         }
       },
       onWillAccept: (data) {
