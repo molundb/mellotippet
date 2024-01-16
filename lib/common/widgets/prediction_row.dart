@@ -61,69 +61,76 @@ class Content extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(6.0),
-      child: IntrinsicHeight(
+      padding: const EdgeInsets.all(0.0),
+      child: SizedBox(
+        height: 60,
         child: Row(
           children: [
             Image.asset(
               widget.imageAsset,
-              width: 45,
-              height: 40,
             ),
             Container(
               margin: const EdgeInsets.only(left: 10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.artist,
-                    style: const TextStyle(color: Colors.white, fontSize: 10),
-                  ),
-                  Text(
-                    widget.song,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(child: Container()),
-            if (widget.prediction != PredictedPosition.notPlaced) ...[
-              SizedBox(
-                width: 110,
-                height: 24,
-                child: Stack(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      decoration: const BoxDecoration(
-                        color: Color(0xFFFFD58E),
-                      ),
+                    Text(
+                      widget.artist,
+                      style: const TextStyle(color: Colors.white, fontSize: 10),
                     ),
-                    Center(
-                      child: Text(
-                        widget.prediction.text,
-                        style: const TextStyle(
-                          color: MellotippetColors.black,
-                          fontFamily: 'Roboto',
-                          fontStyle: FontStyle.italic,
-                          fontSize: 10,
-                        ),
+                    Text(
+                      widget.song,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: 18),
+            ),
+            Expanded(child: Container()),
+            if (widget.prediction != PredictedPosition.notPlaced) ...[
+              Padding(
+                padding: const EdgeInsets.only(right: 18.0),
+                child: SizedBox(
+                  width: 110,
+                  height: 24,
+                  child: Stack(
+                    children: [
+                      Container(
+                        decoration: const BoxDecoration(
+                          color: Color(0xFFFFD58E),
+                        ),
+                      ),
+                      Center(
+                        child: Text(
+                          widget.prediction.text,
+                          style: const TextStyle(
+                            color: MellotippetColors.black,
+                            fontFamily: 'Roboto',
+                            fontStyle: FontStyle.italic,
+                            fontSize: 10,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ] else ...[
               Container(),
             ],
-            const Icon(
-              Icons.menu,
-              size: 14,
+            const Padding(
+              padding: EdgeInsets.only(right: 12.0),
+              child: Icon(
+                Icons.menu,
+                size: 14,
+              ),
             ),
           ],
         ),
