@@ -26,7 +26,7 @@ class LoginController extends StateNotifier<LoginControllerState> {
       if (user == null) {
         state = state.copyWith(loading: false, loggedIn: false);
       } else {
-        state = state.copyWith(loading: false, loggedIn: true);
+        state = state.copyWith(loading: false, loggedIn: false);
       }
     });
   }

@@ -19,7 +19,7 @@ class CtaButton extends StatelessWidget {
       backgroundColor: MellotippetColors.melloBlue,
       foregroundColor: Colors.white,
       minimumSize: const Size(121, 31),
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 40),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(2)),
       ),

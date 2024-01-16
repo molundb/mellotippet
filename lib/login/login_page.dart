@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/common/repositories/repositories.dart';
+import 'package:mellotippet/common/widgets/cta_button.dart';
 import 'package:mellotippet/common/widgets/widgets.dart';
 import 'package:mellotippet/config/config.dart';
 import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/login/login_controller.dart';
 import 'package:mellotippet/mello_bottom_navigation_bar.dart';
 import 'package:mellotippet/sign_up/sign_up_page.dart';
+import 'package:mellotippet/styles/colors.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -52,37 +54,50 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(config.title),
-        centerTitle: true,
-      ),
-      body: Center(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              MellotippetColors.melloLightPink,
+              MellotippetColors.melloPurple
+            ],
+          ),
+        ),
         child: Form(
           key: _formKey,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                _LoginEmail(
-                  controller: controller,
-                  emailController: _emailController,
+                const Spacer(),
+                const Text(
+                  'Mellotippet',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 64,
+                    fontFamily: 'Lalezar',
+                  ),
                 ),
-                const SizedBox(height: 30.0),
-                _LoginPassword(
-                  controller: controller,
-                  passwordController: _passwordController,
+                _InputField(
+                  label: 'Email',
+                  onSaved: controller.updateEmail,
+                  textEditingController: _emailController,
                 ),
-                const SizedBox(height: 30.0),
+                const SizedBox(height: 24.0),
+                _InputField(
+                  label: 'Lösenord',
+                  onSaved: controller.updatePassword,
+                  textEditingController: _passwordController,
+                ),
+                const SizedBox(height: 84.0),
                 _SubmitButton(
                   formKey: _formKey,
                   state: state,
                 ),
-                const SizedBox(height: 30.0),
+                const Spacer(),
                 const _CreateAccountButton(),
-                // const SizedBox(height: 30.0),
-                // _ContinueWithoutAccountButton(),
               ],
             ),
           ),
@@ -92,43 +107,42 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   }
 }
 
-class _LoginEmail extends StatelessWidget {
-  final LoginController controller;
-  final TextEditingController emailController;
+class _InputField extends StatelessWidget {
+  final String label;
+  final Function(String?)? onSaved;
+  final TextEditingController textEditingController;
 
-  const _LoginEmail({
-    required this.controller,
-    required this.emailController,
+  const _InputField({
+    required this.label,
+    required this.onSaved,
+    required this.textEditingController,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: emailController,
-      decoration: const InputDecoration(hintText: 'Email'),
-      onSaved: controller.updateEmail,
-    );
-  }
-}
-
-class _LoginPassword extends StatelessWidget {
-  final LoginController controller;
-  final TextEditingController passwordController;
-
-  const _LoginPassword({
-    required this.controller,
-    required this.passwordController,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      controller: passwordController,
-      obscureText: true,
-      decoration: const InputDecoration(
-        hintText: 'Password',
-      ),
-      onSaved: controller.updatePassword,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+            fontFamily: 'Roboto',
+          ),
+        ),
+        const SizedBox(height: 8),
+        TextFormField(
+          controller: textEditingController,
+          decoration: const InputDecoration(
+            contentPadding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+            filled: true,
+            fillColor: Colors.white,
+            border: OutlineInputBorder(),
+          ),
+          onSaved: onSaved,
+        ),
+      ],
     );
   }
 }
@@ -147,8 +161,8 @@ class _SubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OldCtaButton(
-      text: 'Login',
+    return CtaButton(
+      text: 'Logga in',
       onPressed: () => _loginPressed(
         context,
         formKey,
@@ -199,8 +213,11 @@ class _CreateAccountButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SecondaryButton(
-      text: 'Create Account',
+    return TextButton(
+      child: const Text(
+        'Inget konto? Registrera dig här',
+        style: TextStyle(color: Colors.white),
+      ),
       onPressed: () => _createAccountPressed(context),
     );
   }
