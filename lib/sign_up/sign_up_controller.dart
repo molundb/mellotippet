@@ -2,7 +2,7 @@ import 'package:mellotippet/common/repositories/repositories.dart';
 import 'package:mellotippet/service_location/get_it.dart';
 
 class SignUpController {
-  final databaseRepository = getIt.get<DatabaseRepositoryImpl>();
+  final databaseRepository = getIt.get<DatabaseRepository>();
 
   late String username;
   late String email;

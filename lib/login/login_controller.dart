@@ -9,15 +9,18 @@ part 'login_controller.freezed.dart';
 class LoginController extends StateNotifier<LoginControllerState> {
   LoginController({
     required this.authRepository,
+    required this.databaseRepository,
     LoginControllerState? state,
   }) : super(state ?? const LoginControllerState());
 
   final AuthenticationRepository authRepository;
+  final DatabaseRepository databaseRepository;
 
   static final provider =
       StateNotifierProvider<LoginController, LoginControllerState>(
           (ref) => LoginController(
                 authRepository: getIt.get<AuthenticationRepository>(),
+                databaseRepository: getIt.get<DatabaseRepository>(),
               ));
 
   void restoreSession() {
@@ -31,6 +34,12 @@ class LoginController extends StateNotifier<LoginControllerState> {
     });
   }
 
+  void updateUsername(String? username) {
+    if (username == null) return;
+
+    state = state.copyWith(username: username);
+  }
+
   void updateEmail(String? email) {
     if (email == null) return;
 
@@ -42,6 +51,11 @@ class LoginController extends StateNotifier<LoginControllerState> {
 
     state = state.copyWith(password: password);
   }
+
+  Future<bool> isUsernameAlreadyTaken() async {
+    final user = await databaseRepository.getUserWithUsername(state.username);
+    return user != null;
+  }
 }
 
 @freezed
@@ -49,6 +63,7 @@ class LoginControllerState with _$LoginControllerState {
   const factory LoginControllerState({
     @Default(true) bool loading,
     @Default(false) bool loggedIn,
+    @Default("") String username,
     @Default("") String email,
     @Default("") String password,
   }) = _LoginControllerState;

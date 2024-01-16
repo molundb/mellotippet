@@ -134,8 +134,6 @@ class Content extends StatelessWidget {
                   ),
                 ),
               ),
-            ] else ...[
-              Container(),
             ],
             const Padding(
               padding: EdgeInsets.only(right: 12.0),
