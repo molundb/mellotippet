@@ -112,8 +112,10 @@ class Content extends StatelessWidget {
                   child: Stack(
                     children: [
                       Container(
+                        transform: Matrix4.skewX(-.4),
                         decoration: const BoxDecoration(
                           color: Color(0xFFFFD58E),
+                          borderRadius: BorderRadius.all(Radius.circular(2)),
                         ),
                       ),
                       Center(
