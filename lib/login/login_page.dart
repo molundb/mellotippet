@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/common/repositories/repositories.dart';
 import 'package:mellotippet/common/widgets/cta_button.dart';
-import 'package:mellotippet/common/widgets/widgets.dart';
 import 'package:mellotippet/config/config.dart';
 import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/login/login_controller.dart';
@@ -228,46 +227,5 @@ class _CreateAccountButton extends StatelessWidget {
         builder: (context) => SignUpPage(),
       ),
     );
-  }
-}
-
-class _ContinueWithoutAccountButton extends StatelessWidget {
-  final AuthenticationRepository _authRepository =
-      getIt.get<AuthenticationRepository>();
-
-  _ContinueWithoutAccountButton();
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 52,
-      child: OutlinedButton(
-        onPressed: () => _continueWithoutAccountPressed(context),
-        style: ElevatedButton.styleFrom(
-          shape: const StadiumBorder(),
-        ),
-        child: const Text('Continue Without Account'),
-      ),
-    );
-  }
-
-  Future<dynamic> _continueWithoutAccountPressed(BuildContext context) async {
-    try {
-      await _authRepository.signInAnonymously();
-
-      if (context.mounted) {
-        return Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const MelloBottomNavigationBar(),
-          ),
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(e.toString()),
-        ),
-      );
-    }
   }
 }
