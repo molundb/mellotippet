@@ -66,8 +66,17 @@ class Content extends StatelessWidget {
         height: 60,
         child: Row(
           children: [
-            Image.asset(
-              widget.imageAsset,
+            Stack(
+              children: [
+                Image.asset(
+                  widget.imageAsset,
+                ),
+                CustomPaint(
+                  painter: TriangleCoveringPhoto(
+                      color: widget.prediction.gradientStartColor),
+                  size: const Size(68, 60),
+                ),
+              ],
             ),
             Container(
               margin: const EdgeInsets.only(left: 10),
@@ -165,4 +174,33 @@ enum PredictedPosition {
 
   final String text;
   final Color gradientStartColor;
+}
+
+class TriangleCoveringPhoto extends CustomPainter {
+  Color color;
+
+  TriangleCoveringPhoto({
+    required this.color,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final double width = size.width;
+    final double height = size.height;
+
+    final path = Path();
+    path.moveTo(width, 0); // Top right corner
+    path.lineTo(width, height); // Bottom right corner
+    path.lineTo(width / 3 * 2, height); // Bottom left corner
+    path.close();
+
+    final paint = Paint()..color = color;
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return false;
+  }
 }
