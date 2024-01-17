@@ -49,6 +49,7 @@ class _LoginPageState extends ConsumerState<LoginOrSignUpPage> {
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
