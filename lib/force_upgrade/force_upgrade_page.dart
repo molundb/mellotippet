@@ -2,6 +2,7 @@ import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
 import 'package:mellotippet/common/repositories/feature_flag_repository.dart';
+import 'package:mellotippet/home_page.dart';
 import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/login/login_page.dart';
 import 'package:mellotippet/services/mello_tippet_package_info.dart';
@@ -35,7 +36,7 @@ class _ForceUpgradeState extends State<ForceUpgradePage> {
       } else {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => const LoginPage(),
+            builder: (context) => HomePage(),
           ),
         );
       }

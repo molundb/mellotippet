@@ -35,6 +35,19 @@ class _ScorePageState extends ConsumerState<ScorePage> {
             fontFamily: 'Lalezar',
           ),
         ),
+        actions: [
+          PopupMenuButton<String>(
+            onSelected: handleClick,
+            itemBuilder: (BuildContext context) {
+              return {'Logout'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
+          ),
+        ],
       ),
       body: Stack(
         children: [
@@ -89,5 +102,13 @@ class _ScorePageState extends ConsumerState<ScorePage> {
         ],
       ),
     );
+  }
+
+  void handleClick(String value) {
+    switch (value) {
+      case 'Logout':
+        controller.signOut();
+        break;
+    }
   }
 }

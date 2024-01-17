@@ -71,4 +71,8 @@ class AuthenticationRepository {
         return AuthError.error;
     }
   }
+
+  Future<void> signOut() async {
+    await firebaseAuth.signOut();
+  }
 }

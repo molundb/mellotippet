@@ -32,7 +32,7 @@ class LoginController extends StateNotifier<LoginControllerState> {
         loggedIn = true;
       }
 
-      state = state.copyWith(loading: false, loggedIn: false);
+      state = state.copyWith(loading: false, loggedIn: loggedIn);
     });
   }
 

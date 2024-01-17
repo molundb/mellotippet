@@ -7,16 +7,18 @@ part 'score_controller.freezed.dart';
 
 class ScoreController extends StateNotifier<ScoreControllerState> {
   ScoreController({
-    required DatabaseRepository databaseRepository,
+    required this.authRepository,
+    required this.databaseRepository,
     ScoreControllerState? state,
-  })  : _databaseRepository = databaseRepository,
-        super(state ?? const ScoreControllerState());
+  }) : super(state ?? const ScoreControllerState());
 
-  final DatabaseRepository _databaseRepository;
+  final AuthenticationRepository authRepository;
+  final DatabaseRepository databaseRepository;
 
   static final provider =
       StateNotifierProvider<ScoreController, ScoreControllerState>(
           (ref) => ScoreController(
+                authRepository: getIt.get<AuthenticationRepository>(),
                 databaseRepository: getIt.get<DatabaseRepository>(),
               ));
 
@@ -26,8 +28,12 @@ class ScoreController extends StateNotifier<ScoreControllerState> {
   }
 
   Future<num> _getUserScore() async {
-    final user = await _databaseRepository.getCurrentUser();
+    final user = await databaseRepository.getCurrentUser();
     return user.totalScore;
+  }
+
+  Future<void> signOut() async {
+    await authRepository.signOut();
   }
 }
 

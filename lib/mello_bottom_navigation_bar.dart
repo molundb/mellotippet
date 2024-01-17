@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mellotippet/config/config.dart';
 import 'package:mellotippet/prediction/heat_prediction_page.dart';
 import 'package:mellotippet/rules/rules_page.dart';
 import 'package:mellotippet/service_location/get_it.dart';
@@ -18,9 +17,9 @@ class MelloBottomNavigationBar extends StatefulWidget {
 }
 
 class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
-  final config = getIt.get<Config>();
 
   int _selectedIndex = 0;
+
   static final List<Widget> _widgetOptions = <Widget>[
     const ScorePage(),
     HeatPredictionPage(snackbarHandler: getIt.get<SnackbarHandler>()),
