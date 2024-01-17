@@ -61,7 +61,7 @@ class SignUpPageState extends ConsumerState<SignUpPage> {
         password: state.password,
       );
 
-      _databaseRepository.setUsername(state.username);
+      _databaseRepository.createUser(state.username);
 
       if (context.mounted) {
         Navigator.of(context).pushAndRemoveUntil(

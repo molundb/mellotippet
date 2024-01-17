@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mellotippet/common/models/competition_model.dart';
 import 'package:mellotippet/common/models/prediction/final_prediction_model.dart';
 import 'package:mellotippet/common/models/prediction/heat_prediction_model.dart';
@@ -65,5 +64,5 @@ class FakeDatabaseRepository implements DatabaseRepository {
   }
 
   @override
-  void setUsername(String username) {}
+  void createUser(String username) {}
 }
