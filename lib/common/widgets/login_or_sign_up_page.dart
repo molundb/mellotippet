@@ -11,7 +11,6 @@ class LoginOrSignUpPage extends ConsumerStatefulWidget {
   final Function(
     BuildContext context,
     GlobalKey<FormState> formKey,
-    LoginControllerState state,
   ) ctaAction;
   final String bottomText;
   final Function(BuildContext context) bottomAction;
@@ -99,7 +98,6 @@ class _LoginPageState extends ConsumerState<LoginOrSignUpPage> {
                 const SizedBox(height: 84.0),
                 _SubmitButton(
                   formKey: _formKey,
-                  state: state,
                   buttonText: widget.ctaText,
                   buttonAction: widget.ctaAction,
                 ),
@@ -162,17 +160,14 @@ class _InputField extends StatelessWidget {
 
 class _SubmitButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;
-  final LoginControllerState state;
   final String buttonText;
   final Function(
     BuildContext context,
     GlobalKey<FormState> formKey,
-    LoginControllerState state,
   ) buttonAction;
 
   const _SubmitButton({
     required this.formKey,
-    required this.state,
     required this.buttonText,
     required this.buttonAction,
   });
@@ -181,7 +176,15 @@ class _SubmitButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return CtaButton(
       text: buttonText,
-      onPressed: () => buttonAction(context, formKey, state),
+      onPressed: () {
+        final FormState? form = formKey.currentState;
+        if (form == null || !form.validate()) return;
+
+        form.save();
+        FocusScope.of(context).unfocus();
+
+        buttonAction(context, formKey);
+      },
     );
   }
 }

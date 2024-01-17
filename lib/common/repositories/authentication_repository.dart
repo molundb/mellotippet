@@ -19,17 +19,7 @@ class AuthenticationRepository {
 
   auth.User? get currentUser => firebaseAuth.currentUser;
 
-  Future<UserScoreEntity> signInAnonymously() async {
-    try {
-      await firebaseAuth.signInAnonymously();
-
-      return _mapFirebaseUser(currentUser!);
-    } on auth.FirebaseAuthException catch (e) {
-      throw _determineError(e);
-    }
-  }
-
-  Future<UserScoreEntity> createUserWithEmailAndPassword({
+  Future<void> createUserWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
@@ -38,43 +28,23 @@ class AuthenticationRepository {
         email: email,
         password: password,
       );
-
-      return _mapFirebaseUser(currentUser!);
     } on auth.FirebaseAuthException catch (e) {
       throw _determineError(e);
     }
   }
 
-  Future<UserScoreEntity> signInWithEmailAndPassword({
+  Future<void> signInWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
     try {
-      final userCredential = await firebaseAuth.signInWithEmailAndPassword(
+      await firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-
-      return _mapFirebaseUser(userCredential.user!);
     } on auth.FirebaseAuthException catch (e) {
       throw _determineError(e);
     }
-  }
-
-  UserScoreEntity _mapFirebaseUser(auth.User? user) {
-    if (user == null) {
-      return UserScoreEntity.empty();
-    }
-
-    final map = <String, dynamic>{
-      'id': user.uid,
-      'username': '',
-      'score': 0,
-      'email': user.email ?? '',
-      'emailVerified': user.emailVerified,
-      'isAnonymous': user.isAnonymous,
-    };
-    return UserScoreEntity.empty();
   }
 
   AuthError _determineError(auth.FirebaseAuthException exception) {

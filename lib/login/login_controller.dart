@@ -25,12 +25,14 @@ class LoginController extends StateNotifier<LoginControllerState> {
 
   void restoreSession() {
     state = state.copyWith(loading: true);
+
     authRepository.firebaseAuth.authStateChanges().listen((User? user) {
-      if (user == null) {
-        state = state.copyWith(loading: false, loggedIn: false);
-      } else {
-        state = state.copyWith(loading: false, loggedIn: false);
+      var loggedIn = false;
+      if (user != null) {
+        loggedIn = true;
       }
+
+      state = state.copyWith(loading: false, loggedIn: false);
     });
   }
 
@@ -55,6 +57,22 @@ class LoginController extends StateNotifier<LoginControllerState> {
   Future<bool> isUsernameAlreadyTaken() async {
     final user = await databaseRepository.getUserWithUsername(state.username);
     return user != null;
+  }
+
+  createUserWithEmailAndPassword() async {
+    await authRepository.createUserWithEmailAndPassword(
+      email: state.email,
+      password: state.password,
+    );
+
+    databaseRepository.createUser(state.username);
+  }
+
+  signInWithEmailAndPassword() async {
+    await authRepository.signInWithEmailAndPassword(
+      email: state.email,
+      password: state.password,
+    );
   }
 }
 
