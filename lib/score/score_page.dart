@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mellotippet/common/widgets/reusable_app_bar.dart';
 import 'package:mellotippet/score/score_controller.dart';
 import 'package:mellotippet/styles/colors.dart';
 
@@ -24,31 +25,7 @@ class _ScorePageState extends ConsumerState<ScorePage> {
     final state = ref.watch(ScoreController.provider);
 
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 120,
-        centerTitle: true,
-        title: const Text(
-          'Poäng',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 64,
-            fontFamily: 'Lalezar',
-          ),
-        ),
-        actions: [
-          PopupMenuButton<String>(
-            onSelected: handleClick,
-            itemBuilder: (BuildContext context) {
-              return {'Logout'}.map((String choice) {
-                return PopupMenuItem<String>(
-                  value: choice,
-                  child: Text(choice),
-                );
-              }).toList();
-            },
-          ),
-        ],
-      ),
+      appBar: ReusableAppBar(title: 'Poäng'),
       body: Stack(
         children: [
           Container(
@@ -92,9 +69,10 @@ class _ScorePageState extends ConsumerState<ScorePage> {
                 child: Text(
                   state.loading ? '0 p' : '${state.userScore} p',
                   style: const TextStyle(
-                      fontSize: 92,
-                      fontFamily: 'Lalezar',
-                      color: MellotippetColors.melloLightOrange),
+                    fontSize: 92,
+                    fontFamily: 'Lalezar',
+                    color: MellotippetColors.melloLightOrange,
+                  ),
                 ),
               )
             ],
@@ -102,13 +80,5 @@ class _ScorePageState extends ConsumerState<ScorePage> {
         ],
       ),
     );
-  }
-
-  void handleClick(String value) {
-    switch (value) {
-      case 'Logout':
-        controller.signOut();
-        break;
-    }
   }
 }

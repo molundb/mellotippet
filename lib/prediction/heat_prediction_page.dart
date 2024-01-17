@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/common/widgets/cta_button.dart';
 import 'package:mellotippet/common/widgets/prediction_row.dart';
+import 'package:mellotippet/common/widgets/reusable_app_bar.dart';
 import 'package:mellotippet/prediction/heat_prediction_controller.dart';
 import 'package:mellotippet/snackbar/snackbar_handler.dart';
 import 'package:mellotippet/styles/all_styles.dart';
@@ -26,19 +27,8 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
     final state = ref.watch(HeatPredictionController.provider);
 
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 120,
-        centerTitle: true,
-        title: const Text(
-          'Tippa',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 64,
-            fontFamily: 'Lalezar',
-          ),
-        ),
-        // TODO: add info about competition
-      ),
+      appBar: ReusableAppBar(title: 'Tippa'),
+      // TODO: add info about competition
       body: Column(
         children: [
           const SizedBox(height: 12),
