@@ -155,7 +155,7 @@ enum PredictedPosition {
     gradientStartColor: MellotippetColors.melloLightOrange,
   ),
   semifinalist(
-    text: 'Andra chansen',
+    text: 'Semifinal',
     gradientStartColor: MellotippetColors.semifinalistGradientGray,
   ),
   fifthPlace(
