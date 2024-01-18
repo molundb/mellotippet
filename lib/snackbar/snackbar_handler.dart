@@ -16,7 +16,7 @@ class SnackbarHandler {
     required String title,
     String? description,
     SnackbarAlertLevel level = SnackbarAlertLevel.info,
-    Duration duration = const Duration(days: 365),
+    Duration duration = const Duration(seconds: 5),
   }) {
     if (title.isEmpty) {
       _logger.e('SnackBarHandler called with blank title');
@@ -40,14 +40,14 @@ class SnackbarHandler {
       ),
       duration: duration,
       dismissDirection: DismissDirection.horizontal,
-      action: SnackBarAction(
-        key: const Key('snackbar_close_button'),
-        label: 'close',
-        textColor: Colors.white,
-        onPressed: () {
-          _snackbarKey.currentState?.hideCurrentSnackBar();
-        },
-      ),
+      // action: SnackBarAction(
+      //   key: const Key('snackbar_close_button'),
+      //   label: 'Stäng',
+      //   textColor: Colors.white,
+      //   onPressed: () {
+      //     _snackbarKey.currentState?.hideCurrentSnackBar();
+      //   },
+      // ),
     );
 
     _snackbarKey.currentState?.showSnackBar(snackBar);
@@ -61,7 +61,7 @@ class SnackbarHandler {
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             title,
