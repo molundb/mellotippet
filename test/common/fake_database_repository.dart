@@ -20,6 +20,11 @@ class FakeDatabaseRepository implements DatabaseRepository {
   }
 
   @override
+  Future<CompetitionModel> getCompetition(String competitionId) {
+    return Future.value(fakeCompetitions[1]);
+  }
+
+  @override
   Future<User> getCurrentUser() {
     return Future.value(currentUser);
   }

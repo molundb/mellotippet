@@ -12,6 +12,7 @@ class CompetitionModel with _$CompetitionModel {
     required CompetitionType type,
     required int lowestScore,
     required PredictionModel result,
+    required String appBarSubtitle,
   }) = _CompetitionModel;
 
   factory CompetitionModel.fromFirestore(
@@ -42,6 +43,7 @@ class CompetitionModel with _$CompetitionModel {
       type: type,
       lowestScore: data?['lowestScore'] ?? -1,
       result: result,
+      appBarSubtitle: data?['appBarSubtitle'],
     );
   }
 

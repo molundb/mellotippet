@@ -47,6 +47,13 @@ class HeatPredictionController
     state = state.copyWith(songLists: songLists);
   }
 
+  void getAppBarSubtitle() async {
+    final currentCompetition = await databaseRepository
+        .getCompetition(featureFlagRepository.getCurrentCompetition());
+
+    state = state.copyWith(appBarSubtitle: currentCompetition.appBarSubtitle);
+  }
+
   onItemReorder(
     int oldItemIndex,
     int oldListIndex,
@@ -113,5 +120,6 @@ class HeatPredictionControllerState with _$HeatPredictionControllerState {
     HeatPredictionModel? prediction,
     @Default([[], []]) List<List<PredictionRow>> songLists,
     @Default(false) bool ctaEnabled,
+    String? appBarSubtitle,
   }) = _HeatPredictionControllerState;
 }

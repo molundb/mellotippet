@@ -23,12 +23,17 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
       ref.read(HeatPredictionController.provider.notifier);
 
   @override
+  void initState() {
+    controller.getAppBarSubtitle();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final state = ref.watch(HeatPredictionController.provider);
 
     return Scaffold(
-      appBar: ReusableAppBar(title: 'Tippa'),
-      // TODO: add info about competition
+      appBar: ReusableAppBar(title: 'Tippa', subtitle: state.appBarSubtitle),
       body: Column(
         children: [
           const SizedBox(height: 12),

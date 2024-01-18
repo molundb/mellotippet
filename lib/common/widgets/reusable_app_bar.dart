@@ -4,11 +4,13 @@ import 'package:mellotippet/service_location/get_it.dart';
 
 class ReusableAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
+  final String? subtitle;
   final PreferredSizeWidget? bottom;
 
   ReusableAppBar({
     super.key,
     required this.title,
+    this.subtitle,
     this.bottom,
   });
 
@@ -17,16 +19,32 @@ class ReusableAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final subtitle2 = subtitle;
     return AppBar(
       toolbarHeight: 120,
       centerTitle: true,
-      title: Text(
-        title,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 64,
-          fontFamily: 'Lalezar',
-        ),
+      title: Column(
+        children: [
+          const SizedBox(height: 10),
+          Text(
+            title,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 64,
+              fontFamily: 'Lalezar',
+              height: 1,
+            ),
+          ),
+          if (subtitle2 != null) ...[
+            Text(
+              subtitle2,
+              style: const TextStyle(
+                fontSize: 12,
+                fontFamily: 'Roboto',
+              ),
+            ),
+          ]
+        ],
       ),
       bottom: bottom,
       actions: [

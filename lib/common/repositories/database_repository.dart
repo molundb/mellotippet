@@ -23,6 +23,8 @@ abstract class DatabaseRepository {
 
   Future<List<CompetitionModel>> getCompetitions();
 
+  Future<CompetitionModel> getCompetition(String competitionId);
+
   Future<List<Song>> getSongs(String heatId);
 
   Future<User> getCurrentUser();
@@ -166,6 +168,18 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
       .docs
       .map((e) => e.data())
       .toList();
+
+  @override
+  Future<CompetitionModel> getCompetition(String competitionId) async {
+    return (await _competitions
+            .withConverter(
+              fromFirestore: CompetitionModel.fromFirestore,
+              toFirestore: CompetitionModel.toFirestore,
+            )
+            .doc(competitionId)
+            .get())
+        .data()!; // TODO: add try-catch and handle error
+  }
 
   @override
   Future<List<Song>> getSongs(String heatId) async {
