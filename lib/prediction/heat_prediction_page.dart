@@ -100,12 +100,12 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
 
     if (successful) {
       widget.snackbarHandler.showText(
-        title: 'Upload Successful!',
+        title: 'Tippet sparat!',
         level: SnackbarAlertLevel.success,
       );
     } else {
       widget.snackbarHandler.showText(
-        title: 'Upload Failed!',
+        title: 'Tippet misslyckades!',
         level: SnackbarAlertLevel.error,
       );
     }
