@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mellotippet/common/repositories/database_repository.dart';
 import 'package:mellotippet/score/score_controller.dart';
 
 import '../common/fake_database_repository.dart';
@@ -13,6 +12,7 @@ void main() {
     final scoreController = ScoreController(
       databaseRepository:
           FakeDatabaseRepository(currentUser: fakeUser.copyWith(totalScore: 7)),
+      // authRepository: ,
       state: null,
     );
 

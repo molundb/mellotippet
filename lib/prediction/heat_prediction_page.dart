@@ -2,8 +2,8 @@ import 'package:drag_and_drop_lists/drag_and_drop_lists.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/common/widgets/cta_button.dart';
+import 'package:mellotippet/common/widgets/prediction_page_app_bar/prediction_page_app_bar.dart';
 import 'package:mellotippet/common/widgets/prediction_row.dart';
-import 'package:mellotippet/common/widgets/reusable_app_bar.dart';
 import 'package:mellotippet/prediction/heat_prediction_controller.dart';
 import 'package:mellotippet/snackbar/snackbar_handler.dart';
 import 'package:mellotippet/styles/all_styles.dart';
@@ -23,17 +23,11 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
       ref.read(HeatPredictionController.provider.notifier);
 
   @override
-  void initState() {
-    controller.getAppBarSubtitle();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final state = ref.watch(HeatPredictionController.provider);
 
     return Scaffold(
-      appBar: ReusableAppBar(title: 'Tippa', subtitle: state.appBarSubtitle),
+      appBar: const PredictionPageAppBar(),
       body: Column(
         children: [
           const SizedBox(height: 12),
