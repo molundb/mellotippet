@@ -1,216 +1,115 @@
+import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mellotippet/common/models/all_models.dart';
 import 'package:mellotippet/common/models/prediction/prediction_and_score.dart';
 import 'package:mellotippet/common/repositories/repositories.dart';
+import 'package:mellotippet/common/widgets/prediction_row.dart';
+import 'package:mellotippet/prediction/prediction_page/prediction_controller.dart';
 import 'package:mellotippet/service_location/get_it.dart';
 
 part 'final_prediction_controller.freezed.dart';
 
-class FinalPredictionController
-    extends StateNotifier<FinalPredictionControllerState> {
+class FinalPredictionController extends PredictionController {
   FinalPredictionController({
     required this.databaseRepository,
     required this.featureFlagRepository,
-    required FinalPredictionControllerState state,
-  }) : super(state);
+    required super.state,
+  });
 
   final DatabaseRepository databaseRepository;
   final FeatureFlagRepository featureFlagRepository;
 
   static final provider = StateNotifierProvider<FinalPredictionController,
-      FinalPredictionControllerState>(
+      PredictionControllerState>(
     (ref) => FinalPredictionController(
       databaseRepository: getIt.get<DatabaseRepository>(),
       featureFlagRepository: getIt.get<FeatureFlagRepository>(),
-      state: const FinalPredictionControllerState(loading: true),
+      state: const PredictionControllerState(loading: true),
     ),
   );
 
-  Future<void> getUsernameAndCurrentCompetition() async {
-    state = state.copyWith(loading: true);
-    final username = await databaseRepository.getCurrentUsername();
-    final currentCompetition = featureFlagRepository.getCurrentCompetition();
-    state = state.copyWith(
-      loading: false,
-      username: username,
-      currentCompetition: currentCompetition,
-    );
+  @override
+  getStateNotifier() {
+    return provider;
   }
 
-  void setPlacement1(String? value) {
-    if (value == null || value.isEmpty) return;
+  @override
+  fetchSongs() async {
+    final songs = await databaseRepository.getSongs('final');
 
-    state = state.copyWith(
-        prediction: state.prediction?.copyWith(
-            placement1: PredictionAndScore(prediction: int.parse(value))));
+    final predictionRows = songs
+        .map((song) => PredictionRow(
+              artist: song.artist,
+              song: song.song,
+              imageAsset: 'assets/images/${song.image}',
+              startNumber: song.startNumber,
+            ))
+        .toList();
+
+    final songLists = [...state.songLists];
+    songLists[0] = [];
+    songLists[1] = predictionRows;
+    state = state.copyWith(songLists: songLists);
   }
 
-  void setPlacement2(String? value) {
-    if (value == null || value.isEmpty) return;
+  @override
+  onItemReorder(
+    int oldItemIndex,
+    int oldListIndex,
+    int newItemIndex,
+    int newListIndex,
+  ) {
+    final songLists = [...state.songLists];
+    final movedItem = songLists[oldListIndex].removeAt(oldItemIndex);
+    songLists[newListIndex].insert(newItemIndex, movedItem);
 
-    state = state.copyWith(
-        prediction: state.prediction?.copyWith(
-            placement2: PredictionAndScore(prediction: int.parse(value))));
+    songLists[0] = songLists[0].mapIndexed((index, element) {
+      element.copyWithPredictionPosition(PredictedPosition.finalist);
+      return element;
+    }).toList();
+
+    songLists[1] = songLists[1]
+        .map((e) => e.copyWithPredictionPosition(PredictedPosition.notPlaced))
+        .toList();
+
+    final ctaEnabled = songLists[0].length >= 12;
+    state = state.copyWith(songLists: songLists, ctaEnabled: ctaEnabled);
   }
 
-  void setPlacement3(String? value) {
-    if (value == null || value.isEmpty) return;
-
-    state = state.copyWith(
-        prediction: state.prediction?.copyWith(
-            placement3: PredictionAndScore(prediction: int.parse(value))));
-  }
-
-  void setPlacement4(String? value) {
-    if (value == null || value.isEmpty) return;
-
-    state = state.copyWith(
-        prediction: state.prediction?.copyWith(
-            placement4: PredictionAndScore(prediction: int.parse(value))));
-  }
-
-  void setPlacement5(String? value) {
-    if (value == null || value.isEmpty) return;
-
-    state = state.copyWith(
-        prediction: state.prediction?.copyWith(
-            placement5: PredictionAndScore(prediction: int.parse(value))));
-  }
-
-  void setPlacement6(String? value) {
-    if (value == null || value.isEmpty) return;
-
-    state = state.copyWith(
-        prediction: state.prediction?.copyWith(
-            placement6: PredictionAndScore(prediction: int.parse(value))));
-  }
-
-  void setPlacement7(String? value) {
-    if (value == null || value.isEmpty) return;
-
-    state = state.copyWith(
-        prediction: state.prediction?.copyWith(
-            placement7: PredictionAndScore(prediction: int.parse(value))));
-  }
-
-  void setPlacement8(String? value) {
-    if (value == null || value.isEmpty) return;
-
-    state = state.copyWith(
-        prediction: state.prediction?.copyWith(
-            placement8: PredictionAndScore(prediction: int.parse(value))));
-  }
-
-  void setPlacement9(String? value) {
-    if (value == null || value.isEmpty) return;
-
-    state = state.copyWith(
-        prediction: state.prediction?.copyWith(
-            placement9: PredictionAndScore(prediction: int.parse(value))));
-  }
-
-  void setPlacement10(String? value) {
-    if (value == null || value.isEmpty) return;
-
-    state = state.copyWith(
-        prediction: state.prediction?.copyWith(
-            placement10: PredictionAndScore(prediction: int.parse(value))));
-  }
-
-  void setPlacement11(String? value) {
-    if (value == null || value.isEmpty) return;
-
-    state = state.copyWith(
-        prediction: state.prediction?.copyWith(
-            placement11: PredictionAndScore(prediction: int.parse(value))));
-  }
-
-  void setPlacement12(String? value) {
-    if (value == null || value.isEmpty) return;
-
-    state = state.copyWith(
-        prediction: state.prediction?.copyWith(
-            placement12: PredictionAndScore(prediction: int.parse(value))));
-  }
-
+  @override
   Future<bool> submitPrediction() {
-    var prediction = state.prediction;
-    if (prediction == null) {
-      return Future.value(false);
-    }
+    final placement1 = state.songLists[0][0].startNumber;
+    final placement2 = state.songLists[0][1].startNumber;
+    final placement3 = state.songLists[0][2].startNumber;
+    final placement4 = state.songLists[0][3].startNumber;
+    final placement5 = state.songLists[0][4].startNumber;
+    final placement6 = state.songLists[0][5].startNumber;
+    final placement7 = state.songLists[0][6].startNumber;
+    final placement8 = state.songLists[0][7].startNumber;
+    final placement9 = state.songLists[0][8].startNumber;
+    final placement10 = state.songLists[0][9].startNumber;
+    final placement11 = state.songLists[0][10].startNumber;
+    final placement12 = state.songLists[0][11].startNumber;
+
+    var prediction = FinalPredictionModel(
+      placement1: PredictionAndScore(prediction: placement1),
+      placement2: PredictionAndScore(prediction: placement2),
+      placement3: PredictionAndScore(prediction: placement3),
+      placement4: PredictionAndScore(prediction: placement4),
+      placement5: PredictionAndScore(prediction: placement5),
+      placement6: PredictionAndScore(prediction: placement6),
+      placement7: PredictionAndScore(prediction: placement7),
+      placement8: PredictionAndScore(prediction: placement8),
+      placement9: PredictionAndScore(prediction: placement9),
+      placement10: PredictionAndScore(prediction: placement10),
+      placement11: PredictionAndScore(prediction: placement11),
+      placement12: PredictionAndScore(prediction: placement12),
+    );
 
     return databaseRepository.uploadFinalPrediction(
-      state.currentCompetition,
+      featureFlagRepository.getCurrentCompetition(),
       prediction,
     );
   }
-
-  String? validatePredictionInput(String? prediction) {
-    if (prediction == null || prediction.isEmpty) {
-      return 'Prediction can not be empty';
-    }
-
-    if (prediction.length > 2) {
-      return 'Prediction is too long';
-    }
-
-    if (!_isNumeric(prediction)) {
-      return 'Prediction is not a number';
-    }
-
-    if (int.tryParse(prediction)! < 1 || int.tryParse(prediction)! > 12) {
-      return 'Prediction must be between 1 and 12';
-    }
-
-    return null;
-  }
-
-  bool _isNumeric(String s) => int.tryParse(s) != null;
-
-  bool duplicatePredictions() {
-    var prediction = state.prediction;
-    if (prediction == null) {
-      return false;
-    }
-
-    var duplicate = false;
-
-    final List<int> predictions = [
-      prediction.placement1.prediction,
-      prediction.placement2.prediction,
-      prediction.placement3.prediction,
-      prediction.placement4.prediction,
-      prediction.placement5.prediction,
-      prediction.placement6.prediction,
-      prediction.placement7.prediction,
-      prediction.placement8.prediction,
-      prediction.placement9.prediction,
-      prediction.placement10.prediction,
-      prediction.placement11.prediction,
-      prediction.placement12.prediction,
-    ];
-
-    List<int> tempPredictions = [];
-    for (var element in predictions) {
-      if (tempPredictions.contains(element)) {
-        duplicate = true;
-        break;
-      } else {
-        tempPredictions.add(element);
-      }
-    }
-
-    return duplicate;
-  }
-}
-
-@freezed
-class FinalPredictionControllerState with _$FinalPredictionControllerState {
-  const factory FinalPredictionControllerState({
-    @Default(false) bool loading,
-    @Default("") String username,
-    @Default("") String currentCompetition,
-    FinalPredictionModel? prediction,
-  }) = _FinalPredictionControllerState;
 }
