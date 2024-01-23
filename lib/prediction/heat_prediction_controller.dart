@@ -1,35 +1,38 @@
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mellotippet/common/models/all_models.dart';
 import 'package:mellotippet/common/models/prediction/prediction_and_score.dart';
 import 'package:mellotippet/common/repositories/repositories.dart';
 import 'package:mellotippet/common/widgets/prediction_row.dart';
+import 'package:mellotippet/prediction/prediction_page/prediction_controller.dart';
 import 'package:mellotippet/service_location/get_it.dart';
 
-part 'heat_prediction_controller.freezed.dart';
-
-class HeatPredictionController
-    extends StateNotifier<HeatPredictionControllerState> {
+class HeatPredictionController extends PredictionController {
   HeatPredictionController({
     required this.databaseRepository,
     required this.featureFlagRepository,
-    required HeatPredictionControllerState state,
-  }) : super(state);
+    required super.state,
+  });
 
   final DatabaseRepository databaseRepository;
   final FeatureFlagRepository featureFlagRepository;
 
   static final provider = StateNotifierProvider<HeatPredictionController,
-      HeatPredictionControllerState>(
+      PredictionControllerState>(
     (ref) => HeatPredictionController(
       databaseRepository: getIt.get<DatabaseRepository>(),
       featureFlagRepository: getIt.get<FeatureFlagRepository>(),
-      state: const HeatPredictionControllerState(loading: true),
+      state: const PredictionControllerState(loading: true),
     ),
   );
 
-  void fetchSongs() async {
+  @override
+  getStateNotifier() {
+    return provider;
+  }
+
+  @override
+  fetchSongs() async {
     final songs = await databaseRepository.getSongs('heat1');
 
     final predictionRows = songs
@@ -47,12 +50,11 @@ class HeatPredictionController
     state = state.copyWith(songLists: songLists);
   }
 
-  onItemReorder(
-    int oldItemIndex,
-    int oldListIndex,
-    int newItemIndex,
-    int newListIndex,
-  ) {
+  @override
+  onItemReorder(int oldItemIndex,
+      int oldListIndex,
+      int newItemIndex,
+      int newListIndex,) {
     final songLists = [...state.songLists];
     final movedItem = songLists[oldListIndex].removeAt(oldItemIndex);
     songLists[newListIndex].insert(newItemIndex, movedItem);
@@ -84,6 +86,7 @@ class HeatPredictionController
     state = state.copyWith(songLists: songLists, ctaEnabled: ctaEnabled);
   }
 
+  @override
   Future<bool> submitPrediction() {
     final finalist1 = state.songLists[0][0].startNumber;
     final finalist2 = state.songLists[0][1].startNumber;
@@ -104,14 +107,4 @@ class HeatPredictionController
       prediction,
     );
   }
-}
-
-@Freezed(makeCollectionsUnmodifiable: false)
-class HeatPredictionControllerState with _$HeatPredictionControllerState {
-  const factory HeatPredictionControllerState({
-    @Default(false) bool loading,
-    HeatPredictionModel? prediction,
-    @Default([[], []]) List<List<PredictionRow>> songLists,
-    @Default(false) bool ctaEnabled,
-  }) = _HeatPredictionControllerState;
 }
