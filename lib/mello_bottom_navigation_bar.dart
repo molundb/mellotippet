@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mellotippet/prediction/heat_prediction_page.dart';
+import 'package:mellotippet/prediction/semifinal_prediction_page.dart';
 import 'package:mellotippet/rules/rules_page.dart';
 import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/snackbar/snackbar_handler.dart';
@@ -22,7 +22,7 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     const ScorePage(),
-    HeatPredictionPage(snackbarHandler: getIt.get<SnackbarHandler>()),
+    SemifinalPredictionPage(snackbarHandler: getIt.get<SnackbarHandler>()),
     const RulesPage(),
   ];
 

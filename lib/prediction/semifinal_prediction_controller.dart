@@ -1,127 +1,100 @@
+import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mellotippet/common/models/all_models.dart';
 import 'package:mellotippet/common/models/prediction/prediction_and_score.dart';
 import 'package:mellotippet/common/repositories/repositories.dart';
+import 'package:mellotippet/common/widgets/prediction_row.dart';
+import 'package:mellotippet/prediction/prediction_page/prediction_controller.dart';
 import 'package:mellotippet/service_location/get_it.dart';
 
-part 'semifinal_prediction_controller.freezed.dart';
-
-class SemifinalPredictionController
-    extends StateNotifier<SemifinalPredictionControllerState> {
+class SemifinalPredictionController extends PredictionController {
   SemifinalPredictionController({
     required this.databaseRepository,
     required this.featureFlagRepository,
-    required SemifinalPredictionControllerState state,
-  }) : super(state);
+    required super.state,
+  });
 
   final DatabaseRepository databaseRepository;
   final FeatureFlagRepository featureFlagRepository;
 
   static final provider = StateNotifierProvider<SemifinalPredictionController,
-      SemifinalPredictionControllerState>(
+      PredictionControllerState>(
     (ref) => SemifinalPredictionController(
       databaseRepository: getIt.get<DatabaseRepository>(),
       featureFlagRepository: getIt.get<FeatureFlagRepository>(),
-      state: const SemifinalPredictionControllerState(),
+      state: const PredictionControllerState(),
     ),
   );
 
-  Future<void> getUsernameAndCurrentCompetition() async {
-    state = state.copyWith(loading: true);
-    final username = await databaseRepository.getCurrentUsername();
-    final currentCompetition = featureFlagRepository.getCurrentCompetition();
-    state = state.copyWith(
-      loading: false,
-      username: username,
-      currentCompetition: currentCompetition,
-    );
+  @override
+  getStateNotifier() {
+    return provider;
   }
 
-  void setFinalist1(String? value) {
-    if (value == null || value.isEmpty) return;
+  @override
+  fetchSongs() async {
+    final songs = await databaseRepository.getSongs('semifinal');
 
-    state = state.copyWith(
-        prediction: state.prediction?.copyWith(
-            finalist1: PredictionAndScore(prediction: int.parse(value))));
+    final predictionRows = songs
+        .map((song) => PredictionRow(
+              artist: song.artist,
+              song: song.song,
+              imageAsset: 'assets/images/${song.image}',
+              startNumber: song.startNumber,
+            ))
+        .toList();
+
+    final songLists = [...state.songLists];
+    songLists[0] = [];
+    songLists[1] = predictionRows;
+    state = state.copyWith(songLists: songLists);
   }
 
-  void setFinalist2(String? value) {
-    if (value == null || value.isEmpty) return;
+  @override
+  onItemReorder(
+    int oldItemIndex,
+    int oldListIndex,
+    int newItemIndex,
+    int newListIndex,
+  ) {
+    final songLists = [...state.songLists];
+    final movedItem = songLists[oldListIndex].removeAt(oldItemIndex);
+    songLists[newListIndex].insert(newItemIndex, movedItem);
 
-    state = state.copyWith(
-        prediction: state.prediction?.copyWith(
-            finalist2: PredictionAndScore(prediction: int.parse(value))));
+    songLists[0] = songLists[0].mapIndexed((index, element) {
+      switch (index) {
+        case < 2:
+          element =
+              element.copyWithPredictionPosition(PredictedPosition.finalist);
+        default:
+          element =
+              element.copyWithPredictionPosition(PredictedPosition.notPlaced);
+      }
+
+      return element;
+    }).toList();
+
+    songLists[1] = songLists[1]
+        .map((e) => e.copyWithPredictionPosition(PredictedPosition.notPlaced))
+        .toList();
+
+    final ctaEnabled = songLists[0].length >= 2;
+    state = state.copyWith(songLists: songLists, ctaEnabled: ctaEnabled);
   }
 
+  @override
   Future<bool> submitPrediction() {
-    var prediction = state.prediction;
-    if (prediction == null) {
-      return Future.value(false);
-    }
+    final finalist1 = state.songLists[0][0].startNumber;
+    final finalist2 = state.songLists[0][1].startNumber;
+
+    var prediction = SemifinalPredictionModel(
+      finalist1: PredictionAndScore(prediction: finalist1),
+      finalist2: PredictionAndScore(prediction: finalist2),
+    );
 
     return databaseRepository.uploadSemifinalPrediction(
-      state.currentCompetition,
+      featureFlagRepository.getCurrentCompetition(),
       prediction,
     );
   }
-
-  String? validatePredictionInput(String? prediction) {
-    if (prediction == null || prediction.isEmpty) {
-      return 'Prediction can not be empty';
-    }
-
-    if (prediction.length > 1) {
-      return 'Prediction is too long';
-    }
-
-    if (!_isNumeric(prediction)) {
-      return 'Prediction is not a number';
-    }
-
-    if (int.tryParse(prediction)! < 1 || int.tryParse(prediction)! > 8) {
-      return 'Prediction must be between 1 and 8';
-    }
-
-    return null;
-  }
-
-  bool _isNumeric(String s) => int.tryParse(s) != null;
-
-  bool duplicatePredictions() {
-    var prediction = state.prediction;
-    if (prediction == null) {
-      return false;
-    }
-
-    var duplicate = false;
-
-    final List<int> predictions = [
-      prediction.finalist1.prediction,
-      prediction.finalist2.prediction,
-    ];
-
-    List<int> tempPredictions = [];
-    for (var element in predictions) {
-      if (tempPredictions.contains(element)) {
-        duplicate = true;
-        break;
-      } else {
-        tempPredictions.add(element);
-      }
-    }
-
-    return duplicate;
-  }
-}
-
-@freezed
-class SemifinalPredictionControllerState
-    with _$SemifinalPredictionControllerState {
-  const factory SemifinalPredictionControllerState({
-    @Default(false) bool loading,
-    @Default("") String username,
-    @Default("") String currentCompetition,
-    SemifinalPredictionModel? prediction,
-  }) = _SemifinalPredictionControllerState;
 }

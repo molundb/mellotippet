@@ -51,10 +51,12 @@ class HeatPredictionController extends PredictionController {
   }
 
   @override
-  onItemReorder(int oldItemIndex,
-      int oldListIndex,
-      int newItemIndex,
-      int newListIndex,) {
+  onItemReorder(
+    int oldItemIndex,
+    int oldListIndex,
+    int newItemIndex,
+    int newListIndex,
+  ) {
     final songLists = [...state.songLists];
     final movedItem = songLists[oldListIndex].removeAt(oldItemIndex);
     songLists[newListIndex].insert(newItemIndex, movedItem);

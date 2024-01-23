@@ -65,6 +65,18 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
             toFirestore: HeatPredictionModel.toFirestore,
           );
 
+  CollectionReference<SemifinalPredictionModel>
+      _getPredictionsAndScoresForSemifinal(
+    String competitionId,
+  ) =>
+          _competitions
+              .doc(competitionId)
+              .collection('predictionsAndScores')
+              .withConverter(
+                fromFirestore: SemifinalPredictionModel.fromFirestore,
+                toFirestore: SemifinalPredictionModel.toFirestore,
+              );
+
   @override
   Future<bool> uploadHeatPrediction(
     String competitionId,
@@ -95,10 +107,9 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
       var uid = authRepository.currentUser?.uid;
 
       if (uid != null) {
-        await _predictionsForCompetition(competitionId).doc(uid).set({
-          "finalist1": prediction.finalist1,
-          "finalist2": prediction.finalist2,
-        });
+        await _getPredictionsAndScoresForSemifinal(competitionId)
+            .doc(uid)
+            .set(prediction);
 
         return true;
       }

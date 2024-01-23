@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mellotippet/common/models/all_models.dart';
 import 'package:mellotippet/common/models/heat_result_model.dart';
+import 'package:mellotippet/common/models/semifinal_result_model.dart';
 
 part 'competition_model.freezed.dart';
 
@@ -11,7 +12,7 @@ class CompetitionModel with _$CompetitionModel {
     required String id,
     required CompetitionType type,
     required int lowestScore,
-    required PredictionModel result,
+    PredictionModel? result,
     required String appBarSubtitle,
   }) = _CompetitionModel;
 
@@ -20,21 +21,29 @@ class CompetitionModel with _$CompetitionModel {
     SnapshotOptions? options,
   ) {
     final data = snapshot.data();
+    final resultSnapshot = data?['result'];
 
     CompetitionType type;
-    PredictionModel result;
+    PredictionModel? result;
+
     switch (snapshot.id) {
       case 'final':
         type = CompetitionType.theFinal;
-        result = FinalPredictionModel.fromJson(data?['result']);
+        if (resultSnapshot != null) {
+          result = FinalPredictionModel.fromJson(resultSnapshot);
+        }
         break;
       case 'semifinal':
         type = CompetitionType.semifinal;
-        result = SemifinalPredictionModel.fromJson(data?['result']);
+        if (resultSnapshot != null) {
+          result = SemifinalResultModel.fromJson(resultSnapshot);
+        }
         break;
       default:
         type = CompetitionType.heat;
-        result = HeatResultModel.fromJson(data?['result']);
+        if (resultSnapshot != null) {
+          result = HeatResultModel.fromJson(resultSnapshot);
+        }
         break;
     }
 
@@ -43,7 +52,7 @@ class CompetitionModel with _$CompetitionModel {
       type: type,
       lowestScore: data?['lowestScore'] ?? -1,
       result: result,
-      appBarSubtitle: data?['appBarSubtitle'],
+      appBarSubtitle: data?['appBarSubtitle'] ?? "",
     );
   }
 

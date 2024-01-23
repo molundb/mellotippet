@@ -5,7 +5,6 @@ import 'package:mellotippet/common/models/all_models.dart';
 import 'package:mellotippet/common/models/prediction/prediction_and_score.dart';
 
 part 'heat_prediction_model.freezed.dart';
-
 part 'heat_prediction_model.g.dart';
 
 @freezed
@@ -30,7 +29,9 @@ class HeatPredictionModel
       HeatPredictionModel.fromJson(snapshot.data() as Map<String, dynamic>);
 
   static Map<String, dynamic> toFirestore(
-          HeatPredictionModel prediction, SetOptions? options) =>
+    HeatPredictionModel prediction,
+    SetOptions? options,
+  ) =>
       prediction.toJson();
 }
 

@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mellotippet/common/models/prediction/prediction_and_score.dart';
 import 'package:mellotippet/common/models/prediction/prediction_model.dart';
-import 'package:flutter/foundation.dart';
 
 part 'semifinal_prediction_model.freezed.dart';
-
 part 'semifinal_prediction_model.g.dart';
 
 @freezed
@@ -28,8 +27,10 @@ class SemifinalPredictionModel
           snapshot.data() as Map<String, dynamic>);
 
   static Map<String, dynamic> toFirestore(
-          PredictionModel model, SetOptions? options) =>
-      {};
+    SemifinalPredictionModel prediction,
+    SetOptions? options,
+  ) =>
+      prediction.toJson();
 }
 
 extension SemifinalPredictionToMap on SemifinalPredictionModel {

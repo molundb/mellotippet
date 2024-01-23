@@ -8,5 +8,11 @@ interface class PredictionModel {
     SnapshotOptions? options,
   );
 
+  static Map<String, dynamic> toFirestore(
+    PredictionModel prediction,
+    SetOptions? options,
+  ) =>
+      {};
+
   PredictionModel.fromJson(Map<String, dynamic> json);
 }

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/config/config.dart';
-import 'package:mellotippet/prediction/heat_prediction_controller.dart';
-import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/force_upgrade/force_upgrade_page.dart';
-import 'package:mellotippet/styles/colors.dart';
-import 'package:mellotippet/styles/text_styles.dart';
+import 'package:mellotippet/prediction/semifinal_prediction_controller.dart';
+import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/theme.dart';
 
 class MellotippetApp extends StatelessWidget {
@@ -48,13 +46,13 @@ class EagerSongFetcher extends ConsumerStatefulWidget {
 }
 
 class _EagerSongFetcherState extends ConsumerState<EagerSongFetcher> {
-  HeatPredictionController get heatPredictionController =>
-      ref.read(HeatPredictionController.provider.notifier);
+  SemifinalPredictionController get controller =>
+      ref.read(SemifinalPredictionController.provider.notifier);
 
   @override
   void initState() {
     super.initState();
-    heatPredictionController.fetchSongs();
+    controller.fetchSongs();
   }
 
   @override
