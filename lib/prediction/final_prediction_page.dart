@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/prediction/final_prediction_controller.dart';
 import 'package:mellotippet/prediction/prediction_page/prediction_page.dart';
+import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/snackbar/snackbar_handler.dart';
 
 class FinalPredictionPage extends ConsumerStatefulWidget {
-  final SnackbarHandler snackbarHandler;
-
-  const FinalPredictionPage({super.key, required this.snackbarHandler});
+  const FinalPredictionPage({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -21,7 +20,7 @@ class _FinalPredictionPageState extends ConsumerState<FinalPredictionPage> {
   @override
   Widget build(BuildContext context) {
     return PredictionPage(
-      snackbarHandler: widget.snackbarHandler,
+      snackbarHandler: getIt.get<SnackbarHandler>(),
       emptyTopListText:
           'Dra alla bidrag ovanför linjen och rangordna för att tippa',
       controller: controller,

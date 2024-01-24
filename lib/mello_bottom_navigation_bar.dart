@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mellotippet/prediction/final_prediction_page.dart';
 import 'package:mellotippet/rules/rules_page.dart';
-import 'package:mellotippet/service_location/get_it.dart';
-import 'package:mellotippet/snackbar/snackbar_handler.dart';
 import 'package:mellotippet/styles/colors.dart';
 
 import 'score/score_page.dart';
@@ -22,7 +20,8 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     const ScorePage(),
-    FinalPredictionPage(snackbarHandler: getIt.get<SnackbarHandler>()),
+    const FinalPredictionPage(),
+    // TODO: Chose page based on current competition
     const RulesPage(),
   ];
 

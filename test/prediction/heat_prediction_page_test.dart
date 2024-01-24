@@ -4,7 +4,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mellotippet/mellotippet_app.dart';
 import 'package:mellotippet/prediction/heat_prediction_page.dart';
 import 'package:mellotippet/service_location/get_it.dart';
-import 'package:mellotippet/snackbar/snackbar_handler.dart';
 
 import '../common/fake_database_repository.dart';
 import '../common/fake_feature_flag_repository.dart';
@@ -19,11 +18,11 @@ void main() {
     );
 
     await tester.pumpWidget(
-      ProviderScope(
+      const ProviderScope(
         child: EagerSongFetcher(
           child: MaterialApp(
-              home: HeatPredictionPage(
-                  snackbarHandler: getIt.get<SnackbarHandler>())),
+            home: HeatPredictionPage(),
+          ),
         ),
       ),
     );

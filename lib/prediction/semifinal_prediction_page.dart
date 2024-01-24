@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/prediction/prediction_page/prediction_page.dart';
 import 'package:mellotippet/prediction/semifinal_prediction_controller.dart';
+import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/snackbar/snackbar_handler.dart';
 
 class SemifinalPredictionPage extends ConsumerStatefulWidget {
-  final SnackbarHandler snackbarHandler;
-
-  const SemifinalPredictionPage({super.key, required this.snackbarHandler});
+  const SemifinalPredictionPage({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -22,7 +21,7 @@ class _SemifinalPredictionPageState
   @override
   Widget build(BuildContext context) {
     return PredictionPage(
-      snackbarHandler: widget.snackbarHandler,
+      snackbarHandler: getIt.get<SnackbarHandler>(),
       emptyTopListText: 'Dra två bidrag ovanför linjen för att tippa',
       controller: controller,
     );

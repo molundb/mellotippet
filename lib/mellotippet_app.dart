@@ -52,7 +52,7 @@ class _EagerSongFetcherState extends ConsumerState<EagerSongFetcher> {
   @override
   void initState() {
     super.initState();
-    controller.fetchSongs();
+    controller.fetchSongs(); // TODO: Fetch songs for current competition
   }
 
   @override
