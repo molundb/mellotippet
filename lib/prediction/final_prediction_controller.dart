@@ -7,7 +7,6 @@ import 'package:mellotippet/common/widgets/prediction_row.dart';
 import 'package:mellotippet/prediction/prediction_page/prediction_controller.dart';
 import 'package:mellotippet/service_location/get_it.dart';
 
-
 class FinalPredictionController extends PredictionController {
   FinalPredictionController({
     required super.databaseRepository,
@@ -41,11 +40,13 @@ class FinalPredictionController extends PredictionController {
     songLists[newListIndex].insert(newItemIndex, movedItem);
 
     songLists[0] = songLists[0].mapIndexed((index, element) {
-      return element.copyWithPredictionPosition(PredictedPosition.finalist);
+      return element.copyWithPredictionPosition(
+        PredictedPosition.finalPosition(text: (index + 1).toString()),
+      );
     }).toList();
 
     songLists[1] = songLists[1]
-        .map((e) => e.copyWithPredictionPosition(PredictedPosition.notPlaced))
+        .map((e) => e.copyWithPredictionPosition(PredictedPosition.notPlaced()))
         .toList();
 
     final ctaEnabled = songLists[0].length >= 12;

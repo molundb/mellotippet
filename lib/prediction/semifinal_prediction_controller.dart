@@ -42,15 +42,16 @@ class SemifinalPredictionController extends PredictionController {
     songLists[0] = songLists[0].mapIndexed((index, element) {
       switch (index) {
         case < 2:
-          return element.copyWithPredictionPosition(PredictedPosition.finalist);
+          return element
+              .copyWithPredictionPosition(PredictedPosition.finalist());
         default:
           return element
-              .copyWithPredictionPosition(PredictedPosition.notPlaced);
+              .copyWithPredictionPosition(PredictedPosition.notPlaced());
       }
     }).toList();
 
     songLists[1] = songLists[1]
-        .map((e) => e.copyWithPredictionPosition(PredictedPosition.notPlaced))
+        .map((e) => e.copyWithPredictionPosition(PredictedPosition.notPlaced()))
         .toList();
 
     final ctaEnabled = songLists[0].length >= 2;

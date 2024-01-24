@@ -30,6 +30,7 @@ abstract class PredictionController
               song: song.song,
               imageAsset: 'assets/images/${song.image}',
               startNumber: song.startNumber,
+              prediction: PredictedPosition.notPlaced(),
             ))
         .toList();
 

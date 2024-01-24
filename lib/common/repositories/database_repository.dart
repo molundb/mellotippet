@@ -66,22 +66,28 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
           );
 
   CollectionReference<SemifinalPredictionModel>
-      _getPredictionsAndScoresForSemifinal(
-    String competitionId,
-  ) =>
-          _competitions
-              .doc(competitionId)
-              .collection('predictionsAndScores')
-              .withConverter(
-                fromFirestore: SemifinalPredictionModel.fromFirestore,
-                toFirestore: SemifinalPredictionModel.toFirestore,
-              );
+      _getPredictionsAndScoresForSemifinal(String competitionId,) =>
+      _competitions
+          .doc(competitionId)
+          .collection('predictionsAndScores')
+          .withConverter(
+        fromFirestore: SemifinalPredictionModel.fromFirestore,
+        toFirestore: SemifinalPredictionModel.toFirestore,
+      );
+
+  CollectionReference<FinalPredictionModel> _getPredictionsAndScoresForFinal(
+      String competitionId,) =>
+      _competitions
+          .doc(competitionId)
+          .collection('predictionsAndScores')
+          .withConverter(
+        fromFirestore: FinalPredictionModel.fromFirestore,
+        toFirestore: FinalPredictionModel.toFirestore,
+      );
 
   @override
-  Future<bool> uploadHeatPrediction(
-    String competitionId,
-    HeatPredictionModel prediction,
-  ) async {
+  Future<bool> uploadHeatPrediction(String competitionId,
+      HeatPredictionModel prediction,) async {
     try {
       var uid = authRepository.currentUser?.uid;
 
@@ -128,20 +134,9 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
       var uid = authRepository.currentUser?.uid;
 
       if (uid != null) {
-        await _predictionsForCompetition(competitionId).doc(uid).set({
-          "placement1": prediction.placement1,
-          "placement2": prediction.placement2,
-          "placement3": prediction.placement3,
-          "placement4": prediction.placement4,
-          "placement5": prediction.placement5,
-          "placement6": prediction.placement6,
-          "placement7": prediction.placement7,
-          "placement8": prediction.placement8,
-          "placement9": prediction.placement9,
-          "placement10": prediction.placement10,
-          "placement11": prediction.placement11,
-          "placement12": prediction.placement12,
-        });
+        await _getPredictionsAndScoresForFinal(competitionId)
+            .doc(uid)
+            .set(prediction);
 
         return true;
       }

@@ -14,7 +14,7 @@ class PredictionRow extends StatefulWidget {
     required this.song,
     required this.imageAsset,
     required this.startNumber,
-    this.prediction = PredictedPosition.notPlaced,
+    required this.prediction,
   });
 
   PredictionRow copyWithPredictionPosition(PredictedPosition prediction) =>
@@ -60,6 +60,7 @@ class Content extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final rhombusText = widget.prediction.text;
     return Padding(
       padding: const EdgeInsets.all(0.0),
       child: SizedBox(
@@ -103,7 +104,7 @@ class Content extends StatelessWidget {
               ),
             ),
             Expanded(child: Container()),
-            if (widget.prediction != PredictedPosition.notPlaced) ...[
+            if (rhombusText != null) ...[
               Padding(
                 padding: const EdgeInsets.only(right: 18.0),
                 child: SizedBox(
@@ -120,7 +121,7 @@ class Content extends StatelessWidget {
                       ),
                       Center(
                         child: Text(
-                          widget.prediction.text,
+                          rhombusText,
                           style: const TextStyle(
                             color: MellotippetColors.black,
                             fontFamily: 'Roboto',
@@ -149,30 +150,38 @@ class Content extends StatelessWidget {
   }
 }
 
-enum PredictedPosition {
-  finalist(
-    text: 'Final',
-    gradientStartColor: MellotippetColors.melloLightOrange,
-  ),
-  semifinalist(
-    text: 'Semifinal',
-    gradientStartColor: MellotippetColors.semifinalistGradientGray,
-  ),
-  fifthPlace(
-    text: '5:e plats',
-    gradientStartColor: MellotippetColors.fifthPlaceGradientBrown,
-  ),
-  notPlaced(
-    text: '',
-    gradientStartColor: Colors.black,
-  );
+class PredictedPosition {
+  factory PredictedPosition.finalPosition({required String text}) =>
+      PredictedPosition(
+        text: text,
+        gradientStartColor: MellotippetColors.melloLightOrange,
+      );
+
+  factory PredictedPosition.finalist() => const PredictedPosition(
+        text: 'Final',
+        gradientStartColor: MellotippetColors.melloLightOrange,
+      );
+
+  factory PredictedPosition.semifinalist() => const PredictedPosition(
+        text: 'Semifinal',
+        gradientStartColor: MellotippetColors.semifinalistGradientGray,
+      );
+
+  factory PredictedPosition.fifthPlace() => const PredictedPosition(
+        text: '5:e plats',
+        gradientStartColor: MellotippetColors.fifthPlaceGradientBrown,
+      );
+
+  factory PredictedPosition.notPlaced() => const PredictedPosition(
+        gradientStartColor: Colors.black,
+      );
 
   const PredictedPosition({
-    required this.text,
+    this.text,
     required this.gradientStartColor,
   });
 
-  final String text;
+  final String? text;
   final Color gradientStartColor;
 }
 
