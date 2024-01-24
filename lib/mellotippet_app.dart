@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/config/config.dart';
 import 'package:mellotippet/force_upgrade/force_upgrade_page.dart';
-import 'package:mellotippet/prediction/semifinal_prediction_controller.dart';
+import 'package:mellotippet/prediction/final_prediction_controller.dart';
 import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/theme.dart';
 
@@ -46,8 +46,8 @@ class EagerSongFetcher extends ConsumerStatefulWidget {
 }
 
 class _EagerSongFetcherState extends ConsumerState<EagerSongFetcher> {
-  SemifinalPredictionController get controller =>
-      ref.read(SemifinalPredictionController.provider.notifier);
+  FinalPredictionController get controller =>
+      ref.read(FinalPredictionController.provider.notifier);
 
   @override
   void initState() {

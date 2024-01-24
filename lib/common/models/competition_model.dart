@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mellotippet/common/models/all_models.dart';
+import 'package:mellotippet/common/models/final_result_model.dart';
 import 'package:mellotippet/common/models/heat_result_model.dart';
 import 'package:mellotippet/common/models/semifinal_result_model.dart';
 
@@ -30,7 +31,7 @@ class CompetitionModel with _$CompetitionModel {
       case 'final':
         type = CompetitionType.theFinal;
         if (resultSnapshot != null) {
-          result = FinalPredictionModel.fromJson(resultSnapshot);
+          result = FinalResultModel.fromJson(resultSnapshot);
         }
         break;
       case 'semifinal':
