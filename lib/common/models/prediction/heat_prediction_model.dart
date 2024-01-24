@@ -34,15 +34,3 @@ class HeatPredictionModel
   ) =>
       prediction.toJson();
 }
-
-extension HeatPredictionToMap on HeatPredictionModel {
-  Map<int, String> toMap() {
-    return <int, String>{
-      finalist1.prediction: 'F',
-      finalist2.prediction: 'F',
-      semifinalist1.prediction: 'SF',
-      semifinalist2.prediction: 'SF',
-      fifthPlace.prediction: '5th',
-    };
-  }
-}

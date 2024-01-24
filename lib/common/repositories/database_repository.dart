@@ -49,11 +49,6 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
   CollectionReference<Map<String, dynamic>> get _competitions =>
       db.collection('competitions');
 
-  CollectionReference<Map<String, dynamic>> _predictionsForCompetition(
-    String competitionId,
-  ) =>
-      _competitions.doc(competitionId).collection('predictionsAndScores');
-
   CollectionReference<HeatPredictionModel> _getPredictionsAndScoresForHeat(
     String competitionId,
   ) =>

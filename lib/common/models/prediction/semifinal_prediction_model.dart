@@ -32,12 +32,3 @@ class SemifinalPredictionModel
   ) =>
       prediction.toJson();
 }
-
-extension SemifinalPredictionToMap on SemifinalPredictionModel {
-  Map<int, String> toMap() {
-    return <int, String>{
-      finalist1.prediction: 'F',
-      finalist2.prediction: 'F',
-    };
-  }
-}
