@@ -9,13 +9,10 @@ import 'package:mellotippet/service_location/get_it.dart';
 
 class SemifinalPredictionController extends PredictionController {
   SemifinalPredictionController({
-    required this.databaseRepository,
-    required this.featureFlagRepository,
+    required super.databaseRepository,
+    required super.featureFlagRepository,
     required super.state,
   });
-
-  final DatabaseRepository databaseRepository;
-  final FeatureFlagRepository featureFlagRepository;
 
   static final provider = StateNotifierProvider<SemifinalPredictionController,
       PredictionControllerState>(
@@ -32,25 +29,6 @@ class SemifinalPredictionController extends PredictionController {
   }
 
   @override
-  fetchSongs() async {
-    final songs = await databaseRepository.getSongs('semifinal');
-
-    final predictionRows = songs
-        .map((song) => PredictionRow(
-              artist: song.artist,
-              song: song.song,
-              imageAsset: 'assets/images/${song.image}',
-              startNumber: song.startNumber,
-            ))
-        .toList();
-
-    final songLists = [...state.songLists];
-    songLists[0] = [];
-    songLists[1] = predictionRows;
-    state = state.copyWith(songLists: songLists);
-  }
-
-  @override
   onItemReorder(
     int oldItemIndex,
     int oldListIndex,
@@ -64,14 +42,11 @@ class SemifinalPredictionController extends PredictionController {
     songLists[0] = songLists[0].mapIndexed((index, element) {
       switch (index) {
         case < 2:
-          element =
-              element.copyWithPredictionPosition(PredictedPosition.finalist);
+          return element.copyWithPredictionPosition(PredictedPosition.finalist);
         default:
-          element =
-              element.copyWithPredictionPosition(PredictedPosition.notPlaced);
+          return element
+              .copyWithPredictionPosition(PredictedPosition.notPlaced);
       }
-
-      return element;
     }).toList();
 
     songLists[1] = songLists[1]

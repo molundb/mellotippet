@@ -1,8 +1,13 @@
+import 'package:collection/collection.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mellotippet/common/models/competition_model.dart';
+import 'package:mellotippet/common/repositories/feature_flag_repository.dart';
 import 'package:mellotippet/common/widgets/login_or_sign_up_page.dart';
 import 'package:mellotippet/login/login_controller.dart';
 import 'package:mellotippet/mello_bottom_navigation_bar.dart';
+import 'package:mellotippet/service_location/get_it.dart';
 
 class SignUpPage extends ConsumerStatefulWidget {
   const SignUpPage({super.key});
@@ -12,7 +17,6 @@ class SignUpPage extends ConsumerStatefulWidget {
 }
 
 class SignUpPageState extends ConsumerState<SignUpPage> {
-
   LoginController get controller => ref.read(LoginController.provider.notifier);
 
   @override
@@ -26,10 +30,8 @@ class SignUpPageState extends ConsumerState<SignUpPage> {
     );
   }
 
-  Future<void> _registerAccount(
-    BuildContext context,
-    GlobalKey<FormState> formKey,
-  ) async {
+  Future<void> _registerAccount(BuildContext context,
+      GlobalKey<FormState> formKey,) async {
     if (await controller.isUsernameAlreadyTaken()) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -47,7 +49,16 @@ class SignUpPageState extends ConsumerState<SignUpPage> {
       if (context.mounted) {
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
-            builder: (context) => const MelloBottomNavigationBar(),
+            builder: (context) {
+              final currentCompetition =
+                  getIt.get<FeatureFlagRepository>().getCurrentCompetition();
+              final CompetitionType? competitionType = CompetitionType.values
+                  .firstWhereOrNull(
+                      (element) => describeEnum(element) == currentCompetition);
+              return MelloBottomNavigationBar(
+                currentCompetitionType: competitionType ?? CompetitionType.heat,
+              );
+            },
           ),
           ModalRoute.withName('/'),
         );

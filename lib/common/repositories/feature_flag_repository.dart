@@ -21,7 +21,7 @@ class FeatureFlagRepositoryImpl implements FeatureFlagRepository {
     );
 
     await remoteConfig.setDefaults(const {
-      'currentCompetition': 'heat1',
+      'currentCompetition': 'theFinal',
       'requiredMinimumAppVersion': '4.0.0',
       'recommendedMinimumAppVersion': '4.0.0',
     });

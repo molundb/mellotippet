@@ -10,45 +10,23 @@ import 'package:mellotippet/service_location/get_it.dart';
 
 class FinalPredictionController extends PredictionController {
   FinalPredictionController({
-    required this.databaseRepository,
-    required this.featureFlagRepository,
+    required super.databaseRepository,
+    required super.featureFlagRepository,
     required super.state,
   });
-
-  final DatabaseRepository databaseRepository;
-  final FeatureFlagRepository featureFlagRepository;
 
   static final provider = StateNotifierProvider<FinalPredictionController,
       PredictionControllerState>(
     (ref) => FinalPredictionController(
       databaseRepository: getIt.get<DatabaseRepository>(),
       featureFlagRepository: getIt.get<FeatureFlagRepository>(),
-      state: const PredictionControllerState(loading: true),
+      state: const PredictionControllerState(),
     ),
   );
 
   @override
   getStateNotifier() {
     return provider;
-  }
-
-  @override
-  fetchSongs() async {
-    final songs = await databaseRepository.getSongs('final');
-
-    final predictionRows = songs
-        .map((song) => PredictionRow(
-              artist: song.artist,
-              song: song.song,
-              imageAsset: 'assets/images/${song.image}',
-              startNumber: song.startNumber,
-            ))
-        .toList();
-
-    final songLists = [...state.songLists];
-    songLists[0] = [];
-    songLists[1] = predictionRows;
-    state = state.copyWith(songLists: songLists);
   }
 
   @override
@@ -63,8 +41,7 @@ class FinalPredictionController extends PredictionController {
     songLists[newListIndex].insert(newItemIndex, movedItem);
 
     songLists[0] = songLists[0].mapIndexed((index, element) {
-      element.copyWithPredictionPosition(PredictedPosition.finalist);
-      return element;
+      return element.copyWithPredictionPosition(PredictedPosition.finalist);
     }).toList();
 
     songLists[1] = songLists[1]

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mellotippet/common/models/all_models.dart';
 import 'package:mellotippet/mellotippet_app.dart';
 import 'package:mellotippet/prediction/heat_prediction_page.dart';
 import 'package:mellotippet/service_location/get_it.dart';
@@ -20,6 +21,7 @@ void main() {
     await tester.pumpWidget(
       const ProviderScope(
         child: EagerSongFetcher(
+          currentCompetitionType: CompetitionType.heat,
           child: MaterialApp(
             home: HeatPredictionPage(),
           ),

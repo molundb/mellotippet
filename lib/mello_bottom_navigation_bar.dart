@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mellotippet/common/models/competition_model.dart';
 import 'package:mellotippet/prediction/final_prediction_page.dart';
+import 'package:mellotippet/prediction/heat_prediction_page.dart';
+import 'package:mellotippet/prediction/semifinal_prediction_page.dart';
 import 'package:mellotippet/rules/rules_page.dart';
 import 'package:mellotippet/styles/colors.dart';
 
 import 'score/score_page.dart';
 
 class MelloBottomNavigationBar extends StatefulWidget {
-  const MelloBottomNavigationBar({super.key});
+  final CompetitionType currentCompetitionType;
+
+  const MelloBottomNavigationBar({
+    super.key,
+    required this.currentCompetitionType,
+  });
 
   @override
   State<MelloBottomNavigationBar> createState() =>
@@ -15,15 +23,13 @@ class MelloBottomNavigationBar extends StatefulWidget {
 }
 
 class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
-
   int _selectedIndex = 0;
 
-  static final List<Widget> _widgetOptions = <Widget>[
-    const ScorePage(),
-    const FinalPredictionPage(),
-    // TODO: Chose page based on current competition
-    const RulesPage(),
-  ];
+  // final List<Widget> _widgetOptions = <Widget>[
+  //   const ScorePage(),
+  //   getPredictionPage(),
+  //   const RulesPage(),
+  // ];
 
   final Widget trophyInactive = SvgPicture.asset(
     'assets/icons/navbar_trophy_inactive.svg',
@@ -33,11 +39,32 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
     'assets/icons/navbar_trophy_active.svg',
   );
 
+  Widget _getWidget(int index) {
+    final widgetOptions = [
+      const ScorePage(),
+      _getPredictionPage(),
+      const RulesPage(),
+    ];
+
+    return widgetOptions.elementAt(index);
+  }
+
+  Widget _getPredictionPage() {
+    switch (widget.currentCompetitionType) {
+      case CompetitionType.heat:
+        return const HeatPredictionPage();
+      case CompetitionType.semifinal:
+        return const SemifinalPredictionPage();
+      case CompetitionType.theFinal:
+        return const FinalPredictionPage();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: _getWidget(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
