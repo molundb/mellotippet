@@ -1,14 +1,39 @@
-import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mellotippet/common/models/all_models.dart';
 import 'package:mellotippet/firebase_options.dart';
 
-class AuthenticationRepository {
-  AuthenticationRepository({
-    required this.firebaseAuth,
+abstract class AuthenticationRepository {
+  FirebaseAuth get firebaseAuth;
+
+  fireAuth.User? get currentUser;
+
+  Future<void> createUserWithEmailAndPassword({
+    required String email,
+    required String password,
   });
 
-  final auth.FirebaseAuth firebaseAuth;
+  Future<void> signInWithEmailAndPassword({
+    required String email,
+    required String password,
+  });
+
+  Future<void> signOut();
+}
+
+class AuthenticationRepositoryImpl implements AuthenticationRepository {
+  AuthenticationRepositoryImpl({
+    required this.auth,
+  });
+
+  final FirebaseAuth auth;
+
+  @override
+  FirebaseAuth get firebaseAuth => auth;
+
+  @override
+  fireAuth.User? get currentUser => auth.currentUser;
 
   static Future<void> initialize({required String name}) async {
     await Firebase.initializeApp(
@@ -17,37 +42,37 @@ class AuthenticationRepository {
     );
   }
 
-  auth.User? get currentUser => firebaseAuth.currentUser;
-
+  @override
   Future<void> createUserWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
     try {
-      await firebaseAuth.createUserWithEmailAndPassword(
+      await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-    } on auth.FirebaseAuthException catch (e) {
+    } on FirebaseAuthException catch (e) {
       throw _determineError(e);
     }
   }
 
+  @override
   Future<void> signInWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
     try {
-      await firebaseAuth.signInWithEmailAndPassword(
+      await auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-    } on auth.FirebaseAuthException catch (e) {
+    } on FirebaseAuthException catch (e) {
       throw _determineError(e);
     }
   }
 
-  AuthError _determineError(auth.FirebaseAuthException exception) {
+  AuthError _determineError(FirebaseAuthException exception) {
     switch (exception.code) {
       case 'invalid-email':
         return AuthError.invalidEmail;
@@ -72,7 +97,8 @@ class AuthenticationRepository {
     }
   }
 
+  @override
   Future<void> signOut() async {
-    await firebaseAuth.signOut();
+    await auth.signOut();
   }
 }

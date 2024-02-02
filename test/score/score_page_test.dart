@@ -12,8 +12,9 @@ void main() {
       'given a user with a score, when score page is shown, the score is displayed',
       (tester) async {
     await setUpGetItForTest(
-        databaseRepository: FakeDatabaseRepository(
-            currentUser: fakeUser.copyWith(totalScore: 5)));
+      databaseRepository:
+          FakeDatabaseRepository(currentUser: fakeUser.copyWith(totalScore: 5)),
+    );
 
     await tester
         .pumpWidget(const ProviderScope(child: MaterialApp(home: ScorePage())));

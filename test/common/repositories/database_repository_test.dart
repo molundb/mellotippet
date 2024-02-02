@@ -12,7 +12,7 @@ import '../fakes.dart';
 import 'database_repository_test.mocks.dart';
 
 @GenerateMocks([
-  AuthenticationRepository,
+  AuthenticationRepositoryImpl,
 ])
 Future<void> main() async {
   late MockAuthenticationRepository mockAuthRepo;
