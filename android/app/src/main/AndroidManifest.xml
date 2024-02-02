@@ -6,7 +6,8 @@
   <application
       android:label="@string/app_name"
       android:name="${applicationName}"
-      android:icon="@mipmap/launcher_icon"
+      android:icon="@mipmap/launcher_icon_round"
+      android:roundIcon="@mipmap/launcher_icon_round"
       >
     <activity
         android:name=".MainActivity"
