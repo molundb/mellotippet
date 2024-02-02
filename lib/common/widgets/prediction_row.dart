@@ -75,23 +75,23 @@ class Content extends StatelessWidget {
                 CustomPaint(
                   painter: TriangleCoveringPhoto(
                       color: widget.prediction.gradientStartColor),
-                  size: const Size(80, 60),
+                  size: const Size(106.8, 60),
                 ),
               ],
             ),
             Container(
-              margin: const EdgeInsets.only(left: 10),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.artist,
-                      style: const TextStyle(color: Colors.white, fontSize: 10),
-                    ),
-                    Text(
+              margin: const EdgeInsets.only(left: 8),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.artist,
+                    style: const TextStyle(color: Colors.white, fontSize: 10),
+                  ),
+                  Container(
+                    constraints: const BoxConstraints(maxWidth: 120),
+                    child: Text(
                       widget.song,
                       style: const TextStyle(
                         color: Colors.white,
@@ -99,8 +99,8 @@ class Content extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             Expanded(child: Container()),
@@ -108,7 +108,7 @@ class Content extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(right: 18.0),
                 child: SizedBox(
-                  width: 110,
+                  width: 80,
                   height: 24,
                   child: Stack(
                     children: [
@@ -120,14 +120,17 @@ class Content extends StatelessWidget {
                         ),
                       ),
                       Center(
-                        child: Text(
-                          rhombusText,
-                          style: const TextStyle(
-                            color: MellotippetColors.black,
-                            fontFamily: 'Roboto',
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 10,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 10.0),
+                          child: Text(
+                            rhombusText,
+                            style: const TextStyle(
+                              color: MellotippetColors.black,
+                              fontFamily: 'Roboto',
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                            ),
                           ),
                         ),
                       ),
