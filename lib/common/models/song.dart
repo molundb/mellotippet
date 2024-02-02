@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'song.freezed.dart';
-
 part 'song.g.dart';
 
 @freezed
@@ -10,7 +9,7 @@ class Song with _$Song {
   const factory Song({
     required String artist,
     required String song,
-    @Default('tone-sekelius.png') String image,
+    @Default('adam-woods.png') String image,
     required int startNumber,
   }) = _Song;
 

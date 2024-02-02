@@ -75,7 +75,7 @@ class Content extends StatelessWidget {
                 CustomPaint(
                   painter: TriangleCoveringPhoto(
                       color: widget.prediction.gradientStartColor),
-                  size: const Size(68, 60),
+                  size: const Size(80, 60),
                 ),
               ],
             ),

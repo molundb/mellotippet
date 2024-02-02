@@ -6,7 +6,7 @@ class PredictionRowListTile extends StatefulWidget {
 
   const PredictionRowListTile({
     super.key,
-    this.imageAsset = 'assets/images/tone-sekelius.png',
+    this.imageAsset = 'assets/images/adam-woods.png',
   });
 
   @override
