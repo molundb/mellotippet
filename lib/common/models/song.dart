@@ -9,7 +9,7 @@ class Song with _$Song {
   const factory Song({
     required String artist,
     required String song,
-    @Default('adam-woods.png') String image,
+    String? image,
     required int startNumber,
   }) = _Song;
 

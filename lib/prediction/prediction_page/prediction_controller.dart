@@ -24,15 +24,20 @@ abstract class PredictionController
     final songs = await databaseRepository
         .getSongs(featureFlagRepository.getCurrentCompetition());
 
-    final predictionRows = songs
-        .map((song) => PredictionRow(
-              artist: song.artist,
-              song: song.song,
-              imageAsset: 'assets/images/${song.image}',
-              startNumber: song.startNumber,
-              prediction: PredictedPosition.notPlaced(),
-            ))
-        .toList();
+    final predictionRows = songs.map((song) {
+      String? imageAsset;
+      if (song.image != null) {
+        imageAsset = 'assets/images/${song.image}';
+      }
+
+      return PredictionRow(
+        artist: song.artist,
+        song: song.song,
+        imageAsset: imageAsset,
+        startNumber: song.startNumber,
+        prediction: PredictedPosition.notPlaced(),
+      );
+    }).toList();
 
     predictionRows.sort((a, b) => a.startNumber.compareTo(b.startNumber));
 

@@ -4,7 +4,7 @@ import 'package:mellotippet/styles/colors.dart';
 class PredictionRow extends StatefulWidget {
   final String artist;
   final String song;
-  final String imageAsset;
+  final String? imageAsset;
   final int startNumber;
   final PredictedPosition prediction;
 
@@ -12,7 +12,7 @@ class PredictionRow extends StatefulWidget {
     super.key,
     required this.artist,
     required this.song,
-    required this.imageAsset,
+    this.imageAsset,
     required this.startNumber,
     required this.prediction,
   });
@@ -61,24 +61,27 @@ class Content extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rhombusText = widget.prediction.text;
+    final imageAsset = widget.imageAsset;
     return Padding(
       padding: const EdgeInsets.all(0.0),
       child: SizedBox(
         height: 60,
         child: Row(
           children: [
-            Stack(
-              children: [
-                Image.asset(
-                  widget.imageAsset,
-                ),
-                CustomPaint(
-                  painter: TriangleCoveringPhoto(
-                      color: widget.prediction.gradientStartColor),
-                  size: const Size(106.8, 60),
-                ),
-              ],
-            ),
+            if (imageAsset != null) ...[
+              Stack(
+                children: [
+                  Image.asset(
+                    imageAsset,
+                  ),
+                  CustomPaint(
+                    painter: TriangleCoveringPhoto(
+                        color: widget.prediction.gradientStartColor),
+                    size: const Size(106.8, 60),
+                  ),
+                ],
+              ),
+            ],
             Container(
               margin: const EdgeInsets.only(left: 8),
               child: Column(
