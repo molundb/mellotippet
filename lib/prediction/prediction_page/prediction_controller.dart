@@ -18,7 +18,7 @@ abstract class PredictionController
   final FeatureFlagRepository featureFlagRepository;
 
   StateNotifierProvider<PredictionController, PredictionControllerState>
-      getStateNotifier();
+  getStateNotifier();
 
   fetchSongs() async {
     final songs = await databaseRepository
@@ -34,18 +34,18 @@ abstract class PredictionController
             ))
         .toList();
 
+    predictionRows.sort((a, b) => a.startNumber.compareTo(b.startNumber));
+
     final songLists = [...state.songLists];
     songLists[0] = [];
     songLists[1] = predictionRows;
     state = state.copyWith(songLists: songLists);
   }
 
-  onItemReorder(
-    int oldItemIndex,
-    int oldListIndex,
-    int newItemIndex,
-    int newListIndex,
-  );
+  onItemReorder(int oldItemIndex,
+      int oldListIndex,
+      int newItemIndex,
+      int newListIndex,);
 
   Future<bool> submitPrediction();
 }
