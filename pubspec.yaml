@@ -98,17 +98,11 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/images/adam-woods.png
-    - assets/images/adam-woods-big.png
     - assets/images/samir-och-viktor.png
-    - assets/images/samir-och-viktor-big.png
     - assets/images/melina-borglowe.png
-    - assets/images/melina-borglowe-big.png
     - assets/images/elisa-lindström.png
-    - assets/images/elisa-lindström-big.png
     - assets/images/lisa-ajax.png
-    - assets/images/lisa-ajax-big.png
     - assets/images/smash-into-pieces.png
-    - assets/images/smash-into-pieces-big.png
     - assets/images/score_page_background.png
     - assets/icons/navbar_trophy_inactive.svg
     - assets/icons/navbar_trophy_active.svg
