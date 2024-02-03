@@ -43,16 +43,18 @@ android {
         prod {
             dimension "flavor-type"
             applicationId "net.martinlundberg.mellotippet_prod"
+            namespace "net.martinlundberg.mellotippet_prod"
             resValue "string", "app_name", "Mellotippet"
         }
         stage {
             dimension "flavor-type"
             applicationId "net.martinlundberg.mellotippet_stage"
+            namespace "net.martinlundberg.mellotippet_stage"
             resValue "string", "app_name", "Mellotippet Stage"
         }
     }
 
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion localProperties.getProperty('flutter.compileSdkVersion').toInteger()
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -66,6 +68,8 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+
+    namespace "net.martinlundberg.mellotippet_prod"
 
     defaultConfig {
         applicationId "net.martinlundberg.mellotippet_prod"
@@ -96,4 +100,5 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "com.google.android.material:material:$material_version"
 }
