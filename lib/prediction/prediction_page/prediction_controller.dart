@@ -1,5 +1,7 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:logger/logger.dart';
 import 'package:mellotippet/common/repositories/database_repository.dart';
 import 'package:mellotippet/common/repositories/feature_flag_repository.dart';
 import 'package:mellotippet/common/widgets/prediction_row.dart';
@@ -18,26 +20,34 @@ abstract class PredictionController
   final FeatureFlagRepository featureFlagRepository;
 
   StateNotifierProvider<PredictionController, PredictionControllerState>
-  getStateNotifier();
+      getStateNotifier();
 
   fetchSongs() async {
     final songs = await databaseRepository
         .getSongs(featureFlagRepository.getCurrentCompetition());
 
-    final predictionRows = songs.map((song) {
-      String? imageAsset;
+    final predictionRows = await Future.wait(songs.map((song) async {
+      String? imageUrl;
       if (song.image != null) {
-        imageAsset = 'assets/images/${song.image}';
+        final storageRef = FirebaseStorage.instance.ref();
+
+        final heat2Ref = storageRef.child("2024/heat2/${song.image}");
+
+        try {
+          imageUrl = await heat2Ref.getDownloadURL();
+        } catch (e) {
+          Logger().e("song.image: ${song.image}, e: $e");
+        }
       }
 
       return PredictionRow(
         artist: song.artist,
         song: song.song,
-        imageAsset: imageAsset,
+        imageUrl: imageUrl,
         startNumber: song.startNumber,
         prediction: PredictedPosition.notPlaced(),
       );
-    }).toList();
+    }));
 
     predictionRows.sort((a, b) => a.startNumber.compareTo(b.startNumber));
 
@@ -47,10 +57,12 @@ abstract class PredictionController
     state = state.copyWith(songLists: songLists);
   }
 
-  onItemReorder(int oldItemIndex,
-      int oldListIndex,
-      int newItemIndex,
-      int newListIndex,);
+  onItemReorder(
+    int oldItemIndex,
+    int oldListIndex,
+    int newItemIndex,
+    int newListIndex,
+  );
 
   Future<bool> submitPrediction();
 }
