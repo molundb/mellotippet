@@ -22,7 +22,7 @@ class _HeatPredictionPageState extends ConsumerState<HeatPredictionPage> {
     return PredictionPage(
       snackbarHandler: getIt.get<SnackbarHandler>(),
       emptyTopListText:
-          'Dra fem bidrag ovanför linjen och rangordna för att tippa',
+          'Dra fem bidrag ovanför linjen och rangordna för att tippa.\nHåll ned ett bidrag för att dra det.',
       controller: controller,
     );
   }
