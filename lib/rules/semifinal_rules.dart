@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mellotippet/styles/text_styles.dart';
 
 class SemifinalRules extends StatelessWidget {
   const SemifinalRules({
@@ -32,11 +31,11 @@ class SemifinalRules extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(top: 20.0, bottom: 4.0),
-            child: Text('Miss av semifinal',
+            child: Text('Miss av finalkval',
                 style: TextStyle(fontFamily: 'Inter', fontSize: 24)),
           ),
           Text(
-            'Om man inte tippar på semifinalen får man 1 poäng mindre än den som tippade och fick lägst poäng på semifinalen. Man har alltså fortfarande en chans att ta hem hela tävlingen!',
+            'Om man inte tippar på finalkvalet får man 1 poäng mindre än den som tippade och fick lägst poäng på finalkvalet. Man har alltså fortfarande en chans att ta hem hela tävlingen!',
             style: TextStyle(fontFamily: 'Inter'),
           )
         ],
