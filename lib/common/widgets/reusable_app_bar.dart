@@ -7,6 +7,8 @@ class ReusableAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? subtitle;
   final PreferredSizeWidget? bottom;
 
+  final double _toolbarHeight = 120;
+
   ReusableAppBar({
     super.key,
     required this.title,
@@ -21,31 +23,36 @@ class ReusableAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final sub = subtitle;
     return AppBar(
-      toolbarHeight: 120,
+      toolbarHeight: _toolbarHeight,
       centerTitle: true,
-      title: Column(
-        children: [
-          const SizedBox(height: 10),
-          Text(
-            title,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 64,
-              fontFamily: 'Lalezar',
-              height: 1,
-            ),
-          ),
-          if (sub != null) ...[
+      title: SizedBox(
+        height: _toolbarHeight,
+        child: Column(
+          children: [
+            const SizedBox(height: 28),
             Text(
-              sub,
+              title,
               style: const TextStyle(
-                fontSize: 12,
-                fontFamily: 'Roboto',
                 color: Colors.white,
+                fontSize: 64,
+                fontFamily: 'Lalezar',
+                height: 1,
               ),
             ),
-          ]
-        ],
+            const SizedBox(height: 4),
+            if (sub != null) ...[
+              Text(
+                sub,
+                style: const TextStyle(
+                  height: 1,
+                  fontSize: 12,
+                  fontFamily: 'Roboto',
+                  color: Colors.white,
+                ),
+              ),
+            ]
+          ],
+        ),
       ),
       bottom: bottom,
       actions: [
@@ -78,5 +85,5 @@ class ReusableAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize =>
-      Size.fromHeight(120 + (bottom?.preferredSize.height ?? 0));
+      Size.fromHeight(_toolbarHeight + (bottom?.preferredSize.height ?? 0));
 }
