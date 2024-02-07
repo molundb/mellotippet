@@ -71,9 +71,7 @@ class Content extends StatelessWidget {
             if (imageUrl != null) ...[
               Stack(
                 children: [
-                  Image.network(
-                    imageUrl,
-                  ),
+                  Image.network(imageUrl),
                   CustomPaint(
                     painter: TriangleCoveringPhoto(
                         color: widget.prediction.gradientStartColor),

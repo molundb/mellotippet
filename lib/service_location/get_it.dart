@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
@@ -28,7 +29,8 @@ Future<void> setUpGetIt(Flavor flavor) async {
           ));
 
   getIt.registerLazySingleton<DatabaseRepository>(() => DatabaseRepositoryImpl(
-        db: FirebaseFirestore.instance,
+    db: FirebaseFirestore.instance,
+        storage: FirebaseStorage.instance,
         authRepository: getIt.get<AuthenticationRepository>(),
       ));
 

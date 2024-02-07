@@ -1,7 +1,5 @@
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:logger/logger.dart';
 import 'package:mellotippet/common/repositories/database_repository.dart';
 import 'package:mellotippet/common/repositories/feature_flag_repository.dart';
 import 'package:mellotippet/common/widgets/prediction_row.dart';
@@ -23,22 +21,15 @@ abstract class PredictionController
       getStateNotifier();
 
   fetchSongs() async {
-    final songs = await databaseRepository
-        .getSongs(featureFlagRepository.getCurrentCompetition());
+    final currentCompetition = featureFlagRepository.getCurrentCompetition();
+    final songs = await databaseRepository.getSongs(currentCompetition);
 
     final predictionRows = await Future.wait(songs.map((song) async {
-      String? imageUrl;
-      if (song.image != null) {
-        final storageRef = FirebaseStorage.instance.ref();
-
-        final heat2Ref = storageRef.child("2024/heat2/${song.image}");
-
-        try {
-          imageUrl = await heat2Ref.getDownloadURL();
-        } catch (e) {
-          Logger().e("song.image: ${song.image}, e: $e");
-        }
-      }
+      String? imageUrl = await databaseRepository.getImageDownloadUrl(
+        DateTime.now().year,
+        currentCompetition,
+        song.image,
+      );
 
       return PredictionRow(
         artist: song.artist,

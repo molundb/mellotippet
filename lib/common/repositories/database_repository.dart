@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:logger/logger.dart';
 import 'package:mellotippet/common/models/all_models.dart';
 import 'package:mellotippet/common/models/song.dart';
 import 'package:mellotippet/common/repositories/repositories.dart';
@@ -16,8 +18,7 @@ abstract class DatabaseRepository {
 
   Future<bool> uploadFinalPrediction(
     String competitionId,
-    FinalPredictionModel prediction,
-  );
+    FinalPredictionModel prediction,);
 
   Future<String> getCurrentUsername();
 
@@ -26,6 +27,9 @@ abstract class DatabaseRepository {
   Future<CompetitionModel> getCompetition(String competitionId);
 
   Future<List<Song>> getSongs(String heatId);
+
+  Future<String?> getImageDownloadUrl(int year, String competitionId,
+      String? imagePath);
 
   Future<User> getCurrentUser();
 
@@ -36,10 +40,12 @@ abstract class DatabaseRepository {
 
 class DatabaseRepositoryImpl implements DatabaseRepository {
   FirebaseFirestore db;
+  FirebaseStorage storage;
   AuthenticationRepository authRepository;
 
   DatabaseRepositoryImpl({
     required this.db,
+    required this.storage,
     required this.authRepository,
   });
 
@@ -195,6 +201,25 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
         .docs
         .map((e) => e.data())
         .toList();
+  }
+
+  @override
+  Future<String?> getImageDownloadUrl(
+      int year, String competitionId, String? imagePath) async {
+    if (imagePath == null) {
+      return null;
+    }
+
+    final ref = storage.ref().child("$year/$competitionId/$imagePath");
+
+    try {
+      return await ref.getDownloadURL();
+    } catch (e) {
+      Logger()
+          .e("getDownloadURL() failed for image: $imagePath, exception: $e");
+    }
+
+    return null;
   }
 
   @override
