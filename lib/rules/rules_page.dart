@@ -16,6 +16,9 @@ class RulesPage extends ConsumerWidget {
         appBar: ReusableAppBar(
           title: 'Regler',
           bottom: const TabBar(
+            labelColor: Colors.white,
+            unselectedLabelColor: Colors.white,
+            indicatorColor: Colors.white,
             tabs: [
               Tab(text: 'Deltävling'),
               Tab(text: 'Semifinal'),
