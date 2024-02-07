@@ -69,18 +69,7 @@ class _EagerSongFetcherState extends ConsumerState<EagerSongFetcher> {
   void initState() {
     super.initState();
     getCorrectPredictionController().fetchSongs(context);
-    // asd();
   }
-
-  // void asd() {
-  //   final imageUrls = getCorrectPredictionController().fetchSongs();
-  //
-  //   for (String? imageUrl in imageUrls) {
-  //     if (imageUrl != null) {
-  //       precacheImage(NetworkImage(imageUrl), context);
-  //     }
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {

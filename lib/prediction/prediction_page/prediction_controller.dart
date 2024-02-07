@@ -32,7 +32,7 @@ abstract class PredictionController
         song.image,
       );
 
-      if (imageUrl != null) {
+      if (imageUrl != null && context.mounted) {
         precacheImage(NetworkImage(imageUrl), context);
       }
 
@@ -51,8 +51,6 @@ abstract class PredictionController
     songLists[0] = [];
     songLists[1] = predictionRows;
     state = state.copyWith(songLists: songLists);
-
-    // return predictionRows.map((e) => e.imageUrl).toList();
   }
 
   onItemReorder(int oldItemIndex,
