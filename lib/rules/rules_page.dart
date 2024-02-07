@@ -19,6 +19,8 @@ class RulesPage extends ConsumerWidget {
             labelColor: Colors.white,
             unselectedLabelColor: Colors.white,
             indicatorColor: Colors.white,
+            indicatorPadding: EdgeInsets.symmetric(vertical: 6, horizontal: 32),
+            indicatorSize: TabBarIndicatorSize.tab,
             tabs: [
               Tab(text: 'Deltävling'),
               Tab(text: 'Semifinal'),
