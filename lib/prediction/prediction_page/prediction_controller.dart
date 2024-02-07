@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mellotippet/common/repositories/database_repository.dart';
@@ -18,9 +19,9 @@ abstract class PredictionController
   final FeatureFlagRepository featureFlagRepository;
 
   StateNotifierProvider<PredictionController, PredictionControllerState>
-      getStateNotifier();
+  getStateNotifier();
 
-  fetchSongs() async {
+  fetchSongs(BuildContext context) async {
     final currentCompetition = featureFlagRepository.getCurrentCompetition();
     final songs = await databaseRepository.getSongs(currentCompetition);
 
@@ -30,6 +31,10 @@ abstract class PredictionController
         currentCompetition,
         song.image,
       );
+
+      if (imageUrl != null) {
+        precacheImage(NetworkImage(imageUrl), context);
+      }
 
       return PredictionRow(
         artist: song.artist,
@@ -46,14 +51,14 @@ abstract class PredictionController
     songLists[0] = [];
     songLists[1] = predictionRows;
     state = state.copyWith(songLists: songLists);
+
+    // return predictionRows.map((e) => e.imageUrl).toList();
   }
 
-  onItemReorder(
-    int oldItemIndex,
-    int oldListIndex,
-    int newItemIndex,
-    int newListIndex,
-  );
+  onItemReorder(int oldItemIndex,
+      int oldListIndex,
+      int newItemIndex,
+      int newListIndex,);
 
   Future<bool> submitPrediction();
 }
