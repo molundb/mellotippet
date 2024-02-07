@@ -1,5 +1,4 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/common/models/all_models.dart';
@@ -22,7 +21,7 @@ class MellotippetApp extends StatelessWidget {
 
   final CompetitionType? competitionType = CompetitionType.values
       .firstWhereOrNull((element) =>
-          describeEnum(element) ==
+          element.name ==
           getIt.get<FeatureFlagRepository>().getCurrentCompetition());
 
   @override
