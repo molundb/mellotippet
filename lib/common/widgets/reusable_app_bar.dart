@@ -19,7 +19,7 @@ class ReusableAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final subtitle2 = subtitle;
+    final sub = subtitle;
     return AppBar(
       toolbarHeight: 120,
       centerTitle: true,
@@ -35,12 +35,13 @@ class ReusableAppBar extends StatelessWidget implements PreferredSizeWidget {
               height: 1,
             ),
           ),
-          if (subtitle2 != null) ...[
+          if (sub != null) ...[
             Text(
-              subtitle2,
+              sub,
               style: const TextStyle(
                 fontSize: 12,
                 fontFamily: 'Roboto',
+                color: Colors.white,
               ),
             ),
           ]
@@ -49,6 +50,10 @@ class ReusableAppBar extends StatelessWidget implements PreferredSizeWidget {
       bottom: bottom,
       actions: [
         PopupMenuButton<String>(
+          icon: const Icon(
+            Icons.more_vert,
+            color: Colors.white,
+          ),
           onSelected: handleClick,
           itemBuilder: (BuildContext context) {
             return {'Logga ut'}.map((String choice) {
