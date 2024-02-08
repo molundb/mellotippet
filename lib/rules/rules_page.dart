@@ -23,7 +23,7 @@ class RulesPage extends ConsumerWidget {
             indicatorSize: TabBarIndicatorSize.tab,
             tabs: [
               Tab(text: 'Deltävling'),
-              Tab(text: 'Semifinal'),
+              Tab(text: 'Finalkval'),
               Tab(text: 'Final'),
             ],
           ),

@@ -167,7 +167,7 @@ class PredictedPosition {
       );
 
   factory PredictedPosition.semifinalist() => const PredictedPosition(
-        text: 'Semifinal',
+        text: 'Finalkval',
         gradientStartColor: MellotippetColors.semifinalistGradientGray,
       );
 
