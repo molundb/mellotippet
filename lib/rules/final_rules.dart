@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mellotippet/styles/text_styles.dart';
 
 class FinalRules extends StatelessWidget {
   const FinalRules({
@@ -14,8 +13,10 @@ class FinalRules extends StatelessWidget {
         children: const [
           Padding(
             padding: EdgeInsets.only(bottom: 4.0),
-            child: Text('Tippning',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 24)),
+            child: Text(
+              'Tippning',
+              style: TextStyle(fontFamily: 'Inter', fontSize: 24),
+            ),
           ),
           Text(
             'Man får tippa hur många gånger man vill. Det är enbart den sista tippningen som räknas. Tippningen stängs strax innan det första resultatet för deltävlingen tillkännages.',
@@ -23,8 +24,10 @@ class FinalRules extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(top: 20.0, bottom: 4.0),
-            child: Text('Poängräkning',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 24)),
+            child: Text(
+              'Poängräkning',
+              style: TextStyle(fontFamily: 'Inter', fontSize: 24),
+            ),
           ),
           Text(
             'Poängsättningen för finalen är indelad i tre grupper:'
@@ -36,11 +39,13 @@ class FinalRules extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(top: 20.0, bottom: 4.0),
-            child: Text('Miss av deltävling',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 24)),
+            child: Text(
+              'Miss av final',
+              style: TextStyle(fontFamily: 'Inter', fontSize: 24),
+            ),
           ),
           Text(
-            'Om man inte tippar på en deltävling får man 1 poäng mindre än den som tippade och fick lägst poäng på den deltävlingen. Man har alltså fortfarande en chans att ta hem hela tävlingen!',
+            'Om man inte tippar på finalen får man 1 poäng mindre än den som tippade och fick lägst poäng på finalen.',
             style: TextStyle(fontFamily: 'Inter'),
           )
         ],
