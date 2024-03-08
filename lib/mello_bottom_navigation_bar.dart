@@ -53,7 +53,7 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
     switch (widget.currentCompetitionType) {
       case CompetitionType.heat:
         return const HeatPredictionPage();
-      case CompetitionType.semifinal:
+      case CompetitionType.finalkval:
         return const SemifinalPredictionPage();
       case CompetitionType.theFinal:
         return const FinalPredictionPage();

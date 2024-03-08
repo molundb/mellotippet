@@ -1,7 +1,7 @@
 import { DocumentData, QueryDocumentSnapshot } from "firebase-admin/firestore";
 import { PredictionAndScore } from "./prediction-and-score";
 
-export default class SemifinalPredictionAndScore {
+export default class FinalkvalPredictionAndScore {
   finalist1: PredictionAndScore;
   finalist2: PredictionAndScore;
 
@@ -25,16 +25,16 @@ export default class SemifinalPredictionAndScore {
   }
 }
 
-const semifinalPredictionAndScoreConverter = {
-  toFirestore(semifinalPrediction: SemifinalPredictionAndScore): DocumentData {
+const finalkvalPredictionAndScoreConverter = {
+  toFirestore(finalkvalPrediction: FinalkvalPredictionAndScore): DocumentData {
     return {
-      finalist1: semifinalPrediction.finalist1.toJson(),
-      finalist2: semifinalPrediction.finalist2.toJson(),
+      finalist1: finalkvalPrediction.finalist1.toJson(),
+      finalist2: finalkvalPrediction.finalist2.toJson(),
     };
   },
-  fromFirestore(snapshot: QueryDocumentSnapshot): SemifinalPredictionAndScore {
+  fromFirestore(snapshot: QueryDocumentSnapshot): FinalkvalPredictionAndScore {
     const data = snapshot.data();
-    return new SemifinalPredictionAndScore({
+    return new FinalkvalPredictionAndScore({
       finalist1: new PredictionAndScore({
         prediction: data.finalist1.prediction,
         score: data.finalist1.score,
@@ -47,4 +47,4 @@ const semifinalPredictionAndScoreConverter = {
   },
 };
 
-export { SemifinalPredictionAndScore, semifinalPredictionAndScoreConverter };
+export { FinalkvalPredictionAndScore, finalkvalPredictionAndScoreConverter };

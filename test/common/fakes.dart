@@ -66,8 +66,8 @@ final fakeCompetitions = [
     appBarSubtitle: 'appBarSubtitle',
   ),
   CompetitionModel(
-    id: "semifinal",
-    type: CompetitionType.semifinal,
+    id: "finalkval",
+    type: CompetitionType.finalkval,
     lowestScore: 5,
     result: fakeSemifinalPrediction,
     appBarSubtitle: 'appBarSubtitle',

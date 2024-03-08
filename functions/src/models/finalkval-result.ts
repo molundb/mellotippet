@@ -1,6 +1,6 @@
 import { DocumentData, QueryDocumentSnapshot } from "firebase-admin/firestore";
 
-export default class SemifinalResult {
+export default class FinalkvalResult {
   readonly finalist1: number;
   readonly finalist2: number;
 
@@ -17,7 +17,7 @@ export default class SemifinalResult {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static fromJson(result: any) {
-    return new SemifinalResult({
+    return new FinalkvalResult({
       finalist1: result.finalist1,
       finalist2: result.finalist2,
     });
@@ -37,22 +37,22 @@ export default class SemifinalResult {
   }
 }
 
-const semifinalResultConverter = {
-  toFirestore(semifinalResult: SemifinalResult): DocumentData {
+const finalkvalResultConverter = {
+  toFirestore(finalkvalResult: FinalkvalResult): DocumentData {
     return {
       result: {
-        finalist1: semifinalResult.finalist1,
-        finalist2: semifinalResult.finalist2,
+        finalist1: finalkvalResult.finalist1,
+        finalist2: finalkvalResult.finalist2,
       },
     };
   },
-  fromFirestore(snapshot: QueryDocumentSnapshot): SemifinalResult {
+  fromFirestore(snapshot: QueryDocumentSnapshot): FinalkvalResult {
     const data = snapshot.data();
-    return new SemifinalResult({
+    return new FinalkvalResult({
       finalist1: data.result.finalist1,
       finalist2: data.result.finalist2,
     });
   },
 };
 
-export { SemifinalResult, semifinalResultConverter };
+export { FinalkvalResult, finalkvalResultConverter };

@@ -79,7 +79,7 @@ class _EagerSongFetcherState extends ConsumerState<EagerSongFetcher> {
     switch (widget.currentCompetitionType) {
       case CompetitionType.heat:
         return ref.read(HeatPredictionController.provider.notifier);
-      case CompetitionType.semifinal:
+      case CompetitionType.finalkval:
         return ref.read(SemifinalPredictionController.provider.notifier);
       case CompetitionType.theFinal:
         return ref.read(FinalPredictionController.provider.notifier);

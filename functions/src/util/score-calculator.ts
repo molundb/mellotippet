@@ -1,7 +1,7 @@
 import { HeatResult } from "../models/heat-result";
 import { HeatPredictionAndScore } from "../models/heat-prediction-and-score";
-import { SemifinalPredictionAndScore } from "../models/semifinal-prediction-and-score";
-import { SemifinalResult } from "../models/semifinal-result";
+import { FinalkvalPredictionAndScore } from "../models/finalkval-prediction-and-score";
+import { FinalkvalResult } from "../models/finalkval-result";
 import { FinalPredictionAndScore } from "../models/final-prediction-and-score";
 import { FinalResult } from "../models/final-result";
 
@@ -42,17 +42,17 @@ class ScoreCalculator {
     }
   }
 
-  calculateSemifinalScore(
-    result: SemifinalResult,
-    predictionAndScore: SemifinalPredictionAndScore
-  ): SemifinalPredictionAndScore {
+  calculateFinalkvalScore(
+    result: FinalkvalResult,
+    predictionAndScore: FinalkvalPredictionAndScore
+  ): FinalkvalPredictionAndScore {
     predictionAndScore.finalist1.score =
-      this.calculateScoreForSemifinalFinalist(
+      this.calculateScoreForFinalkvalFinalist(
         predictionAndScore.finalist1.prediction,
         result
       );
     predictionAndScore.finalist2.score =
-      this.calculateScoreForSemifinalFinalist(
+      this.calculateScoreForFinalkvalFinalist(
         predictionAndScore.finalist2.prediction,
         result
       );
@@ -60,9 +60,9 @@ class ScoreCalculator {
     return predictionAndScore;
   }
 
-  private calculateScoreForSemifinalFinalist(
+  private calculateScoreForFinalkvalFinalist(
     prediction: number,
-    result: SemifinalResult
+    result: FinalkvalResult
   ) {
     if (result.finalists().includes(prediction)) {
       return 3;

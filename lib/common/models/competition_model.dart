@@ -34,8 +34,8 @@ class CompetitionModel with _$CompetitionModel {
           result = FinalResultModel.fromJson(resultSnapshot);
         }
         break;
-      case 'semifinal':
-        type = CompetitionType.semifinal;
+      case 'finalkval':
+        type = CompetitionType.finalkval;
         if (resultSnapshot != null) {
           result = SemifinalResultModel.fromJson(resultSnapshot);
         }
@@ -66,6 +66,6 @@ class CompetitionModel with _$CompetitionModel {
 
 enum CompetitionType {
   heat,
-  semifinal,
+  finalkval,
   theFinal,
 }

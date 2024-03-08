@@ -8,15 +8,15 @@ import {
   heatPredictionAndScoreConverter,
 } from "../src/models/heat-prediction-and-score";
 import {
-  SemifinalPredictionAndScore,
-  semifinalPredictionAndScoreConverter,
-} from "../src/models/semifinal-prediction-and-score";
+  FinalkvalPredictionAndScore,
+  finalkvalPredictionAndScoreConverter,
+} from "../src/models/finalkval-prediction-and-score";
 import {
   FinalPredictionAndScore,
   finalPredictionAndScoreConverter,
 } from "../src/models/final-prediction-and-score";
 import { HeatResult } from "../src/models/heat-result";
-import { SemifinalResult } from "../src/models/semifinal-result";
+import { FinalkvalResult } from "../src/models/finalkval-result";
 import { FinalResult } from "../src/models/final-result";
 import { Change } from "firebase-functions/v1";
 import { PredictionAndScore } from "../src/models/prediction-and-score";
@@ -99,7 +99,7 @@ describe("calculateScores when adding heat result", function () {
     });
   });
 
-  it("heat: should calculate score correctly when one finalist on semifinal", async function () {
+  it("heat: should calculate score correctly when one finalist on finalkval", async function () {
     // Given
     const competition = "heat1";
     const competitionPath = `competitions/${competition}`;
@@ -153,7 +153,7 @@ describe("calculateScores when adding heat result", function () {
     );
   });
 
-  it("heat: should calculate score correctly when two finalists on semifinal", async function () {
+  it("heat: should calculate score correctly when two finalists on finalkval", async function () {
     // Given
     const competition = "heat1";
     const competitionPath = `competitions/${competition}`;
@@ -653,7 +653,7 @@ describe("calculateScores when adding heat result", function () {
   });
 });
 
-describe("calculateScores when adding semifinal result", function () {
+describe("calculateScores when adding finalkval result", function () {
   beforeEach(async function () {
     await resetEntireDatabase();
   });
@@ -667,24 +667,24 @@ describe("calculateScores when adding semifinal result", function () {
     test.cleanup();
   });
 
-  it("semifinal: should calculate score correctly for perfect prediction", async function () {
-    const competition = "semifinal";
+  it("finalkval: should calculate score correctly for perfect prediction", async function () {
+    const competition = "finalkval";
     const competitionPath = `competitions/${competition}`;
 
     const user = new User("user1", "testUser1", 0);
-    const prediction = new SemifinalPredictionAndScore({
+    const prediction = new FinalkvalPredictionAndScore({
       finalist1: new PredictionAndScore({ prediction: 1, score: 0 }),
       finalist2: new PredictionAndScore({ prediction: 2, score: 0 }),
     });
     const expectedScore = 6;
 
-    const result = new SemifinalResult({
+    const result = new FinalkvalResult({
       finalist1: 1,
       finalist2: 2,
     }).toResult();
 
     await addUserToDatabase(user);
-    await addSemifinalPredictionToDatabase(
+    await addFinalkvalPredictionToDatabase(
       competitionPath,
       user.id,
       prediction
@@ -702,40 +702,40 @@ describe("calculateScores when adding semifinal result", function () {
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
 
-    const expectedSemifinalPredictionAndScore = new SemifinalPredictionAndScore(
+    const expectedFinalkvalPredictionAndScore = new FinalkvalPredictionAndScore(
       {
         finalist1: new PredictionAndScore({ prediction: 1, score: 3 }),
         finalist2: new PredictionAndScore({ prediction: 2, score: 3 }),
       }
     );
     const predictionAndScoreAfter =
-      await getSemifinalPredictionAndScoreFromDatabase(
+      await getFinalkvalPredictionAndScoreFromDatabase(
         competitionPath,
         user.id
       );
     expect(predictionAndScoreAfter).to.deep.equal(
-      expectedSemifinalPredictionAndScore
+      expectedFinalkvalPredictionAndScore
     );
   });
 
-  it("semifinal: should calculate score correctly when one finalist correct", async function () {
-    const competition = "semifinal";
+  it("finalkval: should calculate score correctly when one finalist correct", async function () {
+    const competition = "finalkval";
     const competitionPath = `competitions/${competition}`;
 
     const user = new User("user1", "testUser1", 0);
-    const prediction = new SemifinalPredictionAndScore({
+    const prediction = new FinalkvalPredictionAndScore({
       finalist1: new PredictionAndScore({ prediction: 1, score: 0 }),
       finalist2: new PredictionAndScore({ prediction: 3, score: 0 }),
     });
     const expectedScore = 3;
 
-    const result = new SemifinalResult({
+    const result = new FinalkvalResult({
       finalist1: 1,
       finalist2: 2,
     }).toResult();
 
     await addUserToDatabase(user);
-    await addSemifinalPredictionToDatabase(
+    await addFinalkvalPredictionToDatabase(
       competitionPath,
       user.id,
       prediction
@@ -753,40 +753,40 @@ describe("calculateScores when adding semifinal result", function () {
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
 
-    const expectedSemifinalPredictionAndScore = new SemifinalPredictionAndScore(
+    const expectedFinalkvalPredictionAndScore = new FinalkvalPredictionAndScore(
       {
         finalist1: new PredictionAndScore({ prediction: 1, score: 3 }),
         finalist2: new PredictionAndScore({ prediction: 3, score: 0 }),
       }
     );
     const predictionAndScoreAfter =
-      await getSemifinalPredictionAndScoreFromDatabase(
+      await getFinalkvalPredictionAndScoreFromDatabase(
         competitionPath,
         user.id
       );
     expect(predictionAndScoreAfter).to.deep.equal(
-      expectedSemifinalPredictionAndScore
+      expectedFinalkvalPredictionAndScore
     );
   });
 
-  it("semifinal: should calculate score correctly when no finalist correct", async function () {
-    const competition = "semifinal";
+  it("finalkval: should calculate score correctly when no finalist correct", async function () {
+    const competition = "finalkval";
     const competitionPath = `competitions/${competition}`;
 
     const user = new User("user1", "testUser1", 0);
-    const prediction = new SemifinalPredictionAndScore({
+    const prediction = new FinalkvalPredictionAndScore({
       finalist1: new PredictionAndScore({ prediction: 2, score: 0 }),
       finalist2: new PredictionAndScore({ prediction: 5, score: 0 }),
     });
     const expectedScore = 0;
 
-    const result = new SemifinalResult({
+    const result = new FinalkvalResult({
       finalist1: 4,
       finalist2: 8,
     }).toResult();
 
     await addUserToDatabase(user);
-    await addSemifinalPredictionToDatabase(
+    await addFinalkvalPredictionToDatabase(
       competitionPath,
       user.id,
       prediction
@@ -804,37 +804,37 @@ describe("calculateScores when adding semifinal result", function () {
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
 
-    const expectedSemifinalPredictionAndScore = new SemifinalPredictionAndScore(
+    const expectedFinalkvalPredictionAndScore = new FinalkvalPredictionAndScore(
       {
         finalist1: new PredictionAndScore({ prediction: 2, score: 0 }),
         finalist2: new PredictionAndScore({ prediction: 5, score: 0 }),
       }
     );
     const predictionAndScoreAfter =
-      await getSemifinalPredictionAndScoreFromDatabase(
+      await getFinalkvalPredictionAndScoreFromDatabase(
         competitionPath,
         user.id
       );
     expect(predictionAndScoreAfter).to.deep.equal(
-      expectedSemifinalPredictionAndScore
+      expectedFinalkvalPredictionAndScore
     );
   });
 
-  it("semifinal: should not change score when no prediction", async function () {
-    const competition = "semifinal";
+  it("finalkval: should not change score when no prediction", async function () {
+    const competition = "finalkval";
     const competitionPath = `competitions/${competition}`;
 
     const user = new User("user1", "testUser1", 0);
     const prediction = undefined;
     const expectedScore = 0;
 
-    const result = new SemifinalResult({
+    const result = new FinalkvalResult({
       finalist1: 1,
       finalist2: 2,
     }).toResult();
 
     await addUserToDatabase(user);
-    await addSemifinalPredictionToDatabase(
+    await addFinalkvalPredictionToDatabase(
       competitionPath,
       user.id,
       prediction
@@ -852,42 +852,42 @@ describe("calculateScores when adding semifinal result", function () {
     const userAfter = await getUserFromDatabase(user.id);
     expect(userAfter?.totalScore).to.equal(expectedScore);
 
-    const expectedSemifinalPredictionAndScore = undefined;
+    const expectedFinalkvalPredictionAndScore = undefined;
     const predictionAndScoreAfter =
-      await getSemifinalPredictionAndScoreFromDatabase(
+      await getFinalkvalPredictionAndScoreFromDatabase(
         competitionPath,
         user.id
       );
     expect(predictionAndScoreAfter).to.deep.equal(
-      expectedSemifinalPredictionAndScore
+      expectedFinalkvalPredictionAndScore
     );
   });
 
-  it("semifinal: should calculate score correctly for multiple users", async function () {
-    const competition = "semifinal";
+  it("finalkval: should calculate score correctly for multiple users", async function () {
+    const competition = "finalkval";
     const competitionPath = `competitions/${competition}`;
 
     const usersWithPredictionAndExpectedScore = [
       {
         user: new User("user1", "testUser1", 0),
-        prediction: new SemifinalPredictionAndScore({
+        prediction: new FinalkvalPredictionAndScore({
           finalist1: new PredictionAndScore({ prediction: 2, score: 0 }),
           finalist2: new PredictionAndScore({ prediction: 1, score: 0 }),
         }),
         expectedScore: 6,
-        expectedSemifinalPredictionAndScore: new SemifinalPredictionAndScore({
+        expectedFinalkvalPredictionAndScore: new FinalkvalPredictionAndScore({
           finalist1: new PredictionAndScore({ prediction: 2, score: 3 }),
           finalist2: new PredictionAndScore({ prediction: 1, score: 3 }),
         }),
       },
       {
         user: new User("user2", "username 2", 0),
-        prediction: new SemifinalPredictionAndScore({
+        prediction: new FinalkvalPredictionAndScore({
           finalist1: new PredictionAndScore({ prediction: 2, score: 0 }),
           finalist2: new PredictionAndScore({ prediction: 5, score: 0 }),
         }),
         expectedScore: 3,
-        expectedSemifinalPredictionAndScore: new SemifinalPredictionAndScore({
+        expectedFinalkvalPredictionAndScore: new FinalkvalPredictionAndScore({
           finalist1: new PredictionAndScore({ prediction: 2, score: 3 }),
           finalist2: new PredictionAndScore({ prediction: 5, score: 0 }),
         }),
@@ -896,18 +896,18 @@ describe("calculateScores when adding semifinal result", function () {
         user: new User("user3", "third name", 0),
         prediction: undefined,
         expectedScore: 0,
-        expectedSemifinalPredictionAndScore: undefined,
+        expectedFinalkvalPredictionAndScore: undefined,
       },
     ];
 
-    const result = new SemifinalResult({
+    const result = new FinalkvalResult({
       finalist1: 1,
       finalist2: 2,
     }).toResult();
 
     for (const { user, prediction } of usersWithPredictionAndExpectedScore) {
       await addUserToDatabase(user);
-      await addSemifinalPredictionToDatabase(
+      await addFinalkvalPredictionToDatabase(
         competitionPath,
         user.id,
         prediction
@@ -926,18 +926,18 @@ describe("calculateScores when adding semifinal result", function () {
     for (const {
       user,
       expectedScore,
-      expectedSemifinalPredictionAndScore,
+      expectedFinalkvalPredictionAndScore,
     } of usersWithPredictionAndExpectedScore) {
       const userAfter = await getUserFromDatabase(user.id);
       expect(userAfter?.totalScore).to.equal(expectedScore);
 
       const predictionAndScoreAfter =
-        await getSemifinalPredictionAndScoreFromDatabase(
+        await getFinalkvalPredictionAndScoreFromDatabase(
           competitionPath,
           user.id
         );
       expect(predictionAndScoreAfter).to.deep.equal(
-        expectedSemifinalPredictionAndScore
+        expectedFinalkvalPredictionAndScore
       );
     }
   });
@@ -1793,7 +1793,7 @@ describe("calculateScores in real life scenario", function () {
     }
   });
 
-  it("given previous heat1, heat2, heat3, heat4, heat5 and semifinal result, when final is added, then calculate the score correctly for multiple users", async function () {
+  it("given previous heat1, heat2, heat3, heat4, heat5 and finalkval result, when final is added, then calculate the score correctly for multiple users", async function () {
     // Given
     const competition = "final";
     const competitionPath = `competitions/${competition}`;
@@ -2199,39 +2199,39 @@ describe("calculateScores in real life scenario", function () {
       },
     ];
 
-    const usersWithPredictionAndExpectedScoreSemifinal = [
+    const usersWithPredictionAndExpectedScoreFinalkval = [
       {
         user: new User("user1", "testUser1", 39),
-        prediction: new SemifinalPredictionAndScore({
+        prediction: new FinalkvalPredictionAndScore({
           finalist1: new PredictionAndScore({ prediction: 3, score: 0 }),
           finalist2: new PredictionAndScore({ prediction: 4, score: 0 }),
         }),
         expectedTotalScore: 42,
-        expectedSemifinalPredictionAndScore: new SemifinalPredictionAndScore({
+        expectedFinalkvalPredictionAndScore: new FinalkvalPredictionAndScore({
           finalist1: new PredictionAndScore({ prediction: 3, score: 3 }),
           finalist2: new PredictionAndScore({ prediction: 4, score: 0 }),
         }),
       },
       {
         user: new User("user2", "funny username", 40),
-        prediction: new SemifinalPredictionAndScore({
+        prediction: new FinalkvalPredictionAndScore({
           finalist1: new PredictionAndScore({ prediction: 1, score: 0 }),
           finalist2: new PredictionAndScore({ prediction: 2, score: 0 }),
         }),
         expectedTotalScore: 40,
-        expectedSemifinalPredictionAndScore: new SemifinalPredictionAndScore({
+        expectedFinalkvalPredictionAndScore: new FinalkvalPredictionAndScore({
           finalist1: new PredictionAndScore({ prediction: 1, score: 0 }),
           finalist2: new PredictionAndScore({ prediction: 2, score: 0 }),
         }),
       },
       {
         user: new User("user3", "good name", 34),
-        prediction: new SemifinalPredictionAndScore({
+        prediction: new FinalkvalPredictionAndScore({
           finalist1: new PredictionAndScore({ prediction: 5, score: 0 }),
           finalist2: new PredictionAndScore({ prediction: 7, score: 0 }),
         }),
         expectedTotalScore: 37,
-        expectedSemifinalPredictionAndScore: new SemifinalPredictionAndScore({
+        expectedFinalkvalPredictionAndScore: new FinalkvalPredictionAndScore({
           finalist1: new PredictionAndScore({ prediction: 5, score: 0 }),
           finalist2: new PredictionAndScore({ prediction: 7, score: 3 }),
         }),
@@ -2240,16 +2240,16 @@ describe("calculateScores in real life scenario", function () {
         user: new User("user4", "theking", 10),
         prediction: undefined,
         expectedTotalScore: 10,
-        expectedSemifinalPredictionAndScore: undefined,
+        expectedFinalkvalPredictionAndScore: undefined,
       },
       {
         user: new User("user5", "bb47", 42),
-        prediction: new SemifinalPredictionAndScore({
+        prediction: new FinalkvalPredictionAndScore({
           finalist1: new PredictionAndScore({ prediction: 3, score: 0 }),
           finalist2: new PredictionAndScore({ prediction: 7, score: 0 }),
         }),
         expectedTotalScore: 48,
-        expectedSemifinalPredictionAndScore: new SemifinalPredictionAndScore({
+        expectedFinalkvalPredictionAndScore: new FinalkvalPredictionAndScore({
           finalist1: new PredictionAndScore({ prediction: 3, score: 3 }),
           finalist2: new PredictionAndScore({ prediction: 7, score: 3 }),
         }),
@@ -2428,7 +2428,7 @@ describe("calculateScores in real life scenario", function () {
       semifinalist2: 3,
     }).toResult();
 
-    const resultSemifinal = new SemifinalResult({
+    const resultFinalkval = new FinalkvalResult({
       finalist1: 7,
       finalist2: 3,
     }).toResult();
@@ -2516,15 +2516,15 @@ describe("calculateScores in real life scenario", function () {
     for (const {
       user,
       prediction,
-    } of usersWithPredictionAndExpectedScoreSemifinal) {
+    } of usersWithPredictionAndExpectedScoreFinalkval) {
       await addUserToDatabase(user);
-      await addSemifinalPredictionToDatabase(
-        "competitions/semifinal",
+      await addFinalkvalPredictionToDatabase(
+        "competitions/finalkval",
         user.id,
         prediction
       );
     }
-    await addResultToDatabase("competitions/semifinal", resultSemifinal);
+    await addResultToDatabase("competitions/finalkval", resultFinalkval);
 
     for (const {
       user,
@@ -2623,15 +2623,15 @@ describe("calculateScores in real life scenario", function () {
 
     for (const {
       user,
-      expectedSemifinalPredictionAndScore,
-    } of usersWithPredictionAndExpectedScoreSemifinal) {
+      expectedFinalkvalPredictionAndScore,
+    } of usersWithPredictionAndExpectedScoreFinalkval) {
       const predictionAndScoreAfter =
-        await getSemifinalPredictionAndScoreFromDatabase(
-          "competitions/semifinal",
+        await getFinalkvalPredictionAndScoreFromDatabase(
+          "competitions/finalkval",
           user.id
         );
       expect(predictionAndScoreAfter).to.deep.equal(
-        expectedSemifinalPredictionAndScore
+        expectedFinalkvalPredictionAndScore
       );
     }
 
@@ -2668,7 +2668,7 @@ async function resetEntireDatabase() {
       await resetDatabase(user, "heat3");
       await resetDatabase(user, "heat4");
       await resetDatabase(user, "heat5");
-      await resetDatabase(user, "semifinal");
+      await resetDatabase(user, "finalkval");
       await resetDatabase(user, "final");
     })
   );
@@ -2704,10 +2704,10 @@ async function addHeatPredictionToDatabase(
     .set(prediction);
 }
 
-async function addSemifinalPredictionToDatabase(
+async function addFinalkvalPredictionToDatabase(
   competitionPath: string,
   uid: string,
-  prediction: SemifinalPredictionAndScore | undefined
+  prediction: FinalkvalPredictionAndScore | undefined
 ) {
   if (prediction == undefined) {
     return;
@@ -2715,7 +2715,7 @@ async function addSemifinalPredictionToDatabase(
 
   return await db
     .doc(`${competitionPath}/predictionsAndScores/${uid}`)
-    .withConverter(semifinalPredictionAndScoreConverter)
+    .withConverter(finalkvalPredictionAndScoreConverter)
     .set(prediction);
 }
 
@@ -2756,14 +2756,14 @@ async function getHeatPredictionAndScoreFromDatabase(
   ).data();
 }
 
-async function getSemifinalPredictionAndScoreFromDatabase(
+async function getFinalkvalPredictionAndScoreFromDatabase(
   competitionPath: string,
   uid: string
 ) {
   return (
     await db
       .doc(`${competitionPath}/predictionsAndScores/${uid}`)
-      .withConverter(semifinalPredictionAndScoreConverter)
+      .withConverter(finalkvalPredictionAndScoreConverter)
       .get()
   ).data();
 }

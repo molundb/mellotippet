@@ -3,10 +3,10 @@ import { onDocumentWritten } from "firebase-functions/v2/firestore";
 
 import { User, userConverter } from "./models/user";
 import { heatResultConverter } from "./models/heat-result";
-import { semifinalResultConverter } from "./models/semifinal-result";
+import { finalkvalResultConverter } from "./models/finalkval-result";
 import { finalResultConverter } from "./models/final-result";
 import { heatPredictionAndScoreConverter } from "./models/heat-prediction-and-score";
-import { semifinalPredictionAndScoreConverter } from "./models/semifinal-prediction-and-score";
+import { finalkvalPredictionAndScoreConverter } from "./models/finalkval-prediction-and-score";
 import { finalPredictionAndScoreConverter } from "./models/final-prediction-and-score";
 
 import { ScoreCalculator } from "./util/score-calculator";
@@ -40,8 +40,8 @@ const calculateScores = onDocumentWritten(
                 userSnapshot,
                 scoreCalculator
               );
-            } else if (competition.id === "semifinal") {
-              userScore += await calculateScoreForSemifinal(
+            } else if (competition.id === "finalkval") {
+              userScore += await calculateScoreForFinalkval(
                 competition.id,
                 userSnapshot,
                 scoreCalculator
@@ -102,7 +102,7 @@ async function calculateScoreForHeat(
   return Promise.resolve(0);
 }
 
-async function calculateScoreForSemifinal(
+async function calculateScoreForFinalkval(
   competition: string,
   userSnapshot: FirebaseFirestore.QueryDocumentSnapshot<User>,
   scoreCalculator: ScoreCalculator
@@ -110,19 +110,19 @@ async function calculateScoreForSemifinal(
   const resultSnapshot = await db
     .collection("competitions")
     .doc(competition)
-    .withConverter(semifinalResultConverter)
+    .withConverter(finalkvalResultConverter)
     .get();
 
   const predictionAndScoresSnapshot = await db
     .collection(`competitions/${competition}/predictionsAndScores`)
     .doc(userSnapshot.id)
-    .withConverter(semifinalPredictionAndScoreConverter)
+    .withConverter(finalkvalPredictionAndScoreConverter)
     .get();
 
   const prediction = predictionAndScoresSnapshot.data();
   const result = resultSnapshot.data();
   if (prediction !== undefined && result !== undefined) {
-    const semifinalPredictionAndscore = scoreCalculator.calculateSemifinalScore(
+    const finalkvalPredictionAndscore = scoreCalculator.calculateFinalkvalScore(
       result,
       prediction
     );
@@ -130,10 +130,10 @@ async function calculateScoreForSemifinal(
     await db
       .collection(`competitions/${competition}/predictionsAndScores`)
       .doc(userSnapshot.id)
-      .withConverter(semifinalPredictionAndScoreConverter)
-      .set(semifinalPredictionAndscore);
+      .withConverter(finalkvalPredictionAndScoreConverter)
+      .set(finalkvalPredictionAndscore);
 
-    return semifinalPredictionAndscore.totalScore();
+    return finalkvalPredictionAndscore.totalScore();
   }
 
   return Promise.resolve(0);
