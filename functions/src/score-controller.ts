@@ -34,7 +34,7 @@ const calculateScores = onDocumentWritten(
         userSnapshots.docs.map(async (userSnapshot) => {
           let userScore = 0;
           for (const competition of competitionSnapshots) {
-            if (competition.id === "final") {
+            if (competition.id === "theFinal") {
               userScore += await calculateScoreForFinal(
                 competition.id,
                 userSnapshot,

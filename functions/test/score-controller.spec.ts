@@ -958,7 +958,7 @@ describe("calculateScores when adding final result", function () {
   });
 
   it("final: should calculate score correctly for perfect prediction", async function () {
-    const competition = "final";
+    const competition = "theFinal";
     const competitionPath = `competitions/${competition}`;
 
     const user = new User("user1", "testUser1", 0);
@@ -1030,7 +1030,7 @@ describe("calculateScores when adding final result", function () {
   });
 
   it("final: should calculate score correctly when result order is different", async function () {
-    const competition = "final";
+    const competition = "theFinal";
     const competitionPath = `competitions/${competition}`;
 
     const user = new User("user1", "testUser1", 0);
@@ -1102,7 +1102,7 @@ describe("calculateScores when adding final result", function () {
   });
 
   it("final: should calculate score correctly when mistakes", async function () {
-    const competition = "final";
+    const competition = "theFinal";
     const competitionPath = `competitions/${competition}`;
 
     const user = new User("user1", "testUser1", 0);
@@ -1174,7 +1174,7 @@ describe("calculateScores when adding final result", function () {
   });
 
   it("final: should calculate score correctly when mistakes 2", async function () {
-    const competition = "final";
+    const competition = "theFinal";
     const competitionPath = `competitions/${competition}`;
 
     const user = new User("user1", "testUser1", 0);
@@ -1246,7 +1246,7 @@ describe("calculateScores when adding final result", function () {
   });
 
   it("final: should not change score when no prediction", async function () {
-    const competition = "final";
+    const competition = "theFinal";
     const competitionPath = `competitions/${competition}`;
 
     const user = new User("user1", "testUser1", 0);
@@ -1292,7 +1292,7 @@ describe("calculateScores when adding final result", function () {
   });
 
   it("final: should calculate score correctly for multiple users", async function () {
-    const competition = "final";
+    const competition = "theFinal";
     const competitionPath = `competitions/${competition}`;
 
     const usersWithPredictionAndExpectedScore = [
@@ -1795,7 +1795,7 @@ describe("calculateScores in real life scenario", function () {
 
   it("given previous heat1, heat2, heat3, heat4, heat5 and finalkval result, when final is added, then calculate the score correctly for multiple users", async function () {
     // Given
-    const competition = "final";
+    const competition = "theFinal";
     const competitionPath = `competitions/${competition}`;
 
     const usersWithPredictionAndExpectedScoreHeat1 = [
