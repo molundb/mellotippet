@@ -70,4 +70,10 @@ class FakeDatabaseRepository implements DatabaseRepository {
 
   @override
   void createUser(String username) {}
+
+  @override
+  Future<String?> getImageDownloadUrl(
+      int year, String competitionId, String? imagePath) {
+    return Future.value(null);
+  }
 }

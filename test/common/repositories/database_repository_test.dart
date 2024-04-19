@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
+import 'package:firebase_storage_mocks/firebase_storage_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mellotippet/common/repositories/authentication_repository.dart';
 import 'package:mellotippet/common/repositories/database_repository.dart';
@@ -15,10 +16,11 @@ import 'database_repository_test.mocks.dart';
   AuthenticationRepositoryImpl,
 ])
 Future<void> main() async {
-  late MockAuthenticationRepository mockAuthRepo;
+  late MockAuthenticationRepositoryImpl mockAuthRepo;
+  final mockStorage = MockFirebaseStorage();
 
   setUp(() {
-    mockAuthRepo = MockAuthenticationRepository();
+    mockAuthRepo = MockAuthenticationRepositoryImpl();
   });
 
   group('upload semifinal prediction', () {
@@ -30,6 +32,7 @@ Future<void> main() async {
 
       final databaseRepo = DatabaseRepositoryImpl(
         db: mockDb,
+        storage: mockStorage,
         authRepository: mockAuthRepo,
       );
       const competitionId = 'competitionId';
@@ -52,6 +55,7 @@ Future<void> main() async {
 
       final databaseRepo = DatabaseRepositoryImpl(
         db: mockDb,
+        storage: mockStorage,
         authRepository: mockAuthRepo,
       );
 
@@ -78,10 +82,8 @@ Future<void> main() async {
           'competitionId': {
             'predictionsAndScores': {
               'mockuid': {
-                'finalist1': 1,
-                'finalist2': 2,
-                'finalist3': 3,
-                'finalist4': 4
+                'finalist1': {'prediction': 1, 'score': 0},
+                'finalist2': {'prediction': 2, 'score': 0}
               }
             }
           }
@@ -100,6 +102,7 @@ Future<void> main() async {
 
       final databaseRepo = DatabaseRepositoryImpl(
         db: mockDb,
+        storage: mockStorage,
         authRepository: mockAuthRepo,
       );
       const competitionId = 'competitionId';
@@ -122,6 +125,7 @@ Future<void> main() async {
 
       final databaseRepo = DatabaseRepositoryImpl(
         db: mockDb,
+        storage: mockStorage,
         authRepository: mockAuthRepo,
       );
 
@@ -148,18 +152,18 @@ Future<void> main() async {
           'competitionId': {
             'predictionsAndScores': {
               'mockuid': {
-                'position1': 1,
-                'position2': 2,
-                'position3': 3,
-                'position4': 4,
-                'position5': 5,
-                'position6': 6,
-                'position7': 7,
-                'position8': 8,
-                'position9': 9,
-                'position10': 10,
-                'position11': 11,
-                'position12': 12,
+                'placement1': {'prediction': 1, 'score': 0},
+                'placement2': {'prediction': 2, 'score': 0},
+                'placement3': {'prediction': 3, 'score': 0},
+                'placement4': {'prediction': 4, 'score': 0},
+                'placement5': {'prediction': 5, 'score': 0},
+                'placement6': {'prediction': 6, 'score': 0},
+                'placement7': {'prediction': 7, 'score': 0},
+                'placement8': {'prediction': 8, 'score': 0},
+                'placement9': {'prediction': 9, 'score': 0},
+                'placement10': {'prediction': 10, 'score': 0},
+                'placement11': {'prediction': 11, 'score': 0},
+                'placement12': {'prediction': 12, 'score': 0}
               }
             }
           }

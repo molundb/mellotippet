@@ -53,7 +53,7 @@ Future<void> setUpGetItForTest({
   required DatabaseRepository databaseRepository,
   FeatureFlagRepository?
       featureFlagRepository, // TODO: Pass Fake AuthenticationRepository
-}) {
+  required AuthenticationRepository authenticationRepository}) {
   // getIt.registerSingleton<Config>(Config(flavor));
   // getIt.registerSingleton<FirebaseEnvironment>(FirebaseEnvironment());
 
@@ -64,9 +64,7 @@ Future<void> setUpGetItForTest({
   );
 
   getIt.registerLazySingleton<AuthenticationRepository>(
-      () => AuthenticationRepositoryImpl(
-            auth: FirebaseAuth.instance,
-          ));
+      () => authenticationRepository);
 
   getIt.registerLazySingleton<DatabaseRepository>(() => databaseRepository);
 

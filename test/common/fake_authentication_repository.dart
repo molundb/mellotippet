@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mellotippet/common/repositories/authentication_repository.dart';
 
 class FakeAuthenticationRepository implements AuthenticationRepository {
@@ -15,4 +16,10 @@ class FakeAuthenticationRepository implements AuthenticationRepository {
 
   @override
   Future<void> signOut() async {}
+
+  @override
+  User? get currentUser => null;
+
+  @override
+  FirebaseAuth get firebaseAuth => FirebaseAuth.instance;
 }

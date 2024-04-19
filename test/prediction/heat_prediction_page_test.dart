@@ -6,6 +6,7 @@ import 'package:mellotippet/mellotippet_app.dart';
 import 'package:mellotippet/prediction/heat_prediction_page.dart';
 import 'package:mellotippet/service_location/get_it.dart';
 
+import '../common/fake_authentication_repository.dart';
 import '../common/fake_database_repository.dart';
 import '../common/fake_feature_flag_repository.dart';
 
@@ -16,6 +17,7 @@ void main() {
     await setUpGetItForTest(
       databaseRepository: FakeDatabaseRepository(),
       featureFlagRepository: FakeFeatureFlagRepository(),
+      authenticationRepository: FakeAuthenticationRepository(),
     );
 
     await tester.pumpWidget(
