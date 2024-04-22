@@ -28,7 +28,7 @@ class CompetitionModel with _$CompetitionModel {
     PredictionModel? result;
 
     switch (snapshot.id) {
-      case 'final':
+      case 'theFinal':
         type = CompetitionType.theFinal;
         if (resultSnapshot != null) {
           result = FinalResultModel.fromJson(resultSnapshot);
