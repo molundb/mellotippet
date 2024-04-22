@@ -18,7 +18,8 @@ abstract class DatabaseRepository {
 
   Future<bool> uploadFinalPrediction(
     String competitionId,
-    FinalPredictionModel prediction,);
+    FinalPredictionModel prediction,
+  );
 
   Future<String> getCurrentUsername();
 
@@ -28,8 +29,8 @@ abstract class DatabaseRepository {
 
   Future<List<Song>> getSongs(String heatId);
 
-  Future<String?> getImageDownloadUrl(int year, String competitionId,
-      String? imagePath);
+  Future<String?> getImageDownloadUrl(
+      int year, String competitionId, String? imagePath);
 
   Future<User> getCurrentUser();
 
@@ -67,28 +68,33 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
           );
 
   CollectionReference<SemifinalPredictionModel>
-      _getPredictionsAndScoresForSemifinal(String competitionId,) =>
-      _competitions
-          .doc(competitionId)
-          .collection('predictionsAndScores')
-          .withConverter(
-        fromFirestore: SemifinalPredictionModel.fromFirestore,
-        toFirestore: SemifinalPredictionModel.toFirestore,
-      );
+      _getPredictionsAndScoresForSemifinal(
+    String competitionId,
+  ) =>
+          _competitions
+              .doc(competitionId)
+              .collection('predictionsAndScores')
+              .withConverter(
+                fromFirestore: SemifinalPredictionModel.fromFirestore,
+                toFirestore: SemifinalPredictionModel.toFirestore,
+              );
 
   CollectionReference<FinalPredictionModel> _getPredictionsAndScoresForFinal(
-      String competitionId,) =>
+    String competitionId,
+  ) =>
       _competitions
           .doc(competitionId)
           .collection('predictionsAndScores')
           .withConverter(
-        fromFirestore: FinalPredictionModel.fromFirestore,
-        toFirestore: FinalPredictionModel.toFirestore,
-      );
+            fromFirestore: FinalPredictionModel.fromFirestore,
+            toFirestore: FinalPredictionModel.toFirestore,
+          );
 
   @override
-  Future<bool> uploadHeatPrediction(String competitionId,
-      HeatPredictionModel prediction,) async {
+  Future<bool> uploadHeatPrediction(
+    String competitionId,
+    HeatPredictionModel prediction,
+  ) async {
     try {
       var uid = authRepository.currentUser?.uid;
 

@@ -19,7 +19,7 @@ abstract class PredictionController
   final FeatureFlagRepository featureFlagRepository;
 
   StateNotifierProvider<PredictionController, PredictionControllerState>
-  getStateNotifier();
+      getStateNotifier();
 
   fetchSongs(BuildContext context) async {
     final currentCompetition = featureFlagRepository.getCurrentCompetition();
@@ -53,10 +53,12 @@ abstract class PredictionController
     state = state.copyWith(songLists: songLists);
   }
 
-  onItemReorder(int oldItemIndex,
-      int oldListIndex,
-      int newItemIndex,
-      int newListIndex,);
+  onItemReorder(
+    int oldItemIndex,
+    int oldListIndex,
+    int newItemIndex,
+    int newListIndex,
+  );
 
   Future<bool> submitPrediction();
 }
