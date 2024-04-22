@@ -8,8 +8,18 @@ part 'final_result_model.g.dart';
 @freezed
 class FinalResultModel with _$FinalResultModel implements PredictionModel {
   const factory FinalResultModel({
-    required int finalist1,
-    required int finalist2,
+    required int placement1,
+    required int placement2,
+    required int placement3,
+    required int placement4,
+    required int placement5,
+    required int placement6,
+    required int placement7,
+    required int placement8,
+    required int placement9,
+    required int placement10,
+    required int placement11,
+    required int placement12,
   }) = _FinalResultModel;
 
   factory FinalResultModel.fromJson(Map<String, Object?> json) =>
