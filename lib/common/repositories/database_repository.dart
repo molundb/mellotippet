@@ -271,31 +271,57 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
 
   @override
   Future<void> deleteUserInfoAndAccount(String? uid) async {
-    _deletePredictions(uid);
-    _deleteUser(uid);
-    authRepository.deleteUserAccount();
+    final predictionsDeleted = await _deletePredictions(uid);
+    if (predictionsDeleted) {
+      final userDeleted = await _deleteUser(uid);
+      if (userDeleted) {
+        final userAccountDeleted = await authRepository.deleteUserAccount();
+        if (userAccountDeleted) {
+          // return success
+        } else {
+          // return failure
+        }
+      } else {
+        // return failure
+      }
+    } else {
+      // return failure
+    }
   }
 
-  void _deletePredictions(String? uid) async {
+  Future<bool> _deletePredictions(String? uid) async {
     final competitions = await getCompetitions();
+    var success = true;
 
     for (final competition in competitions) {
-      _competitions
+      await _competitions
           .doc(competition.id)
           .collection('predictionsAndScores')
           .doc(uid)
           .delete()
           .then(
-            (doc) => print('Document deleted'),
-            onError: (e) => print("Error deleting document"),
-          );
+        (doc) => print('Document deleted'),
+        onError: (e) {
+          success = false;
+          print("Error deleting document");
+        },
+      );
     }
+
+    return success;
   }
 
-  void _deleteUser(String? uid) {
+  Future<bool> _deleteUser(String? uid) async {
+    var success = true;
+
     _users.doc(uid).delete().then(
-          (doc) => print('Document deleted'),
-          onError: (e) => print("Error deleting document"),
-        );
+      (doc) => print('Document deleted'),
+      onError: (e) {
+        success = false;
+        print("Error deleting document");
+      },
+    );
+
+    return success;
   }
 }

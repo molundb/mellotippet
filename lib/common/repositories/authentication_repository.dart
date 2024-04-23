@@ -21,7 +21,7 @@ abstract class AuthenticationRepository {
 
   Future<void> signOut();
 
-  Future<void> deleteUserAccount();
+  Future<bool> deleteUserAccount();
 }
 
 class AuthenticationRepositoryImpl implements AuthenticationRepository {
@@ -105,7 +105,9 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   }
 
   @override
-  Future<void> deleteUserAccount() async {
+  Future<bool> deleteUserAccount() async {
+    var success = true;
+
     try {
       await FirebaseAuth.instance.currentUser!.delete();
     } on FirebaseAuthException catch (e) {
@@ -114,10 +116,14 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       } else {
         //TODO: Figure out how to communicate between auth repo and reusable app bar.
         // Handle other Firebase exceptions
+        success = false;
       }
     } catch (e) {
       // Handle general exception
+      success = false;
     }
+
+    return success;
   }
 
   Future<void> _reauthenticateAndDelete() async {
