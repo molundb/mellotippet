@@ -22,4 +22,7 @@ class FakeAuthenticationRepository implements AuthenticationRepository {
 
   @override
   FirebaseAuth get firebaseAuth => FirebaseAuth.instance;
+
+  @override
+  Future<void> deleteUserAccount() async {}
 }

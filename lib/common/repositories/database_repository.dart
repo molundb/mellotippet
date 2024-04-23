@@ -30,13 +30,18 @@ abstract class DatabaseRepository {
   Future<List<Song>> getSongs(String heatId);
 
   Future<String?> getImageDownloadUrl(
-      int year, String competitionId, String? imagePath);
+    int year,
+    String competitionId,
+    String? imagePath,
+  );
 
   Future<User> getCurrentUser();
 
   Future<User?> getUserWithUsername(String username);
 
   void createUser(String username);
+
+  Future<void> deleteUserInfoAndAccount(String? uid);
 }
 
 class DatabaseRepositoryImpl implements DatabaseRepository {
@@ -262,5 +267,35 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
       "username": username,
       "totalScore": 0,
     });
+  }
+
+  @override
+  Future<void> deleteUserInfoAndAccount(String? uid) async {
+    _deletePredictions(uid);
+    _deleteUser(uid);
+    authRepository.deleteUserAccount();
+  }
+
+  void _deletePredictions(String? uid) async {
+    final competitions = await getCompetitions();
+
+    for (final competition in competitions) {
+      _competitions
+          .doc(competition.id)
+          .collection('predictionsAndScores')
+          .doc(uid)
+          .delete()
+          .then(
+            (doc) => print('Document deleted'),
+            onError: (e) => print("Error deleting document"),
+          );
+    }
+  }
+
+  void _deleteUser(String? uid) {
+    _users.doc(uid).delete().then(
+          (doc) => print('Document deleted'),
+          onError: (e) => print("Error deleting document"),
+        );
   }
 }

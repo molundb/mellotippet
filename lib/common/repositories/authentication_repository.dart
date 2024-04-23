@@ -20,6 +20,8 @@ abstract class AuthenticationRepository {
   });
 
   Future<void> signOut();
+
+  Future<void> deleteUserAccount();
 }
 
 class AuthenticationRepositoryImpl implements AuthenticationRepository {
@@ -100,5 +102,39 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   @override
   Future<void> signOut() async {
     await auth.signOut();
+  }
+
+  @override
+  Future<void> deleteUserAccount() async {
+    try {
+      await FirebaseAuth.instance.currentUser!.delete();
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "requires-recent-login") {
+        await _reauthenticateAndDelete();
+      } else {
+        //TODO: Figure out how to communicate between auth repo and reusable app bar.
+        // Handle other Firebase exceptions
+      }
+    } catch (e) {
+      // Handle general exception
+    }
+  }
+
+  Future<void> _reauthenticateAndDelete() async {
+    try {
+      final providerData = firebaseAuth.currentUser?.providerData.first;
+
+      if (AppleAuthProvider().providerId == providerData!.providerId) {
+        await firebaseAuth.currentUser!
+            .reauthenticateWithProvider(AppleAuthProvider());
+      } else if (GoogleAuthProvider().providerId == providerData.providerId) {
+        await firebaseAuth.currentUser!
+            .reauthenticateWithProvider(GoogleAuthProvider());
+      }
+
+      await firebaseAuth.currentUser?.delete();
+    } catch (e) {
+      // Handle exceptions
+    }
   }
 }

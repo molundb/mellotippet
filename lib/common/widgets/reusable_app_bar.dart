@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mellotippet/common/repositories/authentication_repository.dart';
+import 'package:mellotippet/common/repositories/database_repository.dart';
 import 'package:mellotippet/service_location/get_it.dart';
 
 class ReusableAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -8,6 +9,8 @@ class ReusableAppBar extends StatelessWidget implements PreferredSizeWidget {
   final PreferredSizeWidget? bottom;
 
   final double _toolbarHeight = 120;
+  static const String signOut = 'Logga ut';
+  static const String deleteAccount = 'Ta bort konto';
 
   ReusableAppBar({
     super.key,
@@ -18,6 +21,8 @@ class ReusableAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   final AuthenticationRepository authRepository =
       getIt.get<AuthenticationRepository>();
+
+  final DatabaseRepository databaseRepository = getIt.get<DatabaseRepository>();
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +68,7 @@ class ReusableAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           onSelected: handleClick,
           itemBuilder: (BuildContext context) {
-            return {'Logga ut'}.map((String choice) {
+            return {signOut, deleteAccount}.map((String choice) {
               return PopupMenuItem<String>(
                 value: choice,
                 child: Text(choice),
@@ -77,8 +82,13 @@ class ReusableAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   void handleClick(String value) {
     switch (value) {
-      case 'Logga ut':
+      case signOut:
         authRepository.signOut();
+        break;
+      case deleteAccount:
+        // TODO: Add confirmation popup
+        databaseRepository
+            .deleteUserInfoAndAccount(authRepository.currentUser?.uid);
         break;
     }
   }

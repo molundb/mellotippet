@@ -76,4 +76,7 @@ class FakeDatabaseRepository implements DatabaseRepository {
       int year, String competitionId, String? imagePath) {
     return Future.value(null);
   }
+
+  @override
+  Future<void> deleteUserInfoAndAccount() async {}
 }
