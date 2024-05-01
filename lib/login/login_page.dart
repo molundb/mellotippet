@@ -15,14 +15,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   LoginController get controller => ref.read(LoginController.provider.notifier);
 
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.restoreSession();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return LoginOrSignUpPage(
       ctaText: 'Logga in',

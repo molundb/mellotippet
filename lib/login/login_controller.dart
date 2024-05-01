@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mellotippet/common/repositories/repositories.dart';
@@ -22,19 +21,6 @@ class LoginController extends StateNotifier<LoginControllerState> {
                 authRepository: getIt.get<AuthenticationRepository>(),
                 databaseRepository: getIt.get<DatabaseRepository>(),
               ));
-
-  void restoreSession() {
-    state = state.copyWith(loading: true);
-
-    authRepository.firebaseAuth.authStateChanges().listen((User? user) {
-      var loggedIn = false;
-      if (user != null) {
-        loggedIn = true;
-      }
-
-      state = state.copyWith(loading: false, loggedIn: loggedIn);
-    });
-  }
 
   void updateUsername(String? username) {
     if (username == null) return;
