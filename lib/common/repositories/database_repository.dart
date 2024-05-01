@@ -271,21 +271,17 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
 
   @override
   Future<void> deleteUserInfoAndAccount(String? uid) async {
-    final predictionsDeleted = await _deletePredictions(uid);
-    if (predictionsDeleted) {
-      final userDeleted = await _deleteUser(uid);
-      if (userDeleted) {
-        final userAccountDeleted = await authRepository.deleteUserAccount();
-        if (userAccountDeleted) {
-          // return success
-        } else {
-          // return failure
-        }
-      } else {
-        // return failure
-      }
-    } else {
-      // return failure
+    try {
+      await db.runTransaction((transaction) async {
+        await _deletePredictions(uid);
+        await _deleteUser(uid);
+        await authRepository.deleteUserAccount();
+      });
+
+      print('Success deleting user account and info');
+      authRepository.signOut();
+    } catch (e) {
+      print('Error deleting user account and info: $e');
     }
   }
 
@@ -303,7 +299,8 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
         (doc) => print('Document deleted'),
         onError: (e) {
           success = false;
-          print("Error deleting document");
+          print("Error deleting document: $e");
+          throw ("error deleting document: $e");
         },
       );
     }
@@ -318,7 +315,8 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
       (doc) => print('Document deleted'),
       onError: (e) {
         success = false;
-        print("Error deleting document");
+        print("Error deleting user: $e");
+        throw ("error deleting user: $e");
       },
     );
 
