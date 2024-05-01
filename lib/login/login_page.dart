@@ -24,12 +24,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(LoginController.provider);
-
-    if (state.loading) {
-      return const CircularProgressIndicator();
-    }
-
     return LoginOrSignUpPage(
       ctaText: 'Logga in',
       ctaAction: _loginPressed,
