@@ -65,7 +65,7 @@ class LoginController extends StateNotifier<LoginControllerState> {
 @freezed
 class LoginControllerState with _$LoginControllerState {
   const factory LoginControllerState({
-    @Default(true) bool loading,
+    @Default(false) bool loading,
     @Default(false) bool loggedIn,
     @Default("") String username,
     @Default("") String email,
