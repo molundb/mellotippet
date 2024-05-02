@@ -31,11 +31,13 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     try {
       await controller.signInWithEmailAndPassword();
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(e.toString()),
-        ),
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Något gick fel: ${e.toString()}'),
+          ),
+        );
+      }
     }
   }
 
