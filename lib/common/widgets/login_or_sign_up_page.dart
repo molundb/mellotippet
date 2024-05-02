@@ -52,70 +52,77 @@ class _LoginPageState extends ConsumerState<LoginOrSignUpPage> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: state.loading
-          ? const Center(child: CircularProgressIndicator())
-          : Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    MellotippetColors.melloLightPink,
-                    MellotippetColors.melloPurple
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              MellotippetColors.melloLightPink,
+              MellotippetColors.melloPurple
+            ],
+          ),
+        ),
+        child: Stack(
+          children: [
+            Form(
+              key: _formKey,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    const Spacer(),
+                    const Text(
+                      'Mellotippet',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 64,
+                        fontFamily: 'Lalezar',
+                      ),
+                    ),
+                    if (widget.showUsernameField) ...[
+                      _InputField(
+                        label: 'Användarnamn',
+                        onSaved: controller.updateUsername,
+                        textEditingController: _usernameController,
+                      ),
+                      const SizedBox(height: 24.0),
+                    ],
+                    _InputField(
+                      label: 'Email',
+                      onSaved: controller.updateEmail,
+                      textEditingController: _emailController,
+                    ),
+                    const SizedBox(height: 24.0),
+                    _InputField(
+                      label: 'Lösenord',
+                      obscureText: true,
+                      onSaved: controller.updatePassword,
+                      textEditingController: _passwordController,
+                    ),
+                    const SizedBox(height: 84.0),
+                    _SubmitButton(
+                      formKey: _formKey,
+                      buttonText: widget.ctaText,
+                      buttonAction: widget.ctaAction,
+                    ),
+                    const Spacer(),
+                    _BottomButton(
+                      buttonText: widget.bottomText,
+                      buttonAction: widget.bottomAction,
+                    ),
                   ],
                 ),
               ),
-              child: Form(
-                key: _formKey,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      const Spacer(),
-                      const Text(
-                        'Mellotippet',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 64,
-                          fontFamily: 'Lalezar',
-                        ),
-                      ),
-                      if (widget.showUsernameField) ...[
-                        _InputField(
-                          label: 'Användarnamn',
-                          onSaved: controller.updateUsername,
-                          textEditingController: _usernameController,
-                        ),
-                        const SizedBox(height: 24.0),
-                      ],
-                      _InputField(
-                        label: 'Email',
-                        onSaved: controller.updateEmail,
-                        textEditingController: _emailController,
-                      ),
-                      const SizedBox(height: 24.0),
-                      _InputField(
-                        label: 'Lösenord',
-                        obscureText: true,
-                        onSaved: controller.updatePassword,
-                        textEditingController: _passwordController,
-                      ),
-                      const SizedBox(height: 84.0),
-                      _SubmitButton(
-                        formKey: _formKey,
-                        buttonText: widget.ctaText,
-                        buttonAction: widget.ctaAction,
-                      ),
-                      const Spacer(),
-                      _BottomButton(
-                        buttonText: widget.bottomText,
-                        buttonAction: widget.bottomAction,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
             ),
+            if (state.loading) ...[
+              Container(
+                  color: MellotippetColors.loadingGrayOverlay,
+                  child: const Center(child: CircularProgressIndicator()))
+            ],
+          ],
+        ),
+      ),
     );
   }
 }
