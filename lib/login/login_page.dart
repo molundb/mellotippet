@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mellotippet/common/widgets/login_or_sign_up_page.dart';
 import 'package:mellotippet/login/login_controller.dart';
-import 'package:mellotippet/sign_up/sign_up_page.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -40,11 +40,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   }
 
   void _createAccountPressed(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const SignUpPage(),
-      ),
-    );
+    context.push('/signUp');
   }
 }

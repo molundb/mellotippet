@@ -7,10 +7,12 @@ import 'package:mellotippet/common/repositories/feature_flag_repository.dart';
 import 'package:mellotippet/config/config.dart';
 import 'package:mellotippet/force_upgrade/force_upgrade_page.dart';
 import 'package:mellotippet/home_page.dart';
+import 'package:mellotippet/login/login_page.dart';
 import 'package:mellotippet/prediction/final_prediction_controller.dart';
 import 'package:mellotippet/prediction/heat_prediction_controller.dart';
 import 'package:mellotippet/prediction/semifinal_prediction_controller.dart';
 import 'package:mellotippet/service_location/get_it.dart';
+import 'package:mellotippet/sign_up/sign_up_page.dart';
 import 'package:mellotippet/theme.dart';
 
 import 'prediction/prediction_page/prediction_controller.dart';
@@ -24,6 +26,14 @@ final _router = GoRouter(
     GoRoute(
       path: '/home',
       builder: (context, state) => HomePage(),
+    ),
+    GoRoute(
+      path: '/login',
+      builder: (context, state) => const LoginPage(),
+    ),
+    GoRoute(
+      path: '/signUp',
+      builder: (context, state) => const SignUpPage(),
     ),
   ],
 );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mellotippet/common/widgets/login_or_sign_up_page.dart';
 import 'package:mellotippet/login/login_controller.dart';
 
@@ -43,7 +44,7 @@ class SignUpPageState extends ConsumerState<SignUpPage> {
       await controller.createUserWithEmailAndPassword();
 
       if (context.mounted) {
-        Navigator.pop(context);
+        context.pop();
       }
     } catch (e) {
       if (context.mounted) {

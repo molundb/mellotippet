@@ -3,7 +3,6 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mellotippet/common/repositories/feature_flag_repository.dart';
-import 'package:mellotippet/login/login_page.dart';
 import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/services/mello_tippet_package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -35,11 +34,6 @@ class _ForceUpgradeState extends State<ForceUpgradePage> {
         _showUpdateVersionDialog(context, true);
       } else {
         context.go('/home');
-        // Navigator.of(context).pushReplacement(
-        //   MaterialPageRoute(
-        //     builder: (context) => HomePage(),
-        //   ),
-        // );
       }
     });
   }
@@ -52,7 +46,9 @@ class _ForceUpgradeState extends State<ForceUpgradePage> {
   }
 
   Future<void> _showUpdateVersionDialog(
-      BuildContext context, bool isSkippable) async {
+    BuildContext context,
+    bool isSkippable,
+  ) async {
     String store;
 
     if (Platform.isAndroid) {
@@ -87,13 +83,8 @@ class _ForceUpgradeState extends State<ForceUpgradePage> {
                 ? TextButton(
                     child: const Text('Inte än'),
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) => const LoginPage(),
-                        ),
-                      );
-                    },
-                  )
+                      context.pushReplacement('/login');
+                    })
                 : Container(),
             TextButton(
               child: const Text('Uppdatera'),
