@@ -1,10 +1,12 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mellotippet/common/models/all_models.dart';
 import 'package:mellotippet/common/repositories/feature_flag_repository.dart';
 import 'package:mellotippet/config/config.dart';
 import 'package:mellotippet/force_upgrade/force_upgrade_page.dart';
+import 'package:mellotippet/home_page.dart';
 import 'package:mellotippet/prediction/final_prediction_controller.dart';
 import 'package:mellotippet/prediction/heat_prediction_controller.dart';
 import 'package:mellotippet/prediction/semifinal_prediction_controller.dart';
@@ -12,6 +14,19 @@ import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/theme.dart';
 
 import 'prediction/prediction_page/prediction_controller.dart';
+
+final _router = GoRouter(
+  routes: [
+    GoRoute(
+      path: '/',
+      builder: (context, state) => const ForceUpgradePage(),
+    ),
+    GoRoute(
+      path: '/home',
+      builder: (context, state) => HomePage(),
+    ),
+  ],
+);
 
 class MellotippetApp extends StatelessWidget {
   final config = getIt.get<Config>();
@@ -37,11 +52,11 @@ class MellotippetApp extends StatelessWidget {
             currentFocus.focusedChild?.unfocus();
           }
         },
-        child: MaterialApp(
+        child: MaterialApp.router(
           title: config.title,
           scaffoldMessengerKey: snackbarKey,
           theme: theme.toThemeData(),
-          home: const ForceUpgradePage(),
+          routerConfig: _router,
         ),
       ),
     );

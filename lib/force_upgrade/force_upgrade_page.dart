@@ -1,10 +1,10 @@
 import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mellotippet/common/repositories/feature_flag_repository.dart';
-import 'package:mellotippet/home_page.dart';
-import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/login/login_page.dart';
+import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/services/mello_tippet_package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -34,11 +34,12 @@ class _ForceUpgradeState extends State<ForceUpgradePage> {
       } else if (appVersion < recommendedMinVersion) {
         _showUpdateVersionDialog(context, true);
       } else {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => HomePage(),
-          ),
-        );
+        context.go('/home');
+        // Navigator.of(context).pushReplacement(
+        //   MaterialPageRoute(
+        //     builder: (context) => HomePage(),
+        //   ),
+        // );
       }
     });
   }
