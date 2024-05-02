@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/common/widgets/old_cta_button.dart';
-import 'package:mellotippet/login/login_page.dart';
 import 'package:mellotippet/settings/settings_controller.dart';
 
 class SettingsPage extends ConsumerStatefulWidget {
@@ -49,12 +48,5 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
 
   void _logoutPressed() async {
     await controller.signOut();
-
-    if (!mounted) return;
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => const LoginPage(),
-      ),
-    );
   }
 }
