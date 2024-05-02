@@ -24,8 +24,10 @@ class SignUpPageState extends ConsumerState<SignUpPage> {
     );
   }
 
-  Future<void> _registerAccount(BuildContext context,
-      GlobalKey<FormState> formKey,) async {
+  Future<void> _registerAccount(
+    BuildContext context,
+    GlobalKey<FormState> formKey,
+  ) async {
     if (await controller.isUsernameAlreadyTaken()) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

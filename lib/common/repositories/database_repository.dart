@@ -39,7 +39,7 @@ abstract class DatabaseRepository {
 
   Future<User?> getUserWithUsername(String username);
 
-  void createUser(String username);
+  Future<void> createUser(String username);
 
   Future<void> deleteUserInfoAndAccount(String? uid);
 }
@@ -260,10 +260,10 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
   }
 
   @override
-  void createUser(String username) async {
+  Future<void> createUser(String username) async {
     final uid = authRepository.currentUser?.uid;
 
-    _users.doc(uid).set({
+    return _users.doc(uid).set({
       "username": username,
       "totalScore": 0,
     });

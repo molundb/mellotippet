@@ -46,12 +46,16 @@ class LoginController extends StateNotifier<LoginControllerState> {
   }
 
   createUserWithEmailAndPassword() async {
+    // state = state.copyWith(loading: true);
     await authRepository.createUserWithEmailAndPassword(
       email: state.email,
       password: state.password,
     );
 
-    databaseRepository.createUser(state.username);
+    await databaseRepository.createUser(state.username);
+
+    // return true;
+    // state = state.copyWith(loading: false, loggedIn: true);
   }
 
   signInWithEmailAndPassword() async {
