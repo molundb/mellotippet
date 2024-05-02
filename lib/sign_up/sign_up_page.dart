@@ -42,10 +42,6 @@ class SignUpPageState extends ConsumerState<SignUpPage> {
 
     try {
       await controller.createUserWithEmailAndPassword();
-
-      if (context.mounted) {
-        context.pop();
-      }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

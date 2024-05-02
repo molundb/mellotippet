@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mellotippet/common/widgets/cta_button.dart';
 import 'package:mellotippet/config/config.dart';
 import 'package:mellotippet/login/login_controller.dart';
@@ -42,6 +43,12 @@ class _LoginPageState extends ConsumerState<LoginOrSignUpPage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(LoginController.provider);
+
+    ref.listen(LoginController.provider, (previous, next) {
+      if (previous?.accountCreated == false && next.accountCreated) {
+        context.pop();
+      }
+    });
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

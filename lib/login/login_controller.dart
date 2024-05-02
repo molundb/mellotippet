@@ -46,7 +46,7 @@ class LoginController extends StateNotifier<LoginControllerState> {
   }
 
   createUserWithEmailAndPassword() async {
-    // state = state.copyWith(loading: true);
+    state = state.copyWith(loading: true, accountCreated: false);
     await authRepository.createUserWithEmailAndPassword(
       email: state.email,
       password: state.password,
@@ -54,8 +54,7 @@ class LoginController extends StateNotifier<LoginControllerState> {
 
     await databaseRepository.createUser(state.username);
 
-    // return true;
-    // state = state.copyWith(loading: false, loggedIn: true);
+    state = state.copyWith(loading: false, accountCreated: true);
   }
 
   signInWithEmailAndPassword() async {
@@ -70,7 +69,7 @@ class LoginController extends StateNotifier<LoginControllerState> {
 class LoginControllerState with _$LoginControllerState {
   const factory LoginControllerState({
     @Default(false) bool loading,
-    @Default(false) bool loggedIn,
+    @Default(false) bool accountCreated,
     @Default("") String username,
     @Default("") String email,
     @Default("") String password,
