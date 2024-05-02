@@ -16,6 +16,21 @@ class SignUpPageState extends ConsumerState<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(LoginController.provider, (previous, next) {
+      if (previous?.accountCreated == false && next.accountCreated) {
+        context.pop();
+      }
+
+      if (next.snackBarText != '') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(next.snackBarText),
+          ),
+        );
+        controller.clearSnackBarText();
+      }
+    });
+
     return LoginOrSignUpPage(
       ctaText: 'Registrera konto',
       ctaAction: _registerAccount,
@@ -29,28 +44,7 @@ class SignUpPageState extends ConsumerState<SignUpPage> {
     BuildContext context,
     GlobalKey<FormState> formKey,
   ) async {
-    if (await controller.isUsernameAlreadyTaken()) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Username is already taken.'),
-          ),
-        );
-      }
-      return;
-    }
-
-    try {
-      await controller.createUserWithEmailAndPassword();
-    } catch (e) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(e.toString()),
-          ),
-        );
-      }
-    }
+    await controller.createUserWithEmailAndPassword();
   }
 
   void _pop(BuildContext context) {

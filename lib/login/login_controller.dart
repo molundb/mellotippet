@@ -47,12 +47,26 @@ class LoginController extends StateNotifier<LoginControllerState> {
 
   createUserWithEmailAndPassword() async {
     state = state.copyWith(loading: true, accountCreated: false);
-    await authRepository.createUserWithEmailAndPassword(
-      email: state.email,
-      password: state.password,
-    );
 
-    await databaseRepository.createUser(state.username);
+    if (await isUsernameAlreadyTaken()) {
+      state = state.copyWith(
+          loading: false,
+          snackBarText: 'Användarnamnet är tyvärr upptaget, prova ett annat.');
+      return;
+    }
+
+    try {
+      await authRepository.createUserWithEmailAndPassword(
+        email: state.email,
+        password: state.password,
+      );
+
+      await databaseRepository.createUser(state.username);
+    } catch (e) {
+      state =
+          state.copyWith(loading: false, snackBarText: 'Något gick fel: $e');
+      return;
+    }
 
     state = state.copyWith(loading: false, accountCreated: true);
   }
@@ -63,6 +77,10 @@ class LoginController extends StateNotifier<LoginControllerState> {
       password: state.password,
     );
   }
+
+  clearSnackBarText() {
+    state = state.copyWith(snackBarText: '');
+  }
 }
 
 @freezed
@@ -70,6 +88,7 @@ class LoginControllerState with _$LoginControllerState {
   const factory LoginControllerState({
     @Default(false) bool loading,
     @Default(false) bool accountCreated,
+    @Default("") String snackBarText,
     @Default("") String username,
     @Default("") String email,
     @Default("") String password,
