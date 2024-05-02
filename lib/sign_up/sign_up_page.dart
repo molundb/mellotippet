@@ -58,6 +58,6 @@ class SignUpPageState extends ConsumerState<SignUpPage> {
   }
 
   void _pop(BuildContext context) {
-    Navigator.pop(context);
+    context.pop();
   }
 }
