@@ -21,7 +21,7 @@ abstract class AuthenticationRepository {
 
   Future<void> signOut();
 
-  Future<bool> deleteUserAccount();
+  Future<void> deleteUserAccount();
 }
 
 class AuthenticationRepositoryImpl implements AuthenticationRepository {

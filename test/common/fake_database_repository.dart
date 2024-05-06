@@ -69,14 +69,15 @@ class FakeDatabaseRepository implements DatabaseRepository {
   }
 
   @override
-  void createUser(String username) {}
+  Future<void> createUser(String username) async {}
 
   @override
-  Future<String?> getImageDownloadUrl(
-      int year, String competitionId, String? imagePath) {
+  Future<String?> getImageDownloadUrl(int year,
+      String competitionId,
+      String? imagePath,) {
     return Future.value(null);
   }
 
   @override
-  Future<void> deleteUserInfoAndAccount() async {}
+  Future<void> deleteUserInfoAndAccount(String? uid) async {}
 }
