@@ -23,13 +23,8 @@ class ScoreController extends StateNotifier<ScoreControllerState> {
               ));
 
   Future<void> getUserScore() async {
-    final userScore = await _getUserScore();
+    final userScore = (await databaseRepository.getCurrentUser()).totalScore;
     state = state.copyWith(loading: false, userScore: userScore);
-  }
-
-  Future<num> _getUserScore() async {
-    final user = await databaseRepository.getCurrentUser();
-    return user.totalScore;
   }
 
   Future<void> signOut() async {
