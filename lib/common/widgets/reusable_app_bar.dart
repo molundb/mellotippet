@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mellotippet/common/repositories/authentication_repository.dart';
 import 'package:mellotippet/common/repositories/database_repository.dart';
 import 'package:mellotippet/service_location/get_it.dart';
@@ -66,7 +67,9 @@ class ReusableAppBar extends StatelessWidget implements PreferredSizeWidget {
             Icons.more_vert,
             color: Colors.white,
           ),
-          onSelected: handleClick,
+          onSelected: (value) {
+            handleClick(value, context);
+          },
           itemBuilder: (BuildContext context) {
             return {signOut, deleteAccount}.map((String choice) {
               return PopupMenuItem<String>(
@@ -80,15 +83,39 @@ class ReusableAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  void handleClick(String value) {
+  void handleClick(String value, BuildContext context) {
     switch (value) {
       case signOut:
         authRepository.signOut();
         break;
       case deleteAccount:
-        // TODO: Add confirmation popup
-        databaseRepository
-            .deleteUserInfoAndAccount(authRepository.currentUser?.uid);
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text(
+                    "Är du säker på att du vill ta bort ditt konto?"),
+                content: const Text(
+                    "Om du tar bort kontot försvinner kontot och all data associerat med kontot permanent."),
+                actions: [
+                  TextButton(
+                    onPressed: context.pop,
+                    child: const Text('Avbryt'),
+                  ),
+                  TextButton(
+                    child: const Text(
+                      'Ta bort konto',
+                    ),
+                    onPressed: () {
+                      databaseRepository.deleteUserInfoAndAccount(
+                          authRepository.currentUser?.uid);
+                      context.pop();
+                    },
+                  ),
+                ],
+              );
+            });
+
         break;
     }
   }
