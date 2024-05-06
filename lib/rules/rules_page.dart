@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mellotippet/common/widgets/reusable_app_bar.dart';
+import 'package:mellotippet/common/widgets/reusable_app_bar/reusable_app_bar.dart';
 import 'package:mellotippet/rules/final_rules.dart';
 import 'package:mellotippet/rules/heat_rules.dart';
 import 'package:mellotippet/rules/semifinal_rules.dart';

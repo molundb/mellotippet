@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mellotippet/common/repositories/repositories.dart';
+import 'package:mellotippet/common/widgets/reusable_app_bar/reusable_app_bar_controller.dart';
 import 'package:mellotippet/service_location/get_it.dart';
 
 part 'score_controller.freezed.dart';
@@ -16,11 +17,15 @@ class ScoreController extends StateNotifier<ScoreControllerState> {
   final DatabaseRepository databaseRepository;
 
   static final provider =
-      StateNotifierProvider<ScoreController, ScoreControllerState>(
-          (ref) => ScoreController(
-                authRepository: getIt.get<AuthenticationRepository>(),
-                databaseRepository: getIt.get<DatabaseRepository>(),
-              ));
+      StateNotifierProvider<ScoreController, ScoreControllerState>((ref) {
+    final appBarState = ref.watch(ReusableAppBarController.provider);
+
+    return ScoreController(
+      authRepository: getIt.get<AuthenticationRepository>(),
+      databaseRepository: getIt.get<DatabaseRepository>(),
+      state: ScoreControllerState(loading: appBarState.loading),
+    );
+  });
 
   Future<void> getUserScore() async {
     final userScore = (await databaseRepository.getCurrentUser()).totalScore;
