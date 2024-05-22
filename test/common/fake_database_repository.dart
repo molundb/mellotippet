@@ -1,3 +1,4 @@
+import 'package:fpdart/fpdart.dart';
 import 'package:mellotippet/common/models/competition_model.dart';
 import 'package:mellotippet/common/models/prediction/final_prediction_model.dart';
 import 'package:mellotippet/common/models/prediction/heat_prediction_model.dart';
@@ -72,12 +73,16 @@ class FakeDatabaseRepository implements DatabaseRepository {
   Future<void> createUser(String username) async {}
 
   @override
-  Future<String?> getImageDownloadUrl(int year,
-      String competitionId,
-      String? imagePath,) {
+  Future<String?> getImageDownloadUrl(
+    int year,
+    String competitionId,
+    String? imagePath,
+  ) {
     return Future.value(null);
   }
 
   @override
-  Future<void> deleteUserInfoAndAccount(String? uid) async {}
+  Future<Either<Exception, bool>> deleteUserInfoAndAccount(String? uid) async {
+    return Either.right(true);
+  }
 }

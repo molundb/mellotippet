@@ -19,12 +19,17 @@ class ScoreController extends StateNotifier<ScoreControllerState> {
   static final provider =
       StateNotifierProvider<ScoreController, ScoreControllerState>((ref) {
     final appBarState = ref.watch(ReusableAppBarController.provider);
-
-    return ScoreController(
+    var first = true;
+    final scoreController = ScoreController(
       authRepository: getIt.get<AuthenticationRepository>(),
       databaseRepository: getIt.get<DatabaseRepository>(),
-      state: ScoreControllerState(loading: appBarState.loading),
+      state: ScoreControllerState(
+          loading: first ||
+              appBarState
+                  .loading), // TODO: Confirm this doesn't work and fix it
     );
+    first = false;
+    return scoreController;
   });
 
   Future<void> getUserScore() async {
