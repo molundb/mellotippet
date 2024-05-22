@@ -44,7 +44,8 @@ Future<void> setUpGetIt(Flavor flavor) async {
     ),
   );
 
-  getIt.registerSingleton<MellotippetPackageInfo>(MellotippetPackageInfo());
+  getIt.registerSingleton<MellotippetPackageInfo>(
+      MellotippetPackageInfoImplementation());
 
   return getIt.allReady();
 }
@@ -53,6 +54,7 @@ Future<void> setUpGetItForTest({
   required DatabaseRepository databaseRepository,
   FeatureFlagRepository? featureFlagRepository,
   required AuthenticationRepository authenticationRepository,
+  MellotippetPackageInfo? mellotippetPackageInfo,
 }) {
   // getIt.registerSingleton<Config>(Config(flavor));
   // getIt.registerSingleton<FirebaseEnvironment>(FirebaseEnvironment());
@@ -78,7 +80,8 @@ Future<void> setUpGetItForTest({
     ),
   );
 
-  getIt.registerSingleton<MellotippetPackageInfo>(MellotippetPackageInfo());
+  getIt.registerSingleton<MellotippetPackageInfo>(
+      mellotippetPackageInfo ?? MellotippetPackageInfoImplementation());
 
   return getIt.allReady();
 }
