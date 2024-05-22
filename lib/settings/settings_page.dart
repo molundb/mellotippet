@@ -12,7 +12,7 @@ class SettingsPage extends ConsumerStatefulWidget {
 
 class _SettingsPageState extends ConsumerState<SettingsPage> {
   SettingsController get controller =>
-      ref.read(SettingsController.provider.notifier);
+      ref.read(settingsControllerProvider.notifier);
 
   @override
   void initState() {
@@ -24,7 +24,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(SettingsController.provider);
+    final state = ref.watch(settingsControllerProvider);
 
     return Column(
       children: [
