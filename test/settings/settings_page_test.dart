@@ -9,7 +9,9 @@ import '../common/fake_database_repository.dart';
 import '../common/fake_mellotippet_package_info.dart';
 
 void main() {
-  testWidgets('given a, when b, then c', (tester) async {
+  testWidgets(
+      'given a version number, when SettingsPage is started, then the version number is displayed',
+      (tester) async {
     await setUpGetItForTest(
       databaseRepository: FakeDatabaseRepository(),
       authenticationRepository: FakeAuthenticationRepository(),
