@@ -66,6 +66,7 @@ dependencies:
   drag_and_drop_lists: ^0.3.3
   flutter_svg: ^2.0.9
   firebase_storage: ^11.6.5
+  fpdart: ^1.1.0
 
 
 dev_dependencies:

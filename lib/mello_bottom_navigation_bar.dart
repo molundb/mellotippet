@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mellotippet/common/models/competition_model.dart';
+import 'package:mellotippet/common/widgets/reusable_app_bar/reusable_app_bar_controller.dart';
 import 'package:mellotippet/prediction/final_prediction_page.dart';
 import 'package:mellotippet/prediction/heat_prediction_page.dart';
 import 'package:mellotippet/prediction/semifinal_prediction_page.dart';
@@ -9,7 +11,7 @@ import 'package:mellotippet/styles/colors.dart';
 
 import 'score/score_page.dart';
 
-class MelloBottomNavigationBar extends StatefulWidget {
+class MelloBottomNavigationBar extends ConsumerStatefulWidget {
   final CompetitionType currentCompetitionType;
 
   const MelloBottomNavigationBar({
@@ -18,11 +20,12 @@ class MelloBottomNavigationBar extends StatefulWidget {
   });
 
   @override
-  State<MelloBottomNavigationBar> createState() =>
+  ConsumerState<ConsumerStatefulWidget> createState() =>
       _MelloBottomNavigationBarState();
 }
 
-class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
+class _MelloBottomNavigationBarState
+    extends ConsumerState<MelloBottomNavigationBar> {
   int _selectedIndex = 0;
 
   // final List<Widget> _widgetOptions = <Widget>[
@@ -62,6 +65,17 @@ class _MelloBottomNavigationBarState extends State<MelloBottomNavigationBar> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(ReusableAppBarController.provider, (previous, next) {
+      if (next.snackBarText != '') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(next.snackBarText),
+          ),
+        );
+        // controller.clearSnackBarText();
+      }
+    });
+
     return Scaffold(
       body: Center(
         child: _getWidget(_selectedIndex),

@@ -8,10 +8,10 @@ class SignUpPage extends ConsumerStatefulWidget {
   const SignUpPage({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => SignUpPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _SignUpPageState();
 }
 
-class SignUpPageState extends ConsumerState<SignUpPage> {
+class _SignUpPageState extends ConsumerState<SignUpPage> {
   LoginController get controller => ref.read(LoginController.provider.notifier);
 
   @override

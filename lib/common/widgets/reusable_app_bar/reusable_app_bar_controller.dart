@@ -30,9 +30,16 @@ class ReusableAppBarController
 
   void deleteUserInfoAndAccount() async {
     state = state.copyWith(loading: true);
-    await databaseRepository
+    final result = await databaseRepository
         .deleteUserInfoAndAccount(authRepository.currentUser?.uid);
-    state = state.copyWith(loading: false);
+    if (result.isLeft()) {
+      state = state.copyWith(loading: false, snackBarText: "Error");
+    } else {
+      state = state.copyWith(loading: false);
+    }
+    // state = result.match(
+    //         (error) => AsyncError(error, StackTrace.current),
+    //         (r) => r);
   }
 }
 
@@ -40,5 +47,6 @@ class ReusableAppBarController
 class ReusableAppBarControllerState with _$ReusableAppBarControllerState {
   const factory ReusableAppBarControllerState({
     @Default(false) bool loading,
+    @Default("") String snackBarText,
   }) = _ReusableAppBarControllerState;
 }

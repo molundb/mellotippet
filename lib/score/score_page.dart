@@ -22,6 +22,17 @@ class _ScorePageState extends ConsumerState<ScorePage> {
 
   @override
   Widget build(BuildContext context) {
+    // ref.listen(ScoreController.provider, (previous, next) {
+    //   if (next.snackBarText != '') {
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       SnackBar(
+    //         content: Text(next.snackBarText),
+    //       ),
+    //     );
+    //     controller.clearSnackBarText();
+    //   }
+    // });
+
     final state = ref.watch(ScoreController.provider);
 
     return Stack(

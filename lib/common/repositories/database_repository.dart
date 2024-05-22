@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:logger/logger.dart';
 import 'package:mellotippet/common/models/all_models.dart';
 import 'package:mellotippet/common/models/song.dart';
@@ -41,7 +42,7 @@ abstract class DatabaseRepository {
 
   Future<void> createUser(String username);
 
-  Future<void> deleteUserInfoAndAccount(String? uid);
+  Future<Either<Exception, void>> deleteUserInfoAndAccount(String? uid);
 }
 
 class DatabaseRepositoryImpl implements DatabaseRepository {
@@ -270,7 +271,8 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
   }
 
   @override
-  Future<void> deleteUserInfoAndAccount(String? uid) async {
+  Future<Either<Exception, bool>> deleteUserInfoAndAccount(String? uid) async {
+    //TODO: return success or fail
     try {
       await db.runTransaction((transaction) async {
         await _deletePredictions(uid);
@@ -278,10 +280,10 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
         await authRepository.deleteUserAccount();
       });
 
-      print('Success deleting user account and info');
       authRepository.signOut();
-    } catch (e) {
-      print('Error deleting user account and info: $e');
+      return Either.right(true);
+    } on Exception catch (e) {
+      return Either.left(e);
     }
   }
 
