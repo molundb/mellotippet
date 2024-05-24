@@ -12,7 +12,7 @@ class ScorePage extends ConsumerStatefulWidget {
 }
 
 class _ScorePageState extends ConsumerState<ScorePage> {
-  ScoreController get controller => ref.read(ScoreController.provider.notifier);
+  ScoreController get controller => ref.read(scoreControllerProvider.notifier);
 
   @override
   void initState() {
@@ -33,7 +33,7 @@ class _ScorePageState extends ConsumerState<ScorePage> {
     //   }
     // });
 
-    final state = ref.watch(ScoreController.provider);
+    final state = ref.watch(scoreControllerProvider);
 
     return Stack(
       children: [

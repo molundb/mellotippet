@@ -1,36 +1,36 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mellotippet/common/repositories/repositories.dart';
-import 'package:mellotippet/common/widgets/reusable_app_bar/reusable_app_bar_controller.dart';
 import 'package:mellotippet/service_location/get_it.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'score_controller.freezed.dart';
+part 'score_controller.g.dart';
 
-class ScoreController extends StateNotifier<ScoreControllerState> {
-  ScoreController({
-    required this.authRepository,
-    required this.databaseRepository,
-    ScoreControllerState? state,
-  }) : super(state ?? const ScoreControllerState());
+@riverpod
+class ScoreController extends _$ScoreController {
+  @override
+  ScoreControllerState build() => const ScoreControllerState();
 
-  final AuthenticationRepository authRepository;
-  final DatabaseRepository databaseRepository;
+  final AuthenticationRepository authRepository =
+      getIt.get<AuthenticationRepository>();
 
-  static final provider =
-      StateNotifierProvider<ScoreController, ScoreControllerState>((ref) {
-    final appBarState = ref.watch(ReusableAppBarController.provider);
-    var first = true;
-    final scoreController = ScoreController(
-      authRepository: getIt.get<AuthenticationRepository>(),
-      databaseRepository: getIt.get<DatabaseRepository>(),
-      state: ScoreControllerState(
-          loading: first ||
-              appBarState
-                  .loading), // TODO: Confirm this doesn't work and fix it
-    );
-    first = false;
-    return scoreController;
-  });
+  final DatabaseRepository databaseRepository = getIt.get<DatabaseRepository>();
+
+  // static final provider =
+  //     StateNotifierProvider<ScoreController, ScoreControllerState>((ref) {
+  //   final appBarState = ref.watch(ReusableAppBarController.provider);
+  //   var first = true;
+  //   final scoreController = ScoreController(
+  //     authRepository: getIt.get<AuthenticationRepository>(),
+  //     databaseRepository: getIt.get<DatabaseRepository>(),
+  //     state: ScoreControllerState(
+  //         loading: first ||
+  //             appBarState
+  //                 .loading), // TODO: Confirm this doesn't work and fix it
+  //   );
+  //   first = false;
+  //   return scoreController;
+  // });
 
   Future<void> getUserScore() async {
     final userScore = (await databaseRepository.getCurrentUser()).totalScore;
