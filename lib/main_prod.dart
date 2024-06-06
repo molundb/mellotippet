@@ -12,7 +12,7 @@ void main() async {
   await setUpGetIt(Flavor.prod);
   await AuthenticationRepositoryImpl.initialize(name: 'mellotippet-prod');
   await FeatureFlagRepositoryImpl.initialize();
-  await getIt.get<MellotippetPackageInfoImplementation>().initialize();
+  await getIt.get<MellotippetPackageInfo>().initialize();
   CrashReporting.initialize();
 
   runApp(ProviderScope(child: MellotippetApp()));
