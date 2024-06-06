@@ -65,7 +65,7 @@ class _MelloBottomNavigationBarState
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(ReusableAppBarController.provider, (previous, next) {
+    ref.listen(reusableAppBarControllerProvider, (previous, next) {
       if (next.snackBarText != '') {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

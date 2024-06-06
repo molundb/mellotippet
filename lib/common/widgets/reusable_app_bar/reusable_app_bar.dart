@@ -30,7 +30,7 @@ class ReusableAppBar extends ConsumerStatefulWidget
 
 class _ReusableAppBarState extends ConsumerState<ReusableAppBar> {
   ReusableAppBarController get controller =>
-      ref.read(ReusableAppBarController.provider.notifier);
+      ref.read(reusableAppBarControllerProvider.notifier);
 
   @override
   Widget build(BuildContext context) {

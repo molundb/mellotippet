@@ -1,28 +1,21 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mellotippet/common/repositories/authentication_repository.dart';
 import 'package:mellotippet/common/repositories/database_repository.dart';
 import 'package:mellotippet/service_location/get_it.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'reusable_app_bar_controller.freezed.dart';
+part 'reusable_app_bar_controller.g.dart';
 
-class ReusableAppBarController
-    extends StateNotifier<ReusableAppBarControllerState> {
-  ReusableAppBarController({
-    required this.authRepository,
-    required this.databaseRepository,
-    ReusableAppBarControllerState? state,
-  }) : super(state ?? const ReusableAppBarControllerState());
+@riverpod
+class ReusableAppBarController extends _$ReusableAppBarController {
+  @override
+  ReusableAppBarControllerState build() =>
+      const ReusableAppBarControllerState();
 
-  final AuthenticationRepository authRepository;
-  final DatabaseRepository databaseRepository;
-
-  static final provider = StateNotifierProvider<
-          ReusableAppBarController, ReusableAppBarControllerState>(
-      (ref) => ReusableAppBarController(
-            authRepository: getIt.get<AuthenticationRepository>(),
-            databaseRepository: getIt.get<DatabaseRepository>(),
-          ));
+  final AuthenticationRepository authRepository =
+      getIt.get<AuthenticationRepository>();
+  final DatabaseRepository databaseRepository = getIt.get<DatabaseRepository>();
 
   void signOut() {
     authRepository.signOut();
