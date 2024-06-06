@@ -26,7 +26,7 @@ class PredictionPage extends ConsumerStatefulWidget {
 class PredictionPageState extends ConsumerState<PredictionPage> {
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(widget.controller.getStateNotifier());
+    final state = ref.watch(widget.controller.getNotifier());
 
     return Scaffold(
       appBar: const PredictionPageAppBar(),

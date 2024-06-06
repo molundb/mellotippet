@@ -2,29 +2,19 @@ import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/common/models/all_models.dart';
 import 'package:mellotippet/common/models/prediction/prediction_and_score.dart';
-import 'package:mellotippet/common/repositories/repositories.dart';
 import 'package:mellotippet/common/widgets/prediction_row.dart';
 import 'package:mellotippet/prediction/prediction_page/prediction_controller.dart';
-import 'package:mellotippet/service_location/get_it.dart';
 
 class FinalPredictionController extends PredictionController {
-  FinalPredictionController({
-    required super.databaseRepository,
-    required super.featureFlagRepository,
-    required super.state,
-  });
+  FinalPredictionController() : super.internal();
 
-  static final provider = StateNotifierProvider<FinalPredictionController,
-      PredictionControllerState>(
-    (ref) => FinalPredictionController(
-      databaseRepository: getIt.get<DatabaseRepository>(),
-      featureFlagRepository: getIt.get<FeatureFlagRepository>(),
-      state: const PredictionControllerState(),
-    ),
+  static final provider =
+      NotifierProvider<FinalPredictionController, PredictionControllerState>(
+    () => FinalPredictionController(),
   );
 
   @override
-  getStateNotifier() {
+  getNotifier() {
     return provider;
   }
 

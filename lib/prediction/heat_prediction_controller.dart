@@ -1,30 +1,20 @@
 import 'package:collection/collection.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/common/models/all_models.dart';
 import 'package:mellotippet/common/models/prediction/prediction_and_score.dart';
-import 'package:mellotippet/common/repositories/repositories.dart';
 import 'package:mellotippet/common/widgets/prediction_row.dart';
 import 'package:mellotippet/prediction/prediction_page/prediction_controller.dart';
-import 'package:mellotippet/service_location/get_it.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 class HeatPredictionController extends PredictionController {
-  HeatPredictionController({
-    required super.databaseRepository,
-    required super.featureFlagRepository,
-    required super.state,
-  });
+  HeatPredictionController() : super.internal();
 
-  static final provider = StateNotifierProvider<HeatPredictionController,
-      PredictionControllerState>(
-    (ref) => HeatPredictionController(
-      databaseRepository: getIt.get<DatabaseRepository>(),
-      featureFlagRepository: getIt.get<FeatureFlagRepository>(),
-      state: const PredictionControllerState(),
-    ),
+  static final provider =
+      NotifierProvider<HeatPredictionController, PredictionControllerState>(
+    () => HeatPredictionController(),
   );
 
   @override
-  getStateNotifier() {
+  getNotifier() {
     return provider;
   }
 

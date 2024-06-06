@@ -2,29 +2,19 @@ import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mellotippet/common/models/all_models.dart';
 import 'package:mellotippet/common/models/prediction/prediction_and_score.dart';
-import 'package:mellotippet/common/repositories/repositories.dart';
 import 'package:mellotippet/common/widgets/prediction_row.dart';
 import 'package:mellotippet/prediction/prediction_page/prediction_controller.dart';
-import 'package:mellotippet/service_location/get_it.dart';
 
 class SemifinalPredictionController extends PredictionController {
-  SemifinalPredictionController({
-    required super.databaseRepository,
-    required super.featureFlagRepository,
-    required super.state,
-  });
+  SemifinalPredictionController() : super.internal();
 
-  static final provider = StateNotifierProvider<SemifinalPredictionController,
+  static final provider = NotifierProvider<SemifinalPredictionController,
       PredictionControllerState>(
-    (ref) => SemifinalPredictionController(
-      databaseRepository: getIt.get<DatabaseRepository>(),
-      featureFlagRepository: getIt.get<FeatureFlagRepository>(),
-      state: const PredictionControllerState(),
-    ),
+    () => SemifinalPredictionController(),
   );
 
   @override
-  getStateNotifier() {
+  getNotifier() {
     return provider;
   }
 
