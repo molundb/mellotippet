@@ -17,7 +17,7 @@ class PredictionPageAppBar extends ConsumerStatefulWidget
 
 class _PredictionPageAppBarState extends ConsumerState<PredictionPageAppBar> {
   PredictionPageAppBarController get controller =>
-      ref.read(PredictionPageAppBarController.provider.notifier);
+      ref.read(predictionPageAppBarControllerProvider.notifier);
 
   @override
   void initState() {
@@ -27,7 +27,7 @@ class _PredictionPageAppBarState extends ConsumerState<PredictionPageAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(PredictionPageAppBarController.provider);
+    final state = ref.watch(predictionPageAppBarControllerProvider);
 
     return ReusableAppBar(
       title: 'Tippa',
