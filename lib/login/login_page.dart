@@ -12,7 +12,7 @@ class LoginPage extends ConsumerStatefulWidget {
 }
 
 class _LoginPageState extends ConsumerState<LoginPage> {
-  LoginController get controller => ref.read(LoginController.provider.notifier);
+  LoginController get controller => ref.read(loginControllerProvider.notifier);
 
   @override
   Widget build(BuildContext context) {

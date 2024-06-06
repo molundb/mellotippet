@@ -12,11 +12,11 @@ class SignUpPage extends ConsumerStatefulWidget {
 }
 
 class _SignUpPageState extends ConsumerState<SignUpPage> {
-  LoginController get controller => ref.read(LoginController.provider.notifier);
+  LoginController get controller => ref.read(loginControllerProvider.notifier);
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(LoginController.provider, (previous, next) {
+    ref.listen(loginControllerProvider, (previous, next) {
       if (previous?.accountCreated == false && next.accountCreated) {
         context.pop();
       }

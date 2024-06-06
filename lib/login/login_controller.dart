@@ -1,26 +1,19 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mellotippet/common/repositories/repositories.dart';
 import 'package:mellotippet/service_location/get_it.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'login_controller.freezed.dart';
+part 'login_controller.g.dart';
 
-class LoginController extends StateNotifier<LoginControllerState> {
-  LoginController({
-    required this.authRepository,
-    required this.databaseRepository,
-    LoginControllerState? state,
-  }) : super(state ?? const LoginControllerState());
+@riverpod
+class LoginController extends _$LoginController {
+  @override
+  LoginControllerState build() => const LoginControllerState();
 
-  final AuthenticationRepository authRepository;
-  final DatabaseRepository databaseRepository;
-
-  static final provider =
-      StateNotifierProvider<LoginController, LoginControllerState>(
-          (ref) => LoginController(
-                authRepository: getIt.get<AuthenticationRepository>(),
-                databaseRepository: getIt.get<DatabaseRepository>(),
-              ));
+  final AuthenticationRepository authRepository =
+      getIt.get<AuthenticationRepository>();
+  final DatabaseRepository databaseRepository = getIt.get<DatabaseRepository>();
 
   void updateUsername(String? username) {
     if (username == null) return;

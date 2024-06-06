@@ -37,11 +37,11 @@ class _LoginPageState extends ConsumerState<LoginOrSignUpPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  LoginController get controller => ref.read(LoginController.provider.notifier);
+  LoginController get controller => ref.read(loginControllerProvider.notifier);
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(LoginController.provider);
+    final state = ref.watch(loginControllerProvider);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
