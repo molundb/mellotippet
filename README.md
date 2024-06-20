@@ -6,7 +6,7 @@
 With **Mellotippet** users can currently do the following:
 
 - Create an account
-- Make a prediction on the upcoming competition in Melodifestivalen (there are 4-6 competitions per year/season based on the year's format)
+- Make a prediction on the next competition in Melodifestivalen (there are 4-6 competitions per year/season based on the year's format)
 - See their score of previous predictions
 
 **Mellotippet** is a work in progress and more features will be implemented.
