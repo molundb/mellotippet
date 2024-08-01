@@ -4,8 +4,8 @@ import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 import 'package:mellotippet/config/config.dart';
-import 'package:mellotippet/service_location/get_it.dart';
 import 'package:mellotippet/firebase_environment.dart';
+import 'package:mellotippet/service_location/get_it.dart';
 
 final config = getIt.get<Config>();
 final firebaseEnv = getIt.get<FirebaseEnvironment>();
@@ -45,21 +45,8 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static FirebaseOptions get android => FirebaseOptions(
-        apiKey: firebaseEnv.firebaseAPIKeyAndroid(config.flavor),
-        appId: firebaseEnv.firebaseAppIdAndroid(config.flavor),
-        messagingSenderId: firebaseEnv.firebaseMessagingSenderId(config.flavor),
-        projectId: firebaseEnv.firebaseProjectId(config.flavor),
-        storageBucket: firebaseEnv.firebaseAPIKeyAndroid(config.flavor),
-      );
+  static FirebaseOptions get android =>
+      firebaseEnv.getAndroidOptions(config.flavor);
 
-  static FirebaseOptions get ios => FirebaseOptions(
-        apiKey: firebaseEnv.firebaseAPIKeyIos(config.flavor),
-        appId: firebaseEnv.firebaseAppIdIos(config.flavor),
-        messagingSenderId: firebaseEnv.firebaseMessagingSenderId(config.flavor),
-        projectId: firebaseEnv.firebaseProjectId(config.flavor),
-        storageBucket: firebaseEnv.firebaseStorageBucket(config.flavor),
-        iosClientId: firebaseEnv.firebaseIosClientId(config.flavor),
-        iosBundleId: firebaseEnv.firebaseIosBundleId(config.flavor),
-      );
+  static FirebaseOptions get ios => firebaseEnv.getIosOptions(config.flavor);
 }

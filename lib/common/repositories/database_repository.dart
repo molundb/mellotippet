@@ -216,8 +216,9 @@ class DatabaseRepositoryImpl implements DatabaseRepository {
   }
 
   @override
-  Future<String?> getImageDownloadUrl(
-      int year, String competitionId, String? imagePath) async {
+  Future<String?> getImageDownloadUrl(int year,
+      String competitionId,
+      String? imagePath,) async {
     if (imagePath == null) {
       return null;
     }
