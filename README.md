@@ -40,7 +40,7 @@ Create a run configuration with the following settings:
 `flutter test` runs all widget tests.
 
 ### Backend
-To run the backend tests
+To run the backend tests:
 1. Create a Firebase project
 2. In that Firebase project, go to Project Settings -> Service Accounts
 3. Generate a new private key for Node.js
