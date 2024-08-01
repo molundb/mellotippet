@@ -2665,7 +2665,7 @@ async function resetEntireDatabase() {
       await resetDatabase(user, "heat4");
       await resetDatabase(user, "heat5");
       await resetDatabase(user, "finalkval");
-      await resetDatabase(user, "final");
+      await resetDatabase(user, "theFinal");
     })
   );
 }

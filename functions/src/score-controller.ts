@@ -150,14 +150,14 @@ async function calculateScoreForFinal(
     .withConverter(finalResultConverter)
     .get();
 
-  const snapshot = await db
+  const predictionSnapshot = await db
     .collection(`competitions/${competition}/predictionsAndScores`)
     .doc(userSnapshot.id)
     .withConverter(finalPredictionAndScoreConverter)
     .get();
 
-  const prediction = snapshot.data();
   const result = resultSnapshot.data();
+  const prediction = predictionSnapshot.data();
   if (prediction !== undefined && result !== undefined) {
     const finalPredictionAndScore = scoreCalculator.calculateFinalScore(
       result,
