@@ -140,7 +140,7 @@ testers.txt
 **/fastlane/test_output
 
 # Firebase
-lib/firebase_environment.dart
+lib/firebase_environment_impl.dart
 **google-services.json
 **GoogleService-Info.plist
 

@@ -8,6 +8,7 @@ import 'package:mellotippet/common/repositories/repositories.dart';
 import 'package:mellotippet/config/config.dart';
 import 'package:mellotippet/config/flavor.dart';
 import 'package:mellotippet/firebase_environment.dart';
+import 'package:mellotippet/firebase_environment_impl.dart';
 import 'package:mellotippet/services/mello_tippet_package_info.dart';
 import 'package:mellotippet/snackbar/snackbar_handler.dart';
 
@@ -15,7 +16,7 @@ final getIt = GetIt.instance;
 
 Future<void> setUpGetIt(Flavor flavor) async {
   getIt.registerSingleton<Config>(Config(flavor));
-  getIt.registerSingleton<FirebaseEnvironment>(FirebaseEnvironment());
+  getIt.registerSingleton<FirebaseEnvironment>(FirebaseEnvironmentImpl());
 
   getIt.registerSingleton<Logger>(Logger());
 
