@@ -36,7 +36,7 @@ To run the backend tests:
 3. Generate a new private key for Node.js
 4. Download the file and move it to `functions/.firebase/serice-account-test.json`
 5. Go to the functions folder in the project
-6. Run all backend tests with - `npm test`
+6. Run all backend tests with - `npm test ""`
 
 ## Backend
 The backend consists of a Firestore database and an Express.js application hosted as a Firebase Cloud Function.
