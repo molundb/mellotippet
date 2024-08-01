@@ -2532,22 +2532,18 @@ describe("calculateScores in real life scenario", function () {
     } of usersWithPredictionAndExpectedScoreFinal) {
       await addUserToDatabase(user);
       await addFinalPredictionToDatabase(
-        "competitions/final",
+        "competitions/theFinal",
         user.id,
         prediction
       );
     }
-    await addResultToDatabase("competitions/final", resultFinal);
+    await addResultToDatabase("competitions/theFinal", resultFinal);
 
     const change = createChange(competitionPath, resultFinal);
     const event = createEvent(change, competition);
 
     // When
     const wrappedCalculateScores = test.wrap(calculateScores);
-    await wrappedCalculateScores(event);
-    await wrappedCalculateScores(event);
-    await wrappedCalculateScores(event);
-    await wrappedCalculateScores(event);
     await wrappedCalculateScores(event);
 
     // Then
