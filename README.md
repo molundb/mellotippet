@@ -36,7 +36,17 @@ Create a run configuration with the following settings:
 - Build flavor: stage
 
 ## Testing
-Both the app and the backend are thoroughly tested.  
+### Frontend: 
+`flutter test` runs all widget tests.
+
+### Backend
+To run the backend tests
+1. Create a Firebase project
+2. In that Firebase project, go to Project Settings -> Service Accounts
+3. Generate a new private key for Node.js
+4. Download the file and move it to `functions/.firebase/serice-account-test.json`
+5. Go to the functions folder in the project
+6. Run all backend tests with - `npm test`
 
 ## Backend
 The backend consists of a Firestore database and an Express.js application hosted as a Firebase Cloud Function.
