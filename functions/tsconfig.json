@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "target": "es2017",
     "module": "commonjs",
     "resolveJsonModule": true,
     "esModuleInterop": true,
@@ -7,8 +8,7 @@
     "noUnusedLocals": true,
     "outDir": "lib",
     "sourceMap": true,
-    "strict": true,
-    "target": "es2017"
+    "strict": true
   },
   "compileOnSave": true,
   "include": [
